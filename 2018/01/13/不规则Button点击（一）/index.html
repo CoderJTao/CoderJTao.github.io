@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言在 iOS 程序中，Button 占据的位置总是一个矩形区域。但是，在实际应用中时，Button 设置了图片之后，我们总是希望显示有内容的地方点击才有反馈。基于这个需求，于是有了这篇文章。这篇文章主要讲述当为 Button 设置图片之后，点击响应的处理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="不规则Button点击（一）">
+<meta property="og:url" content="http://yoursite.com/2018/01/13/不规则Button点击（一）/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="前言在 iOS 程序中，Button 占据的位置总是一个矩形区域。但是，在实际应用中时，Button 设置了图片之后，我们总是希望显示有内容的地方点击才有反馈。基于这个需求，于是有了这篇文章。这篇文章主要讲述当为 Button 设置图片之后，点击响应的处理。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/8/169fbe59f31b356e?w=598&h=598&f=jpeg&s=29798">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/8/169fbe92979ad902?w=598&h=598&f=jpeg&s=36648">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/8/169fc77cbb576331?w=498&h=540&f=gif&s=510416">
+<meta property="og:updated_time" content="2019-05-07T09:50:44.617Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="不规则Button点击（一）">
+<meta name="twitter:description" content="前言在 iOS 程序中，Button 占据的位置总是一个矩形区域。但是，在实际应用中时，Button 设置了图片之后，我们总是希望显示有内容的地方点击才有反馈。基于这个需求，于是有了这篇文章。这篇文章主要讲述当为 Button 设置图片之后，点击响应的处理。">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/4/8/169fbe59f31b356e?w=598&h=598&f=jpeg&s=29798">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/13/不规则Button点击（一）/">
+
+
+
+
+
+  <title>不规则Button点击（一） | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/13/不规则Button点击（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">不规则Button点击（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-13T18:47:22+08:00">
+                2018-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在 iOS 程序中，Button 占据的位置总是一个矩形区域。但是，在实际应用中时，Button 设置了图片之后，我们总是希望显示有内容的地方点击才有反馈。基于这个需求，于是有了这篇文章。这篇文章主要讲述当为 Button 设置图片之后，点击响应的处理。</p>
+<a id="more"></a>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>利用图片，实现一个如图的按钮组。</p>
+<div align="center"><br><img src="https://user-gold-cdn.xitu.io/2019/4/8/169fbe59f31b356e?w=598&h=598&f=jpeg&s=29798" height="300" width="300"><br> </div>
+
+
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>如下图所示：</p>
+<ul>
+<li>功能1、2、3、4的按钮可以实现点击功能。但是在红色方框四角的位置，也会响应相应的点击事件。</li>
+<li>紫色方框内四角区域点击时，响应的方法是功能5，而不是对应的功能。</li>
+</ul>
+<div align="center"><br><img src="https://user-gold-cdn.xitu.io/2019/4/8/169fbe92979ad902?w=598&h=598&f=jpeg&s=36648" height="300" width="300"><br> </div>
+
+<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><h4 id="期望的结果"><a href="#期望的结果" class="headerlink" title="期望的结果"></a>期望的结果</h4><ul>
+<li>寻找到合适的Button来处理点击事件</li>
+</ul>
+<h4 id="需要弄明白的问题"><a href="#需要弄明白的问题" class="headerlink" title="需要弄明白的问题"></a>需要弄明白的问题</h4><ul>
+<li>事件在如何传递的？</li>
+<li>怎么判断谁来处理当前事件？</li>
+</ul>
+<p><strong>事件是如何传递的？</strong></p>
+<ol>
+<li>当用户触摸实际屏幕时，会生成一个Touch Event，将此事件添加到UIApplication管理的事件队列之中。</li>
+<li>UIApplication从事件队列之中按顺序取出事件分发到视图去处理。</li>
+<li>当事件被发出以后，会从keyWindow开始，依次向上传递，包括Controller以及View，最后找到合适的视图来响应事件。</li>
+</ol>
+<p>可以看出：当一个事件发生后，事件会从父控件传给子控件，也就是说由UIApplication -&gt; UIWindow -&gt; UIView -&gt; initial view,以上就是事件的传递，也就是寻找最合适的view的过程。</p>
+<p><strong>涉及到两个方法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func hitTest(_ point: CGPoint, with event: UIEvent?) -&gt; UIView?</span><br><span class="line">func point(inside point: CGPoint, with event: UIEvent?) -&gt; Bool</span><br></pre></td></tr></table></figure>
+<p>当UIApplication发送事件到keyWindow时，会调用 hitTest来寻找最合适的视图处理事件。判断逻辑如下：</p>
+<ol>
+<li>首先判断自身是否能够响应触摸事件（userInteractionEnabled==true、hidden==true、alpha&lt;=0.01不能响应触摸事件）,若能响应则下一步，否则返回nil。</li>
+<li>如果可以响应触摸事件，调用pointInside来判断是否在显示区域内，如果不在其中，pointInside返回false，同时hitTest返回nil。</li>
+<li>如果 pointInside返回true，表示在当前的视图之中，然后<font color="red">倒序</font>遍历该视图的子视图,重复上述步骤，直到某一视图可以响应，hitTest:返回该视图。</li>
+<li><p>如果执行完上述步骤以后，没有符合条件的视图响应事件，则返回视图本身，表示只有当前视图符合条件，能够处理该事件。</p>
+<pre><code>Q：为什么倒序遍历？
+A：因为在subViews数组中，最后添加的视图，在视图层级中处于最上方。
+</code></pre></li>
+</ol>
+<p><strong>怎么判断谁来处理当前事件？</strong></p>
+<p>当知道的上面事件传递机制后，我们就能理清楚我们的Button处理事件的逻辑了：</p>
+<ol>
+<li>自定义Button继承自系统的Button。</li>
+<li><p>重写 point(inside point: CGPoint, with event: UIEvent?) -&gt; Bool 方法。在其中判断当前事件是否需要自身处理。</p>
+<ul>
+<li>判断点是否在自身button.imageView的frame范围内</li>
+<li>得到点击点在button.imageView中该点的颜色值</li>
+<li>如果得到的色值中alpha小于阀值，则返回false</li>
+</ul>
+</li>
+</ol>
+<p>具体代码可以查看<a href="https://github.com/CoderJTao/JTShapedButton" target="_blank" rel="noopener">JTShapedButton源码</a>。</p>
+<h2 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h2><p><img src="https://user-gold-cdn.xitu.io/2019/4/8/169fc77cbb576331?w=498&amp;h=540&amp;f=gif&amp;s=510416" alt></p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这里记录的不规则按钮是在设置图片情况下的。</p>
+<p>还有另一种情况是：按钮的形状是自己绘制的，这种情况的处理可以看另一篇文章<a href="https://juejin.im/post/5cad816e6fb9a068b7489e62" target="_blank" rel="noopener">iOS 不规则Button点击（二）</a>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/30/property及其关键字学习笔记/" rel="next" title="@property及其关键字学习笔记">
+                <i class="fa fa-chevron-left"></i> @property及其关键字学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/21/不规则Button点击（二）/" rel="prev" title="不规则Button点击（二）">
+                不规则Button点击（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题"><span class="nav-number">3.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路"><span class="nav-number">4.</span> <span class="nav-text">解决思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#期望的结果"><span class="nav-number">4.0.1.</span> <span class="nav-text">期望的结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需要弄明白的问题"><span class="nav-number">4.0.2.</span> <span class="nav-text">需要弄明白的问题</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#实现效果"><span class="nav-number">5.</span> <span class="nav-text">实现效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">6.</span> <span class="nav-text">后记</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

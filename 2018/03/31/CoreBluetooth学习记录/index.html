@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言最近公司的项目中刚好用到了 CoreBluetooth 相关的知识，在看了网上很多文章及官方文档的介绍后，现在对大概的框架有了基本的了解。 在此，写下这篇文章记录自己这段时间的成果。文章的最后会有一个小Demo，简单的实现了一些基本的功能，供各位看官把玩。Demo的代码可以去我的Github中下载。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CoreBluetooth 学习记录">
+<meta property="og:url" content="http://yoursite.com/2018/03/31/CoreBluetooth学习记录/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="前言最近公司的项目中刚好用到了 CoreBluetooth 相关的知识，在看了网上很多文章及官方文档的介绍后，现在对大概的框架有了基本的了解。 在此，写下这篇文章记录自己这段时间的成果。文章的最后会有一个小Demo，简单的实现了一些基本的功能，供各位看官把玩。Demo的代码可以去我的Github中下载。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/30/16a6d24f70a0e32d?w=970&h=447&f=png&s=84343">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/30/16a6d722d75bbbb5?w=388&h=690&f=gif&s=880427">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/30/16a6d7247f97dcbe?w=388&h=690&f=gif&s=1869197">
+<meta property="og:updated_time" content="2019-05-07T09:48:37.630Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CoreBluetooth 学习记录">
+<meta name="twitter:description" content="前言最近公司的项目中刚好用到了 CoreBluetooth 相关的知识，在看了网上很多文章及官方文档的介绍后，现在对大概的框架有了基本的了解。 在此，写下这篇文章记录自己这段时间的成果。文章的最后会有一个小Demo，简单的实现了一些基本的功能，供各位看官把玩。Demo的代码可以去我的Github中下载。">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/4/30/16a6d24f70a0e32d?w=970&h=447&f=png&s=84343">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/31/CoreBluetooth学习记录/">
+
+
+
+
+
+  <title>CoreBluetooth 学习记录 | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/31/CoreBluetooth学习记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CoreBluetooth 学习记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-31T12:32:19+08:00">
+                2018-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近公司的项目中刚好用到了 CoreBluetooth 相关的知识，在看了网上很多文章及<a href="https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/CoreBluetoothOverview/CoreBluetoothOverview.html" target="_blank" rel="noopener">官方文档</a>的介绍后，现在对大概的框架有了基本的了解。</p>
+<p>在此，写下这篇文章记录自己这段时间的成果。文章的最后会有一个小Demo，简单的实现了一些基本的功能，供各位看官把玩。Demo的代码可以去<a href="https://github.com/CoderJTao/BleLearnDemo" target="_blank" rel="noopener">我的Github</a>中下载。</p>
+<a id="more"></a>
+<p><img src="https://user-gold-cdn.xitu.io/2019/4/30/16a6d24f70a0e32d?w=970&amp;h=447&amp;f=png&amp;s=84343" alt></p>
+<p>这篇文章主要以实践的方式，实现了蓝牙交互中的两个角色。关于基本概念的介绍，<a href="https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/CoreBluetoothOverview/CoreBluetoothOverview.html" target="_blank" rel="noopener">官方文档</a>中介绍的非常详细，大家可以仔细研究一下。</p>
+<h1 id="Central-和-Peripheral"><a href="#Central-和-Peripheral" class="headerlink" title="Central 和 Peripheral"></a>Central 和 Peripheral</h1><h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p>CoreBluetooth 中最关键的两个角色就是 Central(中心) 和 Peripheral（周边）。</p>
+<p>Central 在连接中作为主动发起者会去寻找待连接的 Peripheral。</p>
+<p>Peripheral 一般是提供服务的一方， Central 获取 Peripheral 提供的服务然后来完成特定的任务。</p>
+<p>Peripheral 通过向空中广播数据的方式来使我们能感知到它的存在。Central 通过扫描搜索来发现周围正在广播数据的 Peripheral, 找到指定的 Peripheral 后，发送连接请求进行连接，连接成功后则与 Peripheral 进行一些数据交互， Peripheral 则会通过合适的方式对 Central 进行响应。</p>
+<h2 id="实现-Central-的功能"><a href="#实现-Central-的功能" class="headerlink" title="实现 Central 的功能"></a>实现 Central 的功能</h2><p>这是在开发中最常见的一个需求，需要自身作为 Central 的对象，去发现一些外设的服务，并根据其提供的数据进行相应的操作。例如，连接一个小米手环，根据其提供的步数、心率等信息调整UI的显示。</p>
+<p><strong>实现步骤：</strong></p>
+<h3 id="1-创建Central-Manager"><a href="#1-创建Central-Manager" class="headerlink" title="1. 创建Central Manager"></a>1. 创建Central Manager</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">centralManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionShowPowerAlertKey : true])</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>delegate：</strong> centralManager的代理</li>
+<li><strong>queue：</strong> 接收回调事件的线程</li>
+<li><p><strong>options:</strong></p>
+<ul>
+<li><p>CBCentralManagerOptionShowPowerAlertKey: 当蓝牙状态为 powered off时，系统会弹出提示框。</p>
+</li>
+<li><p>CBCentralManagerOptionRestoreIdentifierKey：生成一个唯一的标识符，用于后续应用恢复这个manager。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>当创建了 CentralManager 之后， CBCentralManagerDelegate 会通过下面的回调告知你，当前设备是否支持你去使用蓝牙的功能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func centralManagerDidUpdateState(_ central: CBCentralManager)</span><br></pre></td></tr></table></figure>
+<p>通过 central.state 可以获取当前的状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">case unknown        //未知状态</span><br><span class="line">case resetting      // 连接断开，即将重置</span><br><span class="line">case unsupported    // 该设备不支持蓝牙</span><br><span class="line">case unauthorized   // 蓝牙未授权</span><br><span class="line">case poweredOff     // 蓝牙关闭</span><br><span class="line">case poweredOn      // 蓝牙正常开启</span><br></pre></td></tr></table></figure>
+<p>只有当蓝牙的状态为正常开启的状态时，才能进行后续的步骤。</p>
+<h3 id="2-搜索正在广播数据的-Peripheral-设备"><a href="#2-搜索正在广播数据的-Peripheral-设备" class="headerlink" title="2. 搜索正在广播数据的 Peripheral 设备"></a>2. 搜索正在广播数据的 Peripheral 设备</h3><h5 id="1-开始搜索"><a href="#1-开始搜索" class="headerlink" title="1. 开始搜索"></a>1. 开始搜索</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.centralManager?.scanForPeripherals(withServices: [CBUUID(string: UUID_SERVICE)], options: [CBCentralManagerOptionShowPowerAlertKey : true])</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>serviceUUIDs：</strong> 写入这个参数，说明搜索拥有这个特定服务的 Peripheral，若传入nil，则搜索附近所有的 Peripheral。</li>
+</ul>
+<blockquote>
+<p>UUID_SERVICE 通常是由Central及Peripheral自己定义的，两端使用同一个UUID。</p>
+</blockquote>
+<h5 id="2-处理搜索结果"><a href="#2-处理搜索结果" class="headerlink" title="2. 处理搜索结果"></a>2. 处理搜索结果</h5><p>每当 CentralManager 搜索到一个 Peripheral 设备时，就会通过代理方法进行回调。如果你后面需要连接这个 Peripheral，需要定义一个 CBPeripheral 类型的对象来指向（强引用）这个对象，这样系统暂时就不会释放这个对象了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>advertisementData：</strong> Peripheral 开始广播时，放入的数据。 </li>
+<li><strong>RSSI：</strong> 代表发现的 Peripheral 的信号强度。</li>
+</ul>
+<blockquote>
+<p>当发现自身需要的 Peripheral 时，为了减少蓝牙对电量的消耗，可以停止CentralManager的扫描。<br>self.centralManager?.stopScan()</p>
+</blockquote>
+<h3 id="3-连接自身需要的-Peripheral-设备"><a href="#3-连接自身需要的-Peripheral-设备" class="headerlink" title="3. 连接自身需要的 Peripheral 设备"></a>3. 连接自身需要的 Peripheral 设备</h3><h5 id="1-开始连接"><a href="#1-开始连接" class="headerlink" title="1. 开始连接"></a>1. 开始连接</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.centralManager?.connect(peripheral, options: nil)</span><br></pre></td></tr></table></figure>
+<h5 id="2-处理连接结果"><a href="#2-处理连接结果" class="headerlink" title="2. 处理连接结果"></a>2. 处理连接结果</h5><ul>
+<li>当 CentralManager 与 Peripheral 成功连接时</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral)</span><br></pre></td></tr></table></figure>
+<p>当成功连接 Peripheral 之后，我们需要去查找 Peripheral 为我们提供的服务。为了能收到 Peripheral 查找的结果，我们需要去遵守 Peripheral 对象的代理方法 CBPeripheralDelegate。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.configPeripheral?.delegate = self</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当 CentralManager 与 Peripheral 连接失败时</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?)</span><br></pre></td></tr></table></figure>
+<h3 id="4-搜索连接设备的-Services"><a href="#4-搜索连接设备的-Services" class="headerlink" title="4. 搜索连接设备的 Services"></a>4. 搜索连接设备的 Services</h3><h5 id="1-查找-Service"><a href="#1-查找-Service" class="headerlink" title="1. 查找 Service"></a>1. 查找 Service</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.configPeripheral?.discoverServices([CBUUID(string: UUID_SERVICE)])</span><br></pre></td></tr></table></figure>
+<p>这里我们可以传入一个关于 Service 的一个数组，查找自己需要的 Service。当然也可以传入 nil，这样就会查找到 Peripheral 提供的全部 Service。</p>
+<p>但是，一般来说，为了节省电量以及一些不必要的时间浪费，会传入自己需要的 Service 的数组。</p>
+<h5 id="2-处理搜索结果-1"><a href="#2-处理搜索结果-1" class="headerlink" title="2. 处理搜索结果"></a>2. 处理搜索结果</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?)</span><br></pre></td></tr></table></figure>
+<p>CBPeripheralDelegate 的 搜索 Service 回调。在这里出现错误之后，可以进行重试或者抛出停止连接流程。</p>
+<p>若成功的话，则可以继续搜索对应 Service 的 Characteristic。</p>
+<h3 id="5-搜索-Services-的-Characteristic"><a href="#5-搜索-Services-的-Characteristic" class="headerlink" title="5. 搜索 Services 的 Characteristic"></a>5. 搜索 Services 的 Characteristic</h3><h5 id="1-开始搜索-1"><a href="#1-开始搜索-1" class="headerlink" title="1.开始搜索"></a>1.开始搜索</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peripheral.discoverCharacteristics([CBUUID(string: UUID_READABLE), CBUUID(string: UUID_WRITEABLE)], for: service)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>characteristicUUIDs：</strong> 参数接收一个 Characteristic UUID 的数组对象。若传入，则搜索对应的 Characteristic，否则则会搜索 Service 拥有的所有 Characteristic。</li>
+</ul>
+<h5 id="2-处理搜索结果-2"><a href="#2-处理搜索结果-2" class="headerlink" title="2. 处理搜索结果"></a>2. 处理搜索结果</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?)</span><br></pre></td></tr></table></figure>
+<p>CBPeripheralDelegate 的 搜索 Characteristic 的回调。若 Characteristic 有多个，则此方法会回调多次。</p>
+<h5 id="3-使用-Characteristic"><a href="#3-使用-Characteristic" class="headerlink" title="3. 使用 Characteristic"></a>3. 使用 Characteristic</h5><ul>
+<li>读取 Characteristic 的值</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peripheral.readValue(for: characteristic)</span><br></pre></td></tr></table></figure>
+<p>当你尝试去读取一个 Characteristic 的值时， Peripheral 会通过下面的代理回调来返回结果，你可以通过 Characteristic 的 value 属性来得到这个值。</p>
+<p>并不是所有的 Characteristic 的值都是可读的，决定一个 Characteristic 的值是否可读是通过检查 Characteristic 的 Properties 属性是否包含 CBCharacteristicPropertyRead 常量来判断的。当你尝试去读取一个值不可读的 Characteristic 时，下面的代理方法会返回一个Error供你处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>订阅 Characteristic 的值</li>
+</ul>
+<p>当一个我们需要读取 Characteristic 的值，频繁变化时，read 操作就会显得很繁琐。这个时候我们就可以通过订阅的方式获取值得更新。如果订阅了某个 Characteristic 之后，每当值有变化时，也会通过 peripheral(_ peripheral:, didUpdateValueFor characteristic:, error:) 方法回调使我们收到每次更新的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peripheral.setNotifyValue(true, for: characteristic)</span><br></pre></td></tr></table></figure>
+<p>当我们订阅了一个 Characteristic 后，CBPeripheralDelegate 会通过下面的回调，使我们知道订阅的 Characteristic 的状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?)</span><br></pre></td></tr></table></figure>
+<p>并不是所有的 Characteristic 都提供订阅功能，决定一个 Characteristic 是否能订阅是通过检查 Characteristic 的 properties 属性是否包含 CBCharacteristicPropertyNotify 或者 CBCharacteristicPropertyIndicate  常量来判断的。</p>
+<ul>
+<li>写入数据到 Characteristic</li>
+</ul>
+<p>决定 Characteristic 的值是否可写，需要通过查看 Characteristic 的 properties 属性是否包含 CBCharacteristicPropertyWriteWithoutResponse 或者 CBCharacteristicPropertyWrite 常量来判断的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peripheral.writeValue(data, for: characteristic, type: .withResponse)</span><br></pre></td></tr></table></figure>
+<p>type: 写入类型。</p>
+<ul>
+<li>.withResponse：写入后，会通过下面的回调告知写入的结果。</li>
+<li>.withoutResponse：无回调消息。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?)</span><br></pre></td></tr></table></figure>
+<h2 id="实现-Peripheral-的功能"><a href="#实现-Peripheral-的功能" class="headerlink" title="实现 Peripheral 的功能"></a>实现 Peripheral 的功能</h2><p>将自身声明为一个 Peripheral，可为 Central 对象提供一些服务。例如：在A手机利用连接B手机时，B手机此时就是 Peripheral 对象。</p>
+<p><strong>实现步骤：</strong></p>
+<h3 id="1-创建-Peripheral-Manager"><a href="#1-创建-Peripheral-Manager" class="headerlink" title="1. 创建 Peripheral Manager"></a>1. 创建 Peripheral Manager</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myPeripheral = CBPeripheralManager(delegate: self, queue: nil, options: [CBPeripheralManagerOptionShowPowerAlertKey : true])</span><br></pre></td></tr></table></figure>
+<p>当创建了 Peripheral 之后， CBPeripheralManagerDelegate 会通过下面的回调告知你，当前设备是否支持你去使用蓝牙的功能。</p>
+<p>状态同 CentralManager 一样的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager)</span><br></pre></td></tr></table></figure>
+<p>只有当蓝牙的状态为正常开启的状态时，才能进行后续的步骤。</p>
+<h3 id="2-设置自身的-Services-和-Characteristics"><a href="#2-设置自身的-Services-和-Characteristics" class="headerlink" title="2. 设置自身的 Services 和 Characteristics"></a>2. 设置自身的 Services 和 Characteristics</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">let characteristic_read = CBUUID(string: UUID_READABLE)</span><br><span class="line">let characteristic_write = CBUUID(string: UUID_WRITEABLE)</span><br><span class="line">        </span><br><span class="line">let serviceUUID = CBUUID(string: UUID_SERVICE)</span><br><span class="line">        </span><br><span class="line">// 为服务指定一个特征    读取特征   可被订阅</span><br><span class="line">myCharacteristic_beRead = CBMutableCharacteristic(type: characteristic_read,</span><br><span class="line">                                                    properties: [.read, .notify],</span><br><span class="line">                                                    value: nil,</span><br><span class="line">                                                    permissions: .readable)</span><br><span class="line">        </span><br><span class="line">myCharacteristic_beWrite = CBMutableCharacteristic(type: characteristic_write,</span><br><span class="line">                                                    properties: .write,</span><br><span class="line">                                                    value: nil,</span><br><span class="line">                                                    permissions: .writeable)</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">// 创建一个服务</span><br><span class="line">myService = CBMutableService(type: serviceUUID, primary: true)</span><br></pre></td></tr></table></figure>
+<p>上面的代码中，我们创建了两个 Characteristic，一个可读且可被订阅，另一个可写。这个是通过实例化时，传入的 properties 及 permissions 的值来指定的。</p>
+<p>这里需要注意的是 value 传入的值是 nil。因为，如果你指定了 Characteristic 的值，那么该值将被缓存并且该 Characteristic 的 properties 和 permissions 将被设置为可读的。因此，如果你需要 Characteristic 的值是可写的，或者你希望在 Service 发布后，Characteristic 的值在 lifetime（生命周期）中依然可以更改，你必须将该 Characteristic 的值指定为 nil。通过这种方式可以确保 Characteristic 的值,在 PeripheralManager 收到来自连接的 Central 的读或者写请求的时候，能够被动态处理。</p>
+<h3 id="3-添加服务特征"><a href="#3-添加服务特征" class="headerlink" title="3. 添加服务特征"></a>3. 添加服务特征</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 将特征加入到服务中</span><br><span class="line">myService!.characteristics = ([myCharacteristic_beRead, myCharacteristic_beWrite] as! [CBCharacteristic])</span><br><span class="line">        </span><br><span class="line">// 将服务加入到外设中</span><br><span class="line">myPeripheral?.add(myService!)</span><br></pre></td></tr></table></figure>
+<p>这里我们将自己的服务构建完成，并将服务添加至 Peripheral 中。这样，当 Peripheral 向外界发送广播时，就可以搜索这个服务获取相应的支持。</p>
+<h3 id="4-广播自己的服务"><a href="#4-广播自己的服务" class="headerlink" title="4. 广播自己的服务"></a>4. 广播自己的服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 广播自己的service</span><br><span class="line">myPeripheral?.startAdvertising([CBAdvertisementDataServiceUUIDsKey: [myService!.uuid], CBAdvertisementDataLocalNameKey: &quot;我创建了一个房间&quot;])</span><br></pre></td></tr></table></figure>
+<p>在广播时，可以同时携带一些数据。这里可以传入一个字典，但是这个字典只支持传入 CBAdvertisementDataLocalNameKey 及 CBAdvertisementDataServiceUUIDsKey。</p>
+<p>关于广播方法官方文档的说明如下：</p>
+<blockquote>
+<p>When in the foreground, an application can utilize up to 28 bytes of space in the initial advertisement data for any combination of the supported advertising data types. If this space is used up, there are an additional 10 bytes of space in the scan response that can be used only for the local name. Note that these sizes do not include the 2 bytes of header information that are required for each new data type. Any service UUIDs that do not fit in the allotted space will be added to a special “overflow” area, and can only be discovered by an iOS device that is explicitly scanning for them.</p>
+</blockquote>
+<blockquote>
+<p>While an application is in the background, the local name will not be used and all service UUIDs will be placed in the “overflow” area. However, applications that have not specified the “bluetooth-peripheral” background mode will not be able  to advertise anything while in the background.</p>
+</blockquote>
+<p>大概意思是：</p>
+<p>当处于前台时，应用程序可以在初始广告数据中利用28个字节的空间用来初始化广播数据字典，该字典包含两个支持的 key。如果此空间已用完，扫描响应时最后还会添加10个字节的空间，只能用于Local Name。</p>
+<blockquote>
+<p>请注意，这些大小不包括每种新数据类型所需的2个字节的头部信息。任何不适合分配空间的服务UUID都将添加到特殊的“溢出”区域，并且只能由明确扫描它们的iOS设备发现。</p>
+</blockquote>
+<p>当应用程序在后台时，将不使用本地名称，并且所有服务UUID将放置在“溢出”区域中。但是，未指定“蓝牙后台运行”背景模式的应用程序将无法在后台播放任何内容。</p>
+<h3 id="5-响应-Central-的读写请求"><a href="#5-响应-Central-的读写请求" class="headerlink" title="5. 响应 Central 的读写请求"></a>5. 响应 Central 的读写请求</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/// 收到来自中心设备读取数据的请求</span><br><span class="line">func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveRead request: CBATTRequest)</span><br><span class="line">    </span><br><span class="line">/// 收到来自中心设备写入数据的请求</span><br><span class="line">func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest])</span><br></pre></td></tr></table></figure>
+<p>当 Peripheral 收到来自 Central 的读写请求时，CBPeripheralManagerDelegate 会通过上面两个方法来进行回调。读写请求以 CBATTRequest 对象来传递。</p>
+<p>当我们收到请求时，可以根据 CBATTRequest 请求的一些属性来判断 Central 指定要读写的 Characteristic 是否和设备服务库中的 Characteristic 是否相匹配。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if request.characteristic.uuid.isEqual(CBUUID(string: UUID_READABLE)) &#123; </span><br><span class="line">    // do something </span><br><span class="line">    myPeripheral?.respond(to: request, withResult: CBATTError.Code.success)</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    // not match</span><br><span class="line">    myPeripheral?.respond(to: request, withResult: CBATTError.Code.readNotPermitted)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后使用 respond(to:, withResult:) 回应 Central 请求。</p>
+<p>这里的 <strong>result</strong> 是一个 CBATTError.Code 类型，这里定义了很多对 Request 响应的枚举，可以根据对 Request 的响应，返回相应的 CBATTError.Code 值。</p>
+<h1 id="蓝牙学习小实践"><a href="#蓝牙学习小实践" class="headerlink" title="蓝牙学习小实践"></a>蓝牙学习小实践</h1><p>利用蓝牙连接两个设备，进行一场激情的五子棋小游戏吧。</p>
+<p>示例工程可以去<a href="https://github.com/CoderJTao/BleLearnDemo" target="_blank" rel="noopener">我的Giuhub</a>下载。</p>
+<p>目前工程内完成了基本的两端交互逻辑。对于掉线重连等优化问题目前<a href="https://github.com/CoderJTao/BleLearnDemo" target="_blank" rel="noopener">示例工程</a>内尚未体现。</p>
+<p><strong>创建房间：</strong> 实现 Local Peripheral 端功能。将自己创建了房间的消息进行广播，使其它玩家可以扫描到房间进入游戏。并利用一个可被订阅的 Characteristic 将消息传输给 Central，一个可写的 Characteristic 接收来自 Central 的消息。</p>
+<p><strong>寻找房间：</strong> 实现 Local Central 端功能。可以扫描其它玩家创建的房间并加入游戏。通过可写的 Characteristic 将消息传输给 Peripheral，订阅一个 Characteristic 来获取值更新的通知。</p>
+<figure class="half"><br>    <img src="https://user-gold-cdn.xitu.io/2019/4/30/16a6d722d75bbbb5?w=388&h=690&f=gif&s=880427"><br>    <img src="https://user-gold-cdn.xitu.io/2019/4/30/16a6d7247f97dcbe?w=388&h=690&f=gif&s=1869197"><br></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/04/多线程学习记录（二）/" rel="next" title="多线程学习记录（二）">
+                <i class="fa fa-chevron-left"></i> 多线程学习记录（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Central-和-Peripheral"><span class="nav-number">2.</span> <span class="nav-text">Central 和 Peripheral</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#核心概念"><span class="nav-number">2.1.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-Central-的功能"><span class="nav-number">2.2.</span> <span class="nav-text">实现 Central 的功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建Central-Manager"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. 创建Central Manager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-搜索正在广播数据的-Peripheral-设备"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. 搜索正在广播数据的 Peripheral 设备</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-开始搜索"><span class="nav-number">2.2.2.0.1.</span> <span class="nav-text">1. 开始搜索</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-处理搜索结果"><span class="nav-number">2.2.2.0.2.</span> <span class="nav-text">2. 处理搜索结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-连接自身需要的-Peripheral-设备"><span class="nav-number">2.2.3.</span> <span class="nav-text">3. 连接自身需要的 Peripheral 设备</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-开始连接"><span class="nav-number">2.2.3.0.1.</span> <span class="nav-text">1. 开始连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-处理连接结果"><span class="nav-number">2.2.3.0.2.</span> <span class="nav-text">2. 处理连接结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-搜索连接设备的-Services"><span class="nav-number">2.2.4.</span> <span class="nav-text">4. 搜索连接设备的 Services</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-查找-Service"><span class="nav-number">2.2.4.0.1.</span> <span class="nav-text">1. 查找 Service</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-处理搜索结果-1"><span class="nav-number">2.2.4.0.2.</span> <span class="nav-text">2. 处理搜索结果</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#5-搜索-Services-的-Characteristic"><span class="nav-number">2.2.5.</span> <span class="nav-text">5. 搜索 Services 的 Characteristic</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-开始搜索-1"><span class="nav-number">2.2.5.0.1.</span> <span class="nav-text">1.开始搜索</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-处理搜索结果-2"><span class="nav-number">2.2.5.0.2.</span> <span class="nav-text">2. 处理搜索结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-使用-Characteristic"><span class="nav-number">2.2.5.0.3.</span> <span class="nav-text">3. 使用 Characteristic</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-Peripheral-的功能"><span class="nav-number">2.3.</span> <span class="nav-text">实现 Peripheral 的功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建-Peripheral-Manager"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 创建 Peripheral Manager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-设置自身的-Services-和-Characteristics"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. 设置自身的 Services 和 Characteristics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-添加服务特征"><span class="nav-number">2.3.3.</span> <span class="nav-text">3. 添加服务特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-广播自己的服务"><span class="nav-number">2.3.4.</span> <span class="nav-text">4. 广播自己的服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-响应-Central-的读写请求"><span class="nav-number">2.3.5.</span> <span class="nav-text">5. 响应 Central 的读写请求</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#蓝牙学习小实践"><span class="nav-number">3.</span> <span class="nav-text">蓝牙学习小实践</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
