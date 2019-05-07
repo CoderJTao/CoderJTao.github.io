@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="一、概述闭包 = 一个函数「或指向函数的指针」+ 该函数执行的外部的上下文变量「也就是自由变量」； Block实质是Objective-C对闭包的对象实现，简单说来，Block就是对象。 二、Block的声明1.有参数有返回值123int (^CustomBlock1)(int) = ^int (int a) &amp;#123;        return a + 1;    &amp;#125;; 2.有参数">
+<meta name="description" content="一、概述闭包 = 一个函数「或指向函数的指针」+ 该函数执行的外部的上下文变量「也就是自由变量」； Block实质是Objective-C对闭包的对象实现，简单说来，Block就是对象。 二、Block的声明1.有参数有返回值123int (^CustomBlock1)(int) = ^int (int a) &amp;#123;        return a + 1;    &amp;#125;;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Block学习笔记">
 <meta property="og:url" content="http://yoursite.com/2019/05/07/Block学习笔记/index.html">
 <meta property="og:site_name" content="江涛的博客">
-<meta property="og:description" content="一、概述闭包 = 一个函数「或指向函数的指针」+ 该函数执行的外部的上下文变量「也就是自由变量」； Block实质是Objective-C对闭包的对象实现，简单说来，Block就是对象。 二、Block的声明1.有参数有返回值123int (^CustomBlock1)(int) = ^int (int a) &amp;#123;        return a + 1;    &amp;#125;; 2.有参数">
+<meta property="og:description" content="一、概述闭包 = 一个函数「或指向函数的指针」+ 该函数执行的外部的上下文变量「也就是自由变量」； Block实质是Objective-C对闭包的对象实现，简单说来，Block就是对象。 二、Block的声明1.有参数有返回值123int (^CustomBlock1)(int) = ^int (int a) &amp;#123;        return a + 1;    &amp;#125;;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-07T07:52:21.254Z">
+<meta property="og:updated_time" content="2019-05-07T08:23:11.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Block学习笔记">
-<meta name="twitter:description" content="一、概述闭包 = 一个函数「或指向函数的指针」+ 该函数执行的外部的上下文变量「也就是自由变量」； Block实质是Objective-C对闭包的对象实现，简单说来，Block就是对象。 二、Block的声明1.有参数有返回值123int (^CustomBlock1)(int) = ^int (int a) &amp;#123;        return a + 1;    &amp;#125;; 2.有参数">
+<meta name="twitter:description" content="一、概述闭包 = 一个函数「或指向函数的指针」+ 该函数执行的外部的上下文变量「也就是自由变量」； Block实质是Objective-C对闭包的对象实现，简单说来，Block就是对象。 二、Block的声明1.有参数有返回值123int (^CustomBlock1)(int) = ^int (int a) &amp;#123;        return a + 1;    &amp;#125;;">
 
 
 
@@ -282,6 +282,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -312,6 +334,7 @@
         <h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>闭包 = 一个函数「或指向函数的指针」+ 该函数执行的外部的上下文变量「也就是自由变量」；</p>
 <p>Block实质是Objective-C对闭包的对象实现，简单说来，Block就是对象。</p>
 <h2 id="二、Block的声明"><a href="#二、Block的声明" class="headerlink" title="二、Block的声明"></a>二、Block的声明</h2><h3 id="1-有参数有返回值"><a href="#1-有参数有返回值" class="headerlink" title="1.有参数有返回值"></a>1.有参数有返回值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int (^CustomBlock1)(int) = ^int (int a) &#123;</span><br><span class="line">        return a + 1;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h3 id="2-有参数无返回值"><a href="#2-有参数无返回值" class="headerlink" title="2.有参数无返回值"></a>2.有参数无返回值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void (^CustomBlock)(int) = ^void (int a) &#123;</span><br><span class="line">    NSLog(@&quot;-有参数无返回值--参数：%d&quot;, a);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 也可以简写</span><br><span class="line">void (^CustomBlock1)(int) = ^(int a) &#123;</span><br><span class="line">    NSLog(@&quot;-有参数无返回值--参数：%d&quot;, a);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="3-无参数有返回值"><a href="#3-无参数有返回值" class="headerlink" title="3. 无参数有返回值"></a>3. 无参数有返回值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int (^CustomBlock)(void) = ^int(void) &#123;</span><br><span class="line">    return 1;</span><br><span class="line">&#125;;</span><br><span class="line">// 也可以简写</span><br><span class="line">int (^CustomBlock1)(void) = ^int &#123;</span><br><span class="line">    return 1;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="4-无参数无返回值"><a href="#4-无参数无返回值" class="headerlink" title="4. 无参数无返回值"></a>4. 无参数无返回值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void (^CustomBlock)(void) = ^void (void) &#123;</span><br><span class="line">    NSLog(@&quot;-无参数无返回值--&quot;);</span><br><span class="line">&#125;;</span><br><span class="line">// 也可以简写</span><br><span class="line">void (^CustomBlock1)(void) = ^(void)&#123;</span><br><span class="line">    NSLog(@&quot;-无参数无返回值--&quot;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -432,7 +455,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/01/Hello blog/" rel="next" title="Hello blog">
+              <a href="/2019/05/07/Hello blog/" rel="next" title="Hello blog">
                 <i class="fa fa-chevron-left"></i> Hello blog
               </a>
             
@@ -523,6 +546,15 @@
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
             
 
             
