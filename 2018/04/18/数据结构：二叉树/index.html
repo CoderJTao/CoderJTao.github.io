@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这篇文章主要介绍树结构中的一种特殊存在——二叉树。主要内容有：  二叉树的概念 二叉树的基本结构 二叉树的操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构：二叉树">
+<meta property="og:url" content="http://yoursite.com/2018/04/18/数据结构：二叉树/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="这篇文章主要介绍树结构中的一种特殊存在——二叉树。主要内容有：  二叉树的概念 二叉树的基本结构 二叉树的操作">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c473e99acd?w=441&h=311&f=jpeg&s=21246">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06cda11826f1?w=524&h=376&f=jpeg&s=35530">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c72f8ac26b?w=962&h=670&f=jpeg&s=55402">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c82b65f239?w=961&h=669&f=jpeg&s=50509">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c2f510dfdc?w=622&h=244&f=jpeg&s=16753">
+<meta property="og:updated_time" content="2019-05-13T09:05:55.283Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构：二叉树">
+<meta name="twitter:description" content="这篇文章主要介绍树结构中的一种特殊存在——二叉树。主要内容有：  二叉树的概念 二叉树的基本结构 二叉树的操作">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c473e99acd?w=441&h=311&f=jpeg&s=21246">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/18/数据结构：二叉树/">
+
+
+
+
+
+  <title>数据结构：二叉树 | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/数据结构：二叉树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构：二叉树</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-18T21:41:19+08:00">
+                2018-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇文章主要介绍树结构中的一种特殊存在——二叉树。主要内容有：</p>
+<ul>
+<li>二叉树的概念</li>
+<li>二叉树的基本结构</li>
+<li>二叉树的操作</li>
+</ul>
+<a id="more"></a>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
+<li><p><strong>二叉树：</strong>每个结点最多有两个子结点，两个子结点是有次序的，且子结点次序不能颠倒。两个子结点一般称之为左结点及右结点。</p>
+</li>
+<li><p><strong>层次：</strong>在树中，节点的层次从根开始定义，根为第一层。</p>
+</li>
+<li><p><strong>深度：</strong>树中节点的最大层次为树的深度。</p>
+</li>
+<li><p><strong>度：</strong>结点拥有的结点数。</p>
+</li>
+<li><p><strong>分支结点：</strong>度不为0的结点。</p>
+</li>
+<li><p><strong>叶子节点：</strong> 度为0的结点。</p>
+</li>
+<li><p><strong>特殊二叉树</strong></p>
+<ul>
+<li>满二叉树：所有分支结点都存在左右两节点，并且所有叶子结点都在同一层。</li>
+<li>斜树：所有的结点都只有左子结点或者右子结点。</li>
+<li>完全二叉树：对一棵具有n个结点的二叉树按层序编号，如果编号i（1&lt;=i&lt;=n）的结点<br>与同样深度的满二叉树中编号为i的结点在二叉树中位置完全相同，则称之为完全二叉树。</li>
+<li>二叉查找树：左子树中节点的值都小于根节点的值，右子树中节点的值都大于根节点的值。</li>
+</ul>
+</li>
+</ul>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><h3 id="顺序存储结构"><a href="#顺序存储结构" class="headerlink" title="顺序存储结构"></a>顺序存储结构</h3><p>二叉树的顺序存储结构就是用一维数组存储二叉树中的结点，并且结点的存储位置，也就是数组的下标要能体现结点之间的逻辑关系。使用顺序存储结构表现二叉树的时候，在其线性结构中，会存在一些空结点，但是其会占据一定的内存空间，会造成存储空间的浪费。</p>
+<h3 id="链式存储结构"><a href="#链式存储结构" class="headerlink" title="链式存储结构"></a>链式存储结构</h3><p>由于二叉树的每个结点最多有两个孩子，所以为每个结点设计一个数据域和两个指针域。</p>
+<h3 id="结点的定义"><a href="#结点的定义" class="headerlink" title="结点的定义"></a>结点的定义</h3><p>结点的结构定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class TreeNode &#123;</span><br><span class="line">    var value: String</span><br><span class="line">    var left: TreeNode?</span><br><span class="line">    var right: TreeNode?</span><br><span class="line">    </span><br><span class="line">    init(_ value: String) &#123;</span><br><span class="line">        self.value = value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="创建二叉树"><a href="#创建二叉树" class="headerlink" title="创建二叉树"></a>创建二叉树</h3><p>现在我们创建一棵如图所示的二叉树：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c473e99acd?w=441&amp;h=311&amp;f=jpeg&amp;s=21246" alt="预期"></p>
+<p>为了能让每个结点确认是否有左右子结点，我们将预期二叉树进行一个扩展：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/5/13/16ab06cda11826f1?w=524&amp;h=376&amp;f=jpeg&amp;s=35530" alt="扩展"></p>
+<p>我们给每一个结点的空指针引出一个虚结点，其值为一个特定值——#。</p>
+<p>创建这棵二叉树代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">let arr = [&quot;A&quot;, &quot;B&quot;, &quot;D&quot;, &quot;G&quot;, &quot;#&quot;, &quot;#&quot;, &quot;H&quot;, &quot;#&quot;, &quot;#&quot;, &quot;#&quot;, &quot;C&quot;, &quot;E&quot;, &quot;#&quot;, &quot;I&quot;, &quot;#&quot;, &quot;#&quot;, &quot;F&quot;]</span><br><span class="line">var index = 0</span><br><span class="line"></span><br><span class="line">func preCreateTree(_ tree: inout BinaryTreeNode?) &#123;</span><br><span class="line">    if index &gt; arr.count-1 &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    let value = arr[index]</span><br><span class="line"></span><br><span class="line">    index += 1</span><br><span class="line"></span><br><span class="line">    if value == &quot;#&quot; &#123;</span><br><span class="line">        tree = nil</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // 生成根结点</span><br><span class="line">        tree = BinaryTreeNode(value)</span><br><span class="line"></span><br><span class="line">        // 构造左子树</span><br><span class="line">        preCreateTree(&amp;tree!.leftChild)</span><br><span class="line"></span><br><span class="line">        // 构造右子树</span><br><span class="line">        preCreateTree(&amp;tree!.rightChild)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var root: BinaryTreeNode? = BinaryTreeNode(nil)</span><br><span class="line"></span><br><span class="line">preCreateTree(&amp;root)</span><br></pre></td></tr></table></figure>
+<h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><p>二叉树的遍历主要分为四种：</p>
+<ul>
+<li><strong>前序遍历：</strong>根结点–&gt;左子树–&gt;右子树。</li>
+<li><strong>中序遍历：</strong>左子树–&gt;根结点–&gt;右子树。</li>
+<li><strong>后序遍历：</strong>左子树–&gt;右子树–&gt;根结点。</li>
+<li><strong>层序遍历：</strong>从上至下一层一层遍历。</li>
+</ul>
+<h4 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h4><p>前面创建二叉树时，我们有一个数组 [“A”, “B”, “D”, “G”, “#”, “#”, “H”, “#”, “#”, “#”, “C”, “E”, “#”, “I”, “#”, “#”, “F”]，这个数组是如何得到的呢？</p>
+<p>就是根据前序遍历扩展二叉树的结果得到的这个数组，并利用这个数组前序创建了我们预期的二叉树。</p>
+<p>前序遍历代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func preOrderTraverse(_ tree: BinaryTreeNode?) &#123;</span><br><span class="line">    if let node = tree &#123;</span><br><span class="line">        print(&quot;value is \(node.value)&quot;)</span><br><span class="line"></span><br><span class="line">        // 先序遍历左子树</span><br><span class="line">        preOrderTraverse(node.leftChild)</span><br><span class="line"></span><br><span class="line">        // 再先序遍历右子树</span><br><span class="line">        preOrderTraverse(node.rightChild)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h4><p>中序遍历代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func inOrdertraverse(_ tree: BinaryTreeNode?) &#123;</span><br><span class="line">    if let node = tree &#123;</span><br><span class="line">        // 中序遍历左子树</span><br><span class="line">        inOrdertraverse(node.leftChild)</span><br><span class="line"></span><br><span class="line">        print(&quot;value is \(node.value)&quot;)</span><br><span class="line"></span><br><span class="line">        // 中序遍历右子树</span><br><span class="line">        inOrdertraverse(node.rightChild)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h4><p>后序遍历代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func lastOrdertraverse(_ tree: BinaryTreeNode?) &#123;</span><br><span class="line">    if let node = tree &#123;</span><br><span class="line">        // 后序遍历左子树</span><br><span class="line">        lastOrdertraverse(node.leftChild)</span><br><span class="line"></span><br><span class="line">        // 后序遍历右子树</span><br><span class="line">        lastOrdertraverse(node.rightChild)</span><br><span class="line"></span><br><span class="line">        print(&quot;value is \(node.value)&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="层序遍历"><a href="#层序遍历" class="headerlink" title="层序遍历"></a>层序遍历</h4><p>层序遍历代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">func levelOrdertraverse(_ tree: BinaryTreeNode?) &#123;</span><br><span class="line">    guard let root = tree else &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    var tempQueue: [BinaryTreeNode] = []</span><br><span class="line">    </span><br><span class="line">    // 将根节点加入数组</span><br><span class="line">    if let _ = root.value &#123;</span><br><span class="line">        tempQueue.insert(root, at: 0)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    while tempQueue.count != 0 &#123;</span><br><span class="line">    	  // 取出数组最后一个元素</span><br><span class="line">        let temp = tempQueue.popLast()!</span><br><span class="line">        </span><br><span class="line">        // 将下一层结点依次插入到数组最前面</span><br><span class="line">        if let l = temp.leftChild, l.value != nil &#123;</span><br><span class="line">            tempQueue.insert(l, at: 0)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        if let r = temp.rightChild, r.value != nil &#123;</span><br><span class="line">            tempQueue.insert(r, at: 0)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        print(temp.value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="树的最大深度"><a href="#树的最大深度" class="headerlink" title="树的最大深度"></a>树的最大深度</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func maxDepth(_ tree: BinaryTreeNode?) -&gt; Int &#123;</span><br><span class="line">    guard let root = tree else &#123;</span><br><span class="line">        return 0</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return max(maxDepth(root.leftChild), maxDepth(root.rightChild)) + 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="推导遍历结果"><a href="#推导遍历结果" class="headerlink" title="推导遍历结果"></a>推导遍历结果</h3><p>遍历特点：</p>
+<p><strong>前序遍历：</strong>根结点–&gt;左子树–&gt;右子树。</p>
+<p><strong>中序遍历：</strong>左子树–&gt;根结点–&gt;右子树。</p>
+<p><strong>后序遍历：</strong>左子树–&gt;右子树–&gt;根结点。</p>
+<p>根据遍历特点，得出解题思路：</p>
+<ol>
+<li>找到根–&gt;找到左右子树</li>
+<li>一直重复这个操作，直到最后一个子节点。</li>
+</ol>
+<h4 id="题目一：求后序遍历"><a href="#题目一：求后序遍历" class="headerlink" title="题目一：求后序遍历"></a>题目一：求后序遍历</h4><p><strong>题目：</strong>已知前序遍历 ABDGHCEIF 及中序遍历 GDHBAEICF，求出后序遍历顺序？</p>
+<p><strong>解答：</strong></p>
+<ol>
+<li><p>先序遍历的结果是ABDGHCEIF，根据先序得到根节点是A；中序遍历的结果是GDHBAEICF，根据中序得到A之前的节点都是左子树，A之后的节点都是右子树。</p>
+</li>
+<li><p>再对左右子树进行第一步的分析。最终能得到二叉树的完整结构。</p>
+</li>
+</ol>
+<p><img src="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c72f8ac26b?w=962&amp;h=670&amp;f=jpeg&amp;s=55402" alt="过程分析"></p>
+<h4 id="题目二：求前序遍历"><a href="#题目二：求前序遍历" class="headerlink" title="题目二：求前序遍历"></a>题目二：求前序遍历</h4><p><strong>题目：</strong>已知后序遍历 GHDBIEFCA 及中序遍历 GDHBAEICF，求出后序遍历顺序？</p>
+<p><strong>解答：</strong></p>
+<ol>
+<li>后序遍历的结果是GHDBIEFCA，根据先序得到根节点是A；中序遍历的结果是GDHBAEICF，根据中序得到A之前的节点都是左子树，A之后的节点都是右子树。</li>
+<li>再对左右子树进行第一步的分析。最终能得到二叉树的完整结构。</li>
+</ol>
+<p><img src="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c82b65f239?w=961&amp;h=669&amp;f=jpeg&amp;s=50509" alt="过程分析"></p>
+<h4 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h4><ol>
+<li>已知前序遍历序列和中序遍历序列，可以唯一确定一棵二叉树。</li>
+<li>已知后序遍历序列和中序遍历序列，可以唯一确定一棵二叉树。</li>
+</ol>
+<p>但是，已知前序和后序是不能确定一棵二叉树的。</p>
+<p>例如：前序遍历序列为 ABC 及后序遍历序列为 CBA。</p>
+<p>可以确定 A 一定是根节点，但是接下来无法确定哪些是左子树，哪些是右子树。此时，这棵二叉树有以下四种可能：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c2f510dfdc?w=622&amp;h=244&amp;f=jpeg&amp;s=16753" alt="可能"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/14/数据结构：栈与队列/" rel="next" title="数据结构学习：栈与队列">
+                <i class="fa fa-chevron-left"></i> 数据结构学习：栈与队列
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构"><span class="nav-number">2.</span> <span class="nav-text">结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序存储结构"><span class="nav-number">2.1.</span> <span class="nav-text">顺序存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链式存储结构"><span class="nav-number">2.2.</span> <span class="nav-text">链式存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结点的定义"><span class="nav-number">2.3.</span> <span class="nav-text">结点的定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-number">3.</span> <span class="nav-text">操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建二叉树"><span class="nav-number">3.1.</span> <span class="nav-text">创建二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历"><span class="nav-number">3.2.</span> <span class="nav-text">遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前序遍历"><span class="nav-number">3.2.1.</span> <span class="nav-text">前序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中序遍历"><span class="nav-number">3.2.2.</span> <span class="nav-text">中序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后序遍历"><span class="nav-number">3.2.3.</span> <span class="nav-text">后序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#层序遍历"><span class="nav-number">3.2.4.</span> <span class="nav-text">层序遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树的最大深度"><span class="nav-number">3.3.</span> <span class="nav-text">树的最大深度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推导遍历结果"><span class="nav-number">3.4.</span> <span class="nav-text">推导遍历结果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目一：求后序遍历"><span class="nav-number">3.4.1.</span> <span class="nav-text">题目一：求后序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题目二：求前序遍历"><span class="nav-number">3.4.2.</span> <span class="nav-text">题目二：求前序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结一下"><span class="nav-number">3.4.3.</span> <span class="nav-text">总结一下</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
