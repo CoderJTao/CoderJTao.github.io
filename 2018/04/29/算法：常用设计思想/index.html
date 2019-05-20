@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前面几篇文章大概介绍了几个常用的数据结构。 根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。 这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：  解空间内的穷举 贪婪法 分治法 动态规划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法：常用设计思想">
+<meta property="og:url" content="http://yoursite.com/2018/04/29/算法：常用设计思想/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="前面几篇文章大概介绍了几个常用的数据结构。 根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。 这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：  解空间内的穷举 贪婪法 分治法 动态规划">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-20T10:17:23.675Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法：常用设计思想">
+<meta name="twitter:description" content="前面几篇文章大概介绍了几个常用的数据结构。 根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。 这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：  解空间内的穷举 贪婪法 分治法 动态规划">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/29/算法：常用设计思想/">
+
+
+
+
+
+  <title>算法：常用设计思想 | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/29/算法：常用设计思想/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">算法：常用设计思想</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-29T16:11:42+08:00">
+                2018-04-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法系列/" itemprop="url" rel="index">
+                    <span itemprop="name">算法系列</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前面几篇文章大概介绍了几个常用的数据结构。</p>
+<p>根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。</p>
+<p>这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：</p>
+<ul>
+<li>解空间内的穷举</li>
+<li>贪婪法</li>
+<li>分治法</li>
+<li>动态规划</li>
+</ul>
+<a id="more"></a>
+<h2 id="解空间内的穷举"><a href="#解空间内的穷举" class="headerlink" title="解空间内的穷举"></a>解空间内的穷举</h2><p>这个名字是来自于《算法的乐趣》，其实就是穷举法。这里的解空间是所有可能的解的集合。加上解空间就是为了说明：穷举是在可能的解的集合中查找的，并不是漫步目的的乱找。</p>
+<p><strong>步骤：</strong></p>
+<ol>
+<li>确定问题的解空间的范围以及正确解的判定条件</li>
+<li>根据解空间的特点选取搜索策略。一一检验解空间中的候选解是否正确，必要时可辅助一些剪枝算法。</li>
+</ol>
+<p>穷举法可以说是解决很多问题的 “通用算法” 了，但是穷举法最大的问题就是问题的规模。所以，我们需要一些策略来进行我们的穷举。</p>
+<p><strong>策略：</strong></p>
+<ul>
+<li><strong>盲目搜索：</strong>在给定的解空间，按顺序依次搜索所有的候选解。</li>
+<li><strong>启发式搜索：</strong>在搜索过程中，依据一些状态评估的函数，优先对有可能演化出解的节点进行搜索。</li>
+<li><strong>剪枝策略：</strong>如果一些节点可以根据提供的信息明确地被判定为不可能演化出解，那么就可以跳过此状态节点。</li>
+</ul>
+<p><strong>举例：</strong><br>在一个笼子里关着若干只鸡和若干只兔，从上面数共有35个头；从下面数共有94只脚。问笼中鸡和兔的数量各是多少？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// head = 35,  foot = 94</span><br><span class="line">func getNumberBy(head: Int, foot: Int) -&gt; (Int, Int)? &#123;</span><br><span class="line">    var numOfRabbit: Int = 1</span><br><span class="line">    var numOfChicken: Int = head - numOfRabbit</span><br><span class="line">    </span><br><span class="line">    while (numOfRabbit*4 + numOfChicken*2) != foot &#123;</span><br><span class="line">        numOfRabbit += 1</span><br><span class="line">        numOfChicken = head - numOfRabbit</span><br><span class="line">        </span><br><span class="line">        if numOfRabbit &gt; head &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return (numOfRabbit, numOfChicken)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="贪婪法"><a href="#贪婪法" class="headerlink" title="贪婪法"></a>贪婪法</h2><p>又称贪心算法（greedy algorithm），是寻找最优解问题的常用方法。这种方法模式一般将求解过程分为若干个步骤，在每个步骤都应用贪心原则，选取当前状态下最好的或最优的选择（局部最有利的选择），并以此希望最后堆叠的结果也是最好或最优的解。</p>
+<p>大多数情况下，由于贪婪法在选择策略上的“短视”，或错过真正的最优解，但是贪婪法简单高效，省去了为了寻找最优解可能需要的穷举操作，可以得到与最优解比较接近的近似最优解。</p>
+<p><strong>基本思想：</strong></p>
+<ol>
+<li>建立对问题精确描述的数学模型，包括定义最优解的模型。</li>
+<li>将问题分解为一系列子问题，同时定义子问题的最优解结构。</li>
+<li>应用贪心原则确定每个子问题的局部最优解，并根据最优解的模型，用子问题的局部最优解堆叠出全局最优解。</li>
+</ol>
+<p><strong>举例：</strong><br>现在我们有一个背包，里面可以装下 150 单位重量的物体，现在我们有一系列重量的东西，怎么样的组合让背包装下最多的东西？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">let weight = [35, 30, 60, 50, 40, 10, 25] // 重量</span><br><span class="line"></span><br><span class="line">// total = 150</span><br><span class="line">func greedy(total: Int) -&gt; [Int] &#123;</span><br><span class="line">    var result: [Int] = []</span><br><span class="line">    </span><br><span class="line">    let tempArr = weight.sorted()</span><br><span class="line">    </span><br><span class="line">    var temp = 0</span><br><span class="line">    for index in 0..&lt;weight.count &#123;</span><br><span class="line">        temp = temp + tempArr[index]</span><br><span class="line">        if temp &lt; total &#123;</span><br><span class="line">            result.append(tempArr[index])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="分治法"><a href="#分治法" class="headerlink" title="分治法"></a>分治法</h2><p>分治法的设计思想是将无法着手解决的大问题分解成一系列规模较小的相同问题。然后逐个解决小问题，即分而治之。分治法产生的子问题与原始问题相同，只是规模减小，反复使用分治方法，可以使得子问题的规模不断减小，直到能够被直接求解为止。</p>
+<p><strong>基本思想：</strong></p>
+<ol>
+<li><strong>分解：</strong>将问题分解为若干个规模较小，相互独立且与原问题形式相同的子问题，确保各个子问题的解具有相同的结构。</li>
+<li><strong>解决：</strong>如果上一步分解得到的子问题可以解决，则直接解决，否则，对每个子问题使用和上一步相同的方法再次分解，然后求解分解后的子问题，这个过程可能是个递归的过程。</li>
+<li><strong>合并：</strong>将上一步解决的各个子问题的解通过某种规则合并起来，得到原问题的解。</li>
+</ol>
+<p><strong>举例：</strong><br>一个人在 1~100 中随机选取一个数，如何才能以最少的次数猜到这个数字？每次猜测后，都会得知猜测结果小了、大了或正确。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// 一个典型的二分搜索</span><br><span class="line">// source = [1, 2, 3, ... 100], target 为需要猜测的数字</span><br><span class="line">func binarySearch(source: [Int], target: Int) -&gt; Int? &#123;</span><br><span class="line">    guard source.count != 0 else &#123;</span><br><span class="line">        return nil</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    var low: Int = 0</span><br><span class="line">    var high: Int = source.count - 1</span><br><span class="line">    var mid: Int = 0</span><br><span class="line">    </span><br><span class="line">    var count = 0</span><br><span class="line">    </span><br><span class="line">    while low &lt;= high &#123;</span><br><span class="line">        count += 1;</span><br><span class="line">        </span><br><span class="line">        mid = low + (high - low) / 2 </span><br><span class="line">        </span><br><span class="line">        if target &lt; source[mid] &#123;</span><br><span class="line">            high = mid - 1</span><br><span class="line">        &#125; else if target &gt; source[mid] &#123;</span><br><span class="line">            low = mid + 1</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return mid</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p>解决多阶段决策问题常用的最优化理论。原理是把多阶段决策过程转化为一系列的单阶段决策问题，利用各个阶段之间的递推关系，逐个确定每个阶段的最优化决策，最终堆叠出多阶段决策的最优化决策结果。</p>
+<p><strong>需要满足的条件：</strong></p>
+<ul>
+<li><p>最优化原理：</p>
+<p>  不管之前决策是否是最优决策，都必须保证从现在开始决策是在之前决策基础上的最优决策。</p>
+</li>
+<li><p>无后向性：</p>
+<p>  当各个阶段的子问题确定以后，对于某个特定阶段的子问题来说，它之前的各个阶段的子问题的决策只影响该阶段的决策，对该阶段之后的决策不产生影响。也就是说，每个阶段的决策仅受之前决策的影响，但是不影响之后各阶段的决策。</p>
+</li>
+<li><p>有重叠子问题：</p>
+<p>  即子问题之间是不独立的，一个子问题在下一阶段决策中可能被多次使用到。（该性质并不是动态规划适用的必要条件，但是如果没有这条性质，动态规划算法同其他算法相比就不具备优势）</p>
+</li>
+</ul>
+<blockquote>
+<p>动态规划算法与分治法最大的差别是：适合于用动态规划法求解的问题，经分解后得到的子问题往往不是互相独立的（即下一个子阶段的求解是建立在上一个子阶段的解的基础上，进行进一步的求解）。</p>
+</blockquote>
+<p><strong>基本思想：</strong></p>
+<ol>
+<li><p><strong>定义最优子问题：</strong></p>
+<p> 确定问题的优化目标以及决策最优解，并对决策过程划分阶段。</p>
+</li>
+<li><p><strong>定义状态：</strong></p>
+<p> 对起始状态施加决策，使得状态发生改变，得到决策的结果状态。状态的定义是建立在子问题定义的基础上的，因此状态必须满足 “无后效性”。</p>
+</li>
+<li><p><strong>定义决策和状态转换方程：</strong></p>
+<p> 决策就是能使状态发生转变的选择动作。状态转换方程是根据上一阶段的状态和决策来导出本阶段的状态的方程。</p>
+</li>
+<li><p><strong>确定边界条件：</strong></p>
+<p> 边界条件其实就是状态转移方程的终止条件。</p>
+</li>
+</ol>
+<p><strong>举例：</strong></p>
+<p>有n级台阶，一个人每次上一级或者两级，问有多少种走完n级台阶的方法？</p>
+<p><strong>分析：</strong></p>
+<p>动态规划的实现的关键在于能不能准确合理的用动态规划表来抽象出实际问题。在这个问题上，我们让f(n)表示走上n级台阶的方法数。</p>
+<p>那么当 n 为 1 时，f(n) = 1,n 为 2 时，f(n) = 2,就是说当台阶只有一级的时候，方法数是一种，台阶有两级的时候，方法数为 2。那么当我们要走上 n 级台阶，必然是从 n-1 级台阶迈一步或者是从 n-2 级台阶迈两步，所以到达 n 级台阶的方法数必然是到达 n-1 级台阶的方法数加上到达 n-2 级台阶的方法数之和。即 f(n) = f(n-1) + f(n-2)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// n 为需要走的台阶总数</span><br><span class="line">func calculateStep(n: Int) -&gt; Int &#123;</span><br><span class="line">    //如果为第一级台阶或者第二级台阶 则直接返回n</span><br><span class="line">    if n &lt; 1 &#123;</span><br><span class="line">        return 0</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if n == 1 || n ==  2 &#123;</span><br><span class="line">        return n</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    var a = 1</span><br><span class="line">    var b = 2</span><br><span class="line">    var temp = 0</span><br><span class="line">    </span><br><span class="line">    for _ in 3..&lt;n+1 &#123;</span><br><span class="line">        temp = a + b</span><br><span class="line">        a = b</span><br><span class="line">        b = temp</span><br><span class="line">    &#125;</span><br><span class="line">    return temp</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/22/数据结构：图/" rel="next" title="数据结构：图">
+                <i class="fa fa-chevron-left"></i> 数据结构：图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#解空间内的穷举"><span class="nav-number">1.</span> <span class="nav-text">解空间内的穷举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贪婪法"><span class="nav-number">2.</span> <span class="nav-text">贪婪法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分治法"><span class="nav-number">3.</span> <span class="nav-text">分治法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态规划"><span class="nav-number">4.</span> <span class="nav-text">动态规划</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
