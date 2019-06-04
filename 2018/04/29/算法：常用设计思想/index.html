@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="前面几篇文章大概介绍了几个常用的数据结构。 根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。 这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：  解空间内的穷举 贪婪法 分治法 动态规划">
+<meta name="description" content="前面几篇文章大概介绍了几个常用的数据结构。 根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题方案的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。 这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：  解空间内的穷举 贪婪法 分治法 动态规划">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法：常用设计思想">
 <meta property="og:url" content="http://yoursite.com/2018/04/29/算法：常用设计思想/index.html">
 <meta property="og:site_name" content="江涛的博客">
-<meta property="og:description" content="前面几篇文章大概介绍了几个常用的数据结构。 根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。 这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：  解空间内的穷举 贪婪法 分治法 动态规划">
+<meta property="og:description" content="前面几篇文章大概介绍了几个常用的数据结构。 根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题方案的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。 这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：  解空间内的穷举 贪婪法 分治法 动态规划">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-20T10:17:23.675Z">
+<meta property="og:updated_time" content="2019-06-03T03:34:14.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法：常用设计思想">
-<meta name="twitter:description" content="前面几篇文章大概介绍了几个常用的数据结构。 根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。 这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：  解空间内的穷举 贪婪法 分治法 动态规划">
+<meta name="twitter:description" content="前面几篇文章大概介绍了几个常用的数据结构。 根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题方案的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。 这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：  解空间内的穷举 贪婪法 分治法 动态规划">
 
 
 
@@ -332,7 +332,7 @@
 
       
         <p>前面几篇文章大概介绍了几个常用的数据结构。</p>
-<p>根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。</p>
+<p>根据我的理解，数据结构帮助我们对需要解决的问题进行描述，而算法就是我们解决问题方案的具体描述。它包括对问题的分析及研究（建立描述问题的数学模型），然后根据一些策略和思想制定出解决问题的方案。</p>
 <p>这篇文章讲述了四个算法设计时的常用思想并给出了相应的例子：</p>
 <ul>
 <li>解空间内的穷举</li>
@@ -357,7 +357,7 @@
 <p><strong>举例：</strong><br>在一个笼子里关着若干只鸡和若干只兔，从上面数共有35个头；从下面数共有94只脚。问笼中鸡和兔的数量各是多少？</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// head = 35,  foot = 94</span><br><span class="line">func getNumberBy(head: Int, foot: Int) -&gt; (Int, Int)? &#123;</span><br><span class="line">    var numOfRabbit: Int = 1</span><br><span class="line">    var numOfChicken: Int = head - numOfRabbit</span><br><span class="line">    </span><br><span class="line">    while (numOfRabbit*4 + numOfChicken*2) != foot &#123;</span><br><span class="line">        numOfRabbit += 1</span><br><span class="line">        numOfChicken = head - numOfRabbit</span><br><span class="line">        </span><br><span class="line">        if numOfRabbit &gt; head &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return (numOfRabbit, numOfChicken)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="贪婪法"><a href="#贪婪法" class="headerlink" title="贪婪法"></a>贪婪法</h2><p>又称贪心算法（greedy algorithm），是寻找最优解问题的常用方法。这种方法模式一般将求解过程分为若干个步骤，在每个步骤都应用贪心原则，选取当前状态下最好的或最优的选择（局部最有利的选择），并以此希望最后堆叠的结果也是最好或最优的解。</p>
-<p>大多数情况下，由于贪婪法在选择策略上的“短视”，或错过真正的最优解，但是贪婪法简单高效，省去了为了寻找最优解可能需要的穷举操作，可以得到与最优解比较接近的近似最优解。</p>
+<p>大多数情况下，由于贪婪法在选择策略上的“短视”，会错过真正的最优解，但是贪婪法简单高效，省去了为了寻找最优解可能需要的穷举操作，可以得到与最优解比较接近的近似最优解。</p>
 <p><strong>基本思想：</strong></p>
 <ol>
 <li>建立对问题精确描述的数学模型，包括定义最优解的模型。</li>
@@ -527,7 +527,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

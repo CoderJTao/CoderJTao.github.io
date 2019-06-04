@@ -91,7 +91,7 @@
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/29/16b02d0218739c3a?w=695&h=663&f=jpeg&s=111585">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/29/16b02d0438997678?w=731&h=768&f=png&s=54371">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/29/16b02d06623948ef?w=734&h=675&f=png&s=52644">
-<meta property="og:updated_time" content="2019-05-29T09:02:16.757Z">
+<meta property="og:updated_time" content="2019-06-03T10:03:34.786Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Runtime学习：消息传递">
 <meta name="twitter:description" content="Objective-C 扩展了 C 语言，并加入了面向对象特性和消息传递机制。而这个扩展的核心就是 Runtime 库。它是 Objective-C 面向对象和动态机制的基石。 基于我对 Runtime 的理解，我认为它的核心知识基本都围绕两个中心：  消息传递 类的动态配置  Runtime 的知识点比较多，计划用三篇文章来记录下自己的学习过程：  消息传递探究 类的动态配置 实际应用">
@@ -453,10 +453,10 @@
 <p>上面的代码中，当动态解析方法时，我们动态的添加了方法的实现，这里引入了一个函数 class_addMethod，这个函数就是动态配置类时的关键函数之一。</p>
 <p>我们看一下这个函数的声明：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BOOL class_addMethod(Class cls, SEL name, IMP imp, const char *types);</span><br></pre></td></tr></table></figure>
-<p><strong>cls：</strong> 给哪个类添加方法</p>
-<p><strong>name：</strong> 添加的方法的名称</p>
+<p><strong>cls：</strong> 给哪个类添加方法。</p>
+<p><strong>name：</strong> 需要添加的方法名。 Objective-C 中可以直接使用 @selector(methodName) 得到方法名， Swift 中使用 #Selector(methodName)。</p>
 <p><strong>imp：</strong> 方法的实现，函数入口，函数名可与方法名不同（建议与方法名相同）。函数必须至少两个参数—— self 和 _cmd。</p>
-<p><strong>types：</strong> 方法类型，需要用特定符号，参考<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html" target="_blank" rel="noopener">官方文档Type encodings</a></p>
+<p><strong>types：</strong> 参数以及返回值类型的字符串，需要用特定符号，参考<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html" target="_blank" rel="noopener">官方文档Type encodings</a>。</p>
 <p>我们从整个动态解析的过程可以看到，无论我们是否实现了动态解析的方法，系统内部都会执行 retry 对方法再次进行查找。那么如果我们实现了动态解析方法，此时就会顺利查找到方法，进而返回 imp 对方法进行调用。如果我们没有实现动态解析方法。就会进行消息转发。</p>
 <p><img src="https://user-gold-cdn.xitu.io/2019/5/29/16b02d0438997678?w=731&amp;h=768&amp;f=png&amp;s=54371" alt="动态解析流程"></p>
 <h4 id="消息转发阶段"><a href="#消息转发阶段" class="headerlink" title="消息转发阶段"></a>消息转发阶段</h4><p>当本类没有实现方法，并且没有动态解析方法，Runtime 这时就会调用 forwardingTargetForSelector 函数，进行消息转发，我们可以实现forwardingTargetForSelector 函数，在其内部将消息转发给可以实现此方法的对象。</p>
@@ -503,6 +503,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/26/Runtime学习：实际应用/" rel="prev" title="Runtime学习：实际应用">
+                Runtime学习：实际应用 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -581,7 +585,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
