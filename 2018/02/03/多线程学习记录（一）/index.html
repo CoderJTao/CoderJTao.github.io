@@ -86,13 +86,13 @@
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="前言 文章主要记录了iOS中多线程的基础概念及使用方法，在此做一个记录。一是加深印象，以后自己使用时也可以方便查找及复习，二是在自己的学习过程中，总有大牛的文章作为引导，希望自己也能给需要这方面知识的人一些帮助。 关于这篇文章的Demo可以去我的github中MultiThreadDemo查看源码，如有不当之处，希望大家指出。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/16/16a243d846205ea3?w=1762&h=1494&f=png&s=283359">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/12/16a10988d512141b?w=950&h=495&f=jpeg&s=59806">
-<meta property="og:updated_time" content="2019-05-07T09:50:52.156Z">
+<meta property="og:image" content="http://yoursite.com/2018/02/03/多线程学习记录（一）/Thread_MindNode.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/03/多线程学习记录（一）/Thread_change.jpg">
+<meta property="og:updated_time" content="2019-07-01T06:19:16.220Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程学习记录（一）">
 <meta name="twitter:description" content="前言 文章主要记录了iOS中多线程的基础概念及使用方法，在此做一个记录。一是加深印象，以后自己使用时也可以方便查找及复习，二是在自己的学习过程中，总有大牛的文章作为引导，希望自己也能给需要这方面知识的人一些帮助。 关于这篇文章的Demo可以去我的github中MultiThreadDemo查看源码，如有不当之处，希望大家指出。">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/4/16/16a243d846205ea3?w=1762&h=1494&f=png&s=283359">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/03/多线程学习记录（一）/Thread_MindNode.png">
 
 
 
@@ -334,7 +334,7 @@
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><img src="https://user-gold-cdn.xitu.io/2019/4/16/16a243d846205ea3?w=1762&amp;h=1494&amp;f=png&amp;s=283359" alt></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><img src="/2018/02/03/多线程学习记录（一）/Thread_MindNode.png" title="MindNode">
 <p>文章主要记录了iOS中多线程的基础概念及使用方法，在此做一个记录。一是加深印象，以后自己使用时也可以方便查找及复习，二是在自己的学习过程中，总有大牛的文章作为引导，希望自己也能给需要这方面知识的人一些帮助。</p>
 <p>关于这篇文章的Demo可以去我的github中<a href="https://github.com/CoderJTao/MultiThreadDemo" target="_blank" rel="noopener">MultiThreadDemo</a>查看源码，如有不当之处，希望大家指出。</p>
 <a id="more"></a>
@@ -421,7 +421,7 @@
 <li><strong>阻塞（Blocked）：</strong> 当满足某个预定条件时，可以使用休眠或锁，阻塞线程执行。sleepForTimeInterval（休眠指定时长），sleepUntilDate（休眠到指定日期），@synchronized(self)：（互斥锁）。</li>
 <li><strong>死亡（Dead）：</strong> 正常死亡，线程执行完毕。非正常死亡，当满足某个条件后，在线程内部中止执行/在主线程中止线程对象</li>
 </ul>
-<p><img src="https://user-gold-cdn.xitu.io/2019/4/12/16a10988d512141b?w=950&amp;h=495&amp;f=jpeg&amp;s=59806" alt="状态转换图"></p>
+<img src="/2018/02/03/多线程学习记录（一）/Thread_change.jpg">
 <p>系统还定义了几个NSNotification。若你对当前线程状态的改变感兴趣，可以订阅这几个通知：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 当除了主线程外的最后一个线程退出时</span><br><span class="line">static let NSDidBecomeSingleThreaded: NSNotification.Name</span><br><span class="line"></span><br><span class="line">// 当线程接收到exit()消息时</span><br><span class="line">static let NSThreadWillExit: NSNotification.Name</span><br><span class="line"></span><br><span class="line">// 当创建第一个除主线程外的子线程时发布，而后再创建子线程时不会再发出通知。</span><br><span class="line">// 通知的观察者的通知方法在主线程调用</span><br><span class="line">NSWillBecomeMultiThreaded: NSNotification.Name</span><br></pre></td></tr></table></figure>
 <h3 id="2-1-6-其它常用方法"><a href="#2-1-6-其它常用方法" class="headerlink" title="2.1.6 其它常用方法"></a>2.1.6 其它常用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 获取主线程</span><br><span class="line">Thread.main</span><br><span class="line">        </span><br><span class="line">// 获取当前线程</span><br><span class="line">Thread.current</span><br><span class="line">        </span><br><span class="line">// 获取当前线程状态</span><br><span class="line">Thread.current.isCancelled</span><br><span class="line">Thread.current.isFinished</span><br><span class="line">Thread.current.isFinished</span><br></pre></td></tr></table></figure>

@@ -86,14 +86,14 @@
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="前言最近公司的项目中刚好用到了 CoreBluetooth 相关的知识，在看了网上很多文章及官方文档的介绍后，现在对大概的框架有了基本的了解。 在此，写下这篇文章记录自己这段时间的成果。文章的最后会有一个小Demo，简单的实现了一些基本的功能，供各位看官把玩。Demo的代码可以去我的Github中下载。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/30/16a6d24f70a0e32d?w=970&h=447&f=png&s=84343">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/30/16a6d722d75bbbb5?w=388&h=690&f=gif&s=880427">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/30/16a6d7247f97dcbe?w=388&h=690&f=gif&s=1869197">
-<meta property="og:updated_time" content="2019-05-10T03:05:31.870Z">
+<meta property="og:image" content="http://yoursite.com/2018/03/31/CoreBluetooth学习记录/CoreBluetooth_MindNode.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/31/CoreBluetooth学习记录/CoreBluetooth_player1.gif">
+<meta property="og:image" content="http://yoursite.com/2018/03/31/CoreBluetooth学习记录/CoreBluetooth_player2.gif">
+<meta property="og:updated_time" content="2019-07-01T06:22:46.987Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CoreBluetooth 学习记录">
 <meta name="twitter:description" content="前言最近公司的项目中刚好用到了 CoreBluetooth 相关的知识，在看了网上很多文章及官方文档的介绍后，现在对大概的框架有了基本的了解。 在此，写下这篇文章记录自己这段时间的成果。文章的最后会有一个小Demo，简单的实现了一些基本的功能，供各位看官把玩。Demo的代码可以去我的Github中下载。">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/4/30/16a6d24f70a0e32d?w=970&h=447&f=png&s=84343">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/31/CoreBluetooth学习记录/CoreBluetooth_MindNode.png">
 
 
 
@@ -338,7 +338,7 @@
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近公司的项目中刚好用到了 CoreBluetooth 相关的知识，在看了网上很多文章及<a href="https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/CoreBluetoothOverview/CoreBluetoothOverview.html" target="_blank" rel="noopener">官方文档</a>的介绍后，现在对大概的框架有了基本的了解。</p>
 <p>在此，写下这篇文章记录自己这段时间的成果。文章的最后会有一个小Demo，简单的实现了一些基本的功能，供各位看官把玩。Demo的代码可以去<a href="https://github.com/CoderJTao/BleLearnDemo" target="_blank" rel="noopener">我的Github</a>中下载。</p>
 <a id="more"></a>
-<p><img src="https://user-gold-cdn.xitu.io/2019/4/30/16a6d24f70a0e32d?w=970&amp;h=447&amp;f=png&amp;s=84343" alt></p>
+<img src="/2018/03/31/CoreBluetooth学习记录/CoreBluetooth_MindNode.png" title="MindNode">
 <p>这篇文章主要以实践的方式，实现了蓝牙交互中的两个角色。关于基本概念的介绍，<a href="https://developer.apple.com/library/archive/documentation/NetworkingInternetWeb/Conceptual/CoreBluetooth_concepts/CoreBluetoothOverview/CoreBluetoothOverview.html" target="_blank" rel="noopener">官方文档</a>中介绍的非常详细，大家可以仔细研究一下。</p>
 <h1 id="Central-和-Peripheral"><a href="#Central-和-Peripheral" class="headerlink" title="Central 和 Peripheral"></a>Central 和 Peripheral</h1><h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p>CoreBluetooth 中最关键的两个角色就是 Central(中心) 和 Peripheral（周边）。</p>
 <p>Central 在连接中作为主动发起者会去寻找待连接的 Peripheral。</p>
@@ -467,8 +467,8 @@
 <p>目前工程内完成了基本的两端交互逻辑。对于掉线重连等优化问题目前<a href="https://github.com/CoderJTao/BleLearnDemo" target="_blank" rel="noopener">示例工程</a>内尚未体现。</p>
 <p><strong>创建房间：</strong> 实现 Local Peripheral 端功能。将自己创建了房间的消息进行广播，使其它玩家可以扫描到房间进入游戏。并利用一个可被订阅的 Characteristic 将消息传输给 Central，一个可写的 Characteristic 接收来自 Central 的消息。</p>
 <p><strong>寻找房间：</strong> 实现 Local Central 端功能。可以扫描其它玩家创建的房间并加入游戏。通过可写的 Characteristic 将消息传输给 Peripheral，订阅一个 Characteristic 来获取值更新的通知。</p>
-<figure class="half"><br>    <img src="https://user-gold-cdn.xitu.io/2019/4/30/16a6d722d75bbbb5?w=388&h=690&f=gif&s=880427"><br>    <img src="https://user-gold-cdn.xitu.io/2019/4/30/16a6d7247f97dcbe?w=388&h=690&f=gif&s=1869197"><br></figure>
-
+<img src="/2018/03/31/CoreBluetooth学习记录/CoreBluetooth_player1.gif" title="Player1">
+<img src="/2018/03/31/CoreBluetooth学习记录/CoreBluetooth_player2.gif" title="Player2">
       
     </div>
     

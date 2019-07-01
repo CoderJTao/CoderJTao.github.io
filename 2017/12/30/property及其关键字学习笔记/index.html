@@ -86,14 +86,14 @@
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="前言 一、@property的本质当我们写下@property NSObject *name时，编译器帮我们做了以下几件事:  创建实例变量_name 声明name属性的setter、getter方法 实现name属性的setter、getter方法">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/3/169e1e4c5dcca049?w=1081&h=924&f=png&s=219481">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/3/169e1a8b2c4ddecb?w=620&h=294&f=jpeg&s=38560">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/4/3/169e1d4c519f78c8?w=1572&h=958&f=jpeg&s=157936">
-<meta property="og:updated_time" content="2019-05-07T09:50:43.548Z">
+<meta property="og:image" content="http://yoursite.com/2017/12/30/property及其关键字学习笔记/property_MindNode.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/30/property及其关键字学习笔记/property_copy.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/30/property及其关键字学习笔记/property_weak.jpg">
+<meta property="og:updated_time" content="2019-07-01T06:06:11.112Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="@property及其关键字学习笔记">
 <meta name="twitter:description" content="前言 一、@property的本质当我们写下@property NSObject *name时，编译器帮我们做了以下几件事:  创建实例变量_name 声明name属性的setter、getter方法 实现name属性的setter、getter方法">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/4/3/169e1e4c5dcca049?w=1081&h=924&f=png&s=219481">
+<meta name="twitter:image" content="http://yoursite.com/2017/12/30/property及其关键字学习笔记/property_MindNode.jpg">
 
 
 
@@ -335,7 +335,7 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><img src="https://user-gold-cdn.xitu.io/2019/4/3/169e1e4c5dcca049?w=1081&amp;h=924&amp;f=png&amp;s=219481" alt></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><img src="/2017/12/30/property及其关键字学习笔记/property_MindNode.jpg" title="property_MindNode">
 <h2 id="一、-property的本质"><a href="#一、-property的本质" class="headerlink" title="一、@property的本质"></a>一、@property的本质</h2><p>当我们写下@property NSObject *name时，编译器帮我们做了以下几件事:</p>
 <ul>
 <li>创建实例变量_name</li>
@@ -416,8 +416,7 @@
 </ol>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@interface test()</span><br><span class="line"> </span><br><span class="line">@property(nonatomic, strong) NSMutableString *strStrong;</span><br><span class="line">@property(nonatomic, copy) NSMutableString *strCopy;</span><br><span class="line"> </span><br><span class="line">@end</span><br><span class="line"> </span><br><span class="line">/********************* test.m **********************/</span><br><span class="line">NSMutableString *string = [NSMutableString stringWithFormat:@&quot;abc&quot;];</span><br><span class="line"></span><br><span class="line">self.strStrong = str;    </span><br><span class="line">self.strCopy = str;</span><br><span class="line">    </span><br><span class="line">[self.strStrong appendString:@&quot;def&quot;];</span><br><span class="line">[self.strCopy appendString:@&quot;def&quot;];// 在这一行会crash</span><br></pre></td></tr></table></figure>
-<div align="center"><br><img src="https://user-gold-cdn.xitu.io/2019/4/3/169e1a8b2c4ddecb?w=620&h=294&f=jpeg&s=38560" height="147" width="310"><br> </div>
-
+ <img src="/2017/12/30/property及其关键字学习笔记/property_copy.jpg">
 <p>因为copy是复制出一个不可变的对象，在不可变对象上运行可变对象的方法，就会找不到执行方法。</p>
 <h4 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h4><h5 id="1、作用"><a href="#1、作用" class="headerlink" title="1、作用"></a>1、作用</h5><ul>
 <li>weak 必须用于 OC 对象</li>
@@ -427,7 +426,7 @@
 </ul>
 <h5 id="2、原理"><a href="#2、原理" class="headerlink" title="2、原理"></a>2、原理</h5><p>Runtime维护了一个weak表，用于存储指向某个对象的所有weak指针。weak表其实是一个hash表，K<br>ey是所指对象的地址，value是weak指针的地址（这个地址的值是所指对象指针的地址）数组。</p>
 <p>为什么value是数组？因为一个对象可能被多个弱引用指针指向。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/4/3/169e1d4c519f78c8?w=1572&amp;h=958&amp;f=jpeg&amp;s=157936" alt></p>
+ <img src="/2017/12/30/property及其关键字学习笔记/property_weak.jpg">
 <ol>
 <li><p><strong>初始化时：</strong></p>
 <p> runtime会调用objc_initWeak函数，objc_initWeak函数会初始化一个新的weak指针指向对象的地址。</p>

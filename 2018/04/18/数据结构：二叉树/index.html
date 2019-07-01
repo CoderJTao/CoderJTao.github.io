@@ -86,16 +86,16 @@
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="这篇文章主要介绍树结构中的一种特殊存在——二叉树。主要内容有：  二叉树的概念 二叉树的基本结构 二叉树的操作">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c473e99acd?w=441&h=311&f=jpeg&s=21246">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06cda11826f1?w=524&h=376&f=jpeg&s=35530">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c72f8ac26b?w=962&h=670&f=jpeg&s=55402">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c82b65f239?w=961&h=669&f=jpeg&s=50509">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c2f510dfdc?w=622&h=244&f=jpeg&s=16753">
-<meta property="og:updated_time" content="2019-05-13T09:06:34.401Z">
+<meta property="og:image" content="http://yoursite.com/2018/04/18/数据结构：二叉树/BinaryTree_want.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/18/数据结构：二叉树/BinaryTree_extension.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/18/数据结构：二叉树/BinaryTree_after.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/18/数据结构：二叉树/BinaryTree_pre.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/18/数据结构：二叉树/Binarytree_may.jpg">
+<meta property="og:updated_time" content="2019-07-01T06:36:31.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构：二叉树">
 <meta name="twitter:description" content="这篇文章主要介绍树结构中的一种特殊存在——二叉树。主要内容有：  二叉树的概念 二叉树的基本结构 二叉树的操作">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c473e99acd?w=441&h=311&f=jpeg&s=21246">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/18/数据结构：二叉树/BinaryTree_want.jpg">
 
 
 
@@ -371,9 +371,9 @@
 <h3 id="结点的定义"><a href="#结点的定义" class="headerlink" title="结点的定义"></a>结点的定义</h3><p>结点的结构定义：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class TreeNode &#123;</span><br><span class="line">    var value: String</span><br><span class="line">    var left: TreeNode?</span><br><span class="line">    var right: TreeNode?</span><br><span class="line">    </span><br><span class="line">    init(_ value: String) &#123;</span><br><span class="line">        self.value = value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="创建二叉树"><a href="#创建二叉树" class="headerlink" title="创建二叉树"></a>创建二叉树</h3><p>现在我们创建一棵如图所示的二叉树：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c473e99acd?w=441&amp;h=311&amp;f=jpeg&amp;s=21246" alt="预期"></p>
+<img src="/2018/04/18/数据结构：二叉树/BinaryTree_want.jpg">
 <p>为了能让每个结点确认是否有左右子结点，我们将预期二叉树进行一个扩展：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/5/13/16ab06cda11826f1?w=524&amp;h=376&amp;f=jpeg&amp;s=35530" alt="扩展"></p>
+<img src="/2018/04/18/数据结构：二叉树/BinaryTree_extension.jpg">
 <p>我们给每一个结点的空指针引出一个虚结点，其值为一个特定值——#。</p>
 <p>创建这棵二叉树代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">let arr = [&quot;A&quot;, &quot;B&quot;, &quot;D&quot;, &quot;G&quot;, &quot;#&quot;, &quot;#&quot;, &quot;H&quot;, &quot;#&quot;, &quot;#&quot;, &quot;#&quot;, &quot;C&quot;, &quot;E&quot;, &quot;#&quot;, &quot;I&quot;, &quot;#&quot;, &quot;#&quot;, &quot;F&quot;]</span><br><span class="line">var index = 0</span><br><span class="line"></span><br><span class="line">func preCreateTree(_ tree: inout BinaryTreeNode?) &#123;</span><br><span class="line">    if index &gt; arr.count-1 &#123;</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    let value = arr[index]</span><br><span class="line"></span><br><span class="line">    index += 1</span><br><span class="line"></span><br><span class="line">    if value == &quot;#&quot; &#123;</span><br><span class="line">        tree = nil</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // 生成根结点</span><br><span class="line">        tree = BinaryTreeNode(value)</span><br><span class="line"></span><br><span class="line">        // 构造左子树</span><br><span class="line">        preCreateTree(&amp;tree!.leftChild)</span><br><span class="line"></span><br><span class="line">        // 构造右子树</span><br><span class="line">        preCreateTree(&amp;tree!.rightChild)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var root: BinaryTreeNode? = BinaryTreeNode(nil)</span><br><span class="line"></span><br><span class="line">preCreateTree(&amp;root)</span><br></pre></td></tr></table></figure>
@@ -412,14 +412,14 @@
 <li><p>再对左右子树进行第一步的分析。最终能得到二叉树的完整结构。</p>
 </li>
 </ol>
-<p><img src="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c72f8ac26b?w=962&amp;h=670&amp;f=jpeg&amp;s=55402" alt="过程分析"></p>
+<img src="/2018/04/18/数据结构：二叉树/BinaryTree_after.jpg" title="过程分析">
 <h4 id="题目二：求前序遍历"><a href="#题目二：求前序遍历" class="headerlink" title="题目二：求前序遍历"></a>题目二：求前序遍历</h4><p><strong>题目：</strong>已知后序遍历 GHDBIEFCA 及中序遍历 GDHBAEICF，求出后序遍历顺序？</p>
 <p><strong>解答：</strong></p>
 <ol>
 <li>后序遍历的结果是GHDBIEFCA，根据先序得到根节点是A；中序遍历的结果是GDHBAEICF，根据中序得到A之前的节点都是左子树，A之后的节点都是右子树。</li>
 <li>再对左右子树进行第一步的分析。最终能得到二叉树的完整结构。</li>
 </ol>
-<p><img src="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c82b65f239?w=961&amp;h=669&amp;f=jpeg&amp;s=50509" alt="过程分析"></p>
+<img src="/2018/04/18/数据结构：二叉树/BinaryTree_pre.jpg" title="过程分析">
 <h4 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h4><ol>
 <li>已知前序遍历序列和中序遍历序列，可以唯一确定一棵二叉树。</li>
 <li>已知后序遍历序列和中序遍历序列，可以唯一确定一棵二叉树。</li>
@@ -427,7 +427,7 @@
 <p>但是，已知前序和后序是不能确定一棵二叉树的。</p>
 <p>例如：前序遍历序列为 ABC 及后序遍历序列为 CBA。</p>
 <p>可以确定 A 一定是根节点，但是接下来无法确定哪些是左子树，哪些是右子树。此时，这棵二叉树有以下四种可能：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2019/5/13/16ab06c2f510dfdc?w=622&amp;h=244&amp;f=jpeg&amp;s=16753" alt="可能"></p>
+<img src="/2018/04/18/数据结构：二叉树/Binarytree_may.jpg" title="过程分析">
 
       
     </div>
