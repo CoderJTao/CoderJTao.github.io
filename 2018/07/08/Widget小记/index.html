@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="项目最近在调研是否需要为项目添加一个 Widget。这篇文章记录下自己学习 Widget 的过程。  创建 Widget 与主 App 的交互 数据共享">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS Widget小记">
+<meta property="og:url" content="http://yoursite.com/2018/07/08/Widget小记/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="项目最近在调研是否需要为项目添加一个 Widget。这篇文章记录下自己学习 Widget 的过程。  创建 Widget 与主 App 的交互 数据共享">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/07/08/Widget小记/目录.jpeg">
+<meta property="og:image" content="http://yoursite.com/2018/07/08/Widget小记/代码-Storyboard.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/08/Widget小记/效果图.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/08/Widget小记/Scheme.jpg">
+<meta property="og:updated_time" content="2019-07-04T02:51:18.797Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS Widget小记">
+<meta name="twitter:description" content="项目最近在调研是否需要为项目添加一个 Widget。这篇文章记录下自己学习 Widget 的过程。  创建 Widget 与主 App 的交互 数据共享">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/08/Widget小记/目录.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/08/Widget小记/">
+
+
+
+
+
+  <title>iOS Widget小记 | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/08/Widget小记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS Widget小记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-08T19:45:02+08:00">
+                2018-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>项目最近在调研是否需要为项目添加一个 Widget。这篇文章记录下自己学习 Widget 的过程。</p>
+<ul>
+<li>创建 Widget</li>
+<li>与主 App 的交互<ul>
+<li>数据共享</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="创建-Widget"><a href="#创建-Widget" class="headerlink" title="创建 Widget"></a>创建 Widget</h2><p>Widget 是一个依附于主 App 的插件，所以如果你想创建对应项目的 Widget 的话，在对应的项目中，新建一个target，类型选择 Today Extension。</p>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><p>File -&gt; New -&gt; Target -&gt; Today Extension 创建 Widget。</p>
+<p>按照上述步骤创建完成之后，你的项目目录应该是下面图所示：</p>
+<img src="/2018/07/08/Widget小记/目录.jpeg" title="目录">
+<h3 id="开发方式"><a href="#开发方式" class="headerlink" title="开发方式"></a>开发方式</h3><p>Widget 界面的开发是可以使用纯代码或者 Storyboard 的，这个依据个人喜好了。</p>
+<p>Widget 创建之后默认是使用 Storyboard 的，若需要纯代码的话，只需要到上图中 Widget 目录下的 Info.plist 中，删除如下黄框中的字段，并加入红框中的键值对就👌了。</p>
+<img src="/2018/07/08/Widget小记/代码-Storyboard.jpg">
+<h3 id="代码编写"><a href="#代码编写" class="headerlink" title="代码编写"></a>代码编写</h3><p>这里我使用了 Storyboard 来开发 Widget 界面。</p>
+<img src="/2018/07/08/Widget小记/效果图.jpg">
+<p>在 TodayViewController 中，开始布局 Widget 的样式。通用组件都可以使用，但是 UITableView 等滚动视图是无法滚动的。</p>
+<p>iOS10 之后，Widget 支持展开及折叠两种展现方式，通过设置 widgetLargestAvailableDisplayMode 属性可以让 Widget 程序实现展开布局，同时在左滑到 Widget 显示的时候，会调用 viewWillAppear，这时候可以去刷新数据获取最新的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">override func viewWillAppear(_ animated: Bool) &#123;</span><br><span class="line">    super.viewWillAppear(animated)</span><br><span class="line"></span><br><span class="line">    // .compact 无法折叠</span><br><span class="line">    // .expanded 可以折叠</span><br><span class="line">    if #available(iOS 10.0, *) &#123;</span><br><span class="line">        self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    self.fetchData()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Widget 默认的 mode 是 compact，当我们设置了 expanded 之后才会有折叠选项。</p>
+<p>右上角折叠与收起的回调，我们可以在下面的方法中处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 展开 / 折叠回调</span><br><span class="line">func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) &#123;</span><br><span class="line">    if activeDisplayMode == .compact &#123;</span><br><span class="line">        // 高度固定，最低高度为110</span><br><span class="line">        self.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 200)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        self.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 500)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="与主-App-交互"><a href="#与主-App-交互" class="headerlink" title="与主 App 交互"></a>与主 App 交互</h2><p>Widget 的目的就是使用户能够快速访问一些主 App 中的信息，当然其中也可以进行一些事件的处理，但是一般事件处理的方式都是调起主 App 来处理。为了能让 Widget 能和主 App 进行这些数据的共享，我们还需要进行一些相应的配置。</p>
+<h3 id="证书配置"><a href="#证书配置" class="headerlink" title="证书配置"></a>证书配置</h3><blockquote>
+<p>ps: 需给 Widget 创建新的 AppID，Bundle ID 需要以主 App 的 Bundle ID 为前缀!</p>
+</blockquote>
+<ol>
+<li>登录开发者账号，创建 App Groups。</li>
+<li>进入到主 App 的 App ID 配置刚创建的 App Group。</li>
+<li>进入到 Widget 的 App ID 配置 App Group。</li>
+<li>进入 Xcode，分别进入主 App 及 Widget 的 target Capabilities，开启 App Group。 添加对应的 App Group。</li>
+</ol>
+<p>这样我们的准备工作就做好了。</p>
+<h3 id="数据共享"><a href="#数据共享" class="headerlink" title="数据共享"></a>数据共享</h3><h4 id="Widget-给主-App-传值"><a href="#Widget-给主-App-传值" class="headerlink" title="Widget 给主 App 传值"></a>Widget 给主 App 传值</h4><p>Widget 中处理事件一般都是调起主 App，Widget 调起主 App 就相当于一个 App 调起另一个 App 的过程，所以我们这里我们需要分两步：</p>
+<ol>
+<li>在主 App 的 target 中，Info -&gt; URL Types，配置主 App 的 URL Scheme。</li>
+</ol>
+<img src="/2018/07/08/Widget小记/Scheme.jpg">
+<ol start="2">
+<li>在 Widget 相应位置中，利用 Scheme 调起主程序。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 打开主App</span><br><span class="line">@IBAction func cleanBtnClicked(_ sender: UIButton) &#123;</span><br><span class="line">    self.extensionContext?.open(URL(string: &quot;LearnWidgetDemo://hello&quot;)!, completionHandler: &#123; (successful) in</span><br><span class="line">        print(&quot;打开成功&quot;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然 Scheme 里面也可以传值，然后在主 App 的 Appdelegaete 的回调中处理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -&gt; Bool &#123;</span><br><span class="line">    // handle</span><br><span class="line">    return true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="主-App-与-Widget-数据共享"><a href="#主-App-与-Widget-数据共享" class="headerlink" title="主 App 与 Widget 数据共享"></a>主 App 与 Widget 数据共享</h4><p>上面的配置，主要就是为了让 Widget 能获取到主 App 的数据。</p>
+<p>数据共享的方式有两种：</p>
+<ul>
+<li><strong>UserDefaults：</strong> 适合小量存储。</li>
+<li><strong>FileManager：</strong> 数据量较大时。</li>
+</ul>
+<p>两种方式都可以写入和读取，一般情况下，都是主 App 写入，Widget 读取显示。</p>
+<h5 id="UserDefaults"><a href="#UserDefaults" class="headerlink" title="UserDefaults"></a>UserDefaults</h5><p>因为沙盒机制，Widget 是不允许访问主 App 的沙盒路径的，因此 UserDefaults 的获取方法与平常有所区别，需要搭配 App group 完成实例化 UserDefaults。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 这种方式是不行的</span><br><span class="line">// let userDefault = UserDefaults.standard</span><br><span class="line"></span><br><span class="line">// 获取实例</span><br><span class="line">let userDefault = UserDefaults(suiteName: &quot;App Group Name&quot;)</span><br></pre></td></tr></table></figure>
+<h5 id="FileManager"><a href="#FileManager" class="headerlink" title="FileManager"></a>FileManager</h5><p>同样的，FileManager 也有特殊的获取方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 这种方式是不行的</span><br><span class="line">//let fileManager = FileManager.default</span><br><span class="line"></span><br><span class="line">// 获取实例</span><br><span class="line">let fileManeger = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: &quot;App Group Name&quot;)</span><br></pre></td></tr></table></figure>
+<p><strong>总结：</strong> 上述两种数据共享的方式，除了获取实例时，需要制定 App Group Name，其它数据存取方式都跟正常使用时一样。</p>
+<hr>
+<blockquote>
+<p>ps: 如果你想测试，需要用模拟器去测试，因为如果你这个之前没有发过，就算能安装成功，手机上也没有显示的，但是模拟器上可以。</p>
+</blockquote>
+<hr>
+<p><strong>参考：</strong> <a href="https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/Today.html" target="_blank" rel="noopener">App Extension Essentials —— Today</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/23/Swift命名空间/" rel="next" title="Swift 命名空间">
+                <i class="fa fa-chevron-left"></i> Swift 命名空间
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-Widget"><span class="nav-number">1.</span> <span class="nav-text">创建 Widget</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建"><span class="nav-number">1.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发方式"><span class="nav-number">1.2.</span> <span class="nav-text">开发方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码编写"><span class="nav-number">1.3.</span> <span class="nav-text">代码编写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与主-App-交互"><span class="nav-number">2.</span> <span class="nav-text">与主 App 交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#证书配置"><span class="nav-number">2.1.</span> <span class="nav-text">证书配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据共享"><span class="nav-number">2.2.</span> <span class="nav-text">数据共享</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Widget-给主-App-传值"><span class="nav-number">2.2.1.</span> <span class="nav-text">Widget 给主 App 传值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主-App-与-Widget-数据共享"><span class="nav-number">2.2.2.</span> <span class="nav-text">主 App 与 Widget 数据共享</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#UserDefaults"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">UserDefaults</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FileManager"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">FileManager</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
