@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="项目中一直使用着 RxSwift，现在也只是停留在使用的阶段，最近利用闲暇的时间拜读了一下 RxSwift 的源码。  介绍 RxSwift 是一个可以帮助我们简化异步编程的框架，它是 ReactiveX（简写：Rx） 的 Swift 版本。RxSwift 拓展了观察者模式，它能帮你自由组合多个异步事件，而不需要去关心线程，同步，线程安全，并发数据以及I/O阻塞。   RxSwift 属于函数响应">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxSwift源码学习（一）">
+<meta property="og:url" content="http://yoursite.com/2018/07/21/RxSwift源码学习（一）/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="项目中一直使用着 RxSwift，现在也只是停留在使用的阶段，最近利用闲暇的时间拜读了一下 RxSwift 的源码。  介绍 RxSwift 是一个可以帮助我们简化异步编程的框架，它是 ReactiveX（简写：Rx） 的 Swift 版本。RxSwift 拓展了观察者模式，它能帮你自由组合多个异步事件，而不需要去关心线程，同步，线程安全，并发数据以及I/O阻塞。   RxSwift 属于函数响应">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-10T09:58:33.176Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxSwift源码学习（一）">
+<meta name="twitter:description" content="项目中一直使用着 RxSwift，现在也只是停留在使用的阶段，最近利用闲暇的时间拜读了一下 RxSwift 的源码。  介绍 RxSwift 是一个可以帮助我们简化异步编程的框架，它是 ReactiveX（简写：Rx） 的 Swift 版本。RxSwift 拓展了观察者模式，它能帮你自由组合多个异步事件，而不需要去关心线程，同步，线程安全，并发数据以及I/O阻塞。   RxSwift 属于函数响应">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/21/RxSwift源码学习（一）/">
+
+
+
+
+
+  <title>RxSwift源码学习（一） | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/21/RxSwift源码学习（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RxSwift源码学习（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-21T22:51:32+08:00">
+                2018-07-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/源码学习/" itemprop="url" rel="index">
+                    <span itemprop="name">源码学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>项目中一直使用着 RxSwift，现在也只是停留在使用的阶段，最近利用闲暇的时间拜读了一下 RxSwift 的源码。</p>
+<blockquote>
+<p>介绍</p>
+<p>RxSwift 是一个可以帮助我们简化异步编程的框架，它是 ReactiveX（简写：Rx） 的 Swift 版本。<br>RxSwift 拓展了观察者模式，它能帮你自由组合多个异步事件，而不需要去关心线程，同步，线程安全，并发数据以及I/O阻塞。</p>
+</blockquote>
+<blockquote>
+<p>RxSwift 属于函数响应式编程。它是通过构建函数操作数据序列，然后对这些序列做出响应的编程方式。它结合了函数式编程以及响应式编程。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let observable =  Observable.just(&quot;hello&quot;)</span><br><span class="line"></span><br><span class="line">observable.subscribe(onNext: &#123; (str) in</span><br><span class="line"></span><br><span class="line">    &#125;, onError: &#123; (error) in</span><br><span class="line"></span><br><span class="line">    &#125;, onCompleted: &#123;</span><br><span class="line">        //finished</span><br><span class="line">    &#125;).disposed(by: self.disposeBag)</span><br></pre></td></tr></table></figure>
+<p>我的记录就从上面这个简单的 RxSwift 使用示例开始，一步步去探寻 RxSwift 源码。</p>
+<h2 id="源码阅读"><a href="#源码阅读" class="headerlink" title="源码阅读"></a>源码阅读</h2><h3 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h3><p>Observable 定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class Observable&lt;Element&gt; : ObservableType &#123;</span><br><span class="line">    init() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public func subscribe&lt;Observer: ObserverType&gt;(_ observer: Observer) -&gt; Disposable where Observer.Element == Element &#123;</span><br><span class="line">        rxAbstractMethod()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public func asObservable() -&gt; Observable&lt;Element&gt; &#123;</span><br><span class="line">        return self</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /// Optimizations for map operator</span><br><span class="line">    internal func composeMap&lt;Result&gt;(_ transform: @escaping (Element) throws -&gt; Result) -&gt; Observable&lt;Result&gt; &#123;</span><br><span class="line">        return _map(source: self, transform: transform)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>init 方法被 internal 修饰，模块外部不可见。主要是为了监测 Rx 中的资源分配。</li>
+<li>关键方法 public func subscribe&lt;O: ObserverType&gt;(_ observer: O) 实现中直接抛出异常；rxAbstractMethod 是对 fatalError的封装。</li>
+</ul>
+<h3 id="just-函数"><a href="#just-函数" class="headerlink" title="just 函数"></a>just 函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static func just(_ element: Element) -&gt; Observable&lt;Element&gt; &#123;</span><br><span class="line">    return Just(element: element)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Observable 的实例方法不可用，但是 Rx 中为我们扩展了许多类方法用于构造 Observable 实例。本文就以 just 方法为例。</p>
+<p>调用 just 函数时，传入了一个数据，这里利用泛型，我们可以传入任何我们需要的数据。并且返回一个 Observable 实例对象。 函数内部调用了一个私有类 Just：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">final private class Just&lt;Element&gt;: Producer&lt;Element&gt; &#123;</span><br><span class="line">    private let _element: Element</span><br><span class="line">    </span><br><span class="line">    init(element: Element) &#123;</span><br><span class="line">        self._element = element</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override func subscribe&lt;Observer: ObserverType&gt;(_ observer: Observer) -&gt; Disposable where Observer.Element == Element &#123;</span><br><span class="line">        observer.on(.next(self._element))</span><br><span class="line">        observer.on(.completed)</span><br><span class="line">        return Disposables.create()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>私有类 Just 中持有了我们传入的数据 Element。</p>
+<p>那么，后续我们就看看当我们对 Observable 进行订阅时，我们是如何收到消息的。</p>
+<h3 id="subscribe-函数"><a href="#subscribe-函数" class="headerlink" title="subscribe 函数"></a>subscribe 函数</h3><p>我们利用 subscribe 函数订阅刚才生成的 Observable 实例。我们先来看看 subscribe 函数的实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public func subscribe(onNext: ((Element) -&gt; Void)? = nil, </span><br><span class="line">							onError: ((Swift.Error) -&gt; Void)? = nil, </span><br><span class="line">							onCompleted: (() -&gt; Void)? = nil, </span><br><span class="line">							onDisposed: (() -&gt; Void)? = nil) -&gt; Disposable &#123;</span><br><span class="line">							</span><br><span class="line">    let disposable: Disposable</span><br><span class="line">    </span><br><span class="line">    if let disposed = onDisposed &#123;</span><br><span class="line">        disposable = Disposables.create(with: disposed)</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        disposable = Disposables.create()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    let callStack = Hooks.recordCallStackOnError ? Hooks.customCaptureSubscriptionCallstack() : []</span><br><span class="line">    </span><br><span class="line">    let observer = AnonymousObserver&lt;Element&gt; &#123; event in</span><br><span class="line">        </span><br><span class="line">        switch event &#123;</span><br><span class="line">        case .next(let value):</span><br><span class="line">            onNext?(value)</span><br><span class="line">        case .error(let error):</span><br><span class="line">            if let onError = onError &#123;</span><br><span class="line">                onError(error)</span><br><span class="line">            &#125;</span><br><span class="line">            else &#123;</span><br><span class="line">                Hooks.defaultErrorHandler(callStack, error)</span><br><span class="line">            &#125;</span><br><span class="line">            disposable.dispose()</span><br><span class="line">        case .completed:</span><br><span class="line">            onCompleted?()</span><br><span class="line">            disposable.dispose()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return Disposables.create(</span><br><span class="line">        self.asObservable().subscribe(observer),</span><br><span class="line">        disposable</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，函数有四个可选参数：onNext、onError、onCompleted、onDisposed。</p>
+<p>并且在函数内部生成了一个 observer 对象，并且又利用 create 函数创建了一个 Observable 实例供外界使用。并且调用了 subscribe 方法将 observer 传入。</p>
+<p>此时，会来到前面我们生成 Observable 实例时提到的的私有类 Just 中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">override func subscribe&lt;Observer: ObserverType&gt;(_ observer: Observer) -&gt; Disposable where Observer.Element == Element &#123;</span><br><span class="line">    observer.on(.next(self._element))</span><br><span class="line">    observer.on(.completed)</span><br><span class="line">    return Disposables.create()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里出现了一个在 RxSwift 中经常出现的概念 Event，并且这个 Event 现在持有了 Just 中我们生成 Observable 时传入的 Element 对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public enum Event&lt;Element&gt; &#123;</span><br><span class="line">    /// Next element is produced.</span><br><span class="line">    case next(Element)</span><br><span class="line"></span><br><span class="line">    /// Sequence terminated with an error.</span><br><span class="line">    case error(Swift.Error)</span><br><span class="line"></span><br><span class="line">    /// Sequence completed successfully.</span><br><span class="line">    case completed</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的 observer 就是在最开始时的 subscribe 函数中生成的。接下来，我们来看看这个生成的 observer 到底是何方神圣吧？</p>
+<h3 id="observer"><a href="#observer" class="headerlink" title="observer"></a>observer</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">let observer = AnonymousObserver&lt;Element&gt; &#123; event in</span><br><span class="line">    </span><br><span class="line">    switch event &#123;</span><br><span class="line">    case .next(let value):</span><br><span class="line">        onNext?(value)</span><br><span class="line">    case .error(let error):</span><br><span class="line">        if let onError = onError &#123;</span><br><span class="line">            onError(error)</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            Hooks.defaultErrorHandler(callStack, error)</span><br><span class="line">        &#125;</span><br><span class="line">        disposable.dispose()</span><br><span class="line">    case .completed:</span><br><span class="line">        onCompleted?()</span><br><span class="line">        disposable.dispose()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是 subscribe 时，生成 observer 的代码，我们可以看到这是一个 AnonymousObserver<element> 的对象：</element></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">final class AnonymousObserver&lt;Element&gt;: ObserverBase&lt;Element&gt; &#123;</span><br><span class="line">    typealias EventHandler = (Event&lt;Element&gt;) -&gt; Void</span><br><span class="line">    </span><br><span class="line">    private let _eventHandler : EventHandler</span><br><span class="line">    </span><br><span class="line">    init(_ eventHandler: @escaping EventHandler) &#123;</span><br><span class="line">        self._eventHandler = eventHandler</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override func onCore(_ event: Event&lt;Element&gt;) &#123;</span><br><span class="line">        return self._eventHandler(event)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到这里持有了创建时传入的闭包，并且在 onCore 方法调用时，执行了这个闭包。我们继续往上找，我们来到 ObserverBase<element> 中：</element></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class ObserverBase&lt;Element&gt; : Disposable, ObserverType &#123;</span><br><span class="line">    private let _isStopped = AtomicInt(0)</span><br><span class="line"></span><br><span class="line">    func on(_ event: Event&lt;Element&gt;) &#123;</span><br><span class="line">        switch event &#123;</span><br><span class="line">        case .next:</span><br><span class="line">            if load(self._isStopped) == 0 &#123;</span><br><span class="line">                self.onCore(event)</span><br><span class="line">            &#125;</span><br><span class="line">        case .error, .completed:</span><br><span class="line">            if fetchOr(self._isStopped, 1) == 0 &#123;</span><br><span class="line">                self.onCore(event)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func onCore(_ event: Event&lt;Element&gt;) &#123;</span><br><span class="line">        rxAbstractMethod()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func dispose() &#123;</span><br><span class="line">        fetchOr(self._isStopped, 1)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里面我们终于找到了处理私有类 Just 内 subscribe 函数中 observer.on(event) 的地方了，这里判断了 event 的类型，并调用了 onCore(event) 方法。下面我们就回到了上面 AnonymousObserver<element> 中的 onCore(event) 方法，并最终执行了创建 observer 时创建的闭包。</element></p>
+<p>我们再回头看一下生成 observer 时的代码。在传入的闭包中，处理了 event，根据 event 的不同传入对应的数据。我们这里关注 next 函数，这里最终将我们生成 Observable 时传入的 Element 传给了调用 subscribe 时传入的 onNext 闭包。</p>
+<p>这样，当利用 just 函数生成一个 Observable 对象，并且订阅值之后的相应处理也就完成了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇文章追寻一个简单的 just 函数，探寻了 RxSwift 的源码，我们可以看到 RxSwift 将我们的处理事件的逻辑封装成闭包，保存在合适的地方，并在需要处理相应事件时，将对应处理的闭包取出来处理。这个处理事件的方式在异步编程的优势就非常明显了。</p>
+<p>RxSwift 的源码真的是非常简洁明了，在阅读源码的过程中不仅可以让自己在使用时更加得心应手，也能学习到大牛的一些编程思想。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/08/Widget小记/" rel="next" title="iOS Widget小记">
+                <i class="fa fa-chevron-left"></i> iOS Widget小记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开篇"><span class="nav-number">1.</span> <span class="nav-text">开篇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码阅读"><span class="nav-number">2.</span> <span class="nav-text">源码阅读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Observable"><span class="nav-number">2.1.</span> <span class="nav-text">Observable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#just-函数"><span class="nav-number">2.2.</span> <span class="nav-text">just 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subscribe-函数"><span class="nav-number">2.3.</span> <span class="nav-text">subscribe 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#observer"><span class="nav-number">2.4.</span> <span class="nav-text">observer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
