@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="作为在互联网领域工作的程序员啊，我们需要不断地学习。自己也坚持每天刷一两个 LeetCode 题目，在刷题的过程中，发现有不少题目都涉及到一些位运算的知识，这篇文章记录一下。  介绍 运算 按位与(&amp;amp;) 按位或(|) 按位异或(^) 左移(&amp;lt;&amp;lt;) 右移(&amp;gt;&amp;gt;) 取反(~)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="位运算记录">
+<meta property="og:url" content="http://yoursite.com/2018/08/26/位运算记录/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="作为在互联网领域工作的程序员啊，我们需要不断地学习。自己也坚持每天刷一两个 LeetCode 题目，在刷题的过程中，发现有不少题目都涉及到一些位运算的知识，这篇文章记录一下。  介绍 运算 按位与(&amp;amp;) 按位或(|) 按位异或(^) 左移(&amp;lt;&amp;lt;) 右移(&amp;gt;&amp;gt;) 取反(~)">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-30T07:18:19.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="位运算记录">
+<meta name="twitter:description" content="作为在互联网领域工作的程序员啊，我们需要不断地学习。自己也坚持每天刷一两个 LeetCode 题目，在刷题的过程中，发现有不少题目都涉及到一些位运算的知识，这篇文章记录一下。  介绍 运算 按位与(&amp;amp;) 按位或(|) 按位异或(^) 左移(&amp;lt;&amp;lt;) 右移(&amp;gt;&amp;gt;) 取反(~)">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/26/位运算记录/">
+
+
+
+
+
+  <title>位运算记录 | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/26/位运算记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">位运算记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-26T21:33:15+08:00">
+                2018-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法系列/" itemprop="url" rel="index">
+                    <span itemprop="name">算法系列</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>作为在互联网领域工作的程序员啊，我们需要不断地学习。自己也坚持每天刷一两个 LeetCode 题目，在刷题的过程中，发现有不少题目都涉及到一些位运算的知识，这篇文章记录一下。</p>
+<ul>
+<li>介绍</li>
+<li>运算<ul>
+<li>按位与(&amp;)</li>
+<li>按位或(|)</li>
+<li>按位异或(^)</li>
+<li>左移(&lt;&lt;)</li>
+<li>右移(&gt;&gt;)</li>
+<li>取反(~)</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>位运算是把数字用二进制表示之后，对每一位上 0 或 1 的运算。</p>
+<h2 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h2><p>接下来我们举一个例子一个个运用下方的运算符。</p>
+<h3 id="按位与-amp"><a href="#按位与-amp" class="headerlink" title="按位与(&amp;)"></a>按位与(&amp;)</h3><p>将参与运算的两个数字，换算为二进制进行运算。只有当相应位上的数都是 1 时，该位取 1，否则取 0。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">将数字 3 与 2 进行按位于运算</span><br><span class="line"></span><br><span class="line">1 1		3的二进制</span><br><span class="line">1 0		2的二进制  </span><br><span class="line">————</span><br><span class="line">1 0		结果的二进制，对应十进制数字为 2</span><br><span class="line"></span><br><span class="line">所以：3 &amp; 2 = 3</span><br></pre></td></tr></table></figure>
+<h3 id="按位或"><a href="#按位或" class="headerlink" title="按位或(|)"></a>按位或(|)</h3><p>将参与运算的两个数字，换算为二进制进行运算。只要相应位上数是有 1 时，该位取 1，否则取 0。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">将数字 3 与 2 进行按位或运算</span><br><span class="line"></span><br><span class="line">1 1		3的二进制</span><br><span class="line">1 0		2的二进制  </span><br><span class="line">----</span><br><span class="line">1 1		结果的二进制，对应十进制数字为 3    </span><br><span class="line"></span><br><span class="line">所以：3 | 2 = 3</span><br></pre></td></tr></table></figure>
+<h3 id="按位异或"><a href="#按位异或" class="headerlink" title="按位异或(^)"></a>按位异或(^)</h3><p>将参与运算的两个数字，换算为二进制进行运算。只要相应位上数不相同时，该位取 1，否则取 0。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">将数字 3 与 2 进行按位异或运算</span><br><span class="line"></span><br><span class="line">1 1		3的二进制</span><br><span class="line">1 0		2的二进制  </span><br><span class="line">----</span><br><span class="line">0 1		结果的二进制，对应十进制数字为 1</span><br><span class="line"></span><br><span class="line">所以：3 ^ 2 = 1</span><br></pre></td></tr></table></figure>
+<h3 id="左移-lt-lt"><a href="#左移-lt-lt" class="headerlink" title="左移(&lt;&lt;)"></a>左移(&lt;&lt;)</h3><p>将参与运算的两个数字，换算为二进制进行运算。将二进制位全部向左移动若干位，后续位置补 0 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">将数字 3 左移 2 位</span><br><span class="line"></span><br><span class="line">1 1			3的二进制</span><br><span class="line">1 1 0 0		左移两位。结果的二进制，对应十进制数字为 12</span><br><span class="line"></span><br><span class="line">所以：3 &lt;&lt; 2 = 12</span><br></pre></td></tr></table></figure>
+<h3 id="右移-gt-gt"><a href="#右移-gt-gt" class="headerlink" title="右移(&gt;&gt;)"></a>右移(&gt;&gt;)</h3><p>将参与运算的两个数字，换算为二进制进行运算。将二进制位全部向右移动若干位，前面空出的位置补 0，后续移出的数字移除。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">将数字 3 右移 2 位</span><br><span class="line"></span><br><span class="line">1 1			3的二进制</span><br><span class="line">0 0 1 1		</span><br><span class="line">0 0			结果的二进制。右移两位，移出去的 1 移除。对应十进制数字为 0</span><br><span class="line"></span><br><span class="line">所以：3 &gt;&gt; 2 = 0</span><br></pre></td></tr></table></figure>
+<p>右移运算可用来代替除法，且效率会比除法更高。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">利用右移运算代替除法。</span><br><span class="line">将数字 3 右移 1 位。</span><br><span class="line"></span><br><span class="line">1 1			3的二进制</span><br><span class="line">0 1 1		</span><br><span class="line">0 1			结果的二进制。右移两位，移出去的 1 移除。对应十进制数字为 1</span><br><span class="line"></span><br><span class="line">所以：3 &gt;&gt; 1 = 1</span><br></pre></td></tr></table></figure>
+<h3 id="取反"><a href="#取反" class="headerlink" title="取反(~)"></a>取反(~)</h3><p>首先，我们需要知道计算机内部在做数学运算时，都是以补码为标准的。</p>
+<p>关于原码、反码及补码的只是这里不多做介绍了。<br><a href="https://www.imooc.com/article/16813?block_id=tuijian_wz" target="_blank" rel="noopener">这篇文章</a>对这三个码进行了一些基本介绍。</p>
+<p>这里我们说一些结论：</p>
+<ul>
+<li>正数的原码、反码及补码都一样。</li>
+<li>负数的原码最高位为 1 开头，反码是最高符号位不变，其余位在原码的基础上取反，补码在反码的基础上 +1 即可得到。</li>
+</ul>
+<p><strong>取反操作</strong></p>
+<p>将参与运算的两个数字，换算为二进制进行运算。每个位置上都取相反值，1 变成 0，0 变为 1。</p>
+<p><strong>例子1：对正数进行取反</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">对数字 3 进行取反。这里就利用 8 位来存储二进制数值。</span><br><span class="line"></span><br><span class="line">0 0 0 0 0 0 1 1		3的二进制原码</span><br><span class="line"></span><br><span class="line">1 1 1 1 1 1 0 0		取反之后得到结果的原码，我们需要转化为补码供计算机计算</span><br><span class="line"></span><br><span class="line">1 0 0 0 0 0 1 1		根据原码得到结果的反码</span><br><span class="line"></span><br><span class="line">1 0 0 0 0 1 0 0		上面反码基础上 +1 得到补码，其十进制值为 -4</span><br><span class="line"></span><br><span class="line">所以：~3 = -4</span><br></pre></td></tr></table></figure>
+<p><strong>例子2：对负数进行取反</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">对数字 -4 进行取反。这里就利用 8 位来存储二进制数值。</span><br><span class="line">其实只是将正数的过程反过来就好。</span><br><span class="line"></span><br><span class="line">1 0 0 0 0 1 0 0		-4的二进制补码</span><br><span class="line"></span><br><span class="line">1 0 0 0 0 0 1 1		在补码的基础上 -1 得到反码</span><br><span class="line"></span><br><span class="line">1 1 1 1 1 1 0 0		根据反码得到其原码</span><br><span class="line"></span><br><span class="line">0 0 0 0 0 0 1 1		每位取反之后得到结果的原码。结果的十进制为 3</span><br><span class="line"></span><br><span class="line">所以：~(-4) = 3</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/12/Core-Animation/" rel="next" title="《iOS Core Animation：Advanced Techniques》读书笔记">
+                <i class="fa fa-chevron-left"></i> 《iOS Core Animation：Advanced Techniques》读书笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运算"><span class="nav-number">2.</span> <span class="nav-text">运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#按位与-amp"><span class="nav-number">2.1.</span> <span class="nav-text">按位与(&amp;)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按位或"><span class="nav-number">2.2.</span> <span class="nav-text">按位或(|)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按位异或"><span class="nav-number">2.3.</span> <span class="nav-text">按位异或(^)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#左移-lt-lt"><span class="nav-number">2.4.</span> <span class="nav-text">左移(&lt;&lt;)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#右移-gt-gt"><span class="nav-number">2.5.</span> <span class="nav-text">右移(&gt;&gt;)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取反"><span class="nav-number">2.6.</span> <span class="nav-text">取反(~)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
