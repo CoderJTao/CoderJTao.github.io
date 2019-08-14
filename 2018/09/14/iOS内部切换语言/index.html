@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="项目中之前已经做了国际化，但是之前只有中文及英文，直接是根据系统的语言来切换的，现在为项目中加入内部切换语言的功能。  国际化简述 内部切换语言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS内部切换语言">
+<meta property="og:url" content="http://yoursite.com/2018/09/14/iOS内部切换语言/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="项目中之前已经做了国际化，但是之前只有中文及英文，直接是根据系统的语言来切换的，现在为项目中加入内部切换语言的功能。  国际化简述 内部切换语言">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/09/14/iOS内部切换语言/Info.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/09/14/iOS内部切换语言/LanguageName.jpg">
+<meta property="og:updated_time" content="2019-08-14T06:03:56.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS内部切换语言">
+<meta name="twitter:description" content="项目中之前已经做了国际化，但是之前只有中文及英文，直接是根据系统的语言来切换的，现在为项目中加入内部切换语言的功能。  国际化简述 内部切换语言">
+<meta name="twitter:image" content="http://yoursite.com/2018/09/14/iOS内部切换语言/Info.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/14/iOS内部切换语言/">
+
+
+
+
+
+  <title>iOS内部切换语言 | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/14/iOS内部切换语言/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS内部切换语言</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-14T23:33:15+08:00">
+                2018-09-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>项目中之前已经做了国际化，但是之前只有中文及英文，直接是根据系统的语言来切换的，现在为项目中加入内部切换语言的功能。</p>
+<ul>
+<li>国际化简述</li>
+<li>内部切换语言</li>
+</ul>
+<a id="more"></a>
+<h2 id="国际化概述"><a href="#国际化概述" class="headerlink" title="国际化概述"></a>国际化概述</h2><p>为了在项目中加入国际化支持，我们首先在项目配置中加入我们需要的语言：</p>
+<img src="/2018/09/14/iOS内部切换语言/Info.jpg" title="配置">
+<p>然后我们根据提示继续往下操作就能在项目中加入对应语言的支持，后续我们只需要加入语言翻译即可。</p>
+<h2 id="内部切换语言"><a href="#内部切换语言" class="headerlink" title="内部切换语言"></a>内部切换语言</h2><h3 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h3><p>国际化语言时会走到 Bundle 的一个方法，在这个方法中我们我们去 Bundle 中找到对应的语言资源包进行语言的加载。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func localizedString(forKey key: String, value: String?, table tableName: String?) -&gt; String</span><br></pre></td></tr></table></figure>
+<h3 id="拦截方法"><a href="#拦截方法" class="headerlink" title="拦截方法"></a>拦截方法</h3><p>既然我们需要自己切换语言。那么只需要拦截到这个方法，并在方法内部切换需要显示的 Bundle 即可。</p>
+<p>我们可以通过 Runtime 的方式来拦截，并替换为自定义的 CustomBundle。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class CustomBundle: Bundle &#123;</span><br><span class="line">    override func localizedString(forKey key: String, value: String?, table tableName: String?) -&gt; String &#123;</span><br><span class="line">        // 这个方法在后面定义：为了获取包含当前语言资源的 Bundle。</span><br><span class="line">        if let bundle = Bundle.getLanguageBundel() &#123;</span><br><span class="line">            return bundle.localizedString(forKey: key, value: value, table: tableName)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return super.localizedString(forKey: key, value: value, table: tableName)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension Bundle &#123;</span><br><span class="line">  public class func exchangeMethod() &#123;</span><br><span class="line">      // 这里的 DispatchQueue 是自定义的，使代码只执行一次。</span><br><span class="line">      DispatchQueue.once(token: &quot;Change&quot;) &#123;</span><br><span class="line">        //替换 Bundle.main 为自定义的 Bundle</span><br><span class="line">        object_setClass(Bundle.main, CustomBundle.self)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">extension DispatchQueue &#123;</span><br><span class="line">    private static var _onceTracker = [String]()</span><br><span class="line">    public class func once(token: String, block: () -&gt; ()) &#123;</span><br><span class="line">        objc_sync_enter(self)</span><br><span class="line">        defer &#123;</span><br><span class="line">            objc_sync_exit(self)</span><br><span class="line">        &#125;</span><br><span class="line">        if _onceTracker.contains(token) &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        _onceTracker.append(token)</span><br><span class="line">        block()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里通过修改了 Bundle.main 对象的 isa 指针，使其指向它的子类 CustomBundle，这样可以调用子类的方法。这里其实也可以使用 method_swizzling 来交换 Bundle.main 的实现。</p>
+<h3 id="获取语言的-Bundle"><a href="#获取语言的-Bundle" class="headerlink" title="获取语言的 Bundle"></a>获取语言的 Bundle</h3><img src="/2018/09/14/iOS内部切换语言/LanguageName.jpg" title="LanguageResourceName">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">extension Bundle &#123;</span><br><span class="line">  class func getLanguageBundel() -&gt; Bundle? &#123;</span><br><span class="line">        // languageResourceName：这里的名字可以在项目目录中找到。</span><br><span class="line">        let languageBundlePath = Bundle.main.path(forResource: languageResourceName, ofType: &quot;lproj&quot;)</span><br><span class="line">        guard let path = languageBundlePath else &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        let languageBundle = Bundle(path: path)</span><br><span class="line">        guard let bundle = languageBundle else &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        return bundle</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="语言设置"><a href="#语言设置" class="headerlink" title="语言设置"></a>语言设置</h3><ul>
+<li><strong>UserLanguageKey：</strong> 保存用户设置的语言</li>
+<li><strong>AppleLanguages：</strong> 系统提供的一个键，设置系统的语言。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// 用户自定义语言</span><br><span class="line">static func setUserLanguage(languageName: String) &#123;</span><br><span class="line">    // save user language setting</span><br><span class="line">    UserDefaults.standard.set(languageName, forKey: &quot;UserLanguageKey&quot;)</span><br><span class="line"></span><br><span class="line">    // set language</span><br><span class="line">    UserDefaults.standard.set([languageName], forKey: &quot;AppleLanguages&quot;)</span><br><span class="line"></span><br><span class="line">    UserDefaults.standard.synchronize()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> // 重置系统语言</span><br><span class="line">static func setUserLanguage() &#123;</span><br><span class="line">    UserDefaults.standard.removeObject(forKey: &quot;UserLanguageKey&quot;)</span><br><span class="line"></span><br><span class="line">    // set language</span><br><span class="line">    UserDefaults.standard.set(nil, forKey: &quot;AppleLanguages&quot;)</span><br><span class="line"></span><br><span class="line">    UserDefaults.standard.synchronize()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="切换控制器"><a href="#切换控制器" class="headerlink" title="切换控制器"></a>切换控制器</h3><p>这里初始化 ViewController 的操作是以从 StoryBoard 中初始化为例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 初始化导航控制器</span><br><span class="line">let nav = UINavigationController()</span><br><span class="line"></span><br><span class="line">// 初始化几个ViewController,使界面回到切换语言界面</span><br><span class="line">var vcs: [UIViewController] = []</span><br><span class="line">let vc1 = UIStoryboard(name: &quot;DeviceCenter&quot;, bundle: Bundle.main).instantiateViewController(withIdentifier: &quot;DeviceCenterController&quot;)</span><br><span class="line">let vc2 = UIStoryboard(name: &quot;Account&quot;, bundle: Bundle.main).instantiateViewController(withIdentifier: &quot;AccountController&quot;)</span><br><span class="line">let vc3 = UIStoryboard(name: &quot;Account&quot;, bundle: Bundle.main).instantiateViewController(withIdentifier: &quot;LanguageController&quot;)</span><br><span class="line">vcs.append(vc1)</span><br><span class="line">vcs.append(vc2)</span><br><span class="line">vcs.append(vc3)</span><br><span class="line"></span><br><span class="line">// 将初始化的 VC 用导航控制器管理</span><br><span class="line">nav.viewControllers = vcs</span><br><span class="line">//切换 rootViewController</span><br><span class="line">UIApplication.shared.keyWindow?.rootViewController = nav</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/26/位运算记录/" rel="next" title="位运算记录">
+                <i class="fa fa-chevron-left"></i> 位运算记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/23/iOS获取设备型号记录/" rel="prev" title="iOS获取设备型号记录">
+                iOS获取设备型号记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#国际化概述"><span class="nav-number">1.</span> <span class="nav-text">国际化概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部切换语言"><span class="nav-number">2.</span> <span class="nav-text">内部切换语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#核心方法"><span class="nav-number">2.1.</span> <span class="nav-text">核心方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拦截方法"><span class="nav-number">2.2.</span> <span class="nav-text">拦截方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取语言的-Bundle"><span class="nav-number">2.3.</span> <span class="nav-text">获取语言的 Bundle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语言设置"><span class="nav-number">2.4.</span> <span class="nav-text">语言设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切换控制器"><span class="nav-number">2.5.</span> <span class="nav-text">切换控制器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
