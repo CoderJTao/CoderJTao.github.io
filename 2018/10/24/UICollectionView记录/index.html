@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="UICollectionView 在项目中是出现很高频的一个空间，它能灵活的展现各种布局。平时，我们常用的水平、垂直及网格的效果基本上都可以使用系统提供的给我们的 Layout 进行完成，最近刚好做了一个自定义布局的需求，这里将过程稍作记录，后面也提及了一些 DragAndDrop 的简单使用。  准备知识 Basic Layout Custom Layout Drag And Drop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS UICollectionView记录">
+<meta property="og:url" content="http://yoursite.com/2018/10/24/UICollectionView记录/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="UICollectionView 在项目中是出现很高频的一个空间，它能灵活的展现各种布局。平时，我们常用的水平、垂直及网格的效果基本上都可以使用系统提供的给我们的 Layout 进行完成，最近刚好做了一个自定义布局的需求，这里将过程稍作记录，后面也提及了一些 DragAndDrop 的简单使用。  准备知识 Basic Layout Custom Layout Drag And Drop">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/10/24/UICollectionView记录/Custom.png">
+<meta property="og:image" content="http://yoursite.com/2018/10/24/UICollectionView记录/Demo1.gif">
+<meta property="og:image" content="http://yoursite.com/2018/10/24/UICollectionView记录/DragAndDrop.gif">
+<meta property="og:updated_time" content="2019-08-21T06:37:33.640Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS UICollectionView记录">
+<meta name="twitter:description" content="UICollectionView 在项目中是出现很高频的一个空间，它能灵活的展现各种布局。平时，我们常用的水平、垂直及网格的效果基本上都可以使用系统提供的给我们的 Layout 进行完成，最近刚好做了一个自定义布局的需求，这里将过程稍作记录，后面也提及了一些 DragAndDrop 的简单使用。  准备知识 Basic Layout Custom Layout Drag And Drop">
+<meta name="twitter:image" content="http://yoursite.com/2018/10/24/UICollectionView记录/Custom.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/24/UICollectionView记录/">
+
+
+
+
+
+  <title>iOS UICollectionView记录 | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/24/UICollectionView记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS UICollectionView记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-24T20:26:31+08:00">
+                2018-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>UICollectionView 在项目中是出现很高频的一个空间，它能灵活的展现各种布局。平时，我们常用的水平、垂直及网格的效果基本上都可以使用系统提供的给我们的 Layout 进行完成，最近刚好做了一个自定义布局的需求，这里将过程稍作记录，后面也提及了一些 DragAndDrop 的简单使用。</p>
+<ul>
+<li>准备知识</li>
+<li>Basic Layout</li>
+<li>Custom Layout</li>
+<li>Drag And Drop</li>
+</ul>
+<a id="more"></a>
+<h2 id="准备知识"><a href="#准备知识" class="headerlink" title="准备知识"></a>准备知识</h2><p>UICollectionView 的核心概念有三点：</p>
+<ul>
+<li>Layout(布局)</li>
+<li>Data Source(数据源)</li>
+<li>Delegate(代理)</li>
+</ul>
+<h3 id="UICollectionViewLayout"><a href="#UICollectionViewLayout" class="headerlink" title="UICollectionViewLayout"></a>UICollectionViewLayout</h3><p>一个抽象基类,用于生成 UICollectionView 的布局信息，每一个 cell 的布局信息由 UICollectionViewLayoutAttributes 进行管理。</p>
+<p>系统为我们提供了一个流式布局的类——UICollectionViewFlowLayout，我们可以利用这个定义我们常用的布局。它可以定义布局方向、cell大小、间距等信息。</p>
+<h3 id="UICollectionViewDataSource"><a href="#UICollectionViewDataSource" class="headerlink" title="UICollectionViewDataSource"></a>UICollectionViewDataSource</h3><p>数据源协议，遵守协议的 delegate 为 UICollectionView 提供数据的各种信息：分组情况、Cell 的数量、每个 Cell 的内容等。</p>
+<p>常用代理方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 分组信息</span><br><span class="line">optional func numberOfSections(in collectionView: UICollectionView) -&gt; Int</span><br><span class="line"></span><br><span class="line">// 每个分组中，cell 的数量</span><br><span class="line">func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int</span><br><span class="line"></span><br><span class="line">// 返回需要显示的 cell</span><br><span class="line">func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -&gt; UICollectionViewCell</span><br><span class="line"></span><br><span class="line">// 返回 UICollectionView 的 Header 或 Footer</span><br><span class="line">optional func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -&gt; UICollectionReusableView</span><br></pre></td></tr></table></figure>
+<h3 id="UICollectionViewDelegate"><a href="#UICollectionViewDelegate" class="headerlink" title="UICollectionViewDelegate"></a>UICollectionViewDelegate</h3><p>UICollectionViewDelegate 为我们提供了 cell 点击的事件以及一些视图的显示事件。</p>
+<p>常用代理方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// cell 点击事件</span><br><span class="line">optional func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath)</span><br><span class="line">    </span><br><span class="line">// cell 视图即将显示</span><br><span class="line">optional func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath)</span><br></pre></td></tr></table></figure>
+<h2 id="Basic-Layout"><a href="#Basic-Layout" class="headerlink" title="Basic Layout"></a>Basic Layout</h2><ul>
+<li>准备工作，后面的几个示例中，数据源的代理方法也是如下实现：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">extension LayoutViewController: UICollectionViewDelegate, UICollectionViewDataSource &#123;</span><br><span class="line">    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int &#123;</span><br><span class="line">        return 14</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -&gt; UICollectionViewCell &#123;</span><br><span class="line">        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: &quot;ImageCell&quot;, for: indexPath) as! ImageCell</span><br><span class="line">        </span><br><span class="line">        let random = dataSource[indexPath.row]</span><br><span class="line">        </span><br><span class="line">        cell.showImage.image = UIImage(named: &quot;\(random)&quot;)</span><br><span class="line"></span><br><span class="line">        return cell</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置 Basic Layout 的布局</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let layout = UICollectionViewFlowLayout()</span><br><span class="line">// 垂直滚动</span><br><span class="line">layout.scrollDirection = .vertical</span><br><span class="line">// cell 大小</span><br><span class="line">layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width)</span><br><span class="line">self.collectionView.collectionViewLayout = layout</span><br></pre></td></tr></table></figure>
+<p>这是最基本的使用，就不多赘述了，基本的使用如果不了解可以去看看官方文档。</p>
+<h2 id="Custom-Layout"><a href="#Custom-Layout" class="headerlink" title="Custom Layout"></a>Custom Layout</h2><p>系统提供给我们的布局只是简单的流式布局，当我们需要一些特殊的布局的时候，只能自己继承自 UICollectionViewLayout 来自定义 Layout。</p>
+<img src="/2018/10/24/UICollectionView记录/Custom.png" title="自定义布局">
+<h3 id="自定义-Layout"><a href="#自定义-Layout" class="headerlink" title="自定义 Layout"></a>自定义 Layout</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class CustomCollectionViewLayout: UICollectionViewLayout &#123;</span><br><span class="line">    private var itemWidth: CGFloat = 0   // cell 宽度</span><br><span class="line">    private var itemHeight: CGFloat = 0  // cell 高度</span><br><span class="line"></span><br><span class="line">    private var currentX: CGFloat = 0    // 当前 x 坐标</span><br><span class="line">    private var currentY: CGFloat = 0    // 当前 y 坐标</span><br><span class="line">	</span><br><span class="line">	 // 存储每个 cell 的布局信息</span><br><span class="line">    private var attrubutesArray = [UICollectionViewLayoutAttributes]()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="布局相关准备工作"><a href="#布局相关准备工作" class="headerlink" title="布局相关准备工作"></a>布局相关准备工作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 布局相关准备工作</span><br><span class="line">// 为每个 invalidateLayout 调用</span><br><span class="line">// 缓存 UICollectionViewLayoutAttributes</span><br><span class="line">// 计算 collectionViewContentSize</span><br><span class="line">override func prepare() &#123;</span><br><span class="line">    super.prepare()</span><br><span class="line"></span><br><span class="line">    guard let count = self.collectionView?.numberOfItems(inSection: 0) else &#123; return &#125;</span><br><span class="line">    // 得到每个 item 的属性并存储</span><br><span class="line">    for i in 0..&lt;count &#123;</span><br><span class="line">        let indexPath = IndexPath(row: i, section: 0)</span><br><span class="line"></span><br><span class="line">        guard let attributes = self.layoutAttributesForItem(at: indexPath) else &#123; break &#125;</span><br><span class="line">        attrubutesArray.append(attributes)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="提供布局属性对象"><a href="#提供布局属性对象" class="headerlink" title="提供布局属性对象"></a>提供布局属性对象</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line">// 提供布局对象</span><br><span class="line">override func layoutAttributesForElements(in rect: CGRect) -&gt; [UICollectionViewLayoutAttributes]? &#123;</span><br><span class="line">    return attrubutesArray</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">override func layoutAttributesForItem(at indexPath: IndexPath) -&gt; UICollectionViewLayoutAttributes? &#123;</span><br><span class="line">    // 获取宽度</span><br><span class="line">    let contentWidth = self.collectionView!.frame.size.width</span><br><span class="line"></span><br><span class="line">    // 通过 indexpath 创建一个 item 属性</span><br><span class="line">    let temp = UICollectionViewLayoutAttributes(forCellWith: indexPath)</span><br><span class="line">    </span><br><span class="line">    // 计算 item 的宽高</span><br><span class="line">    let typeOne: (Int) -&gt; () = &#123; index in</span><br><span class="line">        self.itemWidth = contentWidth / 2</span><br><span class="line">        self.itemHeight = self.itemWidth</span><br><span class="line">        </span><br><span class="line">        temp.frame = CGRect(x: self.currentX, y: self.currentY, width: self.itemWidth, height: self.itemHeight)</span><br><span class="line">        </span><br><span class="line">        if index == 0 &#123;</span><br><span class="line">            self.currentX += self.itemWidth</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            self.currentX += self.itemWidth</span><br><span class="line">            self.currentY += self.itemHeight</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    let typeTwo: (Int) -&gt; () = &#123; index in</span><br><span class="line">        if index == 2 &#123;</span><br><span class="line">            self.itemWidth = (contentWidth * 2) / 3.0</span><br><span class="line">            self.itemHeight = (self.itemWidth * 2) / 3.0</span><br><span class="line">            </span><br><span class="line">            temp.frame = CGRect(x: self.currentX, y: self.currentY, width: self.itemWidth, height: self.itemHeight)</span><br><span class="line">            </span><br><span class="line">            self.currentX += self.itemWidth</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            self.itemWidth = contentWidth / 3.0</span><br><span class="line">            self.itemHeight = (self.itemWidth * 2) / 3.0</span><br><span class="line">            </span><br><span class="line">            temp.frame = CGRect(x: self.currentX, y: self.currentY, width: self.itemWidth, height: self.itemHeight)</span><br><span class="line">            </span><br><span class="line">            self.currentY += self.itemHeight</span><br><span class="line">            if index == 4 &#123;</span><br><span class="line">                self.currentX = 0</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    let typeThree: (Int) -&gt; () = &#123; index in</span><br><span class="line">        if index == 7 &#123;</span><br><span class="line">            self.itemWidth = (contentWidth * 2) / 3.0</span><br><span class="line">            self.itemHeight = (self.itemWidth * 2) / 3.0</span><br><span class="line">            </span><br><span class="line">            temp.frame = CGRect(x: self.currentX, y: self.currentY, width: self.itemWidth, height: self.itemHeight)</span><br><span class="line">            </span><br><span class="line">            self.currentX += self.itemWidth</span><br><span class="line">            self.currentY += self.itemHeight</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            self.itemWidth = contentWidth / 3.0</span><br><span class="line">            self.itemHeight = (self.itemWidth * 2) / 3.0</span><br><span class="line">            </span><br><span class="line">            temp.frame = CGRect(x: self.currentX, y: self.currentY, width: self.itemWidth, height: self.itemHeight)</span><br><span class="line">            </span><br><span class="line">            if index == 5 &#123;</span><br><span class="line">                self.currentY += self.itemHeight</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                self.currentX += self.itemWidth</span><br><span class="line">                self.currentY -= self.itemHeight</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 这下面是我模拟的根据不同的 indexPath 的信息来提供不同的 cell 的显示类型。</span><br><span class="line">    // 实际项目中，一把根据利用 Block 或者 Delegate，在 controller 中根据 indexPath 的值进行计算</span><br><span class="line">    // 并根据计算结果确定其具体的显示类型。</span><br><span class="line">    // Custom Layout 再根据显示类型进行计算显示位置。</span><br><span class="line">    </span><br><span class="line">    let judgeNum = indexPath.row % 8</span><br><span class="line">    </span><br><span class="line">    switch judgeNum &#123;</span><br><span class="line">    case 0, 1:</span><br><span class="line">        typeOne(judgeNum)</span><br><span class="line">    case 2, 3, 4:</span><br><span class="line">        typeTwo(judgeNum)</span><br><span class="line">    case 5, 6, 7:</span><br><span class="line">        typeThree(judgeNum)</span><br><span class="line">    default:</span><br><span class="line">        break</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 当 currentX 到屏幕最右边时，换行到下一行显示。</span><br><span class="line">    if currentX &gt;= contentWidth &#123;</span><br><span class="line">        currentX = 0</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return temp</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="滚动范围"><a href="#滚动范围" class="headerlink" title="滚动范围"></a>滚动范围</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 提供滚动范围</span><br><span class="line">override var collectionViewContentSize: CGSize &#123;</span><br><span class="line">    return CGSize(width: UIScreen.main.bounds.size.width, height: currentY + 20)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="边界更改"><a href="#边界更改" class="headerlink" title="边界更改"></a>边界更改</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 处理自定义布局中的边界修改</span><br><span class="line">// 返回 true 使集合视图重新查询布局</span><br><span class="line">override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -&gt; Bool &#123;</span><br><span class="line">    return true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let layout = CustomCollectionViewLayout()</span><br><span class="line">self.collectionView.collectionViewLayout = layout</span><br></pre></td></tr></table></figure>
+<img src="/2018/10/24/UICollectionView记录/Demo1.gif" title="效果图">
+<h2 id="Drag-And-Drop"><a href="#Drag-And-Drop" class="headerlink" title="Drag And Drop"></a>Drag And Drop</h2><p>之前为了在 UICollectionView 中拖动 cell 需要自己定义手势处理拖动，在 iOS11 增加了 UICollectionViewDragDelegate 及 UICollectionViewDropDelegate 两个协议方便我们进行这个操作。</p>
+<h3 id="开启拖放手势，设置代理"><a href="#开启拖放手势，设置代理" class="headerlink" title="开启拖放手势，设置代理"></a>开启拖放手势，设置代理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 开启拖放手势，设置代理。</span><br><span class="line">self.collectionView.dragInteractionEnabled = true</span><br><span class="line">self.collectionView.dragDelegate = self</span><br><span class="line">self.collectionView.dropDelegate = self</span><br></pre></td></tr></table></figure>
+<h3 id="实现代理"><a href="#实现代理" class="headerlink" title="实现代理"></a>实现代理</h3><h4 id="UICollectionViewDragDelegate"><a href="#UICollectionViewDragDelegate" class="headerlink" title="UICollectionViewDragDelegate"></a>UICollectionViewDragDelegate</h4><p>UICollectionViewDragDelegate 只有一个必须实现的方法。</p>
+<ol>
+<li>创建一个或多个 NSItemProvider ，使用 NSItemProvider 传递集合视图item内容。</li>
+<li>将每个 NSItemProvider 封装在对应 UIDragItem 对象中。</li>
+<li>返回 dragItem。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">extension LayoutViewController: UICollectionViewDragDelegate &#123;</span><br><span class="line">	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -&gt; [UIDragItem] &#123;</span><br><span class="line">	</span><br><span class="line">	    let imageName = self.dataSource[indexPath.row]</span><br><span class="line">	</span><br><span class="line">	    let image = UIImage(named: imageName)!</span><br><span class="line">	</span><br><span class="line">	    let provider = NSItemProvider(object: image)</span><br><span class="line">	</span><br><span class="line">	    let dragItem = UIDragItem(itemProvider: provider)</span><br><span class="line">	</span><br><span class="line">	    return [dragItem]</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果需要支持一次拖动多个，还需要实现下面这个方法，其实现步骤与上方大致相同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -&gt; [UIDragItem]</span><br></pre></td></tr></table></figure>
+<p>如果拖动之后，想自定义拖动视图的样式，可以实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">    自定义拖动过程中 cell 外观。返回 nil 则以 cell 原样式呈现。</span><br><span class="line"> */</span><br><span class="line">func collectionView(_ collectionView: UICollectionView, dragPreviewParametersForItemAt indexPath: IndexPath) -&gt; UIDragPreviewParameters? &#123;</span><br><span class="line">    return nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="UICollectionViewDropDelegate"><a href="#UICollectionViewDropDelegate" class="headerlink" title="UICollectionViewDropDelegate"></a>UICollectionViewDropDelegate</h4><p>实现上方的协议之后，咱们在程序中已经可以实现拖动了，但是现在当放开时，cell 并不会按照我们预想的到达对应的位置，此时，需要实现 UICollectionViewDropDelegate 协议，来处理拖动内容的接收。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">extension LayoutViewController: UICollectionViewDropDelegate &#123;</span><br><span class="line">	 // 返回一个 UICollectionViewDropProposal 对象，告知 cell 该怎么送入新的位置。</span><br><span class="line">    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -&gt; UICollectionViewDropProposal &#123;</span><br><span class="line">        if session.localDragSession != nil &#123;</span><br><span class="line">            // 拖动手势源自同一app。</span><br><span class="line">            return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // 拖动手势源自其它app。</span><br><span class="line">            return UICollectionViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*</span><br><span class="line">        当手指离开屏幕时，UICollectionView 会调用。必须实现该方法以接收拖动的数据。</span><br><span class="line">     */</span><br><span class="line">    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) &#123;</span><br><span class="line">        let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)</span><br><span class="line"></span><br><span class="line">        switch coordinator.proposal.operation &#123;</span><br><span class="line">        case .move:</span><br><span class="line">            let items = coordinator.items</span><br><span class="line"></span><br><span class="line">            if items.contains(where: &#123; $0.sourceIndexPath != nil &#125;) &#123;</span><br><span class="line">                if items.count == 1, let item = items.first &#123;</span><br><span class="line">						// 找到操作的数据</span><br><span class="line">                    let temp = dataSource[item.sourceIndexPath!.row]</span><br><span class="line">						</span><br><span class="line">						// 数据源将操作的数据在原位置删除，以及插入到新的位置。</span><br><span class="line">                    dataSource.remove(at: item.sourceIndexPath!.row)</span><br><span class="line">                    dataSource.insert(temp, at: destinationIndexPath.row)</span><br><span class="line"></span><br><span class="line">                    // 将 collectionView 的多个操作合并为一个动画。</span><br><span class="line">                    collectionView.performBatchUpdates(&#123;</span><br><span class="line">                        collectionView.deleteItems(at: [item.sourceIndexPath!])</span><br><span class="line">                        collectionView.insertItems(at: [destinationIndexPath])</span><br><span class="line">                    &#125;)</span><br><span class="line"></span><br><span class="line">                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        default:</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/2018/10/24/UICollectionView记录/DragAndDrop.gif" title="效果图">
+<p>关于 Drag 和 Drap 还可以很多使用的协议我们没有使用，这里只是实现了一个基本的效果，更多的实现方式还是需要多研读研读官方的文档。</p>
+<p><a href="https://github.com/CoderJTao/LearnCollection" target="_blank" rel="noopener">Demo在此</a></p>
+<blockquote>
+<p>参考链接：<a href="https://developer.apple.com/videos/play/wwdc2017/223" target="_blank" rel="noopener">Drag and Drop with Collection and Table View</a></p>
+<p>参考链接：<a href="https://developer.apple.com/videos/play/wwdc2018/225/" target="_blank" rel="noopener">A Tour Of UICollectionView</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/23/iOS获取设备型号记录/" rel="next" title="iOS获取设备型号记录">
+                <i class="fa fa-chevron-left"></i> iOS获取设备型号记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备知识"><span class="nav-number">1.</span> <span class="nav-text">准备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionViewLayout"><span class="nav-number">1.1.</span> <span class="nav-text">UICollectionViewLayout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionViewDataSource"><span class="nav-number">1.2.</span> <span class="nav-text">UICollectionViewDataSource</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionViewDelegate"><span class="nav-number">1.3.</span> <span class="nav-text">UICollectionViewDelegate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-Layout"><span class="nav-number">2.</span> <span class="nav-text">Basic Layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Custom-Layout"><span class="nav-number">3.</span> <span class="nav-text">Custom Layout</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义-Layout"><span class="nav-number">3.1.</span> <span class="nav-text">自定义 Layout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布局相关准备工作"><span class="nav-number">3.2.</span> <span class="nav-text">布局相关准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提供布局属性对象"><span class="nav-number">3.3.</span> <span class="nav-text">提供布局属性对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滚动范围"><span class="nav-number">3.4.</span> <span class="nav-text">滚动范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边界更改"><span class="nav-number">3.5.</span> <span class="nav-text">边界更改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">3.6.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Drag-And-Drop"><span class="nav-number">4.</span> <span class="nav-text">Drag And Drop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开启拖放手势，设置代理"><span class="nav-number">4.1.</span> <span class="nav-text">开启拖放手势，设置代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现代理"><span class="nav-number">4.2.</span> <span class="nav-text">实现代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UICollectionViewDragDelegate"><span class="nav-number">4.2.1.</span> <span class="nav-text">UICollectionViewDragDelegate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UICollectionViewDropDelegate"><span class="nav-number">4.2.2.</span> <span class="nav-text">UICollectionViewDropDelegate</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
