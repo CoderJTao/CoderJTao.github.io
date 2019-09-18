@@ -79,21 +79,17 @@
 
 
 
-<meta name="description" content="前言在 iOS 程序中，Button 占据的位置总是一个矩形区域。但是，在实际应用中时，Button 设置了图片之后，我们总是希望显示有内容的地方点击才有反馈。基于这个需求，于是有了这篇文章。这篇文章主要讲述当为 Button 设置图片之后，点击响应的处理。">
+<meta name="description" content="实际开发中，我们拿到的设计稿上的颜色标注往往是十六进制的，但是系统中只提供了 RGB 生成颜色的方法，这里我们为 UIColor 添加了一个扩展，支持利用字符串或者 UInt 直接创建 UIColor 对象。  创建文件 添加扩展方法 通过 UInt 创建 通过 String 创建   调用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不规则Button点击（一）">
-<meta property="og:url" content="http://yoursite.com/2018/01/13/不规则Button点击（一）/index.html">
+<meta property="og:title" content="UIColor添加十六进制初始化扩展">
+<meta property="og:url" content="http://yoursite.com/2018/11/04/UIColor添加十六进制初始化扩展/index.html">
 <meta property="og:site_name" content="江涛的博客">
-<meta property="og:description" content="前言在 iOS 程序中，Button 占据的位置总是一个矩形区域。但是，在实际应用中时，Button 设置了图片之后，我们总是希望显示有内容的地方点击才有反馈。基于这个需求，于是有了这篇文章。这篇文章主要讲述当为 Button 设置图片之后，点击响应的处理。">
+<meta property="og:description" content="实际开发中，我们拿到的设计稿上的颜色标注往往是十六进制的，但是系统中只提供了 RGB 生成颜色的方法，这里我们为 UIColor 添加了一个扩展，支持利用字符串或者 UInt 直接创建 UIColor 对象。  创建文件 添加扩展方法 通过 UInt 创建 通过 String 创建   调用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/01/13/不规则Button点击（一）/ShapedButton_One.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/01/13/不规则Button点击（一）/ShapedButton_Two.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/01/13/不规则Button点击（一）/ShapedButton_Final.gif">
-<meta property="og:updated_time" content="2019-07-01T06:12:55.887Z">
+<meta property="og:updated_time" content="2019-09-18T09:48:53.724Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不规则Button点击（一）">
-<meta name="twitter:description" content="前言在 iOS 程序中，Button 占据的位置总是一个矩形区域。但是，在实际应用中时，Button 设置了图片之后，我们总是希望显示有内容的地方点击才有反馈。基于这个需求，于是有了这篇文章。这篇文章主要讲述当为 Button 设置图片之后，点击响应的处理。">
-<meta name="twitter:image" content="http://yoursite.com/2018/01/13/不规则Button点击（一）/ShapedButton_One.jpg">
+<meta name="twitter:title" content="UIColor添加十六进制初始化扩展">
+<meta name="twitter:description" content="实际开发中，我们拿到的设计稿上的颜色标注往往是十六进制的，但是系统中只提供了 RGB 生成颜色的方法，这里我们为 UIColor 添加了一个扩展，支持利用字符串或者 UInt 直接创建 UIColor 对象。  创建文件 添加扩展方法 通过 UInt 创建 通过 String 创建   调用">
 
 
 
@@ -123,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/13/不规则Button点击（一）/">
+  <link rel="canonical" href="http://yoursite.com/2018/11/04/UIColor添加十六进制初始化扩展/">
 
 
 
 
 
-  <title>不规则Button点击（一） | 江涛的博客</title>
+  <title>UIColor添加十六进制初始化扩展 | 江涛的博客</title>
   
 
 
@@ -256,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/13/不规则Button点击（一）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/04/UIColor添加十六进制初始化扩展/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JTao">
@@ -273,7 +269,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">不规则Button点击（一）</h1>
+          <h1 class="post-title" itemprop="name headline">UIColor添加十六进制初始化扩展</h1>
         
 
         <div class="post-meta">
@@ -285,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-13T18:47:22+08:00">
-                2018-01-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-04T20:26:31+08:00">
+                2018-11-04
               </time>
             
 
@@ -345,58 +341,26 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在 iOS 程序中，Button 占据的位置总是一个矩形区域。但是，在实际应用中时，Button 设置了图片之后，我们总是希望显示有内容的地方点击才有反馈。基于这个需求，于是有了这篇文章。这篇文章主要讲述当为 Button 设置图片之后，点击响应的处理。</p>
-<a id="more"></a>
-<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>利用图片，实现一个如图的按钮组。</p>
-<img src="/2018/01/13/不规则Button点击（一）/ShapedButton_One.jpg">
-<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>如下图所示：</p>
+        <p>实际开发中，我们拿到的设计稿上的颜色标注往往是十六进制的，但是系统中只提供了 RGB 生成颜色的方法，这里我们为 UIColor 添加了一个扩展，支持利用字符串或者 UInt 直接创建 UIColor 对象。</p>
 <ul>
-<li>功能1、2、3、4的按钮可以实现点击功能。但是在红色方框四角的位置，也会响应相应的点击事件。</li>
-<li>紫色方框内四角区域点击时，响应的方法是功能5，而不是对应的功能。</li>
-</ul>
-<img src="/2018/01/13/不规则Button点击（一）/ShapedButton_Two.jpg">
-<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><h4 id="期望的结果"><a href="#期望的结果" class="headerlink" title="期望的结果"></a>期望的结果</h4><ul>
-<li>寻找到合适的Button来处理点击事件</li>
-</ul>
-<h4 id="需要弄明白的问题"><a href="#需要弄明白的问题" class="headerlink" title="需要弄明白的问题"></a>需要弄明白的问题</h4><ul>
-<li>事件在如何传递的？</li>
-<li>怎么判断谁来处理当前事件？</li>
-</ul>
-<p><strong>事件是如何传递的？</strong></p>
-<ol>
-<li>当用户触摸实际屏幕时，会生成一个Touch Event，将此事件添加到UIApplication管理的事件队列之中。</li>
-<li>UIApplication从事件队列之中按顺序取出事件分发到视图去处理。</li>
-<li>当事件被发出以后，会从keyWindow开始，依次向上传递，包括Controller以及View，最后找到合适的视图来响应事件。</li>
-</ol>
-<p>可以看出：当一个事件发生后，事件会从父控件传给子控件，也就是说由UIApplication -&gt; UIWindow -&gt; UIView -&gt; initial view,以上就是事件的传递，也就是寻找最合适的view的过程。</p>
-<p><strong>涉及到两个方法：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">func hitTest(_ point: CGPoint, with event: UIEvent?) -&gt; UIView?</span><br><span class="line">func point(inside point: CGPoint, with event: UIEvent?) -&gt; Bool</span><br></pre></td></tr></table></figure>
-<p>当UIApplication发送事件到keyWindow时，会调用 hitTest来寻找最合适的视图处理事件。判断逻辑如下：</p>
-<ol>
-<li>首先判断自身是否能够响应触摸事件（userInteractionEnabled==true、hidden==true、alpha&lt;=0.01不能响应触摸事件）,若能响应则下一步，否则返回nil。</li>
-<li>如果可以响应触摸事件，调用pointInside来判断是否在显示区域内，如果不在其中，pointInside返回false，同时hitTest返回nil。</li>
-<li>如果 pointInside返回true，表示在当前的视图之中，然后<font color="red">倒序</font>遍历该视图的子视图,重复上述步骤，直到某一视图可以响应，hitTest:返回该视图。</li>
-<li><p>如果执行完上述步骤以后，没有符合条件的视图响应事件，则返回视图本身，表示只有当前视图符合条件，能够处理该事件。</p>
-<pre><code>Q：为什么倒序遍历？
-A：因为在subViews数组中，最后添加的视图，在视图层级中处于最上方。
-</code></pre></li>
-</ol>
-<p><strong>怎么判断谁来处理当前事件？</strong></p>
-<p>当知道的上面事件传递机制后，我们就能理清楚我们的Button处理事件的逻辑了：</p>
-<ol>
-<li>自定义Button继承自系统的Button。</li>
-<li><p>重写 point(inside point: CGPoint, with event: UIEvent?) -&gt; Bool 方法。在其中判断当前事件是否需要自身处理。</p>
-<ul>
-<li>判断点是否在自身button.imageView的frame范围内</li>
-<li>得到点击点在button.imageView中该点的颜色值</li>
-<li>如果得到的色值中alpha小于阀值，则返回false</li>
+<li>创建文件</li>
+<li>添加扩展方法<ul>
+<li>通过 UInt 创建</li>
+<li>通过 String 创建</li>
 </ul>
 </li>
-</ol>
-<p>具体代码可以查看<a href="https://github.com/CoderJTao/JTShapedButton" target="_blank" rel="noopener">JTShapedButton源码</a>。</p>
-<h2 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h2><img src="/2018/01/13/不规则Button点击（一）/ShapedButton_Final.gif">
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这里记录的不规则按钮是在设置图片情况下的。</p>
-<p>还有另一种情况是：按钮的形状是自己绘制的，这种情况的处理可以看另一篇文章<a href="https://juejin.im/post/5cad816e6fb9a068b7489e62" target="_blank" rel="noopener">iOS 不规则Button点击（二）</a>。</p>
+<li>调用</li>
+</ul>
+<a id="more"></a>
+<h2 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h2><p>在项目中添加一个编写扩展代码的文件，命名为 UIColor+Helper.swift。</p>
+<h2 id="添加扩展方法"><a href="#添加扩展方法" class="headerlink" title="添加扩展方法"></a>添加扩展方法</h2><p>在第一步创建的文件中添加下方几个扩展的方法。</p>
+<blockquote>
+<p>convenience：便利构造器，使用 convenience 修饰的构造函数叫做便利构造函数，便利构造函数通常用在对系统的类进行构造函数的扩充时使用。  </p>
+</blockquote>
+<p>便利构造函数的特点：<br>1、便利构造函数通常都是写在 extension 里面<br>2、便利函数 init 前面需要加载 convenience<br>3、在便利构造函数中需要明确的调用 self.init() </p>
+<h3 id="通过-UInt-创建"><a href="#通过-UInt-创建" class="headerlink" title="通过 UInt 创建"></a>通过 UInt 创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">extension UIColor &#123;</span><br><span class="line">    //用数值初始化颜色，便于生成设计图上标明的十六进制颜色</span><br><span class="line">    convenience init(valueRGB: UInt, alpha: CGFloat = 1.0) &#123;</span><br><span class="line">        self.init(</span><br><span class="line">                    red: CGFloat((valueRGB &amp; 0xFF0000) &gt;&gt; 16) / 255.0,</span><br><span class="line">                    green: CGFloat((valueRGB &amp; 0x00FF00) &gt;&gt; 8) / 255.0,</span><br><span class="line">                    blue: CGFloat(valueRGB &amp; 0x0000FF) / 255.0,</span><br><span class="line">                    alpha: alpha</span><br><span class="line">                )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="通过-String-创建"><a href="#通过-String-创建" class="headerlink" title="通过 String 创建"></a>通过 String 创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">extension UIColor &#123;</span><br><span class="line">    convenience init(r: UInt32, g: UInt32, b: UInt32, a: CGFloat = 1.0) &#123;</span><br><span class="line">        self.init(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: a)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class func hex(hexString: String) -&gt; UIColor &#123;</span><br><span class="line">        var cString: String = hexString.trimmingCharacters(in: .whitespacesAndNewlines)</span><br><span class="line">        if cString.count &lt; 6 &#123; return UIColor.black &#125;</span><br><span class="line"></span><br><span class="line">        let index = cString.index(cString.endIndex, offsetBy: -6)</span><br><span class="line">        let subString = cString[index...]</span><br><span class="line"></span><br><span class="line">        if cString.hasPrefix(&quot;0X&quot;) &#123;</span><br><span class="line">            cString = String(subString)</span><br><span class="line">        &#125;</span><br><span class="line">        if cString.hasPrefix(&quot;#&quot;) &#123;</span><br><span class="line">            cString = String(subString)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if cString.count != 6 &#123;</span><br><span class="line">            return UIColor.black</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        var range = NSRange(location: 0, length: 2)</span><br><span class="line">        let rString = (cString as NSString).substring(with: range)</span><br><span class="line">        range.location = 2</span><br><span class="line">        let gString = (cString as NSString).substring(with: range)</span><br><span class="line">        range.location = 4</span><br><span class="line">        let bString = (cString as NSString).substring(with: range)</span><br><span class="line"></span><br><span class="line">        var r: UInt32 = 0x0</span><br><span class="line">        var g: UInt32 = 0x0</span><br><span class="line">        var b: UInt32 = 0x0</span><br><span class="line"></span><br><span class="line">        Scanner(string: rString).scanHexInt32(&amp;r)</span><br><span class="line">        Scanner(string: gString).scanHexInt32(&amp;g)</span><br><span class="line">        Scanner(string: bString).scanHexInt32(&amp;b)</span><br><span class="line"></span><br><span class="line">        return UIColor(r: r, g: g, b: b)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let testColor1 = UIColor(valueRGB: 0x666666, alpha: 1.0)</span><br><span class="line">let testColor2 = UIColor.hex(hexString: &quot;#666666&quot;)</span><br><span class="line">let testColor3 = UIColor.hex(hexString: &quot;0X666666&quot;)</span><br><span class="line">let testColor4 = UIColor.hex(hexString: &quot;666666&quot;)</span><br><span class="line"></span><br><span class="line">---结果---</span><br><span class="line"></span><br><span class="line">r 0.4 g 0.4 b 0.4 a 1.0</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -421,8 +385,8 @@ A：因为在subViews数组中，最后添加的视图，在视图层级中处�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/30/property及其关键字学习笔记/" rel="next" title="@property及其关键字学习笔记">
-                <i class="fa fa-chevron-left"></i> @property及其关键字学习笔记
+              <a href="/2018/10/24/UICollectionView记录/" rel="next" title="iOS UICollectionView记录">
+                <i class="fa fa-chevron-left"></i> iOS UICollectionView记录
               </a>
             
           </div>
@@ -430,10 +394,6 @@ A：因为在subViews数组中，最后添加的视图，在视图层级中处�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/21/不规则Button点击（二）/" rel="prev" title="不规则Button点击（二）">
-                不规则Button点击（二） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -568,7 +528,7 @@ A：因为在subViews数组中，最后添加的视图，在视图层级中处�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题"><span class="nav-number">3.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路"><span class="nav-number">4.</span> <span class="nav-text">解决思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#期望的结果"><span class="nav-number">4.0.1.</span> <span class="nav-text">期望的结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需要弄明白的问题"><span class="nav-number">4.0.2.</span> <span class="nav-text">需要弄明白的问题</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#实现效果"><span class="nav-number">5.</span> <span class="nav-text">实现效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">6.</span> <span class="nav-text">后记</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建文件"><span class="nav-number">1.</span> <span class="nav-text">创建文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加扩展方法"><span class="nav-number">2.</span> <span class="nav-text">添加扩展方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-UInt-创建"><span class="nav-number">2.1.</span> <span class="nav-text">通过 UInt 创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-String-创建"><span class="nav-number">2.2.</span> <span class="nav-text">通过 String 创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用"><span class="nav-number">3.</span> <span class="nav-text">调用</span></a></li></ol></div>
             
 
           </div>
