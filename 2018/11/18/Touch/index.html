@@ -79,17 +79,21 @@
 
 
 
-<meta name="description" content="实际开发中，我们拿到的设计稿上的颜色标注往往是十六进制的，但是系统中只提供了 RGB 生成颜色的方法，这里我们为 UIColor 添加了一个扩展，支持利用字符串或者 UInt 直接创建 UIColor 对象。  创建文件 添加扩展方法 通过 UInt 创建 通过 String 创建   调用">
+<meta name="description" content="在项目中可能需要加入 3D Touch 功能，这篇文章就记录一下自己的学习结果。 有两种方式给应用添加 3D Touch 的菜单：静态添加（Info.plist）和动态添加（纯代码）。  静态添加 动态添加 使用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UIColor添加十六进制初始化扩展">
-<meta property="og:url" content="http://yoursite.com/2018/11/04/UIColor添加十六进制初始化扩展/index.html">
+<meta property="og:title" content="iOS学习之：3D Touch">
+<meta property="og:url" content="http://yoursite.com/2018/11/18/Touch/index.html">
 <meta property="og:site_name" content="江涛的博客">
-<meta property="og:description" content="实际开发中，我们拿到的设计稿上的颜色标注往往是十六进制的，但是系统中只提供了 RGB 生成颜色的方法，这里我们为 UIColor 添加了一个扩展，支持利用字符串或者 UInt 直接创建 UIColor 对象。  创建文件 添加扩展方法 通过 UInt 创建 通过 String 创建   调用">
+<meta property="og:description" content="在项目中可能需要加入 3D Touch 功能，这篇文章就记录一下自己的学习结果。 有两种方式给应用添加 3D Touch 的菜单：静态添加（Info.plist）和动态添加（纯代码）。  静态添加 动态添加 使用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-19T02:26:20.271Z">
+<meta property="og:image" content="http://yoursite.com/2018/11/18/Touch/Info.plist.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/11/18/Touch/效果图1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/18/Touch/效果图2.png">
+<meta property="og:updated_time" content="2019-09-19T10:30:19.157Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UIColor添加十六进制初始化扩展">
-<meta name="twitter:description" content="实际开发中，我们拿到的设计稿上的颜色标注往往是十六进制的，但是系统中只提供了 RGB 生成颜色的方法，这里我们为 UIColor 添加了一个扩展，支持利用字符串或者 UInt 直接创建 UIColor 对象。  创建文件 添加扩展方法 通过 UInt 创建 通过 String 创建   调用">
+<meta name="twitter:title" content="iOS学习之：3D Touch">
+<meta name="twitter:description" content="在项目中可能需要加入 3D Touch 功能，这篇文章就记录一下自己的学习结果。 有两种方式给应用添加 3D Touch 的菜单：静态添加（Info.plist）和动态添加（纯代码）。  静态添加 动态添加 使用">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/18/Touch/Info.plist.jpg">
 
 
 
@@ -119,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/04/UIColor添加十六进制初始化扩展/">
+  <link rel="canonical" href="http://yoursite.com/2018/11/18/Touch/">
 
 
 
 
 
-  <title>UIColor添加十六进制初始化扩展 | 江涛的博客</title>
+  <title>iOS学习之：3D Touch | 江涛的博客</title>
   
 
 
@@ -252,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/04/UIColor添加十六进制初始化扩展/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/18/Touch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JTao">
@@ -269,7 +273,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">UIColor添加十六进制初始化扩展</h1>
+          <h1 class="post-title" itemprop="name headline">iOS学习之：3D Touch</h1>
         
 
         <div class="post-meta">
@@ -281,8 +285,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-04T20:26:31+08:00">
-                2018-11-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-18T22:26:31+08:00">
+                2018-11-18
               </time>
             
 
@@ -341,26 +345,52 @@
       
 
       
-        <p>实际开发中，我们拿到的设计稿上的颜色标注往往是十六进制的，但是系统中只提供了 RGB 生成颜色的方法，这里我们为 UIColor 添加了一个扩展，支持利用字符串或者 UInt 直接创建 UIColor 对象。</p>
+        <p>在项目中可能需要加入 3D Touch 功能，这篇文章就记录一下自己的学习结果。</p>
+<p>有两种方式给应用添加 3D Touch 的菜单：<strong>静态添加</strong>（Info.plist）和<strong>动态添加</strong>（纯代码）。</p>
 <ul>
-<li>创建文件</li>
-<li>添加扩展方法<ul>
-<li>通过 UInt 创建</li>
-<li>通过 String 创建</li>
-</ul>
-</li>
-<li>调用</li>
+<li>静态添加</li>
+<li>动态添加</li>
+<li>使用</li>
 </ul>
 <a id="more"></a>
-<h2 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h2><p>在项目中添加一个编写扩展代码的文件，命名为 UIColor+Helper.swift。</p>
-<h2 id="添加扩展方法"><a href="#添加扩展方法" class="headerlink" title="添加扩展方法"></a>添加扩展方法</h2><p>在第一步创建的文件中添加下方几个扩展的方法。</p>
+<h2 id="预备"><a href="#预备" class="headerlink" title="预备"></a>预备</h2><ul>
+<li>3D Touch 只在 iOS 9 及以上版本得到支持，之前版本的 iOS 并不支持该功能； </li>
+<li>3D Touch 只在 iPhone 6s 及以后型号的 iPhone 或 iPad Pro 上可用，更早的设备并不支持该功能。</li>
+</ul>
+<p>可以通过如下代码进行判断：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">switch self.traitCollection.forceTouchCapability &#123;</span><br><span class="line">        case .available:</span><br><span class="line">            print(&quot;支持 3D Touch&quot;)</span><br><span class="line">        case .unavailable:</span><br><span class="line">            print(&quot;不支持 3D Touch&quot;)</span><br><span class="line">        case .unknown:</span><br><span class="line">            print(&quot;未知状态，作不支持处理&quot;)</span><br><span class="line">        default:</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="静态添加"><a href="#静态添加" class="headerlink" title="静态添加"></a>静态添加</h2><p>静态添加直接在 Info.plist 文件中添加如下字段即可：</p>
+<img src="/2018/11/18/Touch/Info.plist.jpg" title="Info.plist">
+<p><strong>各个字段的含义：</strong></p>
+<ul>
+<li><strong>UIApplicationShortcutItems：</strong>数组中的元素是我们需要的快捷选项标签。</li>
+<li><strong>UIApplicationShortcutItemType(required)：</strong>选项的唯一标识符。</li>
+<li><strong>UIApplicationShortcutItemTitle(required)：</strong>选项的标题。</li>
+<li><strong>UIApplicationShortcutItemSubtitle：</strong>选项的子标题。</li>
+<li><strong>UIApplicationShortcutItemIconType：</strong>选项中显示系统提供的图标。</li>
+<li><strong>UIApplicationShortcutItemUserInfo：</strong>字典信息，可用于传值。</li>
+<li><strong>UIApplicationShortcutItemIconFile：</strong>使用项目中图片作为选项图标，指定了此选项后会忽略 UIApplicationShortcutItemIconType 的设置，用户自定义图片优先级高于系统图标。</li>
+</ul>
 <blockquote>
-<p>convenience：便利构造器，使用 convenience 修饰的构造函数叫做便利构造函数，便利构造函数通常用在对系统的类进行构造函数的扩充时使用。  </p>
+<p>参考链接：<a href="https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/iPhoneOSKeys.html#//apple_ref/doc/uid/TP40009252-SW36" target="_blank" rel="noopener">Information Property List Key Reference</a></p>
 </blockquote>
-<p>便利构造函数的特点：<br>1、便利构造函数通常都是写在 extension 里面<br>2、便利函数 init 前面需要加载 convenience<br>3、在便利构造函数中需要明确的调用 self.init() </p>
-<h3 id="通过-UInt-创建"><a href="#通过-UInt-创建" class="headerlink" title="通过 UInt 创建"></a>通过 UInt 创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">extension UIColor &#123;</span><br><span class="line">    //用数值初始化颜色，便于生成设计图上标明的十六进制颜色</span><br><span class="line">    convenience init(valueRGB: UInt, alpha: CGFloat = 1.0) &#123;</span><br><span class="line">        self.init(</span><br><span class="line">                    red: CGFloat((valueRGB &amp; 0xFF0000) &gt;&gt; 16) / 255.0,</span><br><span class="line">                    green: CGFloat((valueRGB &amp; 0x00FF00) &gt;&gt; 8) / 255.0,</span><br><span class="line">                    blue: CGFloat(valueRGB &amp; 0x0000FF) / 255.0,</span><br><span class="line">                    alpha: alpha</span><br><span class="line">                )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="通过-String-创建"><a href="#通过-String-创建" class="headerlink" title="通过 String 创建"></a>通过 String 创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">extension UIColor &#123;</span><br><span class="line">    convenience init(r: UInt32, g: UInt32, b: UInt32, a: CGFloat = 1.0) &#123;</span><br><span class="line">        self.init(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: a)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class func hex(hexString: String) -&gt; UIColor &#123;</span><br><span class="line">        var cString: String = hexString.trimmingCharacters(in: .whitespacesAndNewlines)</span><br><span class="line">        if cString.count &lt; 6 &#123; return UIColor.black &#125;</span><br><span class="line"></span><br><span class="line">        let index = cString.index(cString.endIndex, offsetBy: -6)</span><br><span class="line">        let subString = cString[index...]</span><br><span class="line"></span><br><span class="line">        if cString.hasPrefix(&quot;0X&quot;) &#123;</span><br><span class="line">            cString = String(subString)</span><br><span class="line">        &#125;</span><br><span class="line">        if cString.hasPrefix(&quot;#&quot;) &#123;</span><br><span class="line">            cString = String(subString)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if cString.count != 6 &#123;</span><br><span class="line">            return UIColor.black</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        var range = NSRange(location: 0, length: 2)</span><br><span class="line">        let rString = (cString as NSString).substring(with: range)</span><br><span class="line">        range.location = 2</span><br><span class="line">        let gString = (cString as NSString).substring(with: range)</span><br><span class="line">        range.location = 4</span><br><span class="line">        let bString = (cString as NSString).substring(with: range)</span><br><span class="line"></span><br><span class="line">        var r: UInt32 = 0x0</span><br><span class="line">        var g: UInt32 = 0x0</span><br><span class="line">        var b: UInt32 = 0x0</span><br><span class="line"></span><br><span class="line">        Scanner(string: rString).scanHexInt32(&amp;r)</span><br><span class="line">        Scanner(string: gString).scanHexInt32(&amp;g)</span><br><span class="line">        Scanner(string: bString).scanHexInt32(&amp;b)</span><br><span class="line"></span><br><span class="line">        return UIColor(r: r, g: g, b: b)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let testColor1 = UIColor(valueRGB: 0x666666, alpha: 1.0)</span><br><span class="line">let testColor2 = UIColor.hex(hexString: &quot;#666666&quot;)</span><br><span class="line">let testColor3 = UIColor.hex(hexString: &quot;0X666666&quot;)</span><br><span class="line">let testColor4 = UIColor.hex(hexString: &quot;666666&quot;)</span><br><span class="line"></span><br><span class="line">---结果---</span><br><span class="line"></span><br><span class="line">r 0.4 g 0.4 b 0.4 a 1.0</span><br></pre></td></tr></table></figure>
+<p><strong>效果图：</strong></p>
+<img src="/2018/11/18/Touch/效果图1.png" title="效果图">
+<blockquote>
+<p>在 plist 文件中定义的顺序，在实际显示时，是按照距离 App 图标的顺序来排的。</p>
+</blockquote>
+<h2 id="动态添加"><a href="#动态添加" class="headerlink" title="动态添加"></a>动态添加</h2><p>动态添加其实也是将上方 plist 中定义的字段用代码创建：</p>
+<ol>
+<li>创建图标对象——UIApplicationShortcutIcon </li>
+<li>创建菜单 item 对象——UIApplicationShortcutItem</li>
+<li>将 item 数组赋值给 </li>
+</ol>
+<p>创建代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">private func config3DTouchItems() &#123;</span><br><span class="line">    if self.window!.traitCollection.forceTouchCapability == .available &#123;</span><br><span class="line"></span><br><span class="line">        // 创建图标</span><br><span class="line">        // UIApplicationShortcutIcon(templateImageName: &quot;&quot;) 可以使用自己的图片</span><br><span class="line">        let icon1 = UIApplicationShortcutIcon(type: .bookmark)</span><br><span class="line">        let icon2 = UIApplicationShortcutIcon(type: .home)</span><br><span class="line"></span><br><span class="line">        // 创建 item</span><br><span class="line">        let item1 = UIMutableApplicationShortcutItem(type: &quot;item1&quot;, localizedTitle: &quot;Item1&quot;, localizedSubtitle: &quot;OneSub&quot;, icon: icon1, userInfo: [&quot;item1&quot;: &quot;valueforitem&quot; as NSSecureCoding])</span><br><span class="line">        let item2 = UIMutableApplicationShortcutItem(type: &quot;item2&quot;, localizedTitle: &quot;Item2&quot;, localizedSubtitle: &quot;TwoSub&quot;, icon: icon2, userInfo: [&quot;item2&quot;: &quot;value2foritem&quot; as NSSecureCoding])</span><br><span class="line"></span><br><span class="line">        // 赋值</span><br><span class="line">        UIApplication.shared.shortcutItems = [item1, item2]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果图：</p>
+<img src="/2018/11/18/Touch/效果图2.png" title="效果图">
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>我们只需要在 AppDelegate 加入下面的方法，在其中我们可以获取到选项的一些信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -&gt; Void) &#123;</span><br><span class="line">        print(shortcutItem.localizedTitle)</span><br><span class="line">        print(shortcutItem.localizedSubtitle)</span><br><span class="line">        print(shortcutItem.userInfo)</span><br><span class="line">        print(shortcutItem.type)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -385,8 +415,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/24/UICollectionView记录/" rel="next" title="iOS UICollectionView记录">
-                <i class="fa fa-chevron-left"></i> iOS UICollectionView记录
+              <a href="/2018/11/04/UIColor添加十六进制初始化扩展/" rel="next" title="UIColor添加十六进制初始化扩展">
+                <i class="fa fa-chevron-left"></i> UIColor添加十六进制初始化扩展
               </a>
             
           </div>
@@ -394,10 +424,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/18/Touch/" rel="prev" title="iOS学习之：3D Touch">
-                iOS学习之：3D Touch <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -532,7 +558,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建文件"><span class="nav-number">1.</span> <span class="nav-text">创建文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加扩展方法"><span class="nav-number">2.</span> <span class="nav-text">添加扩展方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-UInt-创建"><span class="nav-number">2.1.</span> <span class="nav-text">通过 UInt 创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-String-创建"><span class="nav-number">2.2.</span> <span class="nav-text">通过 String 创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用"><span class="nav-number">3.</span> <span class="nav-text">调用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#预备"><span class="nav-number">1.</span> <span class="nav-text">预备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态添加"><span class="nav-number">2.</span> <span class="nav-text">静态添加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态添加"><span class="nav-number">3.</span> <span class="nav-text">动态添加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">4.</span> <span class="nav-text">使用</span></a></li></ol></div>
             
 
           </div>
