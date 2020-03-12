@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Category 可以在不修改原来类的基础上为已经存在的类添加方法。这一篇文章会分几个方面来详细介绍 Category。  Category 的特点 Category 对比extension Category 的底层实现 Category 的结构 Category 加载过程 Category 方法的覆盖   Category 和 +load方法 Category 关联对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="底层初窥——Category">
+<meta property="og:url" content="http://yoursite.com/2019/05/04/初窥Category/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="Category 可以在不修改原来类的基础上为已经存在的类添加方法。这一篇文章会分几个方面来详细介绍 Category。  Category 的特点 Category 对比extension Category 的底层实现 Category 的结构 Category 加载过程 Category 方法的覆盖   Category 和 +load方法 Category 关联对象">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-12T06:48:39.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="底层初窥——Category">
+<meta name="twitter:description" content="Category 可以在不修改原来类的基础上为已经存在的类添加方法。这一篇文章会分几个方面来详细介绍 Category。  Category 的特点 Category 对比extension Category 的底层实现 Category 的结构 Category 加载过程 Category 方法的覆盖   Category 和 +load方法 Category 关联对象">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/04/初窥Category/">
+
+
+
+
+
+  <title>底层初窥——Category | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-self">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/04/初窥Category/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">底层初窥——Category</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-04T18:29:13+08:00">
+                2019-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS底层初窥/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS底层初窥</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Category 可以在不修改原来类的基础上为已经存在的类添加方法。这一篇文章会分几个方面来详细介绍 Category。</p>
+<ul>
+<li><a href="#category-special">Category 的特点</a></li>
+<li><a href="#category-extension">Category 对比extension</a></li>
+<li><a href="#category-is">Category 的底层实现</a><ul>
+<li><a href="#category-struct">Category 的结构</a></li>
+<li><a href="#category-how-load">Category 加载过程</a></li>
+<li><a href="#category-override">Category 方法的覆盖</a></li>
+</ul>
+</li>
+<li><a href="#category-load">Category 和 +load方法</a></li>
+<li><a href="#category-associat">Category 关联对象</a></li>
+</ul>
+<a id="more"></a>
+<hr>
+<p><span id="category-special"></span></p>
+<h2 id="Category-特点"><a href="#Category-特点" class="headerlink" title="Category 特点"></a>Category 特点</h2><ul>
+<li>能在不修改原类的基础上为原类添加实例方法、类方法、协议及属性(这里添加属性仅仅是属性，并不会自动为我们生成实例变量以及 getter 和 setter 方法)。</li>
+</ul>
+<blockquote>
+<p>可以把不同的功能组织到不同的 Category 里面，从而减少单个文件的体积，也更符合单一职责原则。</p>
+</blockquote>
+<ul>
+<li>如果 Category 中的方法和类中原有方法同名，运行时会优先调用 Category 中的方法。也就是，Category 中的方法会覆盖掉类中原有的方法。具体细节，在后面<a href="#category-how-load">Category 加载过程</a>中会有解释。</li>
+</ul>
+<ul>
+<li>如果多个 Category 中存在同名的方法，运行时到底调用哪个方法由编译器决定，最后一个参与编译的方法会被调用。编译顺序可查看 Target -&gt; Build Phases -&gt; Compile Sources，两个分类的顺序决定了 Category 被编译的先后顺序，最后参与编译的 Category 方法会被使用。</li>
+</ul>
+<p><span id="category-extension"></span></p>
+<h2 id="对比-extention"><a href="#对比-extention" class="headerlink" title="对比 extention"></a>对比 extention</h2><ul>
+<li><p>extension</p>
+<p>在编译期决议，它就是类的一部分，在编译期和头文件里的 @interface 以及实现文件里的 @implement 一起形成一个完整的类，它伴随类的产生而产生，亦随之一起消亡。extension 一般用来隐藏类的私有信息，你必须有一个类的源码才能为一个类添加 extension，所以你无法为系统的类比如 NSString 添加 extension。（详见2）</p>
+</li>
+<li><p>category</p>
+</li>
+</ul>
+<p>在运行期决议。 就 category 和 extension 的区别来看，我们可以推导出一个明显的事实，extension 可以添加实例变量，而 category 是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）。</p>
+<p><span id="category-is"></span></p>
+<h2 id="Category-的底层实现"><a href="#Category-的底层实现" class="headerlink" title="Category 的底层实现"></a>Category 的底层实现</h2><p>这节我们会从编译期 Category 的表现形式来了解其结构，再继续深入 runtime 源码来学习 Category 到底是如何被加载的。</p>
+<p><span id="category-struct"></span></p>
+<h3 id="Category-的结构"><a href="#Category-的结构" class="headerlink" title="Category 的结构"></a>Category 的结构</h3><p>我们先写一个简单的 Category：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Person.h&quot;</span><br><span class="line"></span><br><span class="line">@interface Person (Addition)&lt;PersonProtocol&gt; // 遵守协议</span><br><span class="line">/* name 属性 */</span><br><span class="line">@property (nonatomic, copy) NSString *personName;</span><br><span class="line">// 类方法</span><br><span class="line">+ (void)printClassName;</span><br><span class="line">// 对象方法</span><br><span class="line">- (void)printName;</span><br><span class="line">@end</span><br><span class="line">------------------------</span><br><span class="line">#import &quot;Person+Addition.h&quot;</span><br><span class="line">@implementation Person (Addition)</span><br><span class="line"></span><br><span class="line">+ (void)printClassName &#123;</span><br><span class="line">    NSLog(@&quot;printClassName&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)printName &#123;</span><br><span class="line">    NSLog(@&quot;printName&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - &lt;PersonProtocol&gt; 方法</span><br><span class="line">- (void)PersonProtocolMethod &#123;</span><br><span class="line">    NSLog(@&quot;PersonProtocolMethod&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)PersonProtocolClassMethod &#123;</span><br><span class="line">    NSLog(@&quot;PersonProtocolClassMethod&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 ==clang -rewrite-objc Person+Addition== 命令转化 Category 实现类后，我们看看 Category 到底会变成什么(代码量太大，截取主要代码)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">struct _category_t &#123;</span><br><span class="line">	const char *name;</span><br><span class="line">	struct _class_t *cls;</span><br><span class="line">	const struct _method_list_t *instance_methods;</span><br><span class="line">	const struct _method_list_t *class_methods;</span><br><span class="line">	const struct _protocol_list_t *protocols;</span><br><span class="line">	const struct _prop_list_t *properties;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static struct /*_method_list_t*/ &#123;</span><br><span class="line">	unsigned int entsize;  // sizeof(struct _objc_method)</span><br><span class="line">	unsigned int method_count;</span><br><span class="line">	struct _objc_method method_list[2];</span><br><span class="line">&#125; _OBJC_$_CATEGORY_INSTANCE_METHODS_Person_$_Addition __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	sizeof(_objc_method),</span><br><span class="line">	2,</span><br><span class="line">	&#123;&#123;(struct objc_selector *)&quot;printName&quot;, &quot;v16@0:8&quot;, (void *)_I_Person_Addition_printName&#125;,</span><br><span class="line">	&#123;(struct objc_selector *)&quot;PersonProtocolMethod&quot;, &quot;v16@0:8&quot;, (void *)_I_Person_Addition_PersonProtocolMethod&#125;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static struct /*_method_list_t*/ &#123;</span><br><span class="line">	unsigned int entsize;  // sizeof(struct _objc_method)</span><br><span class="line">	unsigned int method_count;</span><br><span class="line">	struct _objc_method method_list[2];</span><br><span class="line">&#125; _OBJC_$_CATEGORY_CLASS_METHODS_Person_$_Addition __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	sizeof(_objc_method),</span><br><span class="line">	2,</span><br><span class="line">	&#123;&#123;(struct objc_selector *)&quot;printClassName&quot;, &quot;v16@0:8&quot;, (void *)_C_Person_Addition_printClassName&#125;,</span><br><span class="line">	&#123;(struct objc_selector *)&quot;PersonProtocolClassMethod&quot;, &quot;v16@0:8&quot;, (void *)_C_Person_Addition_PersonProtocolClassMethod&#125;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static struct /*_protocol_list_t*/ &#123;</span><br><span class="line">	long protocol_count;  // Note, this is 32/64 bit</span><br><span class="line">	struct _protocol_t *super_protocols[1];</span><br><span class="line">&#125; _OBJC_CATEGORY_PROTOCOLS_$_Person_$_Addition __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	1,</span><br><span class="line">	&amp;_OBJC_PROTOCOL_PersonProtocol</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static struct /*_prop_list_t*/ &#123;</span><br><span class="line">	unsigned int entsize;  // sizeof(struct _prop_t)</span><br><span class="line">	unsigned int count_of_properties;</span><br><span class="line">	struct _prop_t prop_list[1];</span><br><span class="line">&#125; _OBJC_$_PROP_LIST_Person_$_Addition __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = &#123;</span><br><span class="line">	sizeof(_prop_t),</span><br><span class="line">	1,</span><br><span class="line">	&#123;&#123;&quot;personName&quot;,&quot;T@\&quot;NSString\&quot;,C,N&quot;&#125;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">extern &quot;C&quot; __declspec(dllimport) struct _class_t OBJC_CLASS_$_Person;</span><br><span class="line"></span><br><span class="line">static struct _category_t _OBJC_$_CATEGORY_Person_$_Addition __attribute__ ((used, section (&quot;__DATA,__objc_const&quot;))) = </span><br><span class="line">&#123;</span><br><span class="line">	&quot;Person&quot;,</span><br><span class="line">	0, // &amp;OBJC_CLASS_$_Person,</span><br><span class="line">	(const struct _method_list_t *)&amp;_OBJC_$_CATEGORY_INSTANCE_METHODS_Person_$_Addition,</span><br><span class="line">	(const struct _method_list_t *)&amp;_OBJC_$_CATEGORY_CLASS_METHODS_Person_$_Addition,</span><br><span class="line">	(const struct _protocol_list_t *)&amp;_OBJC_CATEGORY_PROTOCOLS_$_Person_$_Addition,</span><br><span class="line">	(const struct _prop_list_t *)&amp;_OBJC_$_PROP_LIST_Person_$_Addition,</span><br><span class="line">&#125;;</span><br><span class="line">static void OBJC_CATEGORY_SETUP_$_Person_$_Addition(void ) &#123;</span><br><span class="line">	_OBJC_$_CATEGORY_Person_$_Addition.cls = &amp;OBJC_CLASS_$_Person;</span><br><span class="line">&#125;</span><br><span class="line">#pragma section(&quot;.objc_inithooks$B&quot;, long, read, write)</span><br><span class="line">__declspec(allocate(&quot;.objc_inithooks$B&quot;)) static void *OBJC_CATEGORY_SETUP[] = &#123;</span><br><span class="line">	(void *)&amp;OBJC_CATEGORY_SETUP_$_Person_$_Addition,</span><br><span class="line">&#125;;</span><br><span class="line">static struct _category_t *L_OBJC_LABEL_CATEGORY_$ [1] __attribute__((used, section (&quot;__DATA, __objc_catlist,regular,no_dead_strip&quot;)))= &#123;</span><br><span class="line">	&amp;_OBJC_$_CATEGORY_Person_$_Addition,</span><br><span class="line">&#125;;</span><br><span class="line">static struct IMAGE_INFO &#123; unsigned version; unsigned flag; &#125; _OBJC_IMAGE_INFO = &#123; 0, 2 &#125;;</span><br></pre></td></tr></table></figure>
+<p>一个简单的 Category，突然就变成了这么多的代码，乍一看还真是让人头皮发麻，接下来我们就一个个的来理一下其中的关系。</p>
+<h5 id="category-t-：Category-结构体"><a href="#category-t-：Category-结构体" class="headerlink" title="==_category_t==：Category 结构体"></a>==_category_t==：Category 结构体</h5><p>我们知道，所有的 OC 类和对象，在 runtime 层都是用 struct 表示的，category 也不例外。</p>
+<ul>
+<li>name：类的名字</li>
+<li>cls：类</li>
+<li>instance_methods：category 中添加的实例方法列表</li>
+<li>class_methods：category 中添加的类方法列表</li>
+<li>protocols：category 中实现的所有协议列表</li>
+<li>properties：添加的属性</li>
+</ul>
+<p>从 Category 的定义中也可以看出来，在 Category 中可以添加实例方法、类方法、协议及添加属性，但是不会添加实例变量及其 setter/getter 方法。</p>
+<blockquote>
+<p>objc_class 的定义里，我们可以看到它有一个 objc_ivar_list——实例变量列表，但是在 Category 中并没有，所以其不能生成实例变量。</p>
+</blockquote>
+<ul>
+<li>==<em>OBJC</em>$_CATEGORY_Person_$_Addition==：Category 实例</li>
+</ul>
+<p>构造函数中，将结构体的参数依次传入，并将实例方法、类方法、实现的协议及属性初始化为结构体需要的类型。</p>
+<pre><code>1. ==_OBJC_$_CATEGORY_CLASS_METHODS_Person_$_Addition==：生成实例方法列表
+2. ==_OBJC_$_CATEGORY_CLASS_METHODS_Person_$_Addition==：生成类方法列表
+3. ==_OBJC_CATEGORY_PROTOCOLS_$_Person_$_Addition==：生成实现协议列表
+4. ==_OBJC_$_PROP_LIST_Person_$_Addition==：生成属性列表
+</code></pre><p>实例方法列表构造函数中，可以看到有两个实例方法 ==printName== 及 ==PersonProtocolMethod==。这也证实了 Category 添加属性后不会生成实例变量，也不会对这个属性自动生成 setter/getter 方法。</p>
+<blockquote>
+<p>需要注意到的事实就是 category 的名字用来给各种列表以及后面的 category 结构体本身命名，而且有 static 来修饰，所以在同一个编译单元里我们的 category 名不能重复，否则会出现编译错误。</p>
+</blockquote>
+<p><span id="catlist"></span></p>
+<ul>
+<li>==L_OBJC_LABEL_CATEGORY_==：Category 数组</li>
+</ul>
+<p>存储在 DATA 字段下的 objc_catlist section中，用于运行期 Category 的加载。如果有多个 Category 的话，数组的长度会对应 Category 的数量。</p>
+<p><span id="category-how-load"></span></p>
+<h3 id="Category-加载过程"><a href="#Category-加载过程" class="headerlink" title="Category 加载过程"></a>Category 加载过程</h3><p>Objective-C 的运行是依赖OC的 runtime 的，而 OC 的 runtime 和其他系统库一样，是 OS X 和 iOS 通过 dyld 动态加载的。</p>
+<p>我们就关注 runtime 是如何加载 category 的。</p>
+<p>首先我们找到 OC 运行时的入口方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// objc-os.mm 870</span><br><span class="line">void _objc_init(void)</span><br><span class="line">&#123;</span><br><span class="line">    static bool initialized = false;</span><br><span class="line">    if (initialized) return;</span><br><span class="line">    initialized = true;</span><br><span class="line">    </span><br><span class="line">    // fixme defer initialization until an objc-using image is found?</span><br><span class="line">    environ_init();</span><br><span class="line">    tls_init();</span><br><span class="line">    static_init();</span><br><span class="line">    lock_init();</span><br><span class="line">    exception_init();</span><br><span class="line"></span><br><span class="line">    _dyld_objc_notify_register(&amp;map_images, load_images, unmap_image);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>category 被附加到类上面是在 map_images 的时候发生的，在 new-ABI 的标准下，_objc_init 里面的调用的 map_images 最终会调用 objc-runtime-new.mm 里面的 _read_images 方法，而在 _read_images 方法的结尾。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_objc_init ---&gt; map_images ---&gt; map_images_nolock ---&gt; _read_images（加载分类）</span><br></pre></td></tr></table></figure>
+<p>在 _read_images 中关于加载 Category 的代码片段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">// Discover categories. </span><br><span class="line">for (EACH_HEADER) &#123;</span><br><span class="line">    // 获取到分类数组，编译器为我们生成。</span><br><span class="line">    category_t **catlist = </span><br><span class="line">        _getObjc2CategoryList(hi, &amp;count);</span><br><span class="line">    bool hasClassProperties = hi-&gt;info()-&gt;hasCategoryClassProperties();</span><br><span class="line"></span><br><span class="line">    for (i = 0; i &lt; count; i++) &#123;</span><br><span class="line">        category_t *cat = catlist[i];</span><br><span class="line">        Class cls = remapClass(cat-&gt;cls);</span><br><span class="line"></span><br><span class="line">        if (!cls) &#123;</span><br><span class="line">            // Category&apos;s target class is missing (probably weak-linked).</span><br><span class="line">            // Disavow any knowledge of this category.</span><br><span class="line">            catlist[i] = nil;</span><br><span class="line">            if (PrintConnecting) &#123;</span><br><span class="line">                _objc_inform(&quot;CLASS: IGNORING category \?\?\?(%s) %p with &quot;</span><br><span class="line">                             &quot;missing weak-linked target class&quot;, </span><br><span class="line">                            cat-&gt;name, cat);</span><br><span class="line">            &#125;</span><br><span class="line">            continue;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 处理当前分类</span><br><span class="line">        // 首先，使用目标类注册当前分类</span><br><span class="line">        // 然后，如果这个类被实现，则重建累的方法列表</span><br><span class="line">        bool classExists = NO;</span><br><span class="line">        if (cat-&gt;instanceMethods || cat-&gt;protocols || cat-&gt;instanceProperties) </span><br><span class="line">        &#123;</span><br><span class="line">            addUnattachedCategoryForClass(cat, cls, hi);</span><br><span class="line">            if (cls-&gt;isRealized()) &#123;</span><br><span class="line">                remethodizeClass(cls);</span><br><span class="line">                classExists = YES;</span><br><span class="line">            &#125;</span><br><span class="line">            if (PrintConnecting) &#123;</span><br><span class="line">                _objc_inform(&quot;CLASS: found category -%s(%s) %s&quot;, </span><br><span class="line">                            cls-&gt;nameForLogging(), cat-&gt;name, </span><br><span class="line">                            classExists ? &quot;on existing class&quot; : &quot;&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (cat-&gt;classMethods || cat-&gt;protocols || (hasClassProperties &amp;&amp; cat-&gt;_classProperties)) </span><br><span class="line">        &#123;</span><br><span class="line">            addUnattachedCategoryForClass(cat, cls-&gt;ISA(), hi);</span><br><span class="line">            if (cls-&gt;ISA()-&gt;isRealized()) &#123;</span><br><span class="line">                remethodizeClass(cls-&gt;ISA());</span><br><span class="line">            &#125;</span><br><span class="line">            if (PrintConnecting) &#123;</span><br><span class="line">                _objc_inform(&quot;CLASS: found category +%s(%s)&quot;, </span><br><span class="line">                                 cls-&gt;nameForLogging(), cat-&gt;name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先，我们看到获取到一个 catlist，就是上节最后讲的编译器为我们生成的 catrgory_t 数组，见<a href="#catlist">L_OBJC_LABEL_CATEGORY_</a>。</p>
+<p>这段代码用到的最主要的两个方法：</p>
+<ul>
+<li>==addUnattachedCategoryForClass(cat, cls-&gt;ISA(), hi);==将未添加到类的分类添加到类中。</li>
+<li>==remethodizeClass(cls-&gt;ISA());==重建类的方法列表。</li>
+</ul>
+<p>通过这个方法，我们就能把 catrgoty 的对象方法、协议、属性添加到类上，将类方法、协议添加到类的 metalcass 上。</p>
+<p>下面我们具体看看这两个方法是怎么做的。</p>
+<h4 id="addUnattachedCategoryForClass-cat-cls-gt-ISA-hi"><a href="#addUnattachedCategoryForClass-cat-cls-gt-ISA-hi" class="headerlink" title="addUnattachedCategoryForClass(cat, cls-&gt;ISA(), hi)"></a>addUnattachedCategoryForClass(cat, cls-&gt;ISA(), hi)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">static void addUnattachedCategoryForClass(category_t *cat, Class cls, </span><br><span class="line">                                          header_info *catHeader)</span><br><span class="line">&#123;</span><br><span class="line">    runtimeLock.assertLocked();</span><br><span class="line"></span><br><span class="line">    // 获取存储的所有未添加到类中的分类列表</span><br><span class="line">    // DO NOT use cat-&gt;cls! cls may be cat-&gt;cls-&gt;isa instead</span><br><span class="line">    NXMapTable *cats = unattachedCategories();</span><br><span class="line">    category_list *list;</span><br><span class="line">    </span><br><span class="line">    // 在 cats 列表中找到类 cls 对应的分类</span><br><span class="line">    list = (category_list *)NXMapGet(cats, cls);</span><br><span class="line">    if (!list) &#123;</span><br><span class="line">        list = (category_list *)</span><br><span class="line">            calloc(sizeof(*list) + sizeof(list-&gt;list[0]), 1);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        list = (category_list *)</span><br><span class="line">            realloc(list, sizeof(*list) + sizeof(list-&gt;list[0]) * (list-&gt;count + 1));</span><br><span class="line">    &#125;</span><br><span class="line">    // 将新增的分类 cat 添加到 list 中</span><br><span class="line">    list-&gt;list[list-&gt;count++] = (locstamped_category_t)&#123;cat, catHeader&#125;;</span><br><span class="line">    // 将新生成的 list 添加重新插入 cats 中，会覆盖旧的 list</span><br><span class="line">    NXMapInsert(cats, cls, list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从代码的执行上可以看到，我们获取到 cls 未添加的分类列表 list，并将新增分类 cat 插入到 list 中，并更新了原 list。</p>
+<p>可见这个方法的主要作用就是：==将类 cls 与其未添加的分类 list 做一个关联==。</p>
+<h4 id="remethodizeClass-cls-gt-ISA"><a href="#remethodizeClass-cls-gt-ISA" class="headerlink" title="remethodizeClass(cls-&gt;ISA());"></a>remethodizeClass(cls-&gt;ISA());</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">static void remethodizeClass(Class cls)</span><br><span class="line">&#123;</span><br><span class="line">    category_list *cats;</span><br><span class="line">    bool isMeta;</span><br><span class="line"></span><br><span class="line">    runtimeLock.assertLocked();</span><br><span class="line"></span><br><span class="line">    isMeta = cls-&gt;isMetaClass();</span><br><span class="line"></span><br><span class="line">    // Re-methodizing: check for more categories</span><br><span class="line">    if ((cats = unattachedCategoriesForClass(cls, false/*not realizing*/))) &#123;</span><br><span class="line">        if (PrintConnecting) &#123;</span><br><span class="line">            _objc_inform(&quot;CLASS: attaching categories to class &apos;%s&apos; %s&quot;, </span><br><span class="line">                         cls-&gt;nameForLogging(), isMeta ? &quot;(meta)&quot; : &quot;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        attachCategories(cls, cats, true /*flush caches*/);        </span><br><span class="line">        free(cats);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上一个方法，将类 cls 与其未添加的分类 list 做一个关联，这一个方法主要就是调用 ==attachCategories(cls, cats, true);== 将未依附分类的列表 cats 附加到 cls 类上。</p>
+<h4 id="attachCategories-cls-cats-true"><a href="#attachCategories-cls-cats-true" class="headerlink" title="attachCategories(cls, cats, true);"></a>attachCategories(cls, cats, true);</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">static void </span><br><span class="line">attachCategories(Class cls, category_list *cats, bool flush_caches)</span><br><span class="line">&#123;</span><br><span class="line">    if (!cats) return;</span><br><span class="line">    if (PrintReplacedMethods) printReplacements(cls, cats);</span><br><span class="line"></span><br><span class="line">    bool isMeta = cls-&gt;isMetaClass();</span><br><span class="line"></span><br><span class="line">    // 创建方法列表、属性列表、协议列表，用来存储分类的方法、属性、协议</span><br><span class="line">    method_list_t **mlists = (method_list_t **)</span><br><span class="line">        malloc(cats-&gt;count * sizeof(*mlists));</span><br><span class="line">    property_list_t **proplists = (property_list_t **)</span><br><span class="line">        malloc(cats-&gt;count * sizeof(*proplists));</span><br><span class="line">    protocol_list_t **protolists = (protocol_list_t **)</span><br><span class="line">        malloc(cats-&gt;count * sizeof(*protolists));</span><br><span class="line"></span><br><span class="line">    // Count backwards through cats to get newest categories first</span><br><span class="line">    int mcount = 0;           // 记录方法的数量</span><br><span class="line">    int propcount = 0;        // 记录属性的数量</span><br><span class="line">    int protocount = 0;       // 记录协议的数量</span><br><span class="line">    int i = cats-&gt;count;      // 从分类数组最后开始遍历，保证先取的是最新的分类</span><br><span class="line">    bool fromBundle = NO;     // 记录是否是从 bundle 中取的</span><br><span class="line">    while (i--) &#123; // 从后往前依次遍历</span><br><span class="line">        auto&amp; entry = cats-&gt;list[i];  // 取出当前分类</span><br><span class="line">    </span><br><span class="line">        // 取出分类中的方法列表。如果是元类，取得的是类方法列表；否则取得的是对象方法列表</span><br><span class="line">        method_list_t *mlist = entry.cat-&gt;methodsForMeta(isMeta);</span><br><span class="line">        if (mlist) &#123;</span><br><span class="line">            mlists[mcount++] = mlist;            // 将方法列表放入 mlists 方法列表数组中</span><br><span class="line">            fromBundle |= entry.hi-&gt;isBundle();  // 分类的头部信息中存储了是否是 bundle，将其记住</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 取出分类中的属性列表，如果是元类，取得的是 nil</span><br><span class="line">        property_list_t *proplist = </span><br><span class="line">            entry.cat-&gt;propertiesForMeta(isMeta, entry.hi);</span><br><span class="line">        if (proplist) &#123;</span><br><span class="line">            proplists[propcount++] = proplist;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 取出分类中遵循的协议列表</span><br><span class="line">        protocol_list_t *protolist = entry.cat-&gt;protocols;</span><br><span class="line">        if (protolist) &#123;</span><br><span class="line">            protolists[protocount++] = protolist;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 取出当前类 cls 的 class_rw_t 数据</span><br><span class="line">    auto rw = cls-&gt;data();</span><br><span class="line"></span><br><span class="line">    // 存储方法、属性、协议数组到 rw 中</span><br><span class="line">    // 准备方法列表 mlists 中的方法</span><br><span class="line">    prepareMethodLists(cls, mlists, mcount, NO, fromBundle);</span><br><span class="line">    // 将新方法列表添加到 rw 中的方法列表中</span><br><span class="line">    rw-&gt;methods.attachLists(mlists, mcount);</span><br><span class="line">    // 释放方法列表 mlists</span><br><span class="line">    free(mlists);</span><br><span class="line">    // 清除 cls 的缓存列表</span><br><span class="line">    if (flush_caches  &amp;&amp;  mcount &gt; 0) flushCaches(cls);</span><br><span class="line"></span><br><span class="line">    // 将新属性列表添加到 rw 中的属性列表中</span><br><span class="line">    rw-&gt;properties.attachLists(proplists, propcount);</span><br><span class="line">    // 释放属性列表</span><br><span class="line">    free(proplists);</span><br><span class="line"></span><br><span class="line">    // 将新协议列表添加到 rw 中的协议列表中</span><br><span class="line">    rw-&gt;protocols.attachLists(protolists, protocount);</span><br><span class="line">    // 释放协议列表</span><br><span class="line">    free(protolists);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>==attachCategories(cls, cats, true);== 把所有 category 的方法列表、协议列表及属性列表分别拼成了一个大列表，然后转交给了==attachLists==方法。</p>
+<p><span id="category-override"></span></p>
+<h3 id="Category-方法的覆盖"><a href="#Category-方法的覆盖" class="headerlink" title="Category 方法的覆盖"></a>Category 方法的覆盖</h3><h4 id="attachLists-List-const-addedLists-uint32-t-addedCount"><a href="#attachLists-List-const-addedLists-uint32-t-addedCount" class="headerlink" title="attachLists(List const  addedLists, uint32_t addedCount)"></a>attachLists(List<em> const </em> addedLists, uint32_t addedCount)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">void attachLists(List* const * addedLists, uint32_t addedCount) &#123;</span><br><span class="line">    if (addedCount == 0) return;</span><br><span class="line"></span><br><span class="line">    if (hasArray()) &#123;</span><br><span class="line">        // 原来有(方法、属性、协议)列表</span><br><span class="line">        uint32_t oldCount = array()-&gt;count;             // 原列表的长度                                    </span><br><span class="line">        uint32_t newCount = oldCount + addedCount;      // 分类提供的列表长度</span><br><span class="line">        </span><br><span class="line">        // 扩充原列表的大小至可容纳新数据的大小(后面叫新列表)</span><br><span class="line">        setArray((array_t *)realloc(array(), array_t::byteSize(newCount)));</span><br><span class="line">        array()-&gt;count = newCount;</span><br><span class="line">        </span><br><span class="line">        // 将原列表的数据复制到新列表的后面</span><br><span class="line">        memmove(array()-&gt;lists + addedCount, array()-&gt;lists, </span><br><span class="line">                    oldCount * sizeof(array()-&gt;lists[0]));</span><br><span class="line">        // 将分类的列表复制到新列表的最前面</span><br><span class="line">        memcpy(array()-&gt;lists, addedLists, </span><br><span class="line">                   addedCount * sizeof(array()-&gt;lists[0]));</span><br><span class="line">    &#125;</span><br><span class="line">    else if (!list  &amp;&amp;  addedCount == 1) &#123;</span><br><span class="line">        // 0 lists -&gt; 1 list</span><br><span class="line">        list = addedLists[0];</span><br><span class="line">    &#125; </span><br><span class="line">    else &#123;</span><br><span class="line">        // 1 list -&gt; many lists</span><br><span class="line">        List* oldList = list;</span><br><span class="line">        uint32_t oldCount = oldList ? 1 : 0;</span><br><span class="line">        uint32_t newCount = oldCount + addedCount;</span><br><span class="line">        setArray((array_t *)malloc(array_t::byteSize(newCount)));</span><br><span class="line">        array()-&gt;count = newCount;</span><br><span class="line">        if (oldList) array()-&gt;lists[addedCount] = oldList;</span><br><span class="line">        memcpy(array()-&gt;lists, addedLists, </span><br><span class="line">                   addedCount * sizeof(array()-&gt;lists[0]));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从 ==attachLists(List<em> const </em> addedLists, uint32_t addedCount)== 代码中，我们可以得到下面的结论：</p>
+<p>category 的方法没有 “<strong>完全替换掉</strong>” 原来类已经有的方法，也就是说如果 category 和原来类都有 methodA，那么 category 附加完成之后，类的方法列表里会有两个 methodA。</p>
+<p>category 的方法被放到了新方法列表的前面，而原来类的方法被放到了新方法列表的后面，这也就是我们平常所说的 category 的方法会 “<strong>覆盖</strong>” 掉原来类的同名方法，这是因为运行时在查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应名字的方法，就会返回，不会管后面可能还有一样名字的方法。</p>
+<blockquote>
+<p>attachLists(List<em> const </em> addedLists, uint32_t addedCount) 列表中用到的内存管理方法</p>
+<p><strong>realloc</strong>：</p>
+<p><strong>原型</strong>：extern void <em>realloc(void </em>mem_address, unsigned int newsize);</p>
+<p><strong>说明</strong>：改变mem_address所指内存区域的大小为newsize长度。</p>
+<p><strong>memmove</strong>：</p>
+<p><strong>原型</strong>：extern void <em>memmove(void </em>dest, const void *src, unsigned int count);</p>
+<p><strong>说明</strong>：由src所指内存区域复制count个字节到dest所指内存区域。src和dest所指内存区域可以重叠，但复制后dest内容会被更改。函数返回指向dest的指针。</p>
+<p><strong>memcpy</strong>：</p>
+<p><strong>原型</strong>：extern void <em>memcpy(void </em>dest, void *src, unsigned int count);</p>
+<p><strong>说明</strong>：由src所指内存区域复制count个字节到dest所指内存区域。src和dest所指内存区域不能重叠。函数返回指向dest的指针。</p>
+</blockquote>
+<h4 id="调用原类中方法"><a href="#调用原类中方法" class="headerlink" title="调用原类中方法"></a>调用原类中方法</h4><p>怎么调用到原来类中被 category 覆盖掉的方法？对于这个问题，我们已经知道 category 其实并不是完全替换掉原来类的同名方法，只是 category 在方法列表的前面而已，所以我们只要顺着方法列表找到最后一个对应名字的方法，就可以调用原来类的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// 假设被覆盖的方法名叫 printName。</span><br><span class="line">    Class currentClass = [MyClass class];</span><br><span class="line">    MyClass *my = [[MyClass alloc] init];</span><br><span class="line"></span><br><span class="line">    if (currentClass) &#123;</span><br><span class="line">        unsigned int methodCount;</span><br><span class="line">        Method *methodList = class_copyMethodList(currentClass, &amp;methodCount);</span><br><span class="line">        IMP lastImp = NULL;</span><br><span class="line">        SEL lastSel = NULL;</span><br><span class="line">        for (NSInteger i = 0; i &lt; methodCount; i++) &#123;</span><br><span class="line">            Method method = methodList[i];</span><br><span class="line">            NSString *methodName = [NSString stringWithCString:sel_getName(method_getName(method)) encoding:NSUTF8StringEncoding];</span><br><span class="line">            if ([@&quot;printName&quot; isEqualToString:methodName]) &#123;</span><br><span class="line">                lastImp = method_getImplementation(method);</span><br><span class="line">                lastSel = method_getName(method);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        typedef void (*fn)(id,SEL);</span><br><span class="line"></span><br><span class="line">        if (lastImp != NULL) &#123;</span><br><span class="line">            fn f = (fn) lastImp;</span><br><span class="line">            f(my, lastSel);</span><br><span class="line">        &#125;</span><br><span class="line">        free(methodList);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><span id="category-load"></span></p>
+<h2 id="Category-和-load方法"><a href="#Category-和-load方法" class="headerlink" title="Category 和+load方法"></a>Category 和+load方法</h2><blockquote>
+<p>有关 +load 方法的执行顺序问题，可以先看看我另一篇文章——<a href>底层初窥——load及initialize</a>之后，再来回答下方的问题。</p>
+</blockquote>
+<!--load 和 initialize 详解-->
+<ul>
+<li>在类的 +load 方法调用的时候，我们可以调用 category 中声明的方法么？</li>
+</ul>
+<p>答案是可以的，因为 load 方法的调用是在 Category 加载到类中之后才执行的。</p>
+<p><span id="category-associat"></span></p>
+<h2 id="Category-关联对象"><a href="#Category-关联对象" class="headerlink" title="Category 关联对象"></a>Category 关联对象</h2><blockquote>
+<p>关联对象的深入理解可查看我的另一篇文章——<a href>关联对象详解</a>详细了解。</p>
+</blockquote>
+<p>在 Category 中虽然可以添加属性，但是不会生成对应的成员变量，也不能生成 getter、setter 方法。因此，在调用 Category 中声明的属性时会报错。</p>
+<p>那么 Category 中声明的属性我们该怎样来使用它呢？</p>
+<p>我们可以自己来实现 getter、setter 方法，并借助关联对象（Objective-C Associated Objects）来实现 getter、setter 方法。关联对象能够帮助我们在运行时阶段将任意的属性关联到一个对象上。具体需要用到以下几个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 1. 通过 key : value 的形式给对象 object 设置关联属性</span><br><span class="line">void objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy);</span><br><span class="line"></span><br><span class="line">// 2. 通过 key 获取关联的属性 object</span><br><span class="line">id objc_getAssociatedObject(id object, const void *key);</span><br><span class="line"></span><br><span class="line">// 3. 移除对象所关联的属性</span><br><span class="line">void objc_removeAssociatedObjects(id object);</span><br></pre></td></tr></table></figure>
+<h3 id="实践关联对象"><a href="#实践关联对象" class="headerlink" title="实践关联对象"></a>实践关联对象</h3><p>就直接在<a href="#category-struct">上文中演示代码</a>中直接设置关联对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Person+Addition.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">static NSString *nameKey = @&quot;nameKey&quot;;</span><br><span class="line"></span><br><span class="line">@implementation Person (Addition)</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> setter方法</span><br><span class="line"> */</span><br><span class="line">- (void)setPersonName:(NSString *)personName &#123;</span><br><span class="line">    objc_setAssociatedObject(self, &amp;nameKey, personName, OBJC_ASSOCIATION_COPY);</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> getter方法</span><br><span class="line"> */</span><br><span class="line">- (NSString *)personName &#123;</span><br><span class="line">    return objc_getAssociatedObject(self, &amp;nameKey);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">... 省略一些方法</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<!--关联对象的内存管理-->
+<!--[Category 美团](https://tech.meituan.com/2015/03/03/diveintocategory.html)-->
+<!--[Category 底层实现](https://www.jianshu.com/p/9ad4312495fb)-->
+<!--[Category 底层1](https://www.jianshu.com/p/b08bbe3613ab)-->
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/07/底层探秘-Block/" rel="next" title="底层初窥——Block">
+                <i class="fa fa-chevron-left"></i> 底层初窥——Block
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/25/底层探秘-load及initialize/" rel="prev" title="底层初窥——load及initialize">
+                底层初窥——load及initialize <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Category-特点"><span class="nav-number">1.</span> <span class="nav-text">Category 特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对比-extention"><span class="nav-number">2.</span> <span class="nav-text">对比 extention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Category-的底层实现"><span class="nav-number">3.</span> <span class="nav-text">Category 的底层实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Category-的结构"><span class="nav-number">3.1.</span> <span class="nav-text">Category 的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#category-t-：Category-结构体"><span class="nav-number">3.1.0.1.</span> <span class="nav-text">==_category_t==：Category 结构体</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Category-加载过程"><span class="nav-number">3.2.</span> <span class="nav-text">Category 加载过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#addUnattachedCategoryForClass-cat-cls-gt-ISA-hi"><span class="nav-number">3.2.1.</span> <span class="nav-text">addUnattachedCategoryForClass(cat, cls-&gt;ISA(), hi)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#remethodizeClass-cls-gt-ISA"><span class="nav-number">3.2.2.</span> <span class="nav-text">remethodizeClass(cls-&gt;ISA());</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#attachCategories-cls-cats-true"><span class="nav-number">3.2.3.</span> <span class="nav-text">attachCategories(cls, cats, true);</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Category-方法的覆盖"><span class="nav-number">3.3.</span> <span class="nav-text">Category 方法的覆盖</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#attachLists-List-const-addedLists-uint32-t-addedCount"><span class="nav-number">3.3.1.</span> <span class="nav-text">attachLists(List const  addedLists, uint32_t addedCount)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调用原类中方法"><span class="nav-number">3.3.2.</span> <span class="nav-text">调用原类中方法</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#Category-和-load方法"><span class="nav-number">4.</span> <span class="nav-text">Category 和+load方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Category-关联对象"><span class="nav-number">5.</span> <span class="nav-text">Category 关联对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实践关联对象"><span class="nav-number">5.1.</span> <span class="nav-text">实践关联对象</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
