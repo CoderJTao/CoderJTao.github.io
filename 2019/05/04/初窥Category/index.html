@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="Category 可以在不修改原来类的基础上为已经存在的类添加方法。这一篇文章会分几个方面来详细介绍 Category。  Category 的特点 Category 对比extension Category 的底层实现 Category 的结构 Category 加载过程 Category 方法的覆盖   Category 和 +load方法 Category 关联对象">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-12T06:48:39.890Z">
+<meta property="og:updated_time" content="2020-03-12T06:54:05.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="底层初窥——Category">
 <meta name="twitter:description" content="Category 可以在不修改原来类的基础上为已经存在的类添加方法。这一篇文章会分几个方面来详细介绍 Category。  Category 的特点 Category 对比extension Category 的底层实现 Category 的结构 Category 加载过程 Category 方法的覆盖   Category 和 +load方法 Category 关联对象">
@@ -375,9 +375,9 @@
 <p>在编译期决议，它就是类的一部分，在编译期和头文件里的 @interface 以及实现文件里的 @implement 一起形成一个完整的类，它伴随类的产生而产生，亦随之一起消亡。extension 一般用来隐藏类的私有信息，你必须有一个类的源码才能为一个类添加 extension，所以你无法为系统的类比如 NSString 添加 extension。（详见2）</p>
 </li>
 <li><p>category</p>
+<p>在运行期决议。 就 category 和 extension 的区别来看，我们可以推导出一个明显的事实，extension 可以添加实例变量，而 category 是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）。</p>
 </li>
 </ul>
-<p>在运行期决议。 就 category 和 extension 的区别来看，我们可以推导出一个明显的事实，extension 可以添加实例变量，而 category 是无法添加实例变量的（因为在运行期，对象的内存布局已经确定，如果添加实例变量就会破坏类的内部布局，这对编译型语言来说是灾难性的）。</p>
 <p><span id="category-is"></span></p>
 <h2 id="Category-的底层实现"><a href="#Category-的底层实现" class="headerlink" title="Category 的底层实现"></a>Category 的底层实现</h2><p>这节我们会从编译期 Category 的表现形式来了解其结构，再继续深入 runtime 源码来学习 Category 到底是如何被加载的。</p>
 <p><span id="category-struct"></span></p>
@@ -463,7 +463,6 @@
 <h2 id="Category-和-load方法"><a href="#Category-和-load方法" class="headerlink" title="Category 和+load方法"></a>Category 和+load方法</h2><blockquote>
 <p>有关 +load 方法的执行顺序问题，可以先看看我另一篇文章——<a href>底层初窥——load及initialize</a>之后，再来回答下方的问题。</p>
 </blockquote>
-<!--load 和 initialize 详解-->
 <ul>
 <li>在类的 +load 方法调用的时候，我们可以调用 category 中声明的方法么？</li>
 </ul>
@@ -597,7 +596,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
