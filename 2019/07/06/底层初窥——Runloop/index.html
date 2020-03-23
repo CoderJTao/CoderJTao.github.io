@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Runloop 详解 Runloop 相关问题 app如何接收到触摸事件的? 为什么只有主线程的runloop是开启的? PerformSelector和 Runloop 的关系? Runloop 和 AutoreleasePool？ 实现一个常驻线程?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="底层初窥——Runloop">
+<meta property="og:url" content="http://yoursite.com/2019/07/06/底层初窥——Runloop/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="Runloop 详解 Runloop 相关问题 app如何接收到触摸事件的? 为什么只有主线程的runloop是开启的? PerformSelector和 Runloop 的关系? Runloop 和 AutoreleasePool？ 实现一个常驻线程?">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-23T07:09:20.931Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="底层初窥——Runloop">
+<meta name="twitter:description" content="Runloop 详解 Runloop 相关问题 app如何接收到触摸事件的? 为什么只有主线程的runloop是开启的? PerformSelector和 Runloop 的关系? Runloop 和 AutoreleasePool？ 实现一个常驻线程?">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/06/底层初窥——Runloop/">
+
+
+
+
+
+  <title>底层初窥——Runloop | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-self">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/底层初窥——Runloop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">底层初窥——Runloop</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T19:27:55+08:00">
+                2019-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS底层初窥/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS底层初窥</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><a href="#base">Runloop 详解</a></li>
+<li><a href="#qa">Runloop 相关问题</a><ul>
+<li><a href="#q1">app如何接收到触摸事件的?</a></li>
+<li><a href="#q2">为什么只有主线程的runloop是开启的?</a></li>
+<li><a href="#q3">PerformSelector和 Runloop 的关系?</a></li>
+<li><a href="#q4">Runloop 和 AutoreleasePool？</a></li>
+<li><a href="#q5">实现一个常驻线程?</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<a id="more"></a>
+<p><span id="base"></span></p>
+<h1 id="Runloop-介绍"><a href="#Runloop-介绍" class="headerlink" title="Runloop 介绍"></a>Runloop 介绍</h1><p>关于 Runloop 的文章在网上一搜一大片，这里也就不费心去写一篇了，这里推荐一篇写的比较全面的，有兴趣的可以去看。</p>
+<p><a href="https://juejin.im/post/5aca2b0a6fb9a028d700e1f8" target="_blank" rel="noopener">iOS RunLoop详解</a></p>
+<p>这篇文章，主要就像记录一些关于 Runloop 的面试题目，在解题的过程来加深对 Runloop 的了解。</p>
+<p><span id="qa"></span></p>
+<h1 id="Runloop-相关问题"><a href="#Runloop-相关问题" class="headerlink" title="Runloop 相关问题"></a>Runloop 相关问题</h1><p>Runloop 对于一个标准的 iOS 开发来说都不陌生，下面就随便列几个典型问题吧.</p>
+<p><span id="q1"></span></p>
+<h2 id="app如何接收到触摸事件的"><a href="#app如何接收到触摸事件的" class="headerlink" title="app如何接收到触摸事件的?"></a>app如何接收到触摸事件的?</h2><p><a href="https://www.jianshu.com/p/c294d1bd963d" target="_blank" rel="noopener">app如何接收到触摸事件</a></p>
+<ul>
+<li><strong>系统响应阶段</strong></li>
+</ul>
+<ol>
+<li><p>手指触碰屏幕，屏幕感应到触碰后，将事件交由 IOKit 处理。</p>
+</li>
+<li><p>IOKit 将触摸事件封装成一个 IOHIDEvent 对象，并通过 mach port 传递给 SpringBoad 进程。</p>
+</li>
+</ol>
+<blockquote>
+<p>mach port 进程端口，各进程之间通过它进行通信。<br>SpringBoad.app 是一个系统进程，可以理解为桌面系统，可以统一管理和分发系&gt; 统接收到的触摸事件。<br>SpringBoard 进程因接收到触摸事件，触发了主线程 runloop 的 source1 事件源的回调。</p>
+</blockquote>
+<ol start="3">
+<li>此时 SpringBoard 会根据当前桌面的状态，判断应该由谁处理此次触摸事件。因为事件发生时，你可能正在桌面上翻页，也可能正在刷微博。若是前者（即前台无 APP 运行），则触发 SpringBoard 本身主线程 runloop 的 source0 事件源的回调，将事件交由桌面系统去消耗；若是后者（即有 App 正在前台运行），则将触摸事件通过 IPC 传递给前台 APP 进程，接下来的事情便是 APP 内部对于触摸事件的响应了。</li>
+</ol>
+<ul>
+<li><strong>App 响应阶段</strong></li>
+</ul>
+<ol>
+<li>APP 进程的 mach port 接受到 SpringBoard 进程传递来的触摸事件，主线程的 runloop 被唤醒，触发了 source1 回调。</li>
+<li>source1 回调又触发了一个 source0 回调，将接收到的 IOHIDEvent 对象封装成 UIEvent 对象，此时 APP 将正式开始对于触摸事件的响应。</li>
+<li>source0 回调内部将触摸事件添加到 UIApplication 对象的事件队列中。事件出队后，UIApplication 开始一个寻找最佳响应者的过程，这个过程又称 hit-testing。另外，此处开始便是与我们平时开发相关的工作了。</li>
+<li>寻找到最佳响应者后，接下来的事情便是事件在响应链中的传递及响应了。事实上，事件除了被响应者消耗，还能被手势识别器或是 target-action 模式捕捉并消耗掉。其中涉及对触摸事件的响应优先级。</li>
+<li>触摸事件历经坎坷后要么被某个响应对象捕获后释放，要么最后也没能找到能够响应的对象，最终释放。至此，这个触摸事件的使命就算终结了。runloop 若没有其他事件需要处理，也将重归于眠，等待新的事件到来后唤醒。</li>
+</ol>
+<blockquote>
+<p>步骤3，就是寻找最佳响应者。<br>步骤4，就是寻找事件响应者。</p>
+</blockquote>
+<hr>
+<p><span id="q2"></span></p>
+<h2 id="为什么只有主线程的runloop是开启的"><a href="#为什么只有主线程的runloop是开启的" class="headerlink" title="为什么只有主线程的runloop是开启的?"></a>为什么只有主线程的runloop是开启的?</h2><ul>
+<li><strong>目的：</strong> </li>
+</ul>
+<p>保持程序持续运行，如果没有 Runloop。 在运行，当主线程执行完当前任务后，线程自动销毁了。</p>
+<ul>
+<li><strong>原因：</strong></li>
+</ul>
+<p>我们的 iOS 程序能保持持续运行的原因就是在 main() 函数中调用了 UIApplicationMain 函数，这个函数内部会启动主线程的 RunLoop。</p>
+<p><strong>CFRunLoopRun</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void CFRunLoopRun(void) &#123;   /* DOES CALLOUT */</span><br><span class="line">    int32_t result;</span><br><span class="line">    do &#123;</span><br><span class="line">        //默认在kCFRunLoopDefaultMode下运行runloop</span><br><span class="line">        result = CFRunLoopRunSpecific(CFRunLoopGetCurrent(), kCFRunLoopDefaultMode, 1.0e10, false);</span><br><span class="line">        CHECK_FOR_FORK();</span><br><span class="line">    &#125; while (kCFRunLoopRunStopped != result &amp;&amp; kCFRunLoopRunFinished != result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 CFRunLoopGetCurrent() 方法中：</p>
+<ul>
+<li>RunLoop和线程的一一对应的，对应的方式是以 key-value 的方式保存在一个全局字典中。</li>
+<li>主线程的 RunLoop 会在初始化全局字典时创建。</li>
+</ul>
+<hr>
+<p><span id="q3"></span></p>
+<h2 id="PerformSelector和-Runloop-的关系"><a href="#PerformSelector和-Runloop-的关系" class="headerlink" title="PerformSelector和 Runloop 的关系?"></a>PerformSelector和 Runloop 的关系?</h2><p>当调用 NSObject 的 performSelecter:afterDelay: 后，实际上其内部会创建一个 Timer 并添加到当前线程的 RunLoop 中。所以如果当前线程没有 RunLoop，则这个方法会失效。</p>
+<p>当调用 performSelector:onThread: 时，实际上其会创建一个 Timer 加到对应的线程去，同样的，如果对应线程没有 RunLoop 该方法也会失效。</p>
+<hr>
+<p><span id="q4"></span></p>
+<h2 id="Runloop-和-AutoreleasePool？"><a href="#Runloop-和-AutoreleasePool？" class="headerlink" title="Runloop 和 AutoreleasePool？"></a>Runloop 和 AutoreleasePool？</h2><p>AutoreleasePool 是另一个与 RunLoop 相关讨论较多的话题。其实 从RunLoop 源代码分析，AutoreleasePool 与 RunLoop 并没有直接的关系，之所以将两个话题放到一起讨论最主要的原因是因为在 iOS 应用启动后会注册两个 Observer 管理和维护 AutoreleasePool。可以应用程序刚刚启动时打印 currentRunLoop 可以看到系统默认注册了很多个 Observer，其中有两个 Observer 的 callout 都是 <strong> _ wrapRunLoopWithAutoreleasePoolHandler</strong>，这两个是和自动释放池相关的两个监听。</p>
+<ul>
+<li>第一个 Observer 会监听 RunLoop 的进入：<ul>
+<li>会回调 objc_autoreleasePoolPush() 向当前的 AutoreleasePoolPage 增加一个哨兵对象标志创建自动释放池。 </li>
+</ul>
+</li>
+<li>第二个 Observer 会监听 RunLoop 的进入休眠和即将退出 RunLoop 两种状态<ul>
+<li>在即将进入休眠时会调用 objc_autoreleasePoolPop() 和 objc_autoreleasePoolPush() 根据情况从最新加入的对象一直往前清理直到遇到哨兵对象。而在即将退出 RunLoop 时会调用 objc_autoreleasePoolPop()  释放自动自动释放池内对象。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><span id="q5"></span></p>
+<h2 id="实现一个常驻线程"><a href="#实现一个常驻线程" class="headerlink" title="实现一个常驻线程?"></a>实现一个常驻线程?</h2><p><a href="https://juejin.im/post/579583ba6be3ff006613628c#heading-0" target="_blank" rel="noopener">线程保活</a></p>
+<ol>
+<li>在子线程中启动 Runloop，注意添加的那个空 port。并使用 runMode:beforeDate: 启动。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (void)run &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        NSLog(@&quot;current thread = %@&quot;, [NSThread currentThread]);</span><br><span class="line">        NSRunLoop *runLoop = [NSRunLoop currentRunLoop];</span><br><span class="line">        if (!self.emptyPort) &#123;</span><br><span class="line">            self.emptyPort = [NSMachPort port];</span><br><span class="line">        &#125;</span><br><span class="line">        [runLoop addPort:self.emptyPort forMode:NSDefaultRunLoopMode];</span><br><span class="line">        [runLoop runMode:NSRunLoopCommonModes beforeDate:[NSDate distantFuture]];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>退出时，使用 CFRunLoopStop()</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (void)stopThread &#123;</span><br><span class="line">    CFRunLoopStop(CFRunLoopGetCurrent());</span><br><span class="line">    NSThread *thread = [NSThread currentThread];</span><br><span class="line">    [thread cancel];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用  performSelector:withObject:afterDelay 验证 Runloop 是否停止。</p>
+<p>我们知道 performSelector:withObject:afterDelay 依赖于线程的 runloop，因为它本质上是由一个定时器负责定期加入到 runloop 中执行。所以如果这个方法可以成功执行，说明当前线程的 runloop 已经开启，否则则说明没有启动。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/20/底层初窥——AutoReleasePool/" rel="next" title="底层初窥——AutoReleasePool">
+                <i class="fa fa-chevron-left"></i> 底层初窥——AutoReleasePool
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Runloop-介绍"><span class="nav-number">1.</span> <span class="nav-text">Runloop 介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Runloop-相关问题"><span class="nav-number">2.</span> <span class="nav-text">Runloop 相关问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#app如何接收到触摸事件的"><span class="nav-number">2.1.</span> <span class="nav-text">app如何接收到触摸事件的?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么只有主线程的runloop是开启的"><span class="nav-number">2.2.</span> <span class="nav-text">为什么只有主线程的runloop是开启的?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PerformSelector和-Runloop-的关系"><span class="nav-number">2.3.</span> <span class="nav-text">PerformSelector和 Runloop 的关系?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runloop-和-AutoreleasePool？"><span class="nav-number">2.4.</span> <span class="nav-text">Runloop 和 AutoreleasePool？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现一个常驻线程"><span class="nav-number">2.5.</span> <span class="nav-text">实现一个常驻线程?</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
