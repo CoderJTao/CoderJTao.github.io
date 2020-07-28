@@ -81,14 +81,14 @@
 
 <meta name="description" content="启动介绍 启动类型 优化原则   启动过程及优化方案 main()函数执行前 main()函数执行后 首屏渲染完成后   优化目标 优化实践">
 <meta property="og:type" content="article">
-<meta property="og:title" content="优化二三事——App启动速度优化">
-<meta property="og:url" content="http://yoursite.com/2019/08/19/优化二三事——App启动速度优化/index.html">
+<meta property="og:title" content="性能优化——App启动速度优化">
+<meta property="og:url" content="http://yoursite.com/2019/08/19/性能优化——App启动速度优化/index.html">
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="启动介绍 启动类型 优化原则   启动过程及优化方案 main()函数执行前 main()函数执行后 首屏渲染完成后   优化目标 优化实践">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-11T06:10:06.100Z">
+<meta property="og:updated_time" content="2020-07-28T14:52:56.827Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="优化二三事——App启动速度优化">
+<meta name="twitter:title" content="性能优化——App启动速度优化">
 <meta name="twitter:description" content="启动介绍 启动类型 优化原则   启动过程及优化方案 main()函数执行前 main()函数执行后 首屏渲染完成后   优化目标 优化实践">
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/19/优化二三事——App启动速度优化/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/19/性能优化——App启动速度优化/">
 
 
 
 
 
-  <title>优化二三事——App启动速度优化 | 江涛的博客</title>
+  <title>性能优化——App启动速度优化 | 江涛的博客</title>
   
 
 
@@ -252,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/19/优化二三事——App启动速度优化/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/19/性能优化——App启动速度优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JTao">
@@ -269,7 +269,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">优化二三事——App启动速度优化</h1>
+          <h1 class="post-title" itemprop="name headline">性能优化——App启动速度优化</h1>
         
 
         <div class="post-meta">
@@ -304,8 +304,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS优化二三事/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS优化二三事</span>
+                  <a href="/categories/性能优化专题/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化专题</span>
                   </a>
                 </span>
 
@@ -377,7 +377,7 @@
 </ol>
 <p><span id="step1"></span></p>
 <h3 id="main-函数执行前"><a href="#main-函数执行前" class="headerlink" title="main() 函数执行前"></a>main() 函数执行前</h3><p>pre-main() 阶段，可以在 Xcode 中 Edit Scheme -&gt; Run -&gt; Argument -&gt; Environment Variables 中，添加 <strong>DYLD_PRINT_STATISTICS</strong> 环境变量，并将其 Value 设置为 1，则开始在 App 启动时看到这个阶段的具体耗时。</p>
-<p><a href>pre-main阶段图</a></p>
+
 <p><strong>详细过程：</strong></p>
 <p>根据 <a href="https://developer.apple.com/videos/play/wwdc2016/406/" target="_blank" rel="noopener">Apple WWDC Optimizing App Startup Time</a> 上的介绍，dyld 的加载主要分为 4 步：</p>
 <ul>
@@ -620,7 +620,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
