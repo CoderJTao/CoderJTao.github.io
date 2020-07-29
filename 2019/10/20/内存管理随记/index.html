@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="内存区域 iOS内存管理三种方式 Tagged Pointer Non-pointer isa SideTables   常见内存泄漏场景 获取内存上限 内存监控">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 内存管理随记">
+<meta property="og:url" content="http://yoursite.com/2019/10/20/内存管理随记/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="内存区域 iOS内存管理三种方式 Tagged Pointer Non-pointer isa SideTables   常见内存泄漏场景 获取内存上限 内存监控">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/20/内存管理随记/内存1.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/20/内存管理随记/内存2.png">
+<meta property="og:updated_time" content="2020-07-29T07:41:37.688Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 内存管理随记">
+<meta name="twitter:description" content="内存区域 iOS内存管理三种方式 Tagged Pointer Non-pointer isa SideTables   常见内存泄漏场景 获取内存上限 内存监控">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/20/内存管理随记/内存1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/20/内存管理随记/">
+
+
+
+
+
+  <title>iOS 内存管理随记 | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-self">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/20/内存管理随记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS 内存管理随记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-20T18:21:33+08:00">
+                2019-10-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS学习记录/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS学习记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><a href>内存区域</a></li>
+<li><a href>iOS内存管理三种方式</a><ul>
+<li><a href>Tagged Pointer</a></li>
+<li><a href>Non-pointer isa</a></li>
+<li><a href>SideTables</a></li>
+</ul>
+</li>
+<li><a href>常见内存泄漏场景</a></li>
+<li><a href>获取内存上限</a></li>
+<li><a href>内存监控</a></li>
+</ul>
+<a id="more"></a>
+<h1 id="内存区域"><a href="#内存区域" class="headerlink" title="内存区域"></a>内存区域</h1><p>一个 iOS app 对应的进程地址空间大概如下图所示：</p>
+<img src="/2019/10/20/内存管理随记/内存1.png" title="效果图">
+<ul>
+<li>栈区（stack）：线性结构，内存连续，系统自己管理内存，程序运行记录，每个线程，也就是每个执行序列各有一个（看crash log最容易理解），都是编译的时候能确定好的，还有一个特点就是这里面的数据可以不用指针，也不会丢。</li>
+<li>堆区（heap）：链式结构，内存不连续，最灵活的内存区，用途多多，动态分配和释放，编译时不能提前确定，我们的Objective-C对象都是这么来的，都存在这里，通常堆中的对象都是以指针来访问的，指针从线程栈中来，但不独属于某个线程，堆也是对复杂的运行时处理的基础支持，还有就是ARC还是MRC、“谁分配谁释放”说的都是堆上对象的管理。</li>
+<li>静态区(全局区)（bss）：初始化数据，简单理解就是有初始值的变量、常量。</li>
+<li>常量区（data）：未初始化数据，只声明未给值的变量，运行前统统为0，之所以单独分出来，是出于性能的考虑，因为这些东西都是0，没必要放在程序包里，也不用copy。</li>
+<li>代码区（text）：最静态的，就是只读的东西，存储代码。</li>
+</ul>
+<h1 id="iOS内存管理三种方式"><a href="#iOS内存管理三种方式" class="headerlink" title="iOS内存管理三种方式"></a>iOS内存管理三种方式</h1><h2 id="Tagged-Pointer"><a href="#Tagged-Pointer" class="headerlink" title="Tagged Pointer"></a>Tagged Pointer</h2><p>假设我们要存储一个NSNumber对象，其值是一个整数。正常情况下，如果这个整数只是一个NSInteger的普通变量，那么它所占用的内存是与CPU的位数有关，在32位CPU下占4个字节，在64位CPU下是占8个字节的。而指针类型的大小通常也是与CPU位数相关，一个指针所占用的内存在32位CPU下为4个字节，在64位CPU下也是8个字节。</p>
+<p>所以一个普通的iOS程序，如果没有Tagged Pointer对象，从32位机器迁移到64位机器中后，虽然逻辑没有任何变化，但这种NSNumber、NSDate一类的对象所占用的内存会翻倍。(由原本的 4+4 变成 8+8)。<br>我们再来看看效率上的问题，为了存储和访问一个NSNumber对象，我们需要在堆上为其分配内存，另外还要维护它的引用计数，管理它的生命期。这些都给程序增加了额外的逻辑，造成运行效率上的损失。</p>
+<p>为了改进上面提到的内存占用和效率问题，苹果提出了Tagged Pointer对象。由于NSNumber、NSDate一类的变量本身的值需要占用的内存大小常常不需要8个字节，拿整数来说，4个字节所能表示的有符号整数就可以达到20多亿（注：2^31=2147483648，另外1位作为符号位)，对于绝大多数情况都是可以处理的。</p>
+<p>所以我们可以将一个对象的指针拆成两部分，一部分直接保存数据，另一部分作为特殊标记，表示这是一个特别的指针，不指向任何一个地址。</p>
+<p>当8字节可以承载用于表示的数值时，系统就会以Tagged Pointer的方式生成指针，如果8字节承载不了时，则又用以前的方式来生成普通的指针。以上是关于Tag Pointer的存储细节。</p>
+<p><strong>特点</strong></p>
+<ol>
+<li>我们也可以在WWDC2013的《Session 404 Advanced in Objective-C》视频中，看到苹果对于Tagged Pointer特点的介绍：Tagged Pointer专门用来存储小的对象，例如NSNumber和NSDate。</li>
+<li>Tagged Pointer指针的值不再是地址了，而是真正的值。所以，实际上它不再是一个对象了，它只是一个披着对象皮的普通变量而已，因为他没有isa指针。所以，它的内存并不存储在堆中，也不需要malloc和free。</li>
+<li>在内存读取上有着3倍的效率，创建时比以前快106倍。</li>
+</ol>
+<h2 id="Non-pointer-isa-——-非指针型-isa"><a href="#Non-pointer-isa-——-非指针型-isa" class="headerlink" title="Non-pointer isa —— 非指针型 isa"></a>Non-pointer isa —— 非指针型 isa</h2><p>设计思想跟 TaggetPointer 类似，isa 其实并不单单是一个指针。其中一些位仍旧编码指向对象的类。但是实际上并不会使用所有的地址空间，Objective-C 运行时会使用这些额外的位去存储每个对象数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">union isa_t &#123;</span><br><span class="line">    isa_t() &#123; &#125;</span><br><span class="line">    isa_t(uintptr_t value) : bits(value) &#123; &#125;</span><br><span class="line"></span><br><span class="line">    Class cls;</span><br><span class="line">    uintptr_t bits;</span><br><span class="line">#if defined(ISA_BITFIELD)</span><br><span class="line">    struct &#123;</span><br><span class="line">        ISA_BITFIELD;  // defined in isa.h</span><br><span class="line">    &#125;;</span><br><span class="line">#endif</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>使查看 isa 的定义，可以看出它被定义为一个联合体，其中定义了一个位域。</p>
+<blockquote>
+<p>关于联合体和位域的概念，可以在<a href="https://blog.csdn.net/xiven/article/details/4343562?utm_medium=distribute.pc_relevant.none-task-blog-baidujs-1" target="_blank" rel="noopener">这篇文章</a>查看。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// __x86_64__和__arm64__下的位域定义是不一样的，不过都是占满了所有的64位</span><br><span class="line"># if __arm64__</span><br><span class="line">#   define ISA_BITFIELD                                                      \</span><br><span class="line">      uintptr_t nonpointer        : 1;                                       \</span><br><span class="line">      uintptr_t has_assoc         : 1;                                       \</span><br><span class="line">      uintptr_t has_cxx_dtor      : 1;                                       \</span><br><span class="line">      uintptr_t shiftcls          : 33; /*MACH_VM_MAX_ADDRESS 0x1000000000*/ \</span><br><span class="line">      uintptr_t magic             : 6;                                       \</span><br><span class="line">      uintptr_t weakly_referenced : 1;                                       \</span><br><span class="line">      uintptr_t deallocating      : 1;                                       \</span><br><span class="line">      uintptr_t has_sidetable_rc  : 1;                                       \</span><br><span class="line">      uintptr_t extra_rc          : 19</span><br><span class="line"># elif __x86_64__</span><br><span class="line">#   define ISA_BITFIELD                                                        \</span><br><span class="line">      uintptr_t nonpointer        : 1;                                         \</span><br><span class="line">      uintptr_t has_assoc         : 1;                                         \</span><br><span class="line">      uintptr_t has_cxx_dtor      : 1;                                         \</span><br><span class="line">      uintptr_t shiftcls          : 44; /*MACH_VM_MAX_ADDRESS 0x7fffffe00000*/ \</span><br><span class="line">      uintptr_t magic             : 6;                                         \</span><br><span class="line">      uintptr_t weakly_referenced : 1;                                         \</span><br><span class="line">      uintptr_t deallocating      : 1;                                         \</span><br><span class="line">      uintptr_t has_sidetable_rc  : 1;                                         \</span><br><span class="line">      uintptr_t extra_rc          : 8</span><br></pre></td></tr></table></figure>
+<p>位域各字段意义：</p>
+<ul>
+<li>nonpointer：表示是否对isa开启指针优化 。0代表是纯isa指针，1代表除了地址外，还包含了类的一些信息、对象的引用计数等。</li>
+<li>has_assoc：关联对象标志位。</li>
+<li>has_cxx_dtor：该对象是否有C++或Objc的析构器，如果有析构函数，则需要做一些析构的逻辑处理，如果没有，则可以更快的释放对象。</li>
+<li>shiftcls：存在类指针的值，开启指针优化的情况下，arm64位中有33位来存储类的指针。</li>
+<li>magic：判断当前对象是真的对象还是一段没有初始化的空间。</li>
+<li>weakly_referenced：是否被指向或者曾经指向一个ARC的弱变量，没有弱引用的对象释放的更快。</li>
+<li>deallocating：是否正在释放。</li>
+<li>has_sidetable_rc：当对象引用计数大于10时，则需要进位。</li>
+<li>extra_rc：表示该对象的引用计数值，实际上是引用计数减一。例如：如果引用计数为10，那么extra_rc为9。如果引用计数大于10，则需要使用has_sidetable_rc。</li>
+</ul>
+<h2 id="SideTables"><a href="#SideTables" class="headerlink" title="SideTables"></a>SideTables</h2><p>为了管理所有对象的引用计数和weak指针，苹果创建了一个全局的SideTables，虽然名字后面有个”s”不过他其实是一个全局的Hash表，里面的内容装的都是SideTable结构体而已。它使用<strong>对象的内存地址当它的key</strong>。管理引用计数和weak指针就靠它了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">static objc::ExplicitInit&lt;StripedMap&lt;SideTable&gt;&gt; SideTablesMap;</span><br><span class="line"></span><br><span class="line">static StripedMap&lt;SideTable&gt;&amp; SideTables() &#123;</span><br><span class="line">    return SideTablesMap.get();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">StripedMap&lt;T&gt;是 void* -&gt; T的映射，会给予合适的大小</span><br><span class="line">用于内存操作友好的分离锁。</span><br><span class="line">例如，它可以用作StripedMap&lt;spinlock_t&gt;，或者作为StripedMap&lt;SomeStruct&gt;，其中SomeStruct存储一个自旋锁。</span><br><span class="line">*/</span><br><span class="line">// StripedMap</span><br><span class="line">class StripedMap &#123;</span><br><span class="line">#if TARGET_OS_IPHONE &amp;&amp; !TARGET_OS_SIMULATOR</span><br><span class="line">    enum &#123; StripeCount = 8 &#125;;</span><br><span class="line">#else</span><br><span class="line">    enum &#123; StripeCount = 64 &#125;;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    struct PaddedT &#123;</span><br><span class="line">        T value alignas(CacheLineSize);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    PaddedT array[StripeCount];</span><br><span class="line"></span><br><span class="line">    static unsigned int indexForPointer(const void *p) &#123;</span><br><span class="line">        uintptr_t addr = reinterpret_cast&lt;uintptr_t&gt;(p);</span><br><span class="line">        // 这里就是 Hash 算法了</span><br><span class="line">        return ((addr &gt;&gt; 4) ^ (addr &gt;&gt; 9)) % StripeCount;</span><br><span class="line">    &#125;</span><br><span class="line">    //......省略了部分代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>StripeCount：由当前系统决定大小。 iPhone 真机大小为 8，其它为 64.</p>
+<ol>
+<li>将对象的内存地址addr右移4位得到结果1</li>
+<li>将对象的内存地址addr右移9位得到结果2</li>
+<li>将结果1和结果2做按位异或得到结果3</li>
+<li>将结果3和StripeCount做模运算得到真正的Hash值。</li>
+</ol>
+<p><strong>因为最后模运算的结果范围是在（0-StripeCount）之间，可见SideTables一共有 StripeCount（8或64） 个单元格。</strong></p>
+<p>因为对象引用计数相关操作应该是原子性的。不然如果多个线程同时去写一个对象的引用计数，那就会造成数据错乱，失去了内存管理的意义。同时又因为内存中对象的数量是非常非常庞大的需要非常频繁的操作SideTables，所以不能对整个Hash表加锁。苹果采用了<strong>分离锁</strong>技术。</p>
+<img src="/2019/10/20/内存管理随记/内存2.png" title="效果图">
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct SideTable &#123;</span><br><span class="line">    // 自旋锁</span><br><span class="line">    spinlock_t slock; </span><br><span class="line">    // 强引用管理</span><br><span class="line">    RefcountMap refcnts;</span><br><span class="line">    // 弱引用管理</span><br><span class="line">    weak_table_t weak_table;</span><br><span class="line">    //...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="spinlock-t-slock—锁"><a href="#spinlock-t-slock—锁" class="headerlink" title="spinlock_t slock—锁"></a>spinlock_t slock—锁</h4><p>os_unfair_lock 类型的自旋锁。</p>
+<p>自旋锁比较适用于锁使用者保持锁时间比较短的情况。正是由于自旋锁使用者一般保持锁时间非常短，因此选择自旋而不是睡眠是非常必要的。<br>它的作用是在操作引用技术的时候对SideTable加锁，避免数据错误。</p>
+<h4 id="RefcountMap-refcnts—引用计数器"><a href="#RefcountMap-refcnts—引用计数器" class="headerlink" title="RefcountMap refcnts—引用计数器"></a>RefcountMap refcnts—引用计数器</h4><p>对象具体的引用计数数量是记录在这里的。</p>
+<p>这里注意RefcountMap其实是个C++的Map。为什么Hash以后还需要个Map呢？因为内存中对象的数量实在是太庞大了我们通过第一个Hash表只是过滤了第一次（SideTables最有只有 StripeCount(8或64) 个单元格），然后我们还需要再通过这个Map才能精确的定位到我们要找的对象的引用计数器。</p>
+<p>引用计数器的数据类型是:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef __SIZE_TYPE__ size_t;</span><br></pre></td></tr></table></figure>
+<p>再进一步看它的定义其实是unsigned long，在32位和64位操作系统中，它分别占用32和64个bit。</p>
+<p>苹果经常使用bit mask技术。这里也不例外。拿32位系统为例的话，可以理解成有32个盒子排成一排横着放在你面前。盒子里可以装0或者1两个数字。我们规定最后边的盒子是低位，左边的盒子是高位。</p>
+<p>(1UL&lt;&lt;0)的意思是将一个”1”放到最右侧的盒子里，然后将这个”1”向左移动0位(就是原地不动):0b0000 0000 0000 0000 0000 0000 0000 0001</p>
+<p>(1UL&lt;&lt;1)的意思是将一个”1”放到最右侧的盒子里,然后将这个”1”向左移动1位:0b0000 0000 0000 0000 0000 0000 0000 0010</p>
+<p>下面来分析引用计数器(图中右侧)的结构,从低位到高位。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// The order of these bits is important.</span><br><span class="line">#define SIDE_TABLE_WEAKLY_REFERENCED (1UL&lt;&lt;0)</span><br><span class="line">#define SIDE_TABLE_DEALLOCATING      (1UL&lt;&lt;1)  // MSB-ward of weak bit</span><br><span class="line">#define SIDE_TABLE_RC_ONE            (1UL&lt;&lt;2)  // MSB-ward of deallocating bit</span><br><span class="line">#define SIDE_TABLE_RC_PINNED         (1UL&lt;&lt;(WORD_BITS-1))</span><br><span class="line"></span><br><span class="line">// WORD_BITS在32位和64位系统的时候分别等于32和64。</span><br><span class="line">#ifdef __LP64__</span><br><span class="line">#   define WORD_BITS 64</span><br><span class="line">#else</span><br><span class="line">#   define WORD_BITS 32</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>WEAKLY_REFERENCED</p>
+<p>  表示是否有弱引用指向这个对象，如果有的话(值为1)在对象释放的时候需要把所有指向它的弱引用都变成nil，避免野指针错误。</p>
+</li>
+<li><p>SIDE_TABLE_DEALLOCATING</p>
+<p>  表示对象是否正在被释放。1正在释放，0没有。</p>
+</li>
+<li><p>SIDE_TABLE_RC_ONE</p>
+<p>  对象真正的引用计数存储区。</p>
+</li>
+<li><p>SIDE_TABLE_RC_PINNED</p>
+<p>  其中其实这一位没啥具体意义，就是随着对象的引用计数不断变大。如果这一位都变成1了，就表示引用计数已经最大了不能再增加了。</p>
+</li>
+</ul>
+<h4 id="weak-table-t-weak-table—弱引用管理"><a href="#weak-table-t-weak-table—弱引用管理" class="headerlink" title="weak_table_t weak_table—弱引用管理"></a>weak_table_t weak_table—弱引用管理</h4><p>第一层结构体中包含两个元素:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct weak_table_t &#123;</span><br><span class="line">    weak_entry_t *weak_entries;</span><br><span class="line">    size_t    num_entries;</span><br><span class="line">    uintptr_t mask;</span><br><span class="line">    uintptr_t max_hash_displacement;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>weak_entry_t *weak_entries；</p>
+<p>  是一个数组,上面RefcountMap是要通过find(key)来找到精确的元素的。weak_entries则是通过循环遍历来找到对应的entry。这是因为weak的显著的特征来决定的: 当weak对象被销毁的时候，要把所有指向该对象的指针都设为nil。</p>
+</li>
+<li><p>size_t    num_entries；</p>
+<p>  用来维护保证数组始终有一个合适的size。比如数组中元素的数量超过3/4的时候将数组的大小乘以2。</p>
+</li>
+</ul>
+<p>第二层weak_entry_t的结构包含3个部分：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#define WEAK_INLINE_COUNT 4</span><br><span class="line"></span><br><span class="line">struct weak_entry_t &#123;</span><br><span class="line">    DisguisedPtr&lt;objc_object&gt; referent;</span><br><span class="line">    union &#123;</span><br><span class="line">        struct &#123;</span><br><span class="line">            weak_referrer_t *referrers;</span><br><span class="line">            uintptr_t        out_of_line_ness : 2;</span><br><span class="line">            uintptr_t        num_refs : PTR_MINUS_2;</span><br><span class="line">            uintptr_t        mask;</span><br><span class="line">            uintptr_t        max_hash_displacement;</span><br><span class="line">        &#125;;</span><br><span class="line">        struct &#123;</span><br><span class="line">            // out_of_line_ness field is low bits of inline_referrers[1]</span><br><span class="line">            weak_referrer_t  inline_referrers[WEAK_INLINE_COUNT];</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    // ... 省略部分代码</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 为了区分弱引用对象和指向它的引用，这里利用typedef换了一个名字</span><br><span class="line">typedef DisguisedPtr&lt;objc_object *&gt; weak_referrer_t;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>DisguisedPtr&lt;objc_object&gt; referent;</p>
+<p>  被指对象的地址。前面循环遍历查找的时候就是判断目标地址是否和他相等。</p>
+</li>
+<li><p>weak_referrer_t *referrers;</p>
+<p>  可变数组,里面保存着所有指向这个对象的弱引用的地址。当这个对象被释放的时候，referrers里的所有指针都会被设置成nil。</p>
+</li>
+<li><p>weak_referrer_t  inline_referrers[WEAK_INLINE_COUNT];</p>
+<p>  只有4个元素的数组，默认情况下用它来存储弱引用的指针。当大于4个的时候使用referrers来存储指针。</p>
+</li>
+</ul>
+<p>reatin原理:</p>
+<ul>
+<li>判断当前对象是否一个TaggedPointer，如果是则返回。</li>
+<li>判断isa是否经过NONPOINTER_ISA优化，如果未经过优化，则将引用计数存储在SideTable中。64位的设备不会进入到这个分支。</li>
+<li>判断当前的设备是否正在析构。</li>
+<li>将isa的bits中的extra_rc进行加1操作。</li>
+<li>如果在extra_rc中已经存储满了，则调用sidetable_addExtraRC_nolock方法将一半的引用计数移存到SideTable中。</li>
+</ul>
+<h1 id="常见内存泄漏场景"><a href="#常见内存泄漏场景" class="headerlink" title="常见内存泄漏场景"></a>常见内存泄漏场景</h1><h3 id="CoreFoundation对象-及-OC与CF对象转换"><a href="#CoreFoundation对象-及-OC与CF对象转换" class="headerlink" title="CoreFoundation对象 及 OC与CF对象转换"></a>CoreFoundation对象 及 OC与CF对象转换</h3><p>只要函数中包含了 create\new\copy\retain 等关键字, 那么这些方法产生的对象, 就必须在不再使用的时候调用1次CFRelease或者其他release函数。</p>
+<ul>
+<li><p>__bridge</p>
+<p>  可用于Foundation对象 和 Core Foundation对象间的相互转换。—— 没有转移内存管理权</p>
+</li>
+<li><p>__bridge_retained</p>
+<p>  用于Foundation对象 转成 Core Foundation对象。—— 内存管理权转移，Core Foundation 需要管理其内存。</p>
+</li>
+<li><p>__bridge_transfer</p>
+<p>  用于Core Foundation对象 转成 Foundation对象。—— 内存管理权转移，内存管理交给 Foundation。</p>
+</li>
+</ul>
+<h3 id="循环引用"><a href="#循环引用" class="headerlink" title="循环引用"></a>循环引用</h3><h4 id="delegate"><a href="#delegate" class="headerlink" title="delegate"></a>delegate</h4><p>问题：声明delegate属性的时候，没有使用正确的属性修饰符—weak，导致的循环引用。</p>
+<p>解决：声明delegate属性时，使用weak修饰即可。</p>
+<h4 id="block"><a href="#block" class="headerlink" title="block"></a>block</h4><p>问题：self 持有 block，block内部又使用了 self，导致形成了循环引用。</p>
+<p>解决：使用 __weak typeof(self) weakSelf = self; 在 block内部弱引用持有者打破循环。</p>
+<h4 id="NSTimer"><a href="#NSTimer" class="headerlink" title="NSTimer"></a>NSTimer</h4><p>不是所有的NSTimer都会造成循环引用。就像不是所有的block都会造成循环引用一样。以下两种timer不会有循环引用：</p>
+<ul>
+<li>非repeat类型的。非repeat类型的timer不会强引用target，因此不会出现循环引用。</li>
+<li>block类型的，新api。iOS 10之后才支持，因此对于还要支持老版本的app来说，这个API暂时无法使用。当然，block内部的循环引用也要避免。</li>
+</ul>
+<p>解决方案：</p>
+<ul>
+<li>借助中间代理间接持有timer。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// 借助中间代理间接持有timer。</span><br><span class="line">//.h文件</span><br><span class="line">@interface GYTimerProxy : NSObject</span><br><span class="line">+ (instancetype) timerProxyWithTarget:(id)target;</span><br><span class="line">@property (weak, nonatomic) id target;</span><br><span class="line">@end</span><br><span class="line">//.m文件</span><br><span class="line">#import &quot;GYTimerProxy.h&quot;</span><br><span class="line">@implementation GYTimerProxy</span><br><span class="line">+ (instancetype) timerProxyWithTarget:(id)target &#123;</span><br><span class="line">    GYTimerProxy *proxy = [[GYTimerProxy alloc] init];</span><br><span class="line">    proxy.target = target;</span><br><span class="line">    return proxy;</span><br><span class="line">&#125;</span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)aSelector &#123;</span><br><span class="line">    return self.target;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<ul>
+<li>继承NSProxy类对消息处理。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 继承NSProxy类对消息处理。</span><br><span class="line">//.h文件</span><br><span class="line">@interface GYProxy : NSProxy</span><br><span class="line">+ (instancetype)proxyWithTarget:(id)target;</span><br><span class="line">@property (weak, nonatomic) id target;</span><br><span class="line">@end</span><br><span class="line">//.m文件</span><br><span class="line">#import &quot;GYProxy.h&quot;</span><br><span class="line">@implementation GYProxy</span><br><span class="line">+ (instancetype)proxyWithTarget:(id)target &#123;</span><br><span class="line">    GYProxy *proxy = [GYProxy alloc];</span><br><span class="line">    proxy.target = target;</span><br><span class="line">    return proxy;</span><br><span class="line">&#125;</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)sel &#123;</span><br><span class="line">    return [self.target methodSignatureForSelector:sel];</span><br><span class="line">&#125;</span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)invocation &#123;</span><br><span class="line">    [invocation invokeWithTarget:self.target];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<h4 id="无限循环的动画"><a href="#无限循环的动画" class="headerlink" title="无限循环的动画"></a>无限循环的动画</h4><p>如果某个ViewController中有无限循环，也会导致即使ViewController对应的view关掉了，ViewController也不能被释放。这种问题常发生于animation处理。</p>
+<p>解决方法：在 viewController 消失的时候，停止动画。</p>
+<h4 id="WKWebView-使用不当"><a href="#WKWebView-使用不当" class="headerlink" title="WKWebView 使用不当"></a>WKWebView 使用不当</h4><p>可以在我的<a href>WKWebView使用讲解</a>中看到具体的解决方案。</p>
+<h1 id="获取内存上限"><a href="#获取内存上限" class="headerlink" title="获取内存上限"></a>获取内存上限</h1><h1 id="内存监控"><a href="#内存监控" class="headerlink" title="内存监控"></a>内存监控</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/27/WKWebView使用记录/" rel="next" title="WKWebView使用记录">
+                <i class="fa fa-chevron-left"></i> WKWebView使用记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存区域"><span class="nav-number">1.</span> <span class="nav-text">内存区域</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS内存管理三种方式"><span class="nav-number">2.</span> <span class="nav-text">iOS内存管理三种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tagged-Pointer"><span class="nav-number">2.1.</span> <span class="nav-text">Tagged Pointer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Non-pointer-isa-——-非指针型-isa"><span class="nav-number">2.2.</span> <span class="nav-text">Non-pointer isa —— 非指针型 isa</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SideTables"><span class="nav-number">2.3.</span> <span class="nav-text">SideTables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#spinlock-t-slock—锁"><span class="nav-number">2.3.0.1.</span> <span class="nav-text">spinlock_t slock—锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RefcountMap-refcnts—引用计数器"><span class="nav-number">2.3.0.2.</span> <span class="nav-text">RefcountMap refcnts—引用计数器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weak-table-t-weak-table—弱引用管理"><span class="nav-number">2.3.0.3.</span> <span class="nav-text">weak_table_t weak_table—弱引用管理</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#常见内存泄漏场景"><span class="nav-number">3.</span> <span class="nav-text">常见内存泄漏场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CoreFoundation对象-及-OC与CF对象转换"><span class="nav-number">3.0.1.</span> <span class="nav-text">CoreFoundation对象 及 OC与CF对象转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环引用"><span class="nav-number">3.0.2.</span> <span class="nav-text">循环引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#delegate"><span class="nav-number">3.0.2.1.</span> <span class="nav-text">delegate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#block"><span class="nav-number">3.0.2.2.</span> <span class="nav-text">block</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSTimer"><span class="nav-number">3.0.2.3.</span> <span class="nav-text">NSTimer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无限循环的动画"><span class="nav-number">3.0.2.4.</span> <span class="nav-text">无限循环的动画</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WKWebView-使用不当"><span class="nav-number">3.0.2.5.</span> <span class="nav-text">WKWebView 使用不当</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取内存上限"><span class="nav-number">4.</span> <span class="nav-text">获取内存上限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存监控"><span class="nav-number">5.</span> <span class="nav-text">内存监控</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
