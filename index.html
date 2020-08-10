@@ -341,83 +341,19 @@
 
       
         
-          
-            <h1 id="普通写法"><a href="#普通写法" class="headerlink" title="普通写法"></a>普通写法</h1><ul>
-<li>单例代码</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@implementation SingletonClass</span><br><span class="line"></span><br><span class="line">+ (instancetype)shareInstance &#123;</span><br><span class="line">    static SingletonClass *_sharedInstance = nil;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        _sharedInstance = [[self alloc] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return _sharedInstance;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+          <p>单例，是我们在开发中使用非常多的一种设计模式。但是，我们真的有写好一个单例么？这篇文章记录了单例的一些常见问题。</p>
 <ul>
-<li>测试代码</li>
+<li>常见的单例写法及存在的问题</li>
+<li>好的单例怎么写</li>
+<li>单例的特殊需求</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// MARK : singleton</span><br><span class="line">- (void)testSingleton &#123;</span><br><span class="line">    SingletonClass *cls1 = [SingletonClass shareInstance];</span><br><span class="line">    NSLog(@&quot;cls1 = %@&quot;, cls1);</span><br><span class="line">    </span><br><span class="line">    SingletonClass *cls2 = [SingletonClass shareInstance];</span><br><span class="line">    NSLog(@&quot;cls2 = %@&quot;, cls2);</span><br><span class="line">    </span><br><span class="line">    SingletonClass *cls3 = [[SingletonClass alloc] init];</span><br><span class="line">    NSLog(@&quot;cls3 = %@&quot;, cls3);</span><br><span class="line">    </span><br><span class="line">    SingletonClass *cls4 = [cls1 copy];</span><br><span class="line">    NSLog(@&quot;cls4 = %@&quot;, cls4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>测试结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Test[4588:4307534] cls1 = &lt;SingletonClass: 0x600002688150&gt;</span><br><span class="line">Test[4588:4307534] cls2 = &lt;SingletonClass: 0x600002688150&gt;</span><br><span class="line">Test[4588:4307534] cls3 = &lt;SingletonClass: 0x6000026a0260&gt;</span><br><span class="line">Test[4588:4307534] -[SingletonClass copyWithZone:]: unrecognized selector sent to instance 0x600002688150</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>分析</p>
-</li>
-<li><p>当我们调用 shareInstance 方法时获取到的对象是相同的；</p>
-</li>
-<li>当我们通过 alloc 和 init 来构造对象的时候，得到的对象却是不一样的；</li>
-<li>如果直接使用 copy, 会在此崩溃。</li>
-</ul>
-<p>所以，当我们通过不同的途径获取对象，并不能保证对象的唯一性，，所以我们就需要封锁用户通过 alloc 和 init 以及 copy 来构造对象这条道路。</p>
-<h1 id="完善写法"><a href="#完善写法" class="headerlink" title="完善写法"></a>完善写法</h1><ul>
-<li>单例代码</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@implementation SingletonClass</span><br><span class="line">+ (instancetype)shareInstance &#123;</span><br><span class="line">    static SingletonClass *_sharedInstance = nil;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        _sharedInstance = [[super allocWithZone:NULL] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return _sharedInstance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)allocWithZone:(struct _NSZone *)zone &#123;</span><br><span class="line">    return [self shareInstance];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)copyWithZone:(nullable NSZone *)zone &#123;</span><br><span class="line">    return [SingletonClass shareInstance];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<ul>
-<li>测试代码</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (void)testSingleton &#123;</span><br><span class="line">    SingletonClass *cls1 = [SingletonClass shareInstance];</span><br><span class="line">    NSLog(@&quot;cls1 = %@&quot;, cls1);</span><br><span class="line">    </span><br><span class="line">    SingletonClass *cls2 = [SingletonClass shareInstance];</span><br><span class="line">    NSLog(@&quot;cls2 = %@&quot;, cls2);</span><br><span class="line">    </span><br><span class="line">    SingletonClass *cls3 = [[SingletonClass alloc] init];</span><br><span class="line">    NSLog(@&quot;cls3 = %@&quot;, cls3);</span><br><span class="line">    </span><br><span class="line">    SingletonClass *cls4 = [cls1 copy];</span><br><span class="line">    NSLog(@&quot;cls4 = %@&quot;, cls4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>测试结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Test[4793:4317590] cls1 = &lt;SingletonClass: 0x600003e8c460&gt;</span><br><span class="line">Test[4793:4317590] cls2 = &lt;SingletonClass: 0x600003e8c460&gt;</span><br><span class="line">Test[4793:4317590] cls3 = &lt;SingletonClass: 0x600003e8c460&gt;</span><br><span class="line">Test[4793:4317590] cls4 = &lt;SingletonClass: 0x600003e8c460&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>分析</li>
-</ul>
-<p>上方的几个问题这种写法都解决了。</p>
-<h1 id="特殊的需求"><a href="#特殊的需求" class="headerlink" title="特殊的需求"></a>特殊的需求</h1><h2 id="可继承的单例"><a href="#可继承的单例" class="headerlink" title="可继承的单例"></a>可继承的单例</h2><ul>
-<li>说明</li>
-</ul>
-<p>因为单例具有唯一性，要保证每个创建的类是不同的，所以在每个类生成时，我们动态的给类绑定唯一的对象。</p>
-<ul>
-<li>单例代码</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation InheritableSharedInstanceClass</span><br><span class="line"></span><br><span class="line">+ (instancetype)sharedInstance &#123;</span><br><span class="line">    id sharedInstance = objc_getAssociatedObject(self, @&quot;SharedInstance&quot;);</span><br><span class="line">    if (!sharedInstance) &#123;</span><br><span class="line">        sharedInstance = [[super allocWithZone:NULL] init];</span><br><span class="line">        objc_setAssociatedObject(self, @&quot;SharedInstance&quot;, sharedInstance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">    &#125;</span><br><span class="line">    return sharedInstance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)allocWithZone:(struct _NSZone *)zone &#123;</span><br><span class="line">    return [self sharedInstance];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)copyWithZone:(nullable NSZone *)zone &#123;</span><br><span class="line">    return [[self class] sharedInstance];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<ul>
-<li>测试代码</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- (void)testSingleton &#123;</span><br><span class="line">    SingletonClass *cls = [SingletonClass shareInstance];</span><br><span class="line">    NSLog(@&quot;cls = %@&quot;, cls);</span><br><span class="line">    </span><br><span class="line">    SubSingletonClass *subCls = [SubSingletonClass shareInstance];</span><br><span class="line">    NSLog(@&quot;subCls = %@&quot;, subCls);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>测试结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cls = &lt;SingletonClass: 0x6000017ebb10&gt;</span><br><span class="line">subCls = &lt;SubSingletonClass: 0x6000017cc4d0&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="单例的销毁"><a href="#单例的销毁" class="headerlink" title="单例的销毁"></a>单例的销毁</h2><ul>
-<li>说明</li>
-</ul>
-<p>虽然单例销毁需要销毁的情况还是比较少的，这里还是加一下，防止特殊的需求出现。</p>
-<ul>
-<li>单例代码</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">static dispatch_once_t onceToken;</span><br><span class="line">static SingletonClass *_sharedInstance = nil;</span><br><span class="line"></span><br><span class="line">@implementation SingletonClass</span><br><span class="line">+ (instancetype)shareInstance &#123;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        _sharedInstance = [[super allocWithZone:NULL] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return _sharedInstance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)allocWithZone:(struct _NSZone *)zone &#123;</span><br><span class="line">    return [self shareInstance];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)copyWithZone:(nullable NSZone *)zone &#123;</span><br><span class="line">    return [SingletonClass shareInstance];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)shouldDealloc &#123;</span><br><span class="line">    onceToken = 0;</span><br><span class="line">    _sharedInstance = nil;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<ul>
-<li>测试代码</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)testSingleton &#123;</span><br><span class="line">    SingletonClass *clsOld = [SingletonClass shareInstance];</span><br><span class="line">    NSLog(@&quot;clsOld = %@&quot;, clsOld);</span><br><span class="line">    </span><br><span class="line">    [SingletonClass shouldDealloc];</span><br><span class="line">    </span><br><span class="line">    SingletonClass *clsNew = [SingletonClass shareInstance];</span><br><span class="line">    NSLog(@&quot;clsNew = %@&quot;, clsNew);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>测试结果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clsOld = &lt;SingletonClass: 0x600003e3d9b0&gt;</span><br><span class="line">clsNew = &lt;SingletonClass: 0x600003e3d9a0&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>分析</li>
-</ul>
-<p>必须把 static dispatch_once_t onceToken; 这个拿到函数体外,成为全局的。</p>
-<p>onceToken 置成 0，GCD 才会认为它从未执行过.它默认为 0,这样才能保证下次再次调用 shareInstance 的时候，再次创建对象。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/11/24/iOS单例的正确使用姿势/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

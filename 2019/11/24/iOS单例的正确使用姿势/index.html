@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="普通写法 单例代码  1234567891011@implementation SingletonClass+ (instancetype)shareInstance &amp;#123;    static SingletonClass *_sharedInstance = nil;    static dispatch_once_t onceToken;    dispatch_once(&amp;amp;o">
+<meta name="description" content="单例，是我们在开发中使用非常多的一种设计模式。但是，我们真的有写好一个单例么？这篇文章记录了单例的一些常见问题。  常见的单例写法及存在的问题 好的单例怎么写 单例的特殊需求">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS单例的正确使用姿势">
 <meta property="og:url" content="http://yoursite.com/2019/11/24/iOS单例的正确使用姿势/index.html">
 <meta property="og:site_name" content="江涛的博客">
-<meta property="og:description" content="普通写法 单例代码  1234567891011@implementation SingletonClass+ (instancetype)shareInstance &amp;#123;    static SingletonClass *_sharedInstance = nil;    static dispatch_once_t onceToken;    dispatch_once(&amp;amp;o">
+<meta property="og:description" content="单例，是我们在开发中使用非常多的一种设计模式。但是，我们真的有写好一个单例么？这篇文章记录了单例的一些常见问题。  常见的单例写法及存在的问题 好的单例怎么写 单例的特殊需求">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-09T09:19:52.588Z">
+<meta property="og:updated_time" content="2020-08-10T02:36:16.137Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS单例的正确使用姿势">
-<meta name="twitter:description" content="普通写法 单例代码  1234567891011@implementation SingletonClass+ (instancetype)shareInstance &amp;#123;    static SingletonClass *_sharedInstance = nil;    static dispatch_once_t onceToken;    dispatch_once(&amp;amp;o">
+<meta name="twitter:description" content="单例，是我们在开发中使用非常多的一种设计模式。但是，我们真的有写好一个单例么？这篇文章记录了单例的一些常见问题。  常见的单例写法及存在的问题 好的单例怎么写 单例的特殊需求">
 
 
 
@@ -341,7 +341,14 @@
       
 
       
-        <h1 id="普通写法"><a href="#普通写法" class="headerlink" title="普通写法"></a>普通写法</h1><ul>
+        <p>单例，是我们在开发中使用非常多的一种设计模式。但是，我们真的有写好一个单例么？这篇文章记录了单例的一些常见问题。</p>
+<ul>
+<li>常见的单例写法及存在的问题</li>
+<li>好的单例怎么写</li>
+<li>单例的特殊需求</li>
+</ul>
+<a id="more"></a>
+<h1 id="普通写法"><a href="#普通写法" class="headerlink" title="普通写法"></a>普通写法</h1><ul>
 <li>单例代码</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@implementation SingletonClass</span><br><span class="line"></span><br><span class="line">+ (instancetype)shareInstance &#123;</span><br><span class="line">    static SingletonClass *_sharedInstance = nil;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        _sharedInstance = [[self alloc] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    return _sharedInstance;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
