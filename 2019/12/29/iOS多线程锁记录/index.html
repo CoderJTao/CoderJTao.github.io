@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="介绍 锁的概念 两种锁——自旋锁与互斥锁 两种锁的使用选择   几种常见的锁 OSSpinLock os_unfair_lock atomic @synchronized dispatch_semaphore ## pthread_mutex NSLock、NSRecurisiveLock、NSCondition、NSConditionLock">
+<meta name="description" content="介绍 锁的概念 两种锁——自旋锁与互斥锁 两种锁的使用选择   几种常见的锁 OSSpinLock os_unfair_lock atomic @synchronized dispatch_semaphore pthread_mutex NSLock、NSRecurisiveLock、NSCondition、NSConditionLock">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS多线程锁记录">
 <meta property="og:url" content="http://yoursite.com/2019/12/29/iOS多线程锁记录/index.html">
 <meta property="og:site_name" content="江涛的博客">
-<meta property="og:description" content="介绍 锁的概念 两种锁——自旋锁与互斥锁 两种锁的使用选择   几种常见的锁 OSSpinLock os_unfair_lock atomic @synchronized dispatch_semaphore ## pthread_mutex NSLock、NSRecurisiveLock、NSCondition、NSConditionLock">
+<meta property="og:description" content="介绍 锁的概念 两种锁——自旋锁与互斥锁 两种锁的使用选择   几种常见的锁 OSSpinLock os_unfair_lock atomic @synchronized dispatch_semaphore pthread_mutex NSLock、NSRecurisiveLock、NSCondition、NSConditionLock">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/12/29/iOS多线程锁记录/线程锁1.png">
-<meta property="og:updated_time" content="2020-08-11T16:17:35.418Z">
+<meta property="og:updated_time" content="2020-08-14T14:47:53.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS多线程锁记录">
-<meta name="twitter:description" content="介绍 锁的概念 两种锁——自旋锁与互斥锁 两种锁的使用选择   几种常见的锁 OSSpinLock os_unfair_lock atomic @synchronized dispatch_semaphore ## pthread_mutex NSLock、NSRecurisiveLock、NSCondition、NSConditionLock">
+<meta name="twitter:description" content="介绍 锁的概念 两种锁——自旋锁与互斥锁 两种锁的使用选择   几种常见的锁 OSSpinLock os_unfair_lock atomic @synchronized dispatch_semaphore pthread_mutex NSLock、NSRecurisiveLock、NSCondition、NSConditionLock">
 <meta name="twitter:image" content="http://yoursite.com/2019/12/29/iOS多线程锁记录/线程锁1.png">
 
 
@@ -356,7 +356,7 @@
 <li><a href="#lock3">atomic</a></li>
 <li><a href="#lock4">@synchronized</a></li>
 <li><a href="#lock5">dispatch_semaphore</a></li>
-<li><a href="#lock6">## pthread_mutex</a></li>
+<li><a href="#lock6">pthread_mutex</a></li>
 <li><a href="#lock7">NSLock、NSRecurisiveLock、NSCondition、NSConditionLock</a></li>
 </ul>
 </li>
@@ -552,6 +552,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/02/09/查漏补缺——网络/" rel="prev" title="查漏补缺——网络">
+                查漏补缺——网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -629,7 +633,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -640,7 +644,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
