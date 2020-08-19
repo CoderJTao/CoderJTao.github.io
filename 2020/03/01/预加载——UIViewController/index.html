@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="预加载作为常规性能优化手段，在所有性能敏感的场景都有使用。预加载数据、视图防止在真正使用的时候让用户等待，提高用户体验。 在 iOS 的优化方案中，预加载是非常常见的手段，多见于：预加载图片、配置文件、离线包等业务资源。这些都属于资源文件，我们总能找到合适的方式来进行预加载——多线程操作。但是，对于开发中最常见的 UIViewController 我们却很少能看到有对其预加载的策略。 UIView">
+<meta name="description" content="预加载作为常规性能优化手段，在所有性能敏感的场景都有使用。预加载数据、视图防止在真正使用的时候让用户等待，提高用户体验。 在 iOS 的优化方案中，预加载是非常常见的手段，多见于：预加载图片、配置文件、离线包等业务资源。这些都属于资源文件，我们总能找到合适的方式来进行预加载——多线程操作。但是，对于开发中最常见的 UIViewController 我们却很少能看到有对其预加载的策略。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="预加载——UIViewController">
 <meta property="og:url" content="http://yoursite.com/2020/03/01/预加载——UIViewController/index.html">
 <meta property="og:site_name" content="江涛的博客">
-<meta property="og:description" content="预加载作为常规性能优化手段，在所有性能敏感的场景都有使用。预加载数据、视图防止在真正使用的时候让用户等待，提高用户体验。 在 iOS 的优化方案中，预加载是非常常见的手段，多见于：预加载图片、配置文件、离线包等业务资源。这些都属于资源文件，我们总能找到合适的方式来进行预加载——多线程操作。但是，对于开发中最常见的 UIViewController 我们却很少能看到有对其预加载的策略。 UIView">
+<meta property="og:description" content="预加载作为常规性能优化手段，在所有性能敏感的场景都有使用。预加载数据、视图防止在真正使用的时候让用户等待，提高用户体验。 在 iOS 的优化方案中，预加载是非常常见的手段，多见于：预加载图片、配置文件、离线包等业务资源。这些都属于资源文件，我们总能找到合适的方式来进行预加载——多线程操作。但是，对于开发中最常见的 UIViewController 我们却很少能看到有对其预加载的策略。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-08-19T09:07:24.288Z">
+<meta property="og:updated_time" content="2020-08-19T10:04:35.897Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="预加载——UIViewController">
-<meta name="twitter:description" content="预加载作为常规性能优化手段，在所有性能敏感的场景都有使用。预加载数据、视图防止在真正使用的时候让用户等待，提高用户体验。 在 iOS 的优化方案中，预加载是非常常见的手段，多见于：预加载图片、配置文件、离线包等业务资源。这些都属于资源文件，我们总能找到合适的方式来进行预加载——多线程操作。但是，对于开发中最常见的 UIViewController 我们却很少能看到有对其预加载的策略。 UIView">
+<meta name="twitter:description" content="预加载作为常规性能优化手段，在所有性能敏感的场景都有使用。预加载数据、视图防止在真正使用的时候让用户等待，提高用户体验。 在 iOS 的优化方案中，预加载是非常常见的手段，多见于：预加载图片、配置文件、离线包等业务资源。这些都属于资源文件，我们总能找到合适的方式来进行预加载——多线程操作。但是，对于开发中最常见的 UIViewController 我们却很少能看到有对其预加载的策略。">
 
 
 
@@ -343,10 +343,11 @@
       
         <p>预加载作为常规性能优化手段，在所有性能敏感的场景都有使用。预加载数据、视图防止在真正使用的时候让用户等待，提高用户体验。</p>
 <p>在 iOS 的优化方案中，预加载是非常常见的手段，多见于：预加载图片、配置文件、离线包等业务资源。这些都属于资源文件，我们总能找到合适的方式来进行预加载——多线程操作。但是，对于开发中最常见的 UIViewController 我们却很少能看到有对其预加载的策略。</p>
+<a id="more"></a>
 <h2 id="UIViewController-预加载探究"><a href="#UIViewController-预加载探究" class="headerlink" title="UIViewController 预加载探究"></a>UIViewController 预加载探究</h2><p>UITabBarController 作为 ViewController 容器的时候，TabBarController 显示后，只会默认 load TabBarController 的第一个 ViewController（或者selectedViewController）的 View，只有在点击 tabbar 或者设置 selectedViewController，selectedIndex 时候，才会调用想用的 ViewController 的 loadView 与 viewDidLoad。<br>当项目遇到某个 tabbar 下需要预加载提升体验的时候，就需要进行相关处理。<br>首先在 tabbarcontroller 下获取到要预加载的vc</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for(UINavigationController *nav in  self.viewControllers)&#123;</span><br><span class="line">    if ([self.viewControllers indexOfObject:nav] == 2) &#123; // 指定需要加载的vc</span><br><span class="line">        UIViewController *viewController = nav.viewControllers.firstObject;</span><br><span class="line">        [viewController loadViewIfNeeded]; // 让其调用viewdidload</span><br><span class="line">        //            __unused  UIView *view =  nav.view;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样打开想应的 tabbar 就会发现页面已加载完成。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">loadViewIfNeeded</span><br><span class="line">Loads the view controller’s view if it has not yet been loaded.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">loadViewIfNeeded</span><br><span class="line">Loads the view controller’s view if it has not yet been loaded.</span><br><span class="line"></span><br><span class="line">- (void)loadViewIfNeeded API_AVAILABLE(ios(9.0));</span><br></pre></td></tr></table></figure>
 <p><strong>说明</strong></p>
 <p>controller 的 view 是懒加载，只要触发了 view 的 getter 方法，那么就会触发 controller 的 viewDidLoad 方法，因此在还没有 push 到某个 controller 之前如果使用了 controller.view 那么就会触发其 viewDidLoad 方法。此时直接使用 controller 的 loadViewIfNeeded 方法很合适。</p>
 <p>当然，我们也可以在初始化出我们需要的 controller 时，直接去获取它的 view，这样也可以触发 viewDidLoad 方法。</p>
