@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/02/09/查漏补缺——网络/tcp2.png">
 <meta property="og:image" content="http://yoursite.com/2020/02/09/查漏补缺——网络/tcp3.png">
 <meta property="og:image" content="http://yoursite.com/2020/02/09/查漏补缺——网络/tcp4.png">
-<meta property="og:updated_time" content="2020-08-16T08:43:35.859Z">
+<meta property="og:updated_time" content="2020-08-17T07:04:42.384Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="查漏补缺——网络">
 <meta name="twitter:description" content="计算机网络分层 TCP TCP 协议的特点 TCP 协议的报文结构 TCP 三次握手过程 TCP 四次挥手过程 TCP 可靠传输是如何实现的   DNS HTTP HTTP 协议 HTTP 工作流程 HTTPS 协议 HTTPS 工作流程 HTTPS 协议与 HTTP 协议的区别">
@@ -547,6 +547,16 @@
 </ol>
 <p>于是就引出了 HTTPS 协议。</p>
 <p>HTTPS 是运行在 SSL/TLS 之上的 HTTP 协议，SSL/TLS 运行在 TCP 之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。</p>
+<ol>
+<li>对称加密</li>
+</ol>
+<p>对称加密指的就是加密和解密使用同一个秘钥，所以叫做对称加密。对称加密只有一个秘钥，作为私钥。</p>
+<p>常见的对称加密算法：DES，AES，3DES等等。</p>
+<ol start="2">
+<li>非对称加密</li>
+</ol>
+<p>非对称加密指的是：加密和解密使用不同的秘钥，一把作为公开的公钥，另一把作为私钥。公钥加密的信息，只有私钥才能解密。私钥加密的信息，只有公钥才能解密。</p>
+<p>常见的非对称加密算法：RSA，ECC</p>
 <p><span id="http4"></span></p>
 <h2 id="HTTPS-工作流程"><a href="#HTTPS-工作流程" class="headerlink" title="HTTPS 工作流程"></a>HTTPS 工作流程</h2><h3 id="SSL"><a href="#SSL" class="headerlink" title="SSL"></a>SSL</h3><ol>
 <li><p>安全套接字（Secure Socket Layer，SSL）协议是 Web 浏览器与 Web 服务器之间安全交换信息的协议。</p>
@@ -639,6 +649,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/03/01/预加载——UIViewController/" rel="prev" title="预加载——UIViewController">
+                预加载——UIViewController <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -716,7 +730,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -727,7 +741,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
