@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SwiftUI 中有很多官方的组件已经非常好用，但是在一些特殊的场景中还是需要使用 UIKit 的组件提供支持，这篇文章简单介绍一些如何让 SwiftUI 和 UIKit 的组件混合开发的方法。 在真正使用 SwiftUI 开发时，还是推荐尽量使用原有组件来完成功能。  文章简单记录如果使用，对于具体的业务来说，逻辑肯定是更加复杂的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SwiftUI 与 UIKit 混合开发">
+<meta property="og:url" content="http://yoursite.com/2020/08/30/SwiftUI-与-UIKit-混合开发/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="SwiftUI 中有很多官方的组件已经非常好用，但是在一些特殊的场景中还是需要使用 UIKit 的组件提供支持，这篇文章简单介绍一些如何让 SwiftUI 和 UIKit 的组件混合开发的方法。 在真正使用 SwiftUI 开发时，还是推荐尽量使用原有组件来完成功能。  文章简单记录如果使用，对于具体的业务来说，逻辑肯定是更加复杂的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-04-02T01:27:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SwiftUI 与 UIKit 混合开发">
+<meta name="twitter:description" content="SwiftUI 中有很多官方的组件已经非常好用，但是在一些特殊的场景中还是需要使用 UIKit 的组件提供支持，这篇文章简单介绍一些如何让 SwiftUI 和 UIKit 的组件混合开发的方法。 在真正使用 SwiftUI 开发时，还是推荐尽量使用原有组件来完成功能。  文章简单记录如果使用，对于具体的业务来说，逻辑肯定是更加复杂的。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/08/30/SwiftUI-与-UIKit-混合开发/">
+
+
+
+
+
+  <title>SwiftUI 与 UIKit 混合开发 | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-self">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/30/SwiftUI-与-UIKit-混合开发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SwiftUI 与 UIKit 混合开发</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-30T23:57:35+08:00">
+                2020-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SwiftUI/" itemprop="url" rel="index">
+                    <span itemprop="name">SwiftUI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>SwiftUI 中有很多官方的组件已经非常好用，但是在一些特殊的场景中还是需要使用 UIKit 的组件提供支持，这篇文章简单介绍一些如何让 SwiftUI 和 UIKit 的组件混合开发的方法。</p>
+<p>在真正使用 SwiftUI 开发时，还是推荐尽量使用原有组件来完成功能。</p>
+<blockquote>
+<p>文章简单记录如果使用，对于具体的业务来说，逻辑肯定是更加复杂的。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="UIKit-in-SwiftUI"><a href="#UIKit-in-SwiftUI" class="headerlink" title="UIKit in SwiftUI"></a>UIKit in SwiftUI</h2><h4 id="UIView"><a href="#UIView" class="headerlink" title="UIView"></a>UIView</h4><p>要在 SwiftUI 中使用 UIKit 的话，需要用 <strong>UIViewRepresentable</strong> 对 UIView 进行一层包装。</p>
+<p>且 UIView 需要使用 <strong>typealias</strong> 指定一个需要包装的 UIView 类型，并实现两个方法：</p>
+<ul>
+<li>func makeUIView(context: Self.Context) -&gt; Self.UIViewType</li>
+</ul>
+<p>创建一个 View 并返回。可在这里设置默认的一些属性及状态。</p>
+<ul>
+<li>func updateUIView(_ uiView: Self.UIViewType, context: Self.Context)</li>
+</ul>
+<p>在 SwiftUI 中可改变的属性在这里进行设置及刷新 View 的状态。</p>
+<p>需要暴露的、可设置的属性，就在 View 中声明一个属性，供 SwiftUI 使用时进行调整。</p>
+<h5 id="例子1。常规显示的-View。"><a href="#例子1。常规显示的-View。" class="headerlink" title="例子1。常规显示的 View。"></a>例子1。常规显示的 View。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// Mark :- UIkit Define</span><br><span class="line">struct AAView: UIViewRepresentable &#123;</span><br><span class="line">    typealias UIViewType = UIProgressView</span><br><span class="line">    </span><br><span class="line">    @Binding var progress: Float // SwiftUI 中设置</span><br><span class="line">    </span><br><span class="line">    func makeUIView(context: Context) -&gt; UIProgressView &#123;</span><br><span class="line">        let view = UIProgressView()</span><br><span class="line">        return view</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func updateUIView(_ uiView: UIViewType, context: Context) &#123;</span><br><span class="line">        uiView.progress = progress</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Mark :- SwiftUI</span><br><span class="line">struct ContentView: View &#123;</span><br><span class="line">    @State var progress: Float = 0.5</span><br><span class="line">    </span><br><span class="line">    var body: some View &#123;</span><br><span class="line">        AAView(progress: $progress)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="例子2。包装的-View-中有-Target-Action-事件。"><a href="#例子2。包装的-View-中有-Target-Action-事件。" class="headerlink" title="例子2。包装的 View 中有 Target/Action 事件。"></a>例子2。包装的 View 中有 Target/Action 事件。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">// Mark :- UIkit Define</span><br><span class="line">struct AASwitchView: UIViewRepresentable &#123;</span><br><span class="line">    typealias UIViewType = UISwitch</span><br><span class="line">    </span><br><span class="line">    @Binding var isOn: Bool</span><br><span class="line">    </span><br><span class="line">    func makeUIView(context: Context) -&gt; UISwitch &#123;</span><br><span class="line">        let view = UISwitch()</span><br><span class="line">        view.addTarget(self, action: #selector(Coordinator.valueChanged(sender:)), for: .valueChanged)</span><br><span class="line">        return view</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func updateUIView(_ uiView: UIViewType, context: Context) &#123;</span><br><span class="line">        uiView.isOn = isOn</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func makeCoordinator() -&gt; Coordinator &#123;</span><br><span class="line">        Coordinator(self)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    class Coordinator: NSObject &#123;</span><br><span class="line">        var view: AASwitchView</span><br><span class="line">        </span><br><span class="line">        init(_ view: AASwitchView) &#123;</span><br><span class="line">            self.view = view</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        @objc func valueChanged(sender: UISwitch) &#123;</span><br><span class="line">            view.isOn = sender.isOn</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Mark :- SwiftUI</span><br><span class="line">struct ContentView: View &#123;    </span><br><span class="line">    @State var isOn = false</span><br><span class="line">    </span><br><span class="line">    var body: some View &#123;        </span><br><span class="line">        AASwitchView(isOn: $isOn)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="UIViewController"><a href="#UIViewController" class="headerlink" title="UIViewController"></a>UIViewController</h4><p>要在 SwiftUI 中使用 UIViewController 的话，需要用 UIViewControllerRepresentable 对 UIViewController 进行一层包装。</p>
+<p>且 UIView 需要使用 typealias 指定一个需要包装的 UIView 类型，并实现两个方法：</p>
+<ul>
+<li>func makeUIViewController(context: Self.Context) -&gt; Self.UIViewControllerType</li>
+</ul>
+<p>创建一个 UIViewController 并返回。可在这里设置默认的一些属性及状态。</p>
+<ul>
+<li>func updateUIViewController(_ uiViewController: Self.UIViewControllerType, context: Self.Context)</li>
+</ul>
+<p>在 SwiftUI 中可改变的属性在这里进行设置及刷新 UIViewController 的状态。</p>
+<p>需要暴露的、可设置的属性，就在 View 中声明一个属性，供 SwiftUI 使用时进行调整。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">struct AANavViewController: UIViewControllerRepresentable &#123;</span><br><span class="line">    typealias UIViewControllerType = UINavigationController</span><br><span class="line">    </span><br><span class="line">    var root: UIViewController</span><br><span class="line">    var title: String</span><br><span class="line">    </span><br><span class="line">    func makeUIViewController(context: Context) -&gt; UINavigationController &#123;</span><br><span class="line">        let vc = UINavigationController()</span><br><span class="line">        return vc</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) &#123;</span><br><span class="line">        uiViewController.topViewController?.title = title</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct ContentView: View &#123;</span><br><span class="line">    var body: some View &#123;</span><br><span class="line">        AANavViewController(root: UIViewController(), title: &quot;Title&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="SwiftUI-in-UIkit"><a href="#SwiftUI-in-UIkit" class="headerlink" title="SwiftUI in UIkit"></a>SwiftUI in UIkit</h2><p>SwiftUI 中的控件想在 UIKit 中使用的话相对来说比较简单。只需要通过 <strong>UIHostingController</strong> 包装一次即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let vc = UIHostingController(rootView: Text(&quot;Text&quot;))</span><br></pre></td></tr></table></figure>
+<p>这边需要注意的是，取到的是一个 UIViewController 对象。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/26/Swift-OC-混编Tips/" rel="next" title="Swift OC 混编Tips">
+                <i class="fa fa-chevron-left"></i> Swift OC 混编Tips
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/17/Swift-属性包装器/" rel="prev" title="Swift 属性包装器">
+                Swift 属性包装器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#UIKit-in-SwiftUI"><span class="nav-number">1.</span> <span class="nav-text">UIKit in SwiftUI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UIView"><span class="nav-number">1.0.1.</span> <span class="nav-text">UIView</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#例子1。常规显示的-View。"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">例子1。常规显示的 View。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#例子2。包装的-View-中有-Target-Action-事件。"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">例子2。包装的 View 中有 Target/Action 事件。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UIViewController"><span class="nav-number">1.0.2.</span> <span class="nav-text">UIViewController</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#SwiftUI-in-UIkit"><span class="nav-number">2.</span> <span class="nav-text">SwiftUI in UIkit</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

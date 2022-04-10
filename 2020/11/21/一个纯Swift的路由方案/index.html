@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="目前主流的路由方案主要有三个，URLRoute、Protocol-class、Target-Action。关于这三个方案的文章有非常多了，每个路由方案都是各有优缺点。 现在介绍的这个路由方案，是一个专门给 Swift 项目用的，简单的路由解决方案。利用了 Swift 枚举的特性，可以简单的将项目中的业务模块进行解耦。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个简单、清晰Swift路由方案">
+<meta property="og:url" content="http://yoursite.com/2020/11/21/一个纯Swift的路由方案/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="目前主流的路由方案主要有三个，URLRoute、Protocol-class、Target-Action。关于这三个方案的文章有非常多了，每个路由方案都是各有优缺点。 现在介绍的这个路由方案，是一个专门给 Swift 项目用的，简单的路由解决方案。利用了 Swift 枚举的特性，可以简单的将项目中的业务模块进行解耦。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-04-07T09:23:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个简单、清晰Swift路由方案">
+<meta name="twitter:description" content="目前主流的路由方案主要有三个，URLRoute、Protocol-class、Target-Action。关于这三个方案的文章有非常多了，每个路由方案都是各有优缺点。 现在介绍的这个路由方案，是一个专门给 Swift 项目用的，简单的路由解决方案。利用了 Swift 枚举的特性，可以简单的将项目中的业务模块进行解耦。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/11/21/一个纯Swift的路由方案/">
+
+
+
+
+
+  <title>一个简单、清晰Swift路由方案 | 江涛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">江涛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-self">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/21/一个纯Swift的路由方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JTao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/JT_logo.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一个简单、清晰Swift路由方案</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-21T08:55:45+08:00">
+                2020-11-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Swift-Tips/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift Tips</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>目前主流的路由方案主要有三个，URLRoute、Protocol-class、Target-Action。关于这三个方案的文章有非常多了，每个路由方案都是各有优缺点。</p>
+<p>现在介绍的这个路由方案，是一个专门给 Swift 项目用的，简单的路由解决方案。利用了 Swift 枚举的特性，可以简单的将项目中的业务模块进行解耦。</p>
+<a id="more"></a>
+<h3 id="前置介绍——枚举"><a href="#前置介绍——枚举" class="headerlink" title="前置介绍——枚举"></a>前置介绍——枚举</h3><p>Swift 中的枚举相较于 OC 中的枚举强大了太多了。OC 中枚举只能支持 Int，而在 Swift 中可以支持整形、浮点数、字符串、布尔等类型。</p>
+<p>Swift 的枚举还支持关联值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">enum People &#123;</span><br><span class="line">    case buy(someThing: String)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let p = People.buy(someThing: &quot;Food&quot;)</span><br><span class="line"></span><br><span class="line">switch p &#123;</span><br><span class="line">    case .bug(let thing):</span><br><span class="line">        print(thing)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简单地说，就是枚举可以传值。 这个简易路由就是利用枚举的这个特性来实现的。</p>
+<h3 id="路由介绍"><a href="#路由介绍" class="headerlink" title="路由介绍"></a>路由介绍</h3><h4 id="JTRouterModuleEventProtocol"><a href="#JTRouterModuleEventProtocol" class="headerlink" title="JTRouterModuleEventProtocol"></a>JTRouterModuleEventProtocol</h4><p>统一路由事件的协议，是一个空协议，是为了统一路由事件的类型。各个模块利用枚举实现这个协议。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/// 登录模块，对外暴露的接口</span><br><span class="line">public enum JTLoginModuleRouterEvent: JTRouterModuleEventProtocol &#123;</span><br><span class="line">    /// 打开登录页面</span><br><span class="line">    case openLoginVC</span><br><span class="line">    /// 根据用户id获取用户信息</span><br><span class="line">    case getInfo(uid: String)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="JTRouterProtocol"><a href="#JTRouterProtocol" class="headerlink" title="JTRouterProtocol"></a>JTRouterProtocol</h4><p>路由核心协议，由各个模块实现对应方法，暴露自身模块能力。外界调用时，只需要将需要调用的事件枚举（继承自 JTRouterModuleEventProtocol）传入，并由对应模块进行处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/// 协议定义</span><br><span class="line">public protocol JTRouterProtocol &#123;</span><br><span class="line">    var identifier: String &#123; get &#125;</span><br><span class="line">    </span><br><span class="line">    func canHandle(routerEvent: JTRouterModuleEventProtocol) -&gt; Bool</span><br><span class="line">    </span><br><span class="line">    func handle(routerEvent: JTRouterModuleEventProtocol, completion: (([String: Any]) -&gt; Void)?) -&gt; Bool</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="JTRouterManager"><a href="#JTRouterManager" class="headerlink" title="JTRouterManager"></a>JTRouterManager</h4><p>路由管理中心。各个模块将自己注册进来，manager 将模块服务存储起来，在使用时，manager 会寻找注册进来的路由服务，查找可以响应的服务来处理事件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class JTRouterManager &#123;</span><br><span class="line">    private var moduleServices: [JTRouterProtocol] = []</span><br><span class="line">    </span><br><span class="line">    public static let shared = JTRouterManager()</span><br><span class="line">    private init() &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    public func registService(service: JTRouterProtocol) &#123;</span><br><span class="line">        let isRegisted = moduleServices.contains &#123; value in</span><br><span class="line">            return value.identifier == service.identifier</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        if !isRegisted &#123;</span><br><span class="line">            moduleServices.append(service)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @discardableResult</span><br><span class="line">    public func handle(routerEvent: JTRouterModuleEventProtocol, completion: (([String: Any]) -&gt; Void)?) -&gt; Bool &#123;</span><br><span class="line">        var temp: JTRouterProtocol?</span><br><span class="line">        for service in moduleServices &#123;</span><br><span class="line">            if service.canHandle(routerEvent: routerEvent) &#123;</span><br><span class="line">                temp = service</span><br><span class="line">                break</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        guard let handler = temp  else &#123;</span><br><span class="line">            return false</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return handler.handle(routerEvent: routerEvent, completion: completion)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h2><h4 id="定义模块内事件"><a href="#定义模块内事件" class="headerlink" title="定义模块内事件"></a>定义模块内事件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/// 登录模块，对外暴露的接口</span><br><span class="line">public enum JTLoginModuleRouterEvent: JTRouterModuleEventProtocol &#123;</span><br><span class="line">    /// 打开登录页面</span><br><span class="line">    case openLoginVC</span><br><span class="line">    /// 根据用户id获取用户信息</span><br><span class="line">    case getInfo(uid: String)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="模块实现路由协议并注册自身"><a href="#模块实现路由协议并注册自身" class="headerlink" title="模块实现路由协议并注册自身"></a>模块实现路由协议并注册自身</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">public class JTLoginModuleRouterService: NSObject, JTRouterProtocol &#123;</span><br><span class="line">    @objc public class func serverStart() &#123;</span><br><span class="line">        JTLoginModuleRouterService.shared</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public static let shared = JTLoginModuleRouterService()</span><br><span class="line">    public override init() &#123;</span><br><span class="line">        super.init()</span><br><span class="line">                </span><br><span class="line">        JTRouterManager.shared.registService(service: self)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public extension JTLoginModuleRouterService &#123;</span><br><span class="line">    public var identifier: String &#123;</span><br><span class="line">        return String(describing: self)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public func canHandle(routerEvent: JTRouterModuleEventProtocol) -&gt; Bool &#123;</span><br><span class="line">        return routerEvent is JTLoginModuleRouterEvent</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @discardableResult</span><br><span class="line">    public func handle(routerEvent: JTRouterModuleEventProtocol, completion: (([String: Any]) -&gt; Void)?) -&gt; Bool &#123;</span><br><span class="line">        guard let loginRouter = routerEvent as? JTLoginModuleRouterEvent else &#123;</span><br><span class="line">            return false</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        switch loginRouter &#123;</span><br><span class="line">        case .openLoginVC:</span><br><span class="line">            handleOpenLoginVC()</span><br><span class="line">        case .getInfo(let uid):</span><br><span class="line">            let callbackInfo = handleGetInfo(uid: uid)</span><br><span class="line">            completion?(callbackInfo)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private extension JTLoginModuleRouterService &#123;</span><br><span class="line">    private func handleOpenLoginVC() &#123;</span><br><span class="line">        let vc = JTLoginMainViewController()</span><br><span class="line">        </span><br><span class="line">        // do something</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private func handleGetInfo(uid: String) -&gt; [String: Any] &#123;</span><br><span class="line">        // get infos</span><br><span class="line">        let result: [String: Any] = [&quot;name&quot;: &quot;jt&quot;]</span><br><span class="line">        return result</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="外部调用示例"><a href="#外部调用示例" class="headerlink" title="外部调用示例"></a>外部调用示例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">let routerEvent1 = JTLoginModuleRouterEvent.openLoginVC</span><br><span class="line"></span><br><span class="line">JTRouterManager.shared.handle(routerEvent: routerEvent1) &#123; info in</span><br><span class="line">    // do something with call back info</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let routerEvent2 = JTLoginModuleRouterEvent.getInfo(uid: &quot;id&quot;)</span><br><span class="line"></span><br><span class="line">JTRouterManager.shared.handle(routerEvent: routerEvent2) &#123; info in</span><br><span class="line">    // do something with call back info</span><br><span class="line">    // [&quot;name&quot;: &quot;jt&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>因为模块内需要在项目启动时，注册自身路由服务到路由管理中心。但是，在 Swift 中 <strong>+(void)load</strong> 方法不能使用，这里还是使用了 OC 的类来进行协助。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C</span><br><span class="line">@implementation JTLoginModuleRouterService (Private)</span><br><span class="line">​</span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    [self serverStart];</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line">+ (void)initialize &#123;</span><br><span class="line">    // do something</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>当然，由于这两个方法是 NSObject 类中声明的，所以我们的 Swift 类必须继承自 NSObject 或其子类。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/28/UILabel高亮显示/" rel="next" title="UILabel高亮显示">
+                <i class="fa fa-chevron-left"></i> UILabel高亮显示
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/01/03/在-Swift-中使用-iconfont/" rel="prev" title="在 Swift 中使用 IconFont">
+                在 Swift 中使用 IconFont <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
+            
+              <p class="site-author-name" itemprop="name">JTao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前置介绍——枚举"><span class="nav-number">1.</span> <span class="nav-text">前置介绍——枚举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由介绍"><span class="nav-number">2.</span> <span class="nav-text">路由介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JTRouterModuleEventProtocol"><span class="nav-number">2.1.</span> <span class="nav-text">JTRouterModuleEventProtocol</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JTRouterProtocol"><span class="nav-number">2.2.</span> <span class="nav-text">JTRouterProtocol</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JTRouterManager"><span class="nav-number">2.3.</span> <span class="nav-text">JTRouterManager</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#使用示例"><span class="nav-number"></span> <span class="nav-text">使用示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义模块内事件"><span class="nav-number">0.1.</span> <span class="nav-text">定义模块内事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模块实现路由协议并注册自身"><span class="nav-number">0.2.</span> <span class="nav-text">模块实现路由协议并注册自身</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外部调用示例"><span class="nav-number">0.3.</span> <span class="nav-text">外部调用示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充"><span class="nav-number"></span> <span class="nav-text">补充</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
