@@ -1,365 +1,261 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="动态切换 App 的 icon 这个需求，在上一家公司做一款定制 App 时遇到过一次，这次领导说可能需要做，就又做了一次。虽然不是什么很难的知识点，这里也就记录一下自己做的过程吧。  info.plist 文件编辑 更换 Icon 静默切换">
+    <meta name="description" content="动态切换 App 的 icon 这个需求，在上一家公司做一款定制 App 时遇到过一次，这次领导说可能需要做，就又做了一次。虽然不是什么很难的知识点，这里也就记录一下自己做的过程吧。  info.plist 文件编辑 更换 Icon 静默切换">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS更换Icon">
-<meta property="og:url" content="http://yoursite.com/2018/07/31/iOS更换Icon/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/index.html">
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="动态切换 App 的 icon 这个需求，在上一家公司做一款定制 App 时遇到过一次，这次领导说可能需要做，就又做了一次。虽然不是什么很难的知识点，这里也就记录一下自己做的过程吧。  info.plist 文件编辑 更换 Icon 静默切换">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/07/31/iOS更换Icon/plist.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/07/31/iOS更换Icon/目录.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/07/31/iOS更换Icon/效果图1.gif">
-<meta property="og:image" content="http://yoursite.com/2018/07/31/iOS更换Icon/效果图2.gif">
-<meta property="og:updated_time" content="2019-08-14T06:06:42.000Z">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/plist.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/%E7%9B%AE%E5%BD%95.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/%E6%95%88%E6%9E%9C%E5%9B%BE1.gif">
+<meta property="og:image" content="http://yoursite.com/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/%E6%95%88%E6%9E%9C%E5%9B%BE2.gif">
+<meta property="article:published_time" content="2018-07-31T13:53:20.000Z">
+<meta property="article:modified_time" content="2019-08-14T06:06:42.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS更换Icon">
-<meta name="twitter:description" content="动态切换 App 的 icon 这个需求，在上一家公司做一款定制 App 时遇到过一次，这次领导说可能需要做，就又做了一次。虽然不是什么很难的知识点，这里也就记录一下自己做的过程吧。  info.plist 文件编辑 更换 Icon 静默切换">
-<meta name="twitter:image" content="http://yoursite.com/2018/07/31/iOS更换Icon/plist.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/plist.jpg">
+
+
+<link rel="canonical" href="http://yoursite.com/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/","path":"2018/07/31/iOS更换Icon/","title":"iOS更换Icon"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2018/07/31/iOS更换Icon/">
-
-
-
-
-
-  <title>iOS更换Icon | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>iOS更换Icon | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#info-plist-%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">info.plist 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2-Icon"><span class="nav-number">2.</span> <span class="nav-text">更换 Icon</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E5%88%B0%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E7%9A%84-Icon"><span class="nav-number">2.0.1.</span> <span class="nav-text">切换到我们需要的 Icon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E7%BD%AE%E4%B8%BA%E5%8E%9F%E5%A7%8B%E7%9A%84-Icon"><span class="nav-number">2.0.2.</span> <span class="nav-text">重置为原始的 Icon</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E9%BB%98%E5%88%87%E6%8D%A2"><span class="nav-number">3.</span> <span class="nav-text">静默切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/31/iOS更换Icon/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="iOS更换Icon | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS更换Icon
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">iOS更换Icon</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-31T21:53:20+08:00">
-                2018-07-31
-              </time>
-            
+      <time title="Created: 2018-07-31 21:53:20" itemprop="dateCreated datePublished" datetime="2018-07-31T21:53:20+08:00">2018-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2019-08-14 14:06:42" itemprop="dateModified" datetime="2019-08-14T14:06:42+08:00">2019-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">iOS学习记录</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS学习记录/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS学习记录</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         <p>动态切换 App 的 icon 这个需求，在上一家公司做一款定制 App 时遇到过一次，这次领导说可能需要做，就又做了一次。虽然不是什么很难的知识点，这里也就记录一下自己做的过程吧。</p>
 <ul>
 <li>info.plist 文件编辑</li>
 <li>更换 Icon</li>
 <li>静默切换</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
+
 <h2 id="info-plist-文件"><a href="#info-plist-文件" class="headerlink" title="info.plist 文件"></a>info.plist 文件</h2><p>为了动态更换 icon，我们需要先配置一下我们项目的 info.plist 文件：</p>
-<img src="/2018/07/31/iOS更换Icon/plist.jpg" title="info.plist">
+<img src="/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/plist.jpg" class="" title="info.plist">
+
 <ol>
 <li>加入 Icon files(iOS5)，其中会默认有两个 item：<ol>
 <li>Newsstand Icon</li>
-<li>Primary Icon    </li>
+<li>Primary Icon</li>
 </ol>
+<p>	</p>
 </li>
 <li>我们需要加入我们需要的键——CFBundleAlternateIcons，类型为 Dictionary。</li>
 <li>下面再添加一些字典。这里字典的键是你希望更换 Icon 的名称，在下方的 CFBundleIconFiles 数组中，写入需要更换的 Icon 的名称。</li>
@@ -367,372 +263,95 @@
 <p><strong>Primary Icon：</strong> 可以设置 App 的主 Icon，一般都不理会。一般主 Icon 在 Assets.xcassets 中设置。</p>
 <p><strong>Newsstand Icon：</strong> 这个设置一般用于在 Newsstand 中显示使用。我们也不需要理会。</p>
 <p>这里我们就将 info.plist 编辑完成了，下面我们将对应的图片加入到项目中，这里的图片需要直接加到项目中，不能放在 Assets.xcassets 中。</p>
-<img src="/2018/07/31/iOS更换Icon/目录.jpg" title="目录">
+<img src="/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/%E7%9B%AE%E5%BD%95.jpg" class="" title="目录">
+
 <h2 id="更换-Icon"><a href="#更换-Icon" class="headerlink" title="更换 Icon"></a>更换 Icon</h2><p>在 iOS 10.3，苹果开放了这个 API，可以让我们动态更换我们的 App Icon。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// If false, alternate icons are not supported for the current process.</span><br><span class="line">@available(iOS 10.3, *)</span><br><span class="line">open var supportsAlternateIcons: Bool &#123; get &#125;</span><br><span class="line">    </span><br><span class="line">// Pass `nil` to use the primary application icon. The completion handler will be invoked asynchronously on an arbitrary background queue; be sure to dispatch back to the main queue before doing any further UI work.</span><br><span class="line">@available(iOS 10.3, *)</span><br><span class="line">open func setAlternateIconName(_ alternateIconName: String?, completionHandler: ((Error?) -&gt; Void)? = nil)</span><br><span class="line">    </span><br><span class="line">// If `nil`, the primary application icon is being used.</span><br><span class="line">@available(iOS 10.3, *)</span><br><span class="line">open var alternateIconName: String? &#123; get &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="切换到我们需要的-Icon"><a href="#切换到我们需要的-Icon" class="headerlink" title="切换到我们需要的 Icon"></a>切换到我们需要的 Icon</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@IBAction func changeOneClick(_ sender: Any) &#123;</span><br><span class="line">    if UIApplication.shared.supportsAlternateIcons &#123;</span><br><span class="line">        UIApplication.shared.setAlternateIconName(&quot;lambot&quot;) &#123; (error) in</span><br><span class="line">            if error != nil &#123;</span><br><span class="line">                print(&quot;更换icon错误&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// If false, alternate icons are not supported for the current process.</span><br><span class="line">@available(iOS 10.3, *)</span><br><span class="line">open var supportsAlternateIcons: Bool &#123; get &#125;</span><br><span class="line">    </span><br><span class="line">// Pass `nil` to use the primary application icon. The completion handler will be invoked asynchronously on an arbitrary background queue; be sure to dispatch back to the main queue before doing any further UI work.</span><br><span class="line">@available(iOS 10.3, *)</span><br><span class="line">open func setAlternateIconName(_ alternateIconName: String?, completionHandler: ((Error?) -&gt; Void)? = nil)</span><br><span class="line">    </span><br><span class="line">// If `nil`, the primary application icon is being used.</span><br><span class="line">@available(iOS 10.3, *)</span><br><span class="line">open var alternateIconName: String? &#123; get &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="切换到我们需要的-Icon"><a href="#切换到我们需要的-Icon" class="headerlink" title="切换到我们需要的 Icon"></a>切换到我们需要的 Icon</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@IBAction func changeOneClick(_ sender: Any) &#123;</span><br><span class="line">    if UIApplication.shared.supportsAlternateIcons &#123;</span><br><span class="line">        UIApplication.shared.setAlternateIconName(&quot;lambot&quot;) &#123; (error) in</span><br><span class="line">            if error != nil &#123;</span><br><span class="line">                print(&quot;更换icon错误&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这里的 iconName 直接传入项目中的 icon 名称。这里需要注意的是，项目中的名字、info.plist 中存入的名称以及这里传入的名称需要一致。</p>
-<h4 id="重置为原始的-Icon"><a href="#重置为原始的-Icon" class="headerlink" title="重置为原始的 Icon"></a>重置为原始的 Icon</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@IBAction func resetClick(_ sender: Any) &#123;</span><br><span class="line">    if UIApplication.shared.supportsAlternateIcons &#123;</span><br><span class="line">        UIApplication.shared.setAlternateIconName(nil) &#123; (error) in</span><br><span class="line">            if error != nil &#123;</span><br><span class="line">                print(&quot;更换icon错误&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="重置为原始的-Icon"><a href="#重置为原始的-Icon" class="headerlink" title="重置为原始的 Icon"></a>重置为原始的 Icon</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@IBAction func resetClick(_ sender: Any) &#123;</span><br><span class="line">    if UIApplication.shared.supportsAlternateIcons &#123;</span><br><span class="line">        UIApplication.shared.setAlternateIconName(nil) &#123; (error) in</span><br><span class="line">            if error != nil &#123;</span><br><span class="line">                print(&quot;更换icon错误&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>如果需要恢复为原始的 icon，只需要在传入 iconName 的地方传入 nil 即可。</p>
-<img src="/2018/07/31/iOS更换Icon/效果图1.gif" title="效果图1">
+<img src="/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/%E6%95%88%E6%9E%9C%E5%9B%BE1.gif" class="" title="效果图1">
+
 <p>现在，已经完成了切换 Icon 的功能了。但是每次切换时，都会有一个弹框，下面我们就想办法去掉这个弹框。</p>
 <h2 id="静默切换"><a href="#静默切换" class="headerlink" title="静默切换"></a>静默切换</h2><p>我们可以利用 Runtime 的方法来替换掉弹出提示框的方法。</p>
 <p>以前 Method Swizzling 的时候需要在 load 或者 initialize 方法，但是在 Swift 中不能使用了。那就只能自己定义一个了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">extension UIViewController &#123;</span><br><span class="line">    public class func initializeMethod() &#123;</span><br><span class="line">        if self != UIViewController.self &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">		// Method Swizzling</span><br><span class="line">        DispatchQueue.once(token: &quot;ChangeIcon&quot;) &#123;</span><br><span class="line">            let orignal = class_getInstanceMethod(self, #selector(UIViewController.present(_:animated:completion:)))</span><br><span class="line">            let swizzling = class_getInstanceMethod(self, #selector(UIViewController.jt_present(_:animated:completion:)))</span><br><span class="line"></span><br><span class="line">            if let old = orignal, let new = swizzling &#123;</span><br><span class="line">                method_exchangeImplementations(old, new)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @objc private func jt_present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -&gt; Void)? = nil) &#123;</span><br><span class="line">        // 在这里判断是否是更换icon时的弹出框</span><br><span class="line">        if viewControllerToPresent is UIAlertController &#123;</span><br><span class="line"></span><br><span class="line">            let alertTitle = (viewControllerToPresent as! UIAlertController).title</span><br><span class="line">            let alertMessage = (viewControllerToPresent as! UIAlertController).message</span><br><span class="line"></span><br><span class="line">            // 更换icon时的弹出框，这两个string都为nil。</span><br><span class="line">            if alertTitle == nil &amp;&amp; alertMessage == nil &#123;</span><br><span class="line">                return</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">		</span><br><span class="line">		// 因为方法已经交换，这个地方的调用就相当于调用原先系统的 present</span><br><span class="line">        self.jt_present(viewControllerToPresent, animated: flag, completion: completion)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">extension UIViewController &#123;</span><br><span class="line">    public class func initializeMethod() &#123;</span><br><span class="line">        if self != UIViewController.self &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">		// Method Swizzling</span><br><span class="line">        DispatchQueue.once(token: &quot;ChangeIcon&quot;) &#123;</span><br><span class="line">            let orignal = class_getInstanceMethod(self, #selector(UIViewController.present(_:animated:completion:)))</span><br><span class="line">            let swizzling = class_getInstanceMethod(self, #selector(UIViewController.jt_present(_:animated:completion:)))</span><br><span class="line"></span><br><span class="line">            if let old = orignal, let new = swizzling &#123;</span><br><span class="line">                method_exchangeImplementations(old, new)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @objc private func jt_present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -&gt; Void)? = nil) &#123;</span><br><span class="line">        // 在这里判断是否是更换icon时的弹出框</span><br><span class="line">        if viewControllerToPresent is UIAlertController &#123;</span><br><span class="line"></span><br><span class="line">            let alertTitle = (viewControllerToPresent as! UIAlertController).title</span><br><span class="line">            let alertMessage = (viewControllerToPresent as! UIAlertController).message</span><br><span class="line"></span><br><span class="line">            // 更换icon时的弹出框，这两个string都为nil。</span><br><span class="line">            if alertTitle == nil &amp;&amp; alertMessage == nil &#123;</span><br><span class="line">                return</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">		</span><br><span class="line">		// 因为方法已经交换，这个地方的调用就相当于调用原先系统的 present</span><br><span class="line">        self.jt_present(viewControllerToPresent, animated: flag, completion: completion)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>定义完 UIViewController 的扩展方法后，记得在 AppDelegate 中调用一下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -&gt; Bool &#123;</span><br><span class="line"></span><br><span class="line">    UIViewController.initializeMethod()</span><br><span class="line"></span><br><span class="line">    return true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -&gt; Bool &#123;</span><br><span class="line"></span><br><span class="line">    UIViewController.initializeMethod()</span><br><span class="line"></span><br><span class="line">    return true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>因为，Swift 中 GCD 之前的 once 函数没有了，这里自己简单定义了一个。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">extension DispatchQueue &#123;</span><br><span class="line">    private static var _onceTracker = [String]()</span><br><span class="line">    public class func once(token: String, block: () -&gt; ()) &#123;</span><br><span class="line">        objc_sync_enter(self)</span><br><span class="line">        defer &#123;</span><br><span class="line">            objc_sync_exit(self)</span><br><span class="line">        &#125;</span><br><span class="line">        if _onceTracker.contains(token) &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        _onceTracker.append(token)</span><br><span class="line">        block()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">extension DispatchQueue &#123;</span><br><span class="line">    private static var _onceTracker = [String]()</span><br><span class="line">    public class func once(token: String, block: () -&gt; ()) &#123;</span><br><span class="line">        objc_sync_enter(self)</span><br><span class="line">        defer &#123;</span><br><span class="line">            objc_sync_exit(self)</span><br><span class="line">        &#125;</span><br><span class="line">        if _onceTracker.contains(token) &#123;</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        _onceTracker.append(token)</span><br><span class="line">        block()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>defer block 里的代码会在函数 return 之前执行，无论函数是从哪个分支 return 的，还是有 throw，还是自然而然走到最后一行。</p>
 </blockquote>
 <p>现在，我们再更换 Icon 的时候，就不会出现弹出框了。</p>
-<img src="/2018/07/31/iOS更换Icon/效果图2.gif" title="效果图2">
+<img src="/2018/07/31/iOS%E6%9B%B4%E6%8D%A2Icon/%E6%95%88%E6%9E%9C%E5%9B%BE2.gif" class="" title="效果图2">
+
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简单的知识点，时间长了不用也有可能忘记。希望自己能坚持学习，坚持记录，不断成长。</p>
 <p><strong>参考链接：</strong></p>
-<p><a href="https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#//apple_ref/doc/uid/TP40009249-SW18" target="_blank" rel="noopener">Information Property List Key Reference</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#//apple_ref/doc/uid/TP40009249-SW18">Information Property List Key Reference</a></p>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/07/21/RxSwift源码学习（一）/" rel="next" title="RxSwift源码学习之just">
-                <i class="fa fa-chevron-left"></i> RxSwift源码学习之just
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/12/Core-Animation/" rel="prev" title="《iOS Core Animation：Advanced Techniques》读书笔记">
-                《iOS Core Animation：Advanced Techniques》读书笔记 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/21/RxSwift%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="RxSwift源码学习之just">
+                  <i class="fa fa-chevron-left"></i> RxSwift源码学习之just
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#info-plist-文件"><span class="nav-number">1.</span> <span class="nav-text">info.plist 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更换-Icon"><span class="nav-number">2.</span> <span class="nav-text">更换 Icon</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#切换到我们需要的-Icon"><span class="nav-number">2.0.1.</span> <span class="nav-text">切换到我们需要的 Icon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重置为原始的-Icon"><span class="nav-number">2.0.2.</span> <span class="nav-text">重置为原始的 Icon</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#静默切换"><span class="nav-number">3.</span> <span class="nav-text">静默切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2018/08/12/Core-Animation/" rel="next" title="《iOS Core Animation：Advanced Techniques》读书笔记">
+                  《iOS Core Animation：Advanced Techniques》读书笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -745,34 +364,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

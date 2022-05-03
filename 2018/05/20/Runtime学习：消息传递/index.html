@@ -1,352 +1,245 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="Objective-C 扩展了 C 语言，并加入了面向对象特性和消息传递机制。而这个扩展的核心就是 Runtime 库。它是 Objective-C 面向对象和动态机制的基石。 基于我对 Runtime 的理解，我认为它的核心知识基本都围绕两个中心：  消息传递 类的动态配置  Runtime 的知识点比较多，计划用三篇文章来记录下自己的学习过程：  消息传递探究 类的动态配置 实际应用">
+    <meta name="description" content="Objective-C 扩展了 C 语言，并加入了面向对象特性和消息传递机制。而这个扩展的核心就是 Runtime 库。它是 Objective-C 面向对象和动态机制的基石。 基于我对 Runtime 的理解，我认为它的核心知识基本都围绕两个中心：  消息传递 类的动态配置  Runtime 的知识点比较多，计划用三篇文章来记录下自己的学习过程：  消息传递探究 类的动态配置 实际应用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Runtime学习：消息传递">
-<meta property="og:url" content="http://yoursite.com/2018/05/20/Runtime学习：消息传递/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/index.html">
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="Objective-C 扩展了 C 语言，并加入了面向对象特性和消息传递机制。而这个扩展的核心就是 Runtime 库。它是 Objective-C 面向对象和动态机制的基石。 基于我对 Runtime 的理解，我认为它的核心知识基本都围绕两个中心：  消息传递 类的动态配置  Runtime 的知识点比较多，计划用三篇文章来记录下自己的学习过程：  消息传递探究 类的动态配置 实际应用">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/05/20/Runtime学习：消息传递/Runtime_string.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/05/20/Runtime学习：消息传递/Runtime_消息传递.png">
-<meta property="og:image" content="http://yoursite.com/2018/05/20/Runtime学习：消息传递/Runtime_消息发送.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/05/20/Runtime学习：消息传递/Runtime_动态解析.png">
-<meta property="og:image" content="http://yoursite.com/2018/05/20/Runtime学习：消息传递/Runtime_消息转发.png">
-<meta property="og:updated_time" content="2020-03-02T03:43:56.000Z">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_string.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92.png">
+<meta property="og:image" content="http://yoursite.com/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_%E5%8A%A8%E6%80%81%E8%A7%A3%E6%9E%90.png">
+<meta property="og:image" content="http://yoursite.com/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91.png">
+<meta property="article:published_time" content="2018-05-20T12:55:38.000Z">
+<meta property="article:modified_time" content="2020-03-02T03:43:56.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Runtime学习：消息传递">
-<meta name="twitter:description" content="Objective-C 扩展了 C 语言，并加入了面向对象特性和消息传递机制。而这个扩展的核心就是 Runtime 库。它是 Objective-C 面向对象和动态机制的基石。 基于我对 Runtime 的理解，我认为它的核心知识基本都围绕两个中心：  消息传递 类的动态配置  Runtime 的知识点比较多，计划用三篇文章来记录下自己的学习过程：  消息传递探究 类的动态配置 实际应用">
-<meta name="twitter:image" content="http://yoursite.com/2018/05/20/Runtime学习：消息传递/Runtime_string.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_string.jpg">
+
+
+<link rel="canonical" href="http://yoursite.com/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/","path":"2018/05/20/Runtime学习：消息传递/","title":"Runtime学习：消息传递"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2018/05/20/Runtime学习：消息传递/">
-
-
-
-
-
-  <title>Runtime学习：消息传递 | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Runtime学习：消息传递 | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%AF%B9%E8%B1%A1-objc-class"><span class="nav-number">1.1.</span> <span class="nav-text">类对象(objc_class)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%BC%93%E5%AD%98-objc-cache"><span class="nav-number">1.2.</span> <span class="nav-text">类缓存(objc_cache)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method-objc-method"><span class="nav-number">1.3.</span> <span class="nav-text">Method(objc_method)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SEL-objc-selector"><span class="nav-number">1.3.1.</span> <span class="nav-text">SEL(objc_selector)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IMP"><span class="nav-number">1.3.2.</span> <span class="nav-text">IMP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%EF%BC%88objc-object%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">实例（objc_object）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%83%E7%B1%BB-Meta-Class"><span class="nav-number">1.5.</span> <span class="nav-text">元类(Meta Class)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BC%A0%E9%80%92"><span class="nav-number">2.</span> <span class="nav-text">方法传递</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81%E9%98%B6%E6%AE%B5"><span class="nav-number">2.0.1.</span> <span class="nav-text">消息发送阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%A3%E6%9E%90%E9%98%B6%E6%AE%B5"><span class="nav-number">2.0.2.</span> <span class="nav-text">动态解析阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E9%98%B6%E6%AE%B5"><span class="nav-number">2.0.3.</span> <span class="nav-text">消息转发阶段</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/Runtime学习：消息传递/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Runtime学习：消息传递 | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Runtime学习：消息传递
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">Runtime学习：消息传递</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-20T20:55:38+08:00">
-                2018-05-20
-              </time>
-            
+      <time title="Created: 2018-05-20 20:55:38" itemprop="dateCreated datePublished" datetime="2018-05-20T20:55:38+08:00">2018-05-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-03-02 11:43:56" itemprop="dateModified" datetime="2020-03-02T11:43:56+08:00">2020-03-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS%E5%BA%95%E5%B1%82%E5%88%9D%E7%AA%A5/" itemprop="url" rel="index"><span itemprop="name">iOS底层初窥</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS底层初窥/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS底层初窥</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         <p>Objective-C 扩展了 C 语言，并加入了面向对象特性和消息传递机制。而这个扩展的核心就是 Runtime 库。它是 Objective-C 面向对象和动态机制的基石。</p>
 <p>基于我对 Runtime 的理解，我认为它的核心知识基本都围绕两个中心：</p>
 <ul>
@@ -355,22 +248,26 @@
 </ul>
 <p>Runtime 的知识点比较多，计划用三篇文章来记录下自己的学习过程：</p>
 <ul>
-<li><a href>消息传递探究</a></li>
+<li><a href="">消息传递探究</a></li>
 <li>类的动态配置</li>
 <li>实际应用</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
+
 <p>下面就根据这两个中心我们慢慢来学习 Runtime。首先我们需要对类的本质进行了解。</p>
 <h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><h3 id="类对象-objc-class"><a href="#类对象-objc-class" class="headerlink" title="类对象(objc_class)"></a>类对象(objc_class)</h3><p>Objective-C 类是由 Class 类型来表示的，它实际上是一个指向 <strong>objc_class</strong> 结构体的指针。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_class *Class;</span><br></pre></td></tr></table></figure>
-<p>查看 <strong>objc/runtime.h</strong> 中 <strong>objc_class</strong> 结构体的定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">//runtime.h</span><br><span class="line">struct objc_class &#123;</span><br><span class="line">	// isa指针，指向元类（metaClass）</span><br><span class="line">    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line"></span><br><span class="line">#if !__OBJC2__</span><br><span class="line">	// 父类</span><br><span class="line">    Class _Nullable super_class                              OBJC2_UNAVAILABLE;</span><br><span class="line">    // 类名</span><br><span class="line">    const char * _Nonnull name                               OBJC2_UNAVAILABLE;</span><br><span class="line">    // 类的版本信息，默认为0</span><br><span class="line">    long version                                             OBJC2_UNAVAILABLE;</span><br><span class="line">    // 类信息</span><br><span class="line">    long info                                                OBJC2_UNAVAILABLE;</span><br><span class="line">    // 该类的实例变量大小</span><br><span class="line">    long instance_size                                       OBJC2_UNAVAILABLE;</span><br><span class="line">    // 该类的成员变量链表</span><br><span class="line">    struct objc_ivar_list * _Nullable ivars                  OBJC2_UNAVAILABLE;</span><br><span class="line">    // 该类的方法链表</span><br><span class="line">    struct objc_method_list * _Nullable * _Nullable methodLists                    OBJC2_UNAVAILABLE;</span><br><span class="line">    // 方法缓存</span><br><span class="line">    struct objc_cache * _Nonnull cache                       OBJC2_UNAVAILABLE;</span><br><span class="line">    // 协议链表</span><br><span class="line">    struct objc_protocol_list * _Nullable protocols          OBJC2_UNAVAILABLE;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_class *Class;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查看 <strong>objc&#x2F;runtime.h</strong> 中 <strong>objc_class</strong> 结构体的定义如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">//runtime.h</span><br><span class="line">struct objc_class &#123;</span><br><span class="line">	// isa指针，指向元类（metaClass）</span><br><span class="line">    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line"></span><br><span class="line">#if !__OBJC2__</span><br><span class="line">	// 父类</span><br><span class="line">    Class _Nullable super_class                              OBJC2_UNAVAILABLE;</span><br><span class="line">    // 类名</span><br><span class="line">    const char * _Nonnull name                               OBJC2_UNAVAILABLE;</span><br><span class="line">    // 类的版本信息，默认为0</span><br><span class="line">    long version                                             OBJC2_UNAVAILABLE;</span><br><span class="line">    // 类信息</span><br><span class="line">    long info                                                OBJC2_UNAVAILABLE;</span><br><span class="line">    // 该类的实例变量大小</span><br><span class="line">    long instance_size                                       OBJC2_UNAVAILABLE;</span><br><span class="line">    // 该类的成员变量链表</span><br><span class="line">    struct objc_ivar_list * _Nullable ivars                  OBJC2_UNAVAILABLE;</span><br><span class="line">    // 该类的方法链表</span><br><span class="line">    struct objc_method_list * _Nullable * _Nullable methodLists                    OBJC2_UNAVAILABLE;</span><br><span class="line">    // 方法缓存</span><br><span class="line">    struct objc_cache * _Nonnull cache                       OBJC2_UNAVAILABLE;</span><br><span class="line">    // 协议链表</span><br><span class="line">    struct objc_protocol_list * _Nullable protocols          OBJC2_UNAVAILABLE;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
+
 <p>在 objc_class 的定义中，有几个我们比较感兴趣的对象：</p>
 <p><strong>isa</strong> 在 Objective-C 中，类自身也是一个对象，它的 isa 指针指向其 metaClass（元类）。</p>
 <p><strong>super_class</strong> 指向该类的父类，如果该类已经是最顶层的根类（如 NSObject），则super_class 为 NULL。</p>
 <p><strong>objc_method_list</strong> 该类中的所有实例方法链表。</p>
 <p><strong>objc_cache</strong> 实例调用过的方法缓存。</p>
-<h3 id="类缓存-objc-cache"><a href="#类缓存-objc-cache" class="headerlink" title="类缓存(objc_cache)"></a>类缓存(objc_cache)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct objc_cache &#123;</span><br><span class="line">    unsigned int mask /* total = mask + 1 */                 OBJC2_UNAVAILABLE;</span><br><span class="line">    unsigned int occupied                                    OBJC2_UNAVAILABLE;</span><br><span class="line">    Method _Nullable buckets[1]                              OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="类缓存-objc-cache"><a href="#类缓存-objc-cache" class="headerlink" title="类缓存(objc_cache)"></a>类缓存(objc_cache)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct objc_cache &#123;</span><br><span class="line">    unsigned int mask /* total = mask + 1 */                 OBJC2_UNAVAILABLE;</span><br><span class="line">    unsigned int occupied                                    OBJC2_UNAVAILABLE;</span><br><span class="line">    Method _Nullable buckets[1]                              OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <p>它包含了下面三个变量：</p>
 <ul>
 <li><p><strong>mask：</strong> 指定分配的缓存 bucket 的总数。，所以缓存的 size（total）是 mask+1。</p>
@@ -381,48 +278,60 @@
 </li>
 </ul>
 <p>为了加速消息分发， 系统会对方法和对应的地址进行缓存，就放在 objc_cache 中，所以在实际运行中，大部分常用的方法都是会被缓存起来的。</p>
-<h3 id="Method-objc-method"><a href="#Method-objc-method" class="headerlink" title="Method(objc_method)"></a>Method(objc_method)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct objc_method_list &#123;</span><br><span class="line">    struct objc_method_list * _Nullable obsolete             OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line">    int method_count                                         OBJC2_UNAVAILABLE;</span><br><span class="line">#ifdef __LP64__</span><br><span class="line">    int space                                                OBJC2_UNAVAILABLE;</span><br><span class="line">#endif</span><br><span class="line">    /* variable length structure */</span><br><span class="line">    struct objc_method method_list[1]                        OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Method-objc-method"><a href="#Method-objc-method" class="headerlink" title="Method(objc_method)"></a>Method(objc_method)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct objc_method_list &#123;</span><br><span class="line">    struct objc_method_list * _Nullable obsolete             OBJC2_UNAVAILABLE;</span><br><span class="line"></span><br><span class="line">    int method_count                                         OBJC2_UNAVAILABLE;</span><br><span class="line">#ifdef __LP64__</span><br><span class="line">    int space                                                OBJC2_UNAVAILABLE;</span><br><span class="line">#endif</span><br><span class="line">    /* variable length structure */</span><br><span class="line">    struct objc_method method_list[1]                        OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;   </span><br></pre></td></tr></table></figure>
+
 <p>由结构定义可以看出 objc_method_list 是一个链表。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct objc_method &#123;</span><br><span class="line">    SEL _Nonnull method_name                                 OBJC2_UNAVAILABLE;</span><br><span class="line">    char * _Nullable method_types                            OBJC2_UNAVAILABLE;</span><br><span class="line">    IMP _Nonnull method_imp                                  OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct objc_method &#123;</span><br><span class="line">    SEL _Nonnull method_name                                 OBJC2_UNAVAILABLE;</span><br><span class="line">    char * _Nullable method_types                            OBJC2_UNAVAILABLE;</span><br><span class="line">    IMP _Nonnull method_imp                                  OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>method_name 方法名</li>
 <li>method_types 方法类型</li>
 <li>method_imp 方法实现</li>
 </ul>
 <blockquote>
-<p>关于方法类型，可以查看<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html" target="_blank" rel="noopener">官方文档</a>中的定义。</p>
+<p>关于方法类型，可以查看<a target="_blank" rel="noopener" href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">官方文档</a>中的定义。</p>
 </blockquote>
 <h4 id="SEL-objc-selector"><a href="#SEL-objc-selector" class="headerlink" title="SEL(objc_selector)"></a>SEL(objc_selector)</h4><p>方法选择器。是表示一个方法的 selector 的指针。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/// An opaque type that represents a method selector.</span><br><span class="line">typedef struct objc_selector *SEL;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/// An opaque type that represents a method selector.</span><br><span class="line">typedef struct objc_selector *SEL;</span><br></pre></td></tr></table></figure>
+
 <p>方法的 selector 用于表示运行时方法的名字。Objective-C 在编译时，会依据每一个方法的名字、参数序列，生成一个唯一的整型标识(Int类型的地址)，这个标识就是SEL。</p>
 <p>两个类之间，不管它们是父类与子类的关系，还是之间没有这种关系，只要方法名相同，那么方法的SEL就是一样的。每一个方法都对应着一个 SEL。所以在 Objective-C 同一个类(及类的继承体系)中，不能存在两个同名的方法，即使参数类型不同也不行。</p>
 <p>举例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)addNum:(int)num;</span><br><span class="line">- (void)addNum:(CGFloat)num;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)addNum:(int)num;</span><br><span class="line">- (void)addNum:(CGFloat)num;</span><br></pre></td></tr></table></figure>
+
 <p>这样的定义会导致编译错误，因为这样的 SEL 是相同的，并不能区分。需要改成下方的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)addIntNum:(int)num;</span><br><span class="line">- (void)addCGFloadNum:(CGFloat)num;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)addIntNum:(int)num;</span><br><span class="line">- (void)addCGFloadNum:(CGFloat)num;</span><br></pre></td></tr></table></figure>
+
 <p>当然，不同的类可以拥有相同的 selector，这个没有问题。不同类的实例对象执行相同的 selector 时，会在各自的方法列表中去根据 selector 去寻找自己对应的 IMP。</p>
 <h4 id="IMP"><a href="#IMP" class="headerlink" title="IMP"></a>IMP</h4><p>是一个函数指针，指向方法的实现。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/// A pointer to the function of a method implementation. </span><br><span class="line">#if !OBJC_OLD_DISPATCH_PROTOTYPES</span><br><span class="line">typedef void (*IMP)(void /* id, SEL, ... */ ); </span><br><span class="line">#else</span><br><span class="line">typedef id _Nullable (*IMP)(id _Nonnull, SEL _Nonnull, ...); </span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/// A pointer to the function of a method implementation. </span><br><span class="line">#if !OBJC_OLD_DISPATCH_PROTOTYPES</span><br><span class="line">typedef void (*IMP)(void /* id, SEL, ... */ ); </span><br><span class="line">#else</span><br><span class="line">typedef id _Nullable (*IMP)(id _Nonnull, SEL _Nonnull, ...); </span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+
 <p>第一个参数是指向 self 的指针(如果是实例方法，则是类实例的内存地址；如果是类方法，则是指向元类的指针)，第二个参数是方法选择器(selector)，接下来是方法的实际参数列表。</p>
 <p>上面介绍的 SEL 就是为了查找方法的最终实现 IMP 的。由于每个方法对应唯一的 SEL，因此我们可以通过 SEL 方便快速准确地获得它所对应的 IMP。</p>
-<h3 id="实例（objc-object）"><a href="#实例（objc-object）" class="headerlink" title="实例（objc_object）"></a>实例（objc_object）</h3><p>查看 <strong>objc/objc.h</strong> 中 <strong>objc_object</strong> 结构体的定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/// Represents an instance of a class.</span><br><span class="line">struct objc_object &#123;</span><br><span class="line">    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">&#125;;</span><br><span class="line">/// A pointer to an instance of a class.</span><br><span class="line">typedef struct objc_object *id;</span><br></pre></td></tr></table></figure>
+<h3 id="实例（objc-object）"><a href="#实例（objc-object）" class="headerlink" title="实例（objc_object）"></a>实例（objc_object）</h3><p>查看 <strong>objc&#x2F;objc.h</strong> 中 <strong>objc_object</strong> 结构体的定义如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/// Represents an instance of a class.</span><br><span class="line">struct objc_object &#123;</span><br><span class="line">    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">&#125;;</span><br><span class="line">/// A pointer to an instance of a class.</span><br><span class="line">typedef struct objc_object *id;</span><br></pre></td></tr></table></figure>
+
 <p>可以看到，实例的定义中只有一个 isa 指针字段，它是指向本类的指针。根据 objc_class 定义可以得知关于这个对象的所有基本信息都存储在 objc_class 中。所以，objc_object 需要的就是一个指向其类对象的 isa 指针。这样当我们向一个 Objective-C 对象发送消息时，Runtime 会根据实例对象的 isa 指针找到这个实例对象所属的类。</p>
 <h3 id="元类-Meta-Class"><a href="#元类-Meta-Class" class="headerlink" title="元类(Meta Class)"></a>元类(Meta Class)</h3><p>当我们调用对象方法时（即给实例对象发送消息），是根据 isa 指针寻找到这个对象（objc_object）的类（objc_class），再寻找到对应的方法实现。对应的我们调用类方法时（即给类对象发送消息），也需要根据 isa 指针寻找到一个包含这些类方法的一个 <strong>objc_class</strong> 结构体。这就引出了 <strong>meta-class</strong> 的概念，元类中保存了创建类对象以及类方法所需的所有信息。</p>
 <p>简单来说——元类是类对象的类。</p>
 <p>元类，就像之前的类一样，它也是一个对象。你也可以调用它的方法。自然的，这就意味着他必须也有一个类。</p>
 <p>任何 NSObject 继承体系下的 <strong>meta-class</strong> 都使用 NSObject 的 <strong>meta-class</strong> 作为自己的所属类，而基类的 <strong>meta-class</strong> 的 isa 指针是指向它自己。</p>
-<img src="/2018/05/20/Runtime学习：消息传递/Runtime_string.jpg">
+<img src="/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_string.jpg" class="">
+
 <h2 id="方法传递"><a href="#方法传递" class="headerlink" title="方法传递"></a>方法传递</h2><p>这里我们从实际的代码调用中来学习方法传递的全部过程。</p>
 <p>简单的 Objective-C 代码调用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[test testMethod];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[test testMethod];</span><br></pre></td></tr></table></figure>
+
 <p>利用 <strong>clang -rewrite-objc filename</strong> 代码转换为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((void (*)(id, SEL))(void *)objc_msgSend)((id)test, sel_registerName(&quot;testMethod&quot;));</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((void (*)(id, SEL))(void *)objc_msgSend)((id)test, sel_registerName(&quot;testMethod&quot;));</span><br></pre></td></tr></table></figure>
+
 <p>可以看出 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[test testMethod];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[test testMethod];</span><br></pre></td></tr></table></figure>
+
 <p>实质上就是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objc_msgSend((id)test, sel_registerName(&quot;testMethod&quot;))</span><br></pre></td></tr></table></figure>
-<p>然后，我们可以在源码中查看 objc_msgSend 的执行步骤。由于源码是用汇编写的，这里就不贴出来了（主要是自己也看不懂汇编）。如果有兴趣的话，可以去下载<a href="https://opensource.apple.com/source/objc4/" target="_blank" rel="noopener">官方源码</a>在 objc_msg-xxx 文件中查看。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objc_msgSend((id)test, sel_registerName(&quot;testMethod&quot;))</span><br></pre></td></tr></table></figure>
+
+<p>然后，我们可以在源码中查看 objc_msgSend 的执行步骤。由于源码是用汇编写的，这里就不贴出来了（主要是自己也看不懂汇编）。如果有兴趣的话，可以去下载<a target="_blank" rel="noopener" href="https://opensource.apple.com/source/objc4/">官方源码</a>在 objc_msg-xxx 文件中查看。</p>
 <p>虽然，源码是用汇编写的，但是从注释中我们基本可以看出具体的执行步骤。</p>
 <ol>
 <li>进入消息发送阶段，判断消息接受者是否为 nil。</li>
@@ -434,7 +343,8 @@
 <li>最后会进入消息转发阶段，在这里可以指定别的类为自己实现这个方法。</li>
 <li>若上方步骤都没有找到方法的实现，则会报方法找不到的错误，无法识别消息，unrecognzied selector sent to instance。</li>
 </ol>
-<img src="/2018/05/20/Runtime学习：消息传递/Runtime_消息传递.png">
+<img src="/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92.png" class="">
+
 <p>上面8个步骤，可以看到消息传递的过程分为了以下三个阶段：</p>
 <ul>
 <li>消息发送阶段</li>
@@ -442,386 +352,116 @@
 <li>消息转发阶段</li>
 </ul>
 <h4 id="消息发送阶段"><a href="#消息发送阶段" class="headerlink" title="消息发送阶段"></a>消息发送阶段</h4><p><strong>从上方的分析可以得到：</strong> 方法查找的核心函数就是 _class_lookupMethodAndLoadCache3 函数，接下来重点分析 _class_lookupMethodAndLoadCache3 函数内的源码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IMP _class_lookupMethodAndLoadCache3(id obj, SEL sel, Class cls)</span><br><span class="line">&#123;</span><br><span class="line">    return lookUpImpOrForward(cls, sel, obj, </span><br><span class="line">                              YES/*initialize*/, NO/*cache*/, YES/*resolver*/);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IMP _class_lookupMethodAndLoadCache3(id obj, SEL sel, Class cls)</span><br><span class="line">&#123;</span><br><span class="line">    return lookUpImpOrForward(cls, sel, obj, </span><br><span class="line">                              YES/*initialize*/, NO/*cache*/, YES/*resolver*/);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>lookUpImpOrForward 函数</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line">IMP lookUpImpOrForward(Class cls, SEL sel, id inst, </span><br><span class="line">                       bool initialize, bool cache, bool resolver)</span><br><span class="line">&#123;</span><br><span class="line">	// initialize = YES , cache = NO , resolver = YES</span><br><span class="line">    IMP imp = nil;</span><br><span class="line">    bool triedResolver = NO;</span><br><span class="line"></span><br><span class="line">    runtimeLock.assertUnlocked();</span><br><span class="line"></span><br><span class="line">	// 缓存查找, 因为cache传入的为NO, 这里不会进行缓存查找, 因为在汇编语言中CacheLookup已经查找过</span><br><span class="line">    // Optimistic cache lookup</span><br><span class="line">    if (cache) &#123;</span><br><span class="line">        imp = cache_getImp(cls, sel);</span><br><span class="line">        if (imp) return imp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // runtimeLock is held during isRealized and isInitialized checking</span><br><span class="line">    // to prevent races against concurrent realization.</span><br><span class="line"></span><br><span class="line">    // runtimeLock is held during method search to make</span><br><span class="line">    // method-lookup + cache-fill atomic with respect to method addition.</span><br><span class="line">    // Otherwise, a category could be added but ignored indefinitely because</span><br><span class="line">    // the cache was re-filled with the old value after the cache flush on</span><br><span class="line">    // behalf of the category.</span><br><span class="line"></span><br><span class="line">    runtimeLock.lock();</span><br><span class="line">    checkIsKnownClass(cls);</span><br><span class="line"></span><br><span class="line">    if (!cls-&gt;isRealized()) &#123;</span><br><span class="line">        realizeClass(cls);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (initialize  &amp;&amp;  !cls-&gt;isInitialized()) &#123;</span><br><span class="line">        runtimeLock.unlock();</span><br><span class="line">        _class_initialize (_class_getNonMetaClass(cls, inst));</span><br><span class="line">        runtimeLock.lock();</span><br><span class="line">        // If sel == initialize, _class_initialize will send +initialize and </span><br><span class="line">        // then the messenger will send +initialize again after this </span><br><span class="line">        // procedure finishes. Of course, if this is not being called </span><br><span class="line">        // from the messenger then it won&apos;t happen. 2778172</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"> retry:    </span><br><span class="line">    runtimeLock.assertLocked();</span><br><span class="line"></span><br><span class="line">    // Try this class&apos;s cache.</span><br><span class="line"></span><br><span class="line">	// 防止动态添加方法，缓存会变化，再次查找缓存。</span><br><span class="line">    imp = cache_getImp(cls, sel);</span><br><span class="line">    </span><br><span class="line">    // 如果查找到imp, 直接调用done, 返回方法地址</span><br><span class="line">    if (imp) goto done;</span><br><span class="line"></span><br><span class="line">	// 查找方法列表, 传入类对象和方法名</span><br><span class="line">    // Try this class&apos;s method lists.</span><br><span class="line">    &#123;</span><br><span class="line">    	 // 根据sel去类对象里面查找方法</span><br><span class="line">        Method meth = getMethodNoSuper_nolock(cls, sel);</span><br><span class="line">        if (meth) &#123;</span><br><span class="line">        	  // 如果方法存在，则缓存方法</span><br><span class="line">            log_and_fill_cache(cls, meth-&gt;imp, sel, inst, cls);</span><br><span class="line">            </span><br><span class="line">            // 方法缓存之后, 取出imp, 调用done返回imp</span><br><span class="line">            imp = meth-&gt;imp;</span><br><span class="line">            goto done;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	 // 如果类方法列表中没有找到, 则去父类的缓存中或方法列表中查找方法</span><br><span class="line">    // Try superclass caches and method lists.</span><br><span class="line">    &#123;</span><br><span class="line">        unsigned attempts = unreasonableClassCount();</span><br><span class="line">        for (Class curClass = cls-&gt;superclass;</span><br><span class="line">             curClass != nil;</span><br><span class="line">             curClass = curClass-&gt;superclass)</span><br><span class="line">        &#123;</span><br><span class="line">            // Halt if there is a cycle in the superclass chain.</span><br><span class="line">            if (--attempts == 0) &#123;</span><br><span class="line">                _objc_fatal(&quot;Memory corruption in class list.&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            // 查找父类的缓存</span><br><span class="line">            // Superclass cache.</span><br><span class="line">            imp = cache_getImp(curClass, sel);</span><br><span class="line">            if (imp) &#123;</span><br><span class="line">                if (imp != (IMP)_objc_msgForward_impcache) &#123;</span><br><span class="line">                		 // 在父类中找到方法, 在本类中缓存方法, 注意这里传入的是cls, 将方法缓存在本类缓存列表中, 而非父类中</span><br><span class="line">                    // Found the method in a superclass. Cache it in this class.					</span><br><span class="line">                    log_and_fill_cache(cls, imp, sel, inst, curClass);</span><br><span class="line">                    goto done;</span><br><span class="line">                &#125;</span><br><span class="line">                else &#123;</span><br><span class="line">                    // Found a forward:: entry in a superclass.</span><br><span class="line">                    // Stop searching, but don&apos;t cache yet; call method </span><br><span class="line">                    // resolver for this class first.</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            // 查找父类的方法列表</span><br><span class="line">            // Superclass method list.</span><br><span class="line">            Method meth = getMethodNoSuper_nolock(curClass, sel);</span><br><span class="line">            if (meth) &#123;</span><br><span class="line">            		// 同样拿到方法, 在本类进行缓存</span><br><span class="line">                log_and_fill_cache(cls, meth-&gt;imp, sel, inst, curClass);</span><br><span class="line">                imp = meth-&gt;imp;</span><br><span class="line">                goto done;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // ---------------- 消息发送阶段完成 ---------------------</span><br><span class="line">    </span><br><span class="line">    // ---------------- 进入动态解析阶段 ---------------------</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	 // 上述列表中都没有找到方法实现, 则尝试解析方法</span><br><span class="line">    // No implementation found. Try method resolver once.</span><br><span class="line"></span><br><span class="line">    if (resolver  &amp;&amp;  !triedResolver) &#123;</span><br><span class="line">        runtimeLock.unlock();</span><br><span class="line">        _class_resolveMethod(cls, sel, inst);</span><br><span class="line">        runtimeLock.lock();</span><br><span class="line">        // Don&apos;t cache the result; we don&apos;t hold the lock so it may have </span><br><span class="line">        // changed already. Re-do the search from scratch instead.</span><br><span class="line">        triedResolver = YES;</span><br><span class="line">        goto retry;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	 // ---------------- 动态解析阶段完成 ---------------------</span><br><span class="line"></span><br><span class="line">    // ---------------- 进入消息转发阶段 ---------------------</span><br><span class="line">	</span><br><span class="line">    // No implementation found, and method resolver didn&apos;t help. </span><br><span class="line">    // Use forwarding.</span><br><span class="line"></span><br><span class="line">    imp = (IMP)_objc_msgForward_impcache;</span><br><span class="line">    cache_fill(cls, sel, imp, inst);</span><br><span class="line"></span><br><span class="line"> done:</span><br><span class="line">    runtimeLock.unlock();</span><br><span class="line"></span><br><span class="line">    return imp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line">IMP lookUpImpOrForward(Class cls, SEL sel, id inst, </span><br><span class="line">                       bool initialize, bool cache, bool resolver)</span><br><span class="line">&#123;</span><br><span class="line">	// initialize = YES , cache = NO , resolver = YES</span><br><span class="line">    IMP imp = nil;</span><br><span class="line">    bool triedResolver = NO;</span><br><span class="line"></span><br><span class="line">    runtimeLock.assertUnlocked();</span><br><span class="line"></span><br><span class="line">	// 缓存查找, 因为cache传入的为NO, 这里不会进行缓存查找, 因为在汇编语言中CacheLookup已经查找过</span><br><span class="line">    // Optimistic cache lookup</span><br><span class="line">    if (cache) &#123;</span><br><span class="line">        imp = cache_getImp(cls, sel);</span><br><span class="line">        if (imp) return imp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // runtimeLock is held during isRealized and isInitialized checking</span><br><span class="line">    // to prevent races against concurrent realization.</span><br><span class="line"></span><br><span class="line">    // runtimeLock is held during method search to make</span><br><span class="line">    // method-lookup + cache-fill atomic with respect to method addition.</span><br><span class="line">    // Otherwise, a category could be added but ignored indefinitely because</span><br><span class="line">    // the cache was re-filled with the old value after the cache flush on</span><br><span class="line">    // behalf of the category.</span><br><span class="line"></span><br><span class="line">    runtimeLock.lock();</span><br><span class="line">    checkIsKnownClass(cls);</span><br><span class="line"></span><br><span class="line">    if (!cls-&gt;isRealized()) &#123;</span><br><span class="line">        realizeClass(cls);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (initialize  &amp;&amp;  !cls-&gt;isInitialized()) &#123;</span><br><span class="line">        runtimeLock.unlock();</span><br><span class="line">        _class_initialize (_class_getNonMetaClass(cls, inst));</span><br><span class="line">        runtimeLock.lock();</span><br><span class="line">        // If sel == initialize, _class_initialize will send +initialize and </span><br><span class="line">        // then the messenger will send +initialize again after this </span><br><span class="line">        // procedure finishes. Of course, if this is not being called </span><br><span class="line">        // from the messenger then it won&#x27;t happen. 2778172</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"> retry:    </span><br><span class="line">    runtimeLock.assertLocked();</span><br><span class="line"></span><br><span class="line">    // Try this class&#x27;s cache.</span><br><span class="line"></span><br><span class="line">	// 防止动态添加方法，缓存会变化，再次查找缓存。</span><br><span class="line">    imp = cache_getImp(cls, sel);</span><br><span class="line">    </span><br><span class="line">    // 如果查找到imp, 直接调用done, 返回方法地址</span><br><span class="line">    if (imp) goto done;</span><br><span class="line"></span><br><span class="line">	// 查找方法列表, 传入类对象和方法名</span><br><span class="line">    // Try this class&#x27;s method lists.</span><br><span class="line">    &#123;</span><br><span class="line">    	 // 根据sel去类对象里面查找方法</span><br><span class="line">        Method meth = getMethodNoSuper_nolock(cls, sel);</span><br><span class="line">        if (meth) &#123;</span><br><span class="line">        	  // 如果方法存在，则缓存方法</span><br><span class="line">            log_and_fill_cache(cls, meth-&gt;imp, sel, inst, cls);</span><br><span class="line">            </span><br><span class="line">            // 方法缓存之后, 取出imp, 调用done返回imp</span><br><span class="line">            imp = meth-&gt;imp;</span><br><span class="line">            goto done;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	 // 如果类方法列表中没有找到, 则去父类的缓存中或方法列表中查找方法</span><br><span class="line">    // Try superclass caches and method lists.</span><br><span class="line">    &#123;</span><br><span class="line">        unsigned attempts = unreasonableClassCount();</span><br><span class="line">        for (Class curClass = cls-&gt;superclass;</span><br><span class="line">             curClass != nil;</span><br><span class="line">             curClass = curClass-&gt;superclass)</span><br><span class="line">        &#123;</span><br><span class="line">            // Halt if there is a cycle in the superclass chain.</span><br><span class="line">            if (--attempts == 0) &#123;</span><br><span class="line">                _objc_fatal(&quot;Memory corruption in class list.&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            // 查找父类的缓存</span><br><span class="line">            // Superclass cache.</span><br><span class="line">            imp = cache_getImp(curClass, sel);</span><br><span class="line">            if (imp) &#123;</span><br><span class="line">                if (imp != (IMP)_objc_msgForward_impcache) &#123;</span><br><span class="line">                		 // 在父类中找到方法, 在本类中缓存方法, 注意这里传入的是cls, 将方法缓存在本类缓存列表中, 而非父类中</span><br><span class="line">                    // Found the method in a superclass. Cache it in this class.					</span><br><span class="line">                    log_and_fill_cache(cls, imp, sel, inst, curClass);</span><br><span class="line">                    goto done;</span><br><span class="line">                &#125;</span><br><span class="line">                else &#123;</span><br><span class="line">                    // Found a forward:: entry in a superclass.</span><br><span class="line">                    // Stop searching, but don&#x27;t cache yet; call method </span><br><span class="line">                    // resolver for this class first.</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            // 查找父类的方法列表</span><br><span class="line">            // Superclass method list.</span><br><span class="line">            Method meth = getMethodNoSuper_nolock(curClass, sel);</span><br><span class="line">            if (meth) &#123;</span><br><span class="line">            		// 同样拿到方法, 在本类进行缓存</span><br><span class="line">                log_and_fill_cache(cls, meth-&gt;imp, sel, inst, curClass);</span><br><span class="line">                imp = meth-&gt;imp;</span><br><span class="line">                goto done;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // ---------------- 消息发送阶段完成 ---------------------</span><br><span class="line">    </span><br><span class="line">    // ---------------- 进入动态解析阶段 ---------------------</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	 // 上述列表中都没有找到方法实现, 则尝试解析方法</span><br><span class="line">    // No implementation found. Try method resolver once.</span><br><span class="line"></span><br><span class="line">    if (resolver  &amp;&amp;  !triedResolver) &#123;</span><br><span class="line">        runtimeLock.unlock();</span><br><span class="line">        _class_resolveMethod(cls, sel, inst);</span><br><span class="line">        runtimeLock.lock();</span><br><span class="line">        // Don&#x27;t cache the result; we don&#x27;t hold the lock so it may have </span><br><span class="line">        // changed already. Re-do the search from scratch instead.</span><br><span class="line">        triedResolver = YES;</span><br><span class="line">        goto retry;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	 // ---------------- 动态解析阶段完成 ---------------------</span><br><span class="line"></span><br><span class="line">    // ---------------- 进入消息转发阶段 ---------------------</span><br><span class="line">	</span><br><span class="line">    // No implementation found, and method resolver didn&#x27;t help. </span><br><span class="line">    // Use forwarding.</span><br><span class="line"></span><br><span class="line">    imp = (IMP)_objc_msgForward_impcache;</span><br><span class="line">    cache_fill(cls, sel, imp, inst);</span><br><span class="line"></span><br><span class="line"> done:</span><br><span class="line">    runtimeLock.unlock();</span><br><span class="line"></span><br><span class="line">    return imp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>根据上方源码的解析，得到消息发送阶段的流程如图：</p>
-<img src="/2018/05/20/Runtime学习：消息传递/Runtime_消息发送.jpg">
+<img src="/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81.jpg" class="">
+
 <h4 id="动态解析阶段"><a href="#动态解析阶段" class="headerlink" title="动态解析阶段"></a>动态解析阶段</h4><p>当消息发送阶段没有找到方法实现的时候，就会进入动态方法解析阶段。我们来看一下动态解析阶段源码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">if (resolver  &amp;&amp;  !triedResolver) &#123;</span><br><span class="line">    runtimeLock.unlock();</span><br><span class="line">    _class_resolveMethod(cls, sel, inst);</span><br><span class="line">    runtimeLock.lock();</span><br><span class="line">    // Don&apos;t cache the result; we don&apos;t hold the lock so it may have </span><br><span class="line">    // changed already. Re-do the search from scratch instead.</span><br><span class="line">    triedResolver = YES;</span><br><span class="line">    goto retry;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void _class_resolveMethod(Class cls, SEL sel, id inst)</span><br><span class="line">&#123;</span><br><span class="line">    if (! cls-&gt;isMetaClass()) &#123;</span><br><span class="line">        // try [cls resolveInstanceMethod:sel]</span><br><span class="line">        _class_resolveInstanceMethod(cls, sel, inst);</span><br><span class="line">    &#125; </span><br><span class="line">    else &#123;</span><br><span class="line">        // try [nonMetaClass resolveClassMethod:sel]</span><br><span class="line">        // and [cls resolveInstanceMethod:sel]</span><br><span class="line">        _class_resolveClassMethod(cls, sel, inst);</span><br><span class="line">        if (!lookUpImpOrNil(cls, sel, inst, </span><br><span class="line">                            NO/*initialize*/, YES/*cache*/, NO/*resolver*/)) </span><br><span class="line">        &#123;</span><br><span class="line">            _class_resolveInstanceMethod(cls, sel, inst);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码中可以发现，动态解析方法之后，会将triedResolver = YES;那么下次就不会在进行动态解析阶段了，之后会重新执行retry，会重新对方法查找一遍。也就是说无论我们是否实现动态解析方法，无论动态解析方法是否成功，retry之后都不会在进行动态的解析方法了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">if (resolver  &amp;&amp;  !triedResolver) &#123;</span><br><span class="line">    runtimeLock.unlock();</span><br><span class="line">    _class_resolveMethod(cls, sel, inst);</span><br><span class="line">    runtimeLock.lock();</span><br><span class="line">    // Don&#x27;t cache the result; we don&#x27;t hold the lock so it may have </span><br><span class="line">    // changed already. Re-do the search from scratch instead.</span><br><span class="line">    triedResolver = YES;</span><br><span class="line">    goto retry;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void _class_resolveMethod(Class cls, SEL sel, id inst)</span><br><span class="line">&#123;</span><br><span class="line">    if (! cls-&gt;isMetaClass()) &#123;</span><br><span class="line">        // try [cls resolveInstanceMethod:sel]</span><br><span class="line">        _class_resolveInstanceMethod(cls, sel, inst);</span><br><span class="line">    &#125; </span><br><span class="line">    else &#123;</span><br><span class="line">        // try [nonMetaClass resolveClassMethod:sel]</span><br><span class="line">        // and [cls resolveInstanceMethod:sel]</span><br><span class="line">        _class_resolveClassMethod(cls, sel, inst);</span><br><span class="line">        if (!lookUpImpOrNil(cls, sel, inst, </span><br><span class="line">                            NO/*initialize*/, YES/*cache*/, NO/*resolver*/)) </span><br><span class="line">        &#123;</span><br><span class="line">            _class_resolveInstanceMethod(cls, sel, inst);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码中可以发现，动态解析方法之后，会将triedResolver &#x3D; YES;那么下次就不会在进行动态解析阶段了，之后会重新执行retry，会重新对方法查找一遍。也就是说无论我们是否实现动态解析方法，无论动态解析方法是否成功，retry之后都不会在进行动态的解析方法了。</p>
 <ul>
 <li><strong>对象方法</strong></li>
 </ul>
 <p>动态解析对象方法时，会调用 _class_resolveInstanceMethod(cls, sel, inst) 方法。对应的 Objective-C 的方法是 +(BOOL)resolveInstanceMethod:(SEL)sel。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">    //执行foo函数</span><br><span class="line">    [self performSelector:@selector(foo:)];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</span><br><span class="line">    if (sel == @selector(foo:)) &#123;//如果是执行foo函数，就动态解析，指定新的IMP</span><br><span class="line">        class_addMethod([self class], sel, (IMP)fooMethod, &quot;v@:&quot;);</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    return [super resolveInstanceMethod:sel];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void fooMethod(id obj, SEL _cmd) &#123;</span><br><span class="line">    NSLog(@&quot;Doing foo&quot;);//新的foo函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">    //执行foo函数</span><br><span class="line">    [self performSelector:@selector(foo:)];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</span><br><span class="line">    if (sel == @selector(foo:)) &#123;//如果是执行foo函数，就动态解析，指定新的IMP</span><br><span class="line">        class_addMethod([self class], sel, (IMP)fooMethod, &quot;v@:&quot;);</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    return [super resolveInstanceMethod:sel];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void fooMethod(id obj, SEL _cmd) &#123;</span><br><span class="line">    NSLog(@&quot;Doing foo&quot;);//新的foo函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li><strong>类方法</strong></li>
 </ul>
 <p>动态解析类方法时，会调用 _class_resolveClassMethod(cls, sel, inst) 方法，对应的 Objective-C 的方法是 +(BOOL)resolveClassMethod:(SEL)sel。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@implementation Person</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">    //执行foo函数</span><br><span class="line">    [Person foo];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (BOOL)resolveClassMethod:(SEL)sel</span><br><span class="line">&#123;</span><br><span class="line">    if (sel == @selector(foo)) &#123;</span><br><span class="line">        // 第一个参数是object_getClass(self)，传入元类对象。</span><br><span class="line">        class_addMethod(object_getClass(self), sel, (IMP)fooMethod, &quot;v16@0:8&quot;);</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    return [super resolveClassMethod:sel];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void fooMethod(id obj, SEL _cmd) &#123;</span><br><span class="line">    NSLog(@&quot;Doing foo&quot;);//新的foo函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@implementation Person</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    // Do any additional setup after loading the view, typically from a nib.</span><br><span class="line">    //执行foo函数</span><br><span class="line">    [Person foo];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (BOOL)resolveClassMethod:(SEL)sel</span><br><span class="line">&#123;</span><br><span class="line">    if (sel == @selector(foo)) &#123;</span><br><span class="line">        // 第一个参数是object_getClass(self)，传入元类对象。</span><br><span class="line">        class_addMethod(object_getClass(self), sel, (IMP)fooMethod, &quot;v16@0:8&quot;);</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    return [super resolveClassMethod:sel];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void fooMethod(id obj, SEL _cmd) &#123;</span><br><span class="line">    NSLog(@&quot;Doing foo&quot;);//新的foo函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>上面的代码中，当动态解析方法时，我们动态的添加了方法的实现，这里引入了一个函数 class_addMethod，这个函数就是动态配置类时的关键函数之一。</p>
 <p>我们看一下这个函数的声明：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BOOL class_addMethod(Class cls, SEL name, IMP imp, const char *types);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BOOL class_addMethod(Class cls, SEL name, IMP imp, const char *types);</span><br></pre></td></tr></table></figure>
+
 <p><strong>cls：</strong> 给哪个类添加方法。</p>
 <p><strong>name：</strong> 需要添加的方法名。 Objective-C 中可以直接使用 @selector(methodName) 得到方法名， Swift 中使用 #Selector(methodName)。</p>
 <p><strong>imp：</strong> 方法的实现，函数入口，函数名可与方法名不同（建议与方法名相同）。函数必须至少两个参数—— self 和 _cmd。</p>
-<p><strong>types：</strong> 参数以及返回值类型的字符串，需要用特定符号，参考<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html" target="_blank" rel="noopener">官方文档Type encodings</a>。</p>
+<p><strong>types：</strong> 参数以及返回值类型的字符串，需要用特定符号，参考<a target="_blank" rel="noopener" href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">官方文档Type encodings</a>。</p>
 <p>我们从整个动态解析的过程可以看到，无论我们是否实现了动态解析的方法，系统内部都会执行 retry 对方法再次进行查找。那么如果我们实现了动态解析方法，此时就会顺利查找到方法，进而返回 imp 对方法进行调用。如果我们没有实现动态解析方法。就会进行消息转发。</p>
-<img src="/2018/05/20/Runtime学习：消息传递/Runtime_动态解析.png">
+<img src="/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_%E5%8A%A8%E6%80%81%E8%A7%A3%E6%9E%90.png" class="">
+
 <h4 id="消息转发阶段"><a href="#消息转发阶段" class="headerlink" title="消息转发阶段"></a>消息转发阶段</h4><p>当本类没有实现方法，并且没有动态解析方法，Runtime 这时就会调用 forwardingTargetForSelector 函数，进行消息转发，我们可以实现forwardingTargetForSelector 函数，在其内部将消息转发给可以实现此方法的对象。</p>
 <p>实现一个完整转发的例子如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Car.h&quot;</span><br><span class="line">@implementation Car</span><br><span class="line">- (void) driving</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;car driving&quot;);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">--------------</span><br><span class="line"></span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &quot;Car.h&quot;</span><br><span class="line">@implementation Person</span><br><span class="line"></span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</span><br><span class="line">    return YES;//返回YES，进入下一步转发</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)aSelector</span><br><span class="line">&#123;</span><br><span class="line">    // 返回能够处理消息的对象</span><br><span class="line">    if (aSelector == @selector(driving)) &#123;</span><br><span class="line">        return [[Car alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    return [super forwardingTargetForSelector:aSelector];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">--------------</span><br><span class="line"></span><br><span class="line">#import&lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">        Person *person = [[Person alloc] init];</span><br><span class="line">        [person driving];</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 打印内容</span><br><span class="line">// 消息转发 car driving</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Car.h&quot;</span><br><span class="line">@implementation Car</span><br><span class="line">- (void) driving</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;car driving&quot;);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">--------------</span><br><span class="line"></span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &quot;Car.h&quot;</span><br><span class="line">@implementation Person</span><br><span class="line"></span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</span><br><span class="line">    return YES;//返回YES，进入下一步转发</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)aSelector</span><br><span class="line">&#123;</span><br><span class="line">    // 返回能够处理消息的对象</span><br><span class="line">    if (aSelector == @selector(driving)) &#123;</span><br><span class="line">        return [[Car alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    return [super forwardingTargetForSelector:aSelector];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">--------------</span><br><span class="line"></span><br><span class="line">#import&lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">        Person *person = [[Person alloc] init];</span><br><span class="line">        [person driving];</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 打印内容</span><br><span class="line">// 消息转发 car driving  </span><br></pre></td></tr></table></figure>
+
 <p>如果 forwardingTargetForSelector 函数返回为 nil 或者没有实现的话，就会调用methodSignatureForSelector方法，用来返回一个方法签名，这也是我们正确跳转方法的最后机会。</p>
 <p>如果 methodSignatureForSelector 方法返回正确的方法签名就会调用 forwardInvocation 方法，forwardInvocation 方法内提供一个 NSInvocation 类型的参数，NSInvocation 封装了一个方法的调用，包括方法的调用者，方法名，以及方法的参数。在 forwardInvocation 函数内修改方法调用对象即可。</p>
 <p>如果 methodSignatureForSelector 返回的为 nil，就会来到 doseNotRecognizeSelector: 方法内部，程序 crash 提示无法识别选择器 unrecognized selector sent to instance。</p>
 <p>代码验证：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Car.h&quot;</span><br><span class="line">@implementation Car</span><br><span class="line">- (void) driving</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;car driving&quot;);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">--------------</span><br><span class="line"></span><br><span class="line">#import&lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">        Person *person = [[Person alloc] init];</span><br><span class="line">        [person driving];</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">--------------</span><br><span class="line"></span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &quot;Car.h&quot;</span><br><span class="line">@implementation Person</span><br><span class="line"></span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</span><br><span class="line">    return YES;//返回YES，进入下一步转发</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)aSelector</span><br><span class="line">&#123;</span><br><span class="line">    // 返回能够处理消息的对象</span><br><span class="line">    if (aSelector == @selector(driving)) &#123;</span><br><span class="line">        // 返回nil则会调用methodSignatureForSelector方法</span><br><span class="line">        return nil; </span><br><span class="line">        // return [[Car alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    return [super forwardingTargetForSelector:aSelector];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 方法签名：返回值类型、参数类型</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector</span><br><span class="line">&#123;</span><br><span class="line">    if (aSelector == @selector(driving)) &#123;</span><br><span class="line">       // 通过调用Car的methodSignatureForSelector方法得到方法签名，这种方式需要car对象有aSelector方法</span><br><span class="line">        return [[[Car alloc] init] methodSignatureForSelector: aSelector];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    return [super methodSignatureForSelector:aSelector];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">* NSInvocation 封装了一个方法调用，包括：方法调用者，方法，方法的参数</span><br><span class="line">*    anInvocation.target 方法调用者</span><br><span class="line">*    anInvocation.selector 方法名</span><br><span class="line">*    [anInvocation getArgument: NULL atIndex: 0]; 获得参数</span><br><span class="line">*/    </span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation</span><br><span class="line">&#123;</span><br><span class="line">//   anInvocation中封装了methodSignatureForSelector函数中返回的方法。</span><br><span class="line">//   此时anInvocation.target 还是person对象，我们需要修改target为可以执行方法的方法调用者。</span><br><span class="line">//   anInvocation.target = [[Car alloc] init];</span><br><span class="line">//   [anInvocation invoke];</span><br><span class="line">    [anInvocation invokeWithTarget: [[Car alloc] init]];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// 打印内容</span><br><span class="line">// 消息转发 car driving</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;Car.h&quot;</span><br><span class="line">@implementation Car</span><br><span class="line">- (void) driving</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;car driving&quot;);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">--------------</span><br><span class="line"></span><br><span class="line">#import&lt;Foundation/Foundation.h&gt;</span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line"></span><br><span class="line">        Person *person = [[Person alloc] init];</span><br><span class="line">        [person driving];</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">--------------</span><br><span class="line"></span><br><span class="line">#import &quot;Person.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">#import &quot;Car.h&quot;</span><br><span class="line">@implementation Person</span><br><span class="line"></span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel &#123;</span><br><span class="line">    return YES;//返回YES，进入下一步转发</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)forwardingTargetForSelector:(SEL)aSelector</span><br><span class="line">&#123;</span><br><span class="line">    // 返回能够处理消息的对象</span><br><span class="line">    if (aSelector == @selector(driving)) &#123;</span><br><span class="line">        // 返回nil则会调用methodSignatureForSelector方法</span><br><span class="line">        return nil; </span><br><span class="line">        // return [[Car alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    return [super forwardingTargetForSelector:aSelector];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 方法签名：返回值类型、参数类型</span><br><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector</span><br><span class="line">&#123;</span><br><span class="line">    if (aSelector == @selector(driving)) &#123;</span><br><span class="line">       // 通过调用Car的methodSignatureForSelector方法得到方法签名，这种方式需要car对象有aSelector方法</span><br><span class="line">        return [[[Car alloc] init] methodSignatureForSelector: aSelector];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    return [super methodSignatureForSelector:aSelector];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">* NSInvocation 封装了一个方法调用，包括：方法调用者，方法，方法的参数</span><br><span class="line">*    anInvocation.target 方法调用者</span><br><span class="line">*    anInvocation.selector 方法名</span><br><span class="line">*    [anInvocation getArgument: NULL atIndex: 0]; 获得参数</span><br><span class="line">*/    </span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation</span><br><span class="line">&#123;</span><br><span class="line">//   anInvocation中封装了methodSignatureForSelector函数中返回的方法。</span><br><span class="line">//   此时anInvocation.target 还是person对象，我们需要修改target为可以执行方法的方法调用者。</span><br><span class="line">//   anInvocation.target = [[Car alloc] init];</span><br><span class="line">//   [anInvocation invoke];</span><br><span class="line">    [anInvocation invokeWithTarget: [[Car alloc] init]];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// 打印内容</span><br><span class="line">// 消息转发 car driving</span><br></pre></td></tr></table></figure>
+
 <p>类方法消息转发同对象方法一样，同样需要经过消息发送，动态方法解析之后才会进行消息转发机制。需要注意的是类方法的接受者为类对象。其他同对象方法消息转发模式相同。</p>
 <p>当类对象进行消息转发时，对调用相应的 + 号的 forwardingTargetForSelector、methodSignatureForSelector、forwardInvocation 方法。</p>
-<img src="/2018/05/20/Runtime学习：消息传递/Runtime_消息转发.png">
+<img src="/2018/05/20/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92/Runtime_%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91.png" class="">
 
-      
+
+
+
+
+
+
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/05/04/算法：常用排序方法/" rel="next" title="算法：常用排序方法">
-                <i class="fa fa-chevron-left"></i> 算法：常用排序方法
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/26/Runtime学习：实际应用/" rel="prev" title="Runtime学习：实际应用">
-                Runtime学习：实际应用 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/05/04/%E7%AE%97%E6%B3%95%EF%BC%9A%E5%B8%B8%E7%94%A8%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95/" rel="prev" title="算法：常用排序方法">
+                  <i class="fa fa-chevron-left"></i> 算法：常用排序方法
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#预备知识"><span class="nav-number">1.</span> <span class="nav-text">预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类对象-objc-class"><span class="nav-number">1.1.</span> <span class="nav-text">类对象(objc_class)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类缓存-objc-cache"><span class="nav-number">1.2.</span> <span class="nav-text">类缓存(objc_cache)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method-objc-method"><span class="nav-number">1.3.</span> <span class="nav-text">Method(objc_method)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SEL-objc-selector"><span class="nav-number">1.3.1.</span> <span class="nav-text">SEL(objc_selector)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IMP"><span class="nav-number">1.3.2.</span> <span class="nav-text">IMP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例（objc-object）"><span class="nav-number">1.4.</span> <span class="nav-text">实例（objc_object）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元类-Meta-Class"><span class="nav-number">1.5.</span> <span class="nav-text">元类(Meta Class)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法传递"><span class="nav-number">2.</span> <span class="nav-text">方法传递</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#消息发送阶段"><span class="nav-number">2.0.1.</span> <span class="nav-text">消息发送阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态解析阶段"><span class="nav-number">2.0.2.</span> <span class="nav-text">动态解析阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息转发阶段"><span class="nav-number">2.0.3.</span> <span class="nav-text">消息转发阶段</span></a></li></ol></li></ol></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2018/05/26/Runtime%E5%AD%A6%E4%B9%A0%EF%BC%9A%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8/" rel="next" title="Runtime学习：实际应用">
+                  Runtime学习：实际应用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -834,34 +474,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

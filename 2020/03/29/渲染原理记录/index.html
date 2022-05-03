@@ -1,354 +1,247 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="基本渲染原理 离屏渲染 屏渲染的过程 离屏渲染的效率问题 为什么会离屏渲染 为什么需要使用离屏渲染 离屏渲染场景 CPU离屏渲染 离屏渲染的优化手段   卡顿监控 FPS Runloop">
+    <meta name="description" content="基本渲染原理 离屏渲染 屏渲染的过程 离屏渲染的效率问题 为什么会离屏渲染 为什么需要使用离屏渲染 离屏渲染场景 CPU离屏渲染 离屏渲染的优化手段   卡顿监控 FPS Runloop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 渲染原理记录">
-<meta property="og:url" content="http://yoursite.com/2020/03/29/渲染原理记录/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="基本渲染原理 离屏渲染 屏渲染的过程 离屏渲染的效率问题 为什么会离屏渲染 为什么需要使用离屏渲染 离屏渲染场景 CPU离屏渲染 离屏渲染的优化手段   卡顿监控 FPS Runloop">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2020/03/29/渲染原理记录/render1.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/29/渲染原理记录/render2.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/29/渲染原理记录/render3.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/29/渲染原理记录/render4.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/29/渲染原理记录/render5.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/29/渲染原理记录/render6.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/29/渲染原理记录/render7.png">
-<meta property="og:updated_time" content="2020-08-21T02:39:46.000Z">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render1.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render2.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render3.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render4.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render5.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render6.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render7.png">
+<meta property="article:published_time" content="2020-03-29T03:03:41.000Z">
+<meta property="article:modified_time" content="2020-08-21T02:39:46.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS 渲染原理记录">
-<meta name="twitter:description" content="基本渲染原理 离屏渲染 屏渲染的过程 离屏渲染的效率问题 为什么会离屏渲染 为什么需要使用离屏渲染 离屏渲染场景 CPU离屏渲染 离屏渲染的优化手段   卡顿监控 FPS Runloop">
-<meta name="twitter:image" content="http://yoursite.com/2020/03/29/渲染原理记录/render1.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render1.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/","path":"2020/03/29/渲染原理记录/","title":"iOS 渲染原理记录"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2020/03/29/渲染原理记录/">
-
-
-
-
-
-  <title>iOS 渲染原理记录 | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>iOS 渲染原理记录 | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">基本渲染原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS-%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">iOS 渲染架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Commit-Transaction-%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">Commit Transaction 做了什么？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93"><span class="nav-number">2.</span> <span class="nav-text">离屏渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">离屏渲染的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%9A%84%E6%95%88%E7%8E%87%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">离屏渲染的效率问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93"><span class="nav-number">2.3.</span> <span class="nav-text">为什么会离屏渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93"><span class="nav-number">2.4.</span> <span class="nav-text">为什么需要使用离屏渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E5%9C%BA%E6%99%AF"><span class="nav-number">2.5.</span> <span class="nav-text">离屏渲染场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E7%9A%84%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E2%80%94%E2%80%94CPU%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93"><span class="nav-number">2.6.</span> <span class="nav-text">特殊的离屏渲染——CPU离屏渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E5%B1%8F%E6%B8%B2%E6%9F%93%E7%9A%84%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-number">2.7.</span> <span class="nav-text">离屏渲染的优化手段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%A1%E9%A1%BF%E7%9B%91%E6%8E%A7"><span class="nav-number">3.</span> <span class="nav-text">卡顿监控</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FPS"><span class="nav-number">3.1.</span> <span class="nav-text">FPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runloop"><span class="nav-number">3.2.</span> <span class="nav-text">Runloop</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/29/渲染原理记录/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="iOS 渲染原理记录 | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS 渲染原理记录
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">iOS 渲染原理记录</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-29T11:03:41+08:00">
-                2020-03-29
-              </time>
-            
+      <time title="Created: 2020-03-29 11:03:41" itemprop="dateCreated datePublished" datetime="2020-03-29T11:03:41+08:00">2020-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-08-21 10:39:46" itemprop="dateModified" datetime="2020-08-21T10:39:46+08:00">2020-08-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">iOS学习记录</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS学习记录/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS学习记录</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         <ul>
 <li><a href="#render1">基本渲染原理</a></li>
 <li><a href="#render2">离屏渲染</a><ul>
@@ -367,11 +260,15 @@
 </ul>
 </li>
 </ul>
-<a id="more"></a>
-<p><span id="render1"></span></p>
-<h1 id="基本渲染原理"><a href="#基本渲染原理" class="headerlink" title="基本渲染原理"></a>基本渲染原理</h1><p>关于屏幕显示图像的原理，有很多优秀的文章都介绍过了，这里就不重复介绍了。可以查看下面的链接：<br><!-- 1. iOS渲染原理解析—讲解了iOS渲染的基础原理，也详细说明了离屏渲染的问题。 --><br><a href="https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/#51" target="_blank" rel="noopener">iOS保持界面流畅的技巧</a>——讲述了渲染的基本原理也有很多列表优化的方式。</p>
+<span id="more"></span>
+
+<p><span id = "render1"></span></p>
+<h1 id="基本渲染原理"><a href="#基本渲染原理" class="headerlink" title="基本渲染原理"></a>基本渲染原理</h1><p>关于屏幕显示图像的原理，有很多优秀的文章都介绍过了，这里就不重复介绍了。可以查看下面的链接：</p>
+<!-- 1. iOS渲染原理解析—讲解了iOS渲染的基础原理，也详细说明了离屏渲染的问题。 -->
+<p><a target="_blank" rel="noopener" href="https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/#51">iOS保持界面流畅的技巧</a>——讲述了渲染的基本原理也有很多列表优化的方式。</p>
 <h2 id="iOS-渲染架构"><a href="#iOS-渲染架构" class="headerlink" title="iOS 渲染架构"></a>iOS 渲染架构</h2><p>在 WWDC 的 Advanced Graphics and Animations for iOS Apps（WWDC14 419，关于 UIKit 和 Core Animation 基础的session 在早年的 WWDC 中比较多）中有这样一张图：</p>
-<img src="/2020/03/29/渲染原理记录/render1.png" title="Core Animation Pipeline">
+<img src="/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render1.png" class="" title="Core Animation Pipeline">
+
 <p>整个流水线一共有下面几个步骤：</p>
 <ol>
 <li><strong>Handle Events</strong></li>
@@ -390,7 +287,7 @@
 </ol>
 <p>解码完成后，Core Animation 会调用下层渲染框架（比如 OpenGL 或者 Metal）的方法进行绘制，进而调用到 GPU。</p>
 <ol start="5">
-<li><strong>Render</strong> </li>
+<li><strong>Render</strong></li>
 </ol>
 <p>这一阶段主要由 GPU 进行渲染。</p>
 <ol start="6">
@@ -429,36 +326,46 @@
 </ol>
 <p>这一步主要是：图层打包并发送到 Render Server。</p>
 <p>注意 commit 操作是依赖图层树递归执行的，所以如果图层树过于复杂，commit 的开销就会很大。这也是我们希望减少视图层级，从而降低图层树复杂度的原因。</p>
-<p><span id="render2"></span></p>
+<p><span id = "render2"></span></p>
 <h1 id="离屏渲染"><a href="#离屏渲染" class="headerlink" title="离屏渲染"></a>离屏渲染</h1><!-- 即刻技术团队—关于离屏渲染的研究  https://zhuanlan.zhihu.com/p/72653360 -->
+
 <p>如果要在显示屏上显示内容，我们至少需要一块与屏幕像素数据量一样大的 frame buffer，作为像素数据存储区域，而这也是 GPU 存储渲染结果的地方。如果有时因为面临一些限制，无法把渲染结果直接写入 frame buffer，而是先暂存在另外的内存区域，之后再写入f rame buffer，那么这个过程被称之为离屏渲染。</p>
-<p><span id="render21"></span></p>
+<p><span id = "render21"></span></p>
 <h2 id="离屏渲染的过程"><a href="#离屏渲染的过程" class="headerlink" title="离屏渲染的过程"></a>离屏渲染的过程</h2><p>通常的渲染流程是这样的：</p>
-<img src="/2020/03/29/渲染原理记录/render2.png">
+<img src="/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render2.png" class="">
+
+
 <p>App 通过 CPU 和 GPU 的合作，不停地将内容渲染完成放入 Framebuffer 帧缓冲器中，而显示屏幕不断地从 Framebuffer 中获取内容，显示实时的内容。</p>
 <p>而离屏渲染的流程是这样的：</p>
-<img src="/2020/03/29/渲染原理记录/render3.png">
+<img src="/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render3.png" class="">
+
 <p>与普通情况下 GPU 直接将渲染好的内容放入 Framebuffer 中不同，需要先额外创建离屏渲染缓冲区 Offscreen Buffer，将提前渲染好的内容放入其中，等到合适的时机再将 Offscreen Buffer 中的内容进一步叠加、渲染，完成后将结果切换到 Framebuffer 中。</p>
-<p><span id="render22"></span></p>
+<p><span id = "render22"></span></p>
 <h2 id="离屏渲染的效率问题"><a href="#离屏渲染的效率问题" class="headerlink" title="离屏渲染的效率问题"></a>离屏渲染的效率问题</h2><p>GPU 的操作是高度流水线化的。本来所有计算工作都在有条不紊地正在向 frame buffer输出，此时突然收到指令，需要输出到另一块内存，那么流水线中正在进行的一切都不得不被丢弃，切换到只能服务于我们当前的“切圆角”操作。等到完成以后再次清空，再回到向 frame buffer 输出的正常流程。Offscreen Buffer 和 Framebuffer 进行内容切换的代价也非常大。</p>
 <p>并且 Offscreen Buffer 本身就需要额外的空间，大量的离屏渲染可能早能内存的过大压力。与此同时，Offscreen Buffer 的总大小也有限，不能超过屏幕总像素的 2.5 倍。</p>
 <p>可见离屏渲染的开销非常大，一旦需要离屏渲染的内容过多，例如在 tableView 或者 collectionView 中，滚动的每一帧变化都会触发每个 cell 的重新绘制，因此一旦存在离屏渲染，上面提到的上下文切换就会每秒发生60次。这就很可能造成 App 的界面卡顿，掉帧情况的出现。所以，大部分情况下我们应该避免离屏渲染的出现。</p>
-<p><span id="render23"></span></p>
-<h2 id="为什么会离屏渲染"><a href="#为什么会离屏渲染" class="headerlink" title="为什么会离屏渲染"></a>为什么会离屏渲染</h2><p>在上面的渲染流水线示意图中我们可以看到，主要的渲染操作都是由 CoreAnimation 的 Render Server 模块，通过调用显卡驱动所提供的 OpenGL/Metal 接口来执行的。Render Server 会遵循“画家算法”，在这种算法下会按层绘制，首先绘制距离较远的场景，然后用绘制距离较近的场景覆盖较远的部分。<br>在普通的 layer 绘制中，上层的 sublayer 会覆盖下层的 sublayer，下层 sublayer 绘制完之后就可以抛弃了，从而节约空间提高效率。所有 sublayer 依次绘制完毕之后，整个绘制过程完成，就可以进行后续的呈现了。</p>
-<img src="/2020/03/29/渲染原理记录/render4.png">
+<p><span id = "render23"></span></p>
+<h2 id="为什么会离屏渲染"><a href="#为什么会离屏渲染" class="headerlink" title="为什么会离屏渲染"></a>为什么会离屏渲染</h2><p>在上面的渲染流水线示意图中我们可以看到，主要的渲染操作都是由 CoreAnimation 的 Render Server 模块，通过调用显卡驱动所提供的 OpenGL&#x2F;Metal 接口来执行的。Render Server 会遵循“画家算法”，在这种算法下会按层绘制，首先绘制距离较远的场景，然后用绘制距离较近的场景覆盖较远的部分。<br>在普通的 layer 绘制中，上层的 sublayer 会覆盖下层的 sublayer，下层 sublayer 绘制完之后就可以抛弃了，从而节约空间提高效率。所有 sublayer 依次绘制完毕之后，整个绘制过程完成，就可以进行后续的呈现了。</p>
+<img src="/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render4.png" class="">
+
 <p>举例：</p>
 <ol>
 <li>不设置裁剪和圆角</li>
 </ol>
-<img src="/2020/03/29/渲染原理记录/render5.png">
+<img src="/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render5.png" class="">
+
 <ol start="2">
 <li>设置了裁剪和圆角</li>
 </ol>
-<img src="/2020/03/29/渲染原理记录/render6.png">
+<img src="/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render6.png" class="">
+
+
 <p>看完了上面两个对比示例，我们再来看看 layer 的内容层级：</p>
-<img src="/2020/03/29/渲染原理记录/render7.png">
+<img src="/2020/03/29/%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86%E8%AE%B0%E5%BD%95/render7.png" class="">
+
+
 <p>view.layer.cornerRadius 代码只会默认设置 backgroundColor 和 border 的圆角，而不会设置 content 的圆角，除非同时设置了 layer.masksToBounds 为 true（对应 UIView 的 clipsToBounds 属性）。如果只是设置了 cornerRadius 而没有设置 masksToBounds，由于不需要叠加裁剪，此时是并不会触发离屏渲染的。而当设置了裁剪属性的时候，由于 masksToBounds 会对 layer 以及所有 subLayer 的 content 都进行裁剪，所以不得不触发离屏渲染。</p>
-<p><span id="render24"></span></p>
+<p><span id = "render24"></span></p>
 <h2 id="为什么需要使用离屏渲染"><a href="#为什么需要使用离屏渲染" class="headerlink" title="为什么需要使用离屏渲染"></a>为什么需要使用离屏渲染</h2><p>知道了离屏渲染的逻辑之后，我们可以知道离屏渲染产生的其中一个原因了：</p>
 <ul>
 <li>一些特殊效果需要使用额外的 Offscreen Buffer 来保存渲染的中间状态，所以不得不使用离屏渲染。—— 系统自动触发</li>
@@ -467,15 +374,15 @@
 <ul>
 <li>处于效率目的，可以将内容提前渲染保存在 Offscreen Buffer 中，达到复用的目的。—— 系统主动触发</li>
 </ul>
-<p><span id="render25"></span></p>
+<p><span id = "render25"></span></p>
 <h2 id="离屏渲染场景"><a href="#离屏渲染场景" class="headerlink" title="离屏渲染场景"></a>离屏渲染场景</h2><p>根据上面为什么要使用离屏渲染的两个原因，针对两种情况，列出常见的离屏渲染场景。</p>
 <ol>
 <li>系统自动触发——不得不使用（应尽量避免的）</li>
 </ol>
 <ul>
 <li>使用了 mask 的 layer (layer.mask)</li>
-<li>需要进行裁剪的 layer (layer.masksToBounds / view.clipsToBounds)</li>
-<li>设置了组透明度为 YES，并且透明度不为 1 的 layer (layer.allowsGroupOpacity/layer.opacity)</li>
+<li>需要进行裁剪的 layer (layer.masksToBounds &#x2F; view.clipsToBounds)</li>
+<li>设置了组透明度为 YES，并且透明度不为 1 的 layer (layer.allowsGroupOpacity&#x2F;layer.opacity)</li>
 <li>添加了投影的 layer (layer.shadow*)</li>
 <li>绘制了文字的 layer (UILabel, CATextLayer, Core Text 等)</li>
 <li>UIBlurEffect</li>
@@ -498,19 +405,20 @@
 <li>离屏渲染缓存内容有时间限制，缓存内容 100ms 内如果没有被使用，那么就会被丢弃，无法进行复用。</li>
 <li>离屏渲染缓存空间有限，超过 2.5 倍屏幕像素大小的话也会失效，无法复用。</li>
 </ul>
-<p><span id="render26"></span></p>
+<p><span id = "render26"></span></p>
 <h2 id="特殊的离屏渲染——CPU离屏渲染"><a href="#特殊的离屏渲染——CPU离屏渲染" class="headerlink" title="特殊的离屏渲染——CPU离屏渲染"></a>特殊的离屏渲染——CPU离屏渲染</h2><p>大家知道，如果我们在 UIView 中实现了 drawRect 方法，就算它的函数体内部实际没有代码，系统也会为这个 view 申请一块内存区域，等待 CoreGraphics 可能的绘画操作。</p>
 <p>对于类似这种“新开一块 CGContext 来画图“的操作，有很多文章和视频也称之为“离屏渲染”（因为像素数据是暂时存入了CGContext，而不是直接到了frame buffer）。进一步来说，其实所有 CPU 进行的光栅化操作（如文字渲染、图片解码），都无法直接绘制到由 GPU 掌管的 frame buffer，只能暂时先放在另一块内存之中，说起来都属于“离屏渲染”。</p>
 <p>自然我们会认为，因为 CPU 不擅长做这件事，所以我们需要尽量避免它，就误以为这就是需要避免离屏渲染的原因。但是根据苹果工程师的说法，CPU 渲染并非真正意义上的离屏渲染。另一个证据是，如果你的 view 实现了 drawRect，此时打开 Xcode 调试的“Color offscreen rendered yellow”开关，你会发现这片区域不会被标记为黄色，说明 Xcode 并不认为这属于离屏渲染。</p>
 <p>其实通过 CPU 渲染就是俗称的“软件渲染”，而真正的离屏渲染发生在 GPU。</p>
-<p><span id="render27"></span></p>
+<p><span id = "render27"></span></p>
 <h2 id="离屏渲染的优化手段"><a href="#离屏渲染的优化手段" class="headerlink" title="离屏渲染的优化手段"></a>离屏渲染的优化手段</h2><p><strong>圆角优化</strong></p>
 <ul>
 <li>对于图片的圆角，统一采用“precomposite”的策略，也就是不经由容器来做剪切，而是预先使用 CoreGraphics 为图片裁剪圆角。</li>
 <li>对视视频的圆角，实时裁剪性能会耗费比较严重，直接添加四个白色弧形的 layer，仿造出圆角效果。</li>
 <li>对于视图，如果保证切除圆角位置没有需要裁剪的子元素，可以直接设置 layer.backgroundColor 并直接设置cornerRadius。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">// MARK : 为 UIImage 绘制圆角</span><br><span class="line">- (UIImage *)jt_imageByRoundCornerRadius:(CGFloat)radius</span><br><span class="line">                                 corners:(UIRectCorner)corners</span><br><span class="line">                             borderWidth:(CGFloat)borderWidth</span><br><span class="line">                             borderColor:(UIColor *)borderColor</span><br><span class="line">                          borderLineJoin:(CGLineJoin)borderLineJoin &#123;</span><br><span class="line">    </span><br><span class="line">    if (corners != UIRectCornerAllCorners) &#123;</span><br><span class="line">        UIRectCorner tmp = 0;</span><br><span class="line">        if (corners &amp; UIRectCornerTopLeft) tmp |= UIRectCornerBottomLeft;</span><br><span class="line">        if (corners &amp; UIRectCornerTopRight) tmp |= UIRectCornerBottomRight;</span><br><span class="line">        if (corners &amp; UIRectCornerBottomLeft) tmp |= UIRectCornerTopLeft;</span><br><span class="line">        if (corners &amp; UIRectCornerBottomRight) tmp |= UIRectCornerTopRight;</span><br><span class="line">        corners = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    UIGraphicsBeginImageContextWithOptions(self.size, NO, self.scale);</span><br><span class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</span><br><span class="line">    CGRect rect = CGRectMake(0, 0, self.size.width, self.size.height);</span><br><span class="line">    CGContextScaleCTM(context, 1, -1);</span><br><span class="line">    CGContextTranslateCTM(context, 0, -rect.size.height);</span><br><span class="line">    </span><br><span class="line">    CGFloat minSize = MIN(self.size.width, self.size.height);</span><br><span class="line">    if (borderWidth &lt; minSize / 2) &#123;</span><br><span class="line">        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(rect, borderWidth, borderWidth) byRoundingCorners:corners cornerRadii:CGSizeMake(radius, borderWidth)];</span><br><span class="line">        [path closePath];</span><br><span class="line">        </span><br><span class="line">        CGContextSaveGState(context);</span><br><span class="line">        [path addClip];</span><br><span class="line">        CGContextDrawImage(context, rect, self.CGImage);</span><br><span class="line">        CGContextRestoreGState(context);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (borderColor &amp;&amp; borderWidth &lt; minSize / 2 &amp;&amp; borderWidth &gt; 0) &#123;</span><br><span class="line">        CGFloat strokeInset = (floor(borderWidth * self.scale) + 0.5) / self.scale;</span><br><span class="line">        CGRect strokeRect = CGRectInset(rect, strokeInset, strokeInset);</span><br><span class="line">        CGFloat strokeRadius = radius &gt; self.scale / 2 ? radius - self.scale / 2 : 0;</span><br><span class="line">        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:strokeRect byRoundingCorners:corners cornerRadii:CGSizeMake(strokeRadius, borderWidth)];</span><br><span class="line">        [path closePath];</span><br><span class="line">        </span><br><span class="line">        path.lineWidth = borderWidth;</span><br><span class="line">        path.lineJoinStyle = borderLineJoin;</span><br><span class="line">        [borderColor setStroke];</span><br><span class="line">        [path stroke];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">    UIGraphicsEndImageContext();</span><br><span class="line">    return image;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">// MARK : 为 UIImage 绘制圆角</span><br><span class="line">- (UIImage *)jt_imageByRoundCornerRadius:(CGFloat)radius</span><br><span class="line">                                 corners:(UIRectCorner)corners</span><br><span class="line">                             borderWidth:(CGFloat)borderWidth</span><br><span class="line">                             borderColor:(UIColor *)borderColor</span><br><span class="line">                          borderLineJoin:(CGLineJoin)borderLineJoin &#123;</span><br><span class="line">    </span><br><span class="line">    if (corners != UIRectCornerAllCorners) &#123;</span><br><span class="line">        UIRectCorner tmp = 0;</span><br><span class="line">        if (corners &amp; UIRectCornerTopLeft) tmp |= UIRectCornerBottomLeft;</span><br><span class="line">        if (corners &amp; UIRectCornerTopRight) tmp |= UIRectCornerBottomRight;</span><br><span class="line">        if (corners &amp; UIRectCornerBottomLeft) tmp |= UIRectCornerTopLeft;</span><br><span class="line">        if (corners &amp; UIRectCornerBottomRight) tmp |= UIRectCornerTopRight;</span><br><span class="line">        corners = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    UIGraphicsBeginImageContextWithOptions(self.size, NO, self.scale);</span><br><span class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</span><br><span class="line">    CGRect rect = CGRectMake(0, 0, self.size.width, self.size.height);</span><br><span class="line">    CGContextScaleCTM(context, 1, -1);</span><br><span class="line">    CGContextTranslateCTM(context, 0, -rect.size.height);</span><br><span class="line">    </span><br><span class="line">    CGFloat minSize = MIN(self.size.width, self.size.height);</span><br><span class="line">    if (borderWidth &lt; minSize / 2) &#123;</span><br><span class="line">        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(rect, borderWidth, borderWidth) byRoundingCorners:corners cornerRadii:CGSizeMake(radius, borderWidth)];</span><br><span class="line">        [path closePath];</span><br><span class="line">        </span><br><span class="line">        CGContextSaveGState(context);</span><br><span class="line">        [path addClip];</span><br><span class="line">        CGContextDrawImage(context, rect, self.CGImage);</span><br><span class="line">        CGContextRestoreGState(context);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (borderColor &amp;&amp; borderWidth &lt; minSize / 2 &amp;&amp; borderWidth &gt; 0) &#123;</span><br><span class="line">        CGFloat strokeInset = (floor(borderWidth * self.scale) + 0.5) / self.scale;</span><br><span class="line">        CGRect strokeRect = CGRectInset(rect, strokeInset, strokeInset);</span><br><span class="line">        CGFloat strokeRadius = radius &gt; self.scale / 2 ? radius - self.scale / 2 : 0;</span><br><span class="line">        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:strokeRect byRoundingCorners:corners cornerRadii:CGSizeMake(strokeRadius, borderWidth)];</span><br><span class="line">        [path closePath];</span><br><span class="line">        </span><br><span class="line">        path.lineWidth = borderWidth;</span><br><span class="line">        path.lineJoinStyle = borderLineJoin;</span><br><span class="line">        [borderColor setStroke];</span><br><span class="line">        [path stroke];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">    UIGraphicsEndImageContext();</span><br><span class="line">    return image;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>SDWebImage 加载网络图片时，可以利用 SDImageRoundCornerTransformer 为图片直接绘制圆角。</p>
 </blockquote>
@@ -522,355 +430,71 @@
 <ul>
 <li>特除形状的 view，使用 layer mask 并打开 shouldRasterize 来对渲染结果进行缓存。</li>
 </ul>
-<p><span id="render3"></span></p>
-<h1 id="卡顿监控"><a href="#卡顿监控" class="headerlink" title="卡顿监控"></a>卡顿监控</h1><p><span id="render31"></span></p>
+<p><span id = "render3"></span></p>
+<h1 id="卡顿监控"><a href="#卡顿监控" class="headerlink" title="卡顿监控"></a>卡顿监控</h1><p><span id = "render31"></span></p>
 <h2 id="FPS"><a href="#FPS" class="headerlink" title="FPS"></a>FPS</h2><p>可以通过 CADisplayLink 的机制来计算出实时的帧率，但是这个只是可以看出 CPU 的卡顿，而对于 GPU 的卡顿就无法检测了。所以说，在精准的界面检测中 FPS 只能作为参考来评测界面卡顿。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">@interface JTFPSMonitor : NSObject</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> FPS 监控回调</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, copy) void(^fpsCallback)(float fps);</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation JTFPSMonitor &#123;</span><br><span class="line">    CADisplayLink *_link;</span><br><span class="line">    NSUInteger _count;</span><br><span class="line">    NSTimeInterval _lastTime;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    self = [super init];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        _link = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];</span><br><span class="line">        [_link addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)dealloc &#123;</span><br><span class="line">    [_link invalidate];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)tick:(CADisplayLink *)link &#123;</span><br><span class="line">    if (_lastTime == 0) &#123;</span><br><span class="line">        _lastTime = link.timestamp;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    _count++;</span><br><span class="line">    NSTimeInterval delta = link.timestamp - _lastTime;</span><br><span class="line">    if (delta &lt; 1) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    _lastTime = link.timestamp;</span><br><span class="line">    </span><br><span class="line">    float fps = _count / delta;</span><br><span class="line">    if (self.fpsCallback) &#123;</span><br><span class="line">        self.fpsCallback(fps);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    _count = 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<p><span id="render32"></span></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">@interface JTFPSMonitor : NSObject</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> FPS 监控回调</span><br><span class="line"> */</span><br><span class="line">@property (nonatomic, copy) void(^fpsCallback)(float fps);</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@implementation JTFPSMonitor &#123;</span><br><span class="line">    CADisplayLink *_link;</span><br><span class="line">    NSUInteger _count;</span><br><span class="line">    NSTimeInterval _lastTime;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    self = [super init];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        _link = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];</span><br><span class="line">        [_link addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)dealloc &#123;</span><br><span class="line">    [_link invalidate];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)tick:(CADisplayLink *)link &#123;</span><br><span class="line">    if (_lastTime == 0) &#123;</span><br><span class="line">        _lastTime = link.timestamp;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    _count++;</span><br><span class="line">    NSTimeInterval delta = link.timestamp - _lastTime;</span><br><span class="line">    if (delta &lt; 1) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    _lastTime = link.timestamp;</span><br><span class="line">    </span><br><span class="line">    float fps = _count / delta;</span><br><span class="line">    if (self.fpsCallback) &#123;</span><br><span class="line">        self.fpsCallback(fps);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    _count = 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p><span id = "render32"></span></p>
 <h2 id="Runloop"><a href="#Runloop" class="headerlink" title="Runloop"></a>Runloop</h2><p>代码量不大，全文抄录。相关说明也都在注释里面。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">@interface JTStuckMonitor () &#123;</span><br><span class="line">    CFRunLoopObserverRef runLoopObserver;</span><br><span class="line">    int timeoutCount;</span><br><span class="line">    @public</span><br><span class="line">    CFRunLoopActivity runLoopActivity;</span><br><span class="line">    dispatch_semaphore_t dispatchSemaphore;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation JTStuckMonitor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)start &#123;</span><br><span class="line">    // Dispatch Semaphore保证同步</span><br><span class="line">    dispatchSemaphore = dispatch_semaphore_create(0);</span><br><span class="line">    // 创建一个观察者</span><br><span class="line">    CFRunLoopObserverContext context = &#123;0, (__bridge void *)self, NULL, NULL&#125;;</span><br><span class="line">    runLoopObserver = CFRunLoopObserverCreate(kCFAllocatorDefault,</span><br><span class="line">                                              kCFRunLoopAllActivities,</span><br><span class="line">                                              YES,</span><br><span class="line">                                              0,</span><br><span class="line">                                              &amp;runloopObserverCallBack,</span><br><span class="line">                                              &amp;context);</span><br><span class="line">    </span><br><span class="line">    //将观察者添加到主线程runloop的common模式下的观察中</span><br><span class="line">    CFRunLoopAddObserver(CFRunLoopGetMain(), runLoopObserver, kCFRunLoopCommonModes);</span><br><span class="line">    </span><br><span class="line">    // 创建子线程监控</span><br><span class="line">    dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;</span><br><span class="line">        //子线程开启一个持续的loop用来进行监控</span><br><span class="line">        while (YES) &#123;</span><br><span class="line">            // 假定连续5次超时50ms认为卡顿(当然也包含了单次超时250ms)</span><br><span class="line">            long semaphoreWait = dispatch_semaphore_wait(self-&gt;dispatchSemaphore, dispatch_time(DISPATCH_TIME_NOW, 50*NSEC_PER_MSEC));</span><br><span class="line">            if (semaphoreWait != 0) &#123;</span><br><span class="line">                if (!self-&gt;runLoopObserver) &#123;</span><br><span class="line">                    self-&gt;timeoutCount = 0;</span><br><span class="line">                    self-&gt;dispatchSemaphore = 0;</span><br><span class="line">                    self-&gt;runLoopActivity = 0;</span><br><span class="line">                    return;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                //两个runloop的状态，BeforeSources 和 AfterWaiting 这两个状态区间时间能够检测到是否卡顿</span><br><span class="line">                if (self-&gt;runLoopActivity == kCFRunLoopBeforeSources || self-&gt;runLoopActivity == kCFRunLoopAfterWaiting) &#123;</span><br><span class="line">                    if (++self-&gt;timeoutCount &lt; 5) &#123;</span><br><span class="line">                        continue;</span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                    // 检测到卡顿，抓取堆栈信息</span><br><span class="line">                    </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            self-&gt;timeoutCount = 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> 如果 RunLoop 的线程，进入睡眠前方法的执行时间过长而导致无法进入睡眠，或者线程唤醒后接收消息时间过长而无法进入下一步的话，就可以认为是线程受阻了。如果这个线程是主线程的话，表现出来的就是出现了卡顿。</span><br><span class="line"> </span><br><span class="line"> 所以，如果我们要利用 RunLoop 原理来监控卡顿的话，就是要关注这两个阶段。RunLoop 在进入睡眠之前和唤醒后的两个 loop 状态定义的值，分别是 kCFRunLoopBeforeSources 和 kCFRunLoopAfterWaiting ，也就是要触发 Source0 回调和接收 mach_port 消息两个状态。</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">static void runloopObserverCallBack(CFRunLoopObserverRef observer,</span><br><span class="line">                                    CFRunLoopActivity activity,</span><br><span class="line">                                    void *info) &#123;</span><br><span class="line">    JTStuckMonitor *stuckMonitor = (__bridge JTStuckMonitor *)info;</span><br><span class="line">    stuckMonitor-&gt;runLoopActivity = activity;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     kCFRunLoopEntry = (1UL &lt;&lt; 0),</span><br><span class="line">     kCFRunLoopBeforeTimers = (1UL &lt;&lt; 1),</span><br><span class="line">     kCFRunLoopBeforeSources = (1UL &lt;&lt; 2),</span><br><span class="line">     kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5),</span><br><span class="line">     kCFRunLoopAfterWaiting = (1UL &lt;&lt; 6),</span><br><span class="line">     kCFRunLoopExit = (1UL &lt;&lt; 7),</span><br><span class="line">     kCFRunLoopAllActivities =</span><br><span class="line">     */</span><br><span class="line">    switch (activity) &#123;</span><br><span class="line">        case kCFRunLoopEntry:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopEntry  进入 loop-------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        case kCFRunLoopBeforeTimers:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopBeforeTimers  触发 Timer 回调 -------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        case kCFRunLoopBeforeSources:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopBeforeSources  触发 Source0 回调 -------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        case kCFRunLoopBeforeWaiting:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopBeforeWaiting  等待 mach_port 消息 -------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        case kCFRunLoopAfterWaiting:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopAfterWaiting  接收 mach_port 消息 -------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        case kCFRunLoopExit:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopExit  退出 loop -------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        default:</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    dispatch_semaphore_t semaphore = stuckMonitor-&gt;dispatchSemaphore;</span><br><span class="line">    dispatch_semaphore_signal(semaphore);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)end &#123;</span><br><span class="line">    if (!runLoopObserver) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    CFRunLoopRemoveObserver(CFRunLoopGetMain(), runLoopObserver, kCFRunLoopCommonModes);</span><br><span class="line">    CFRelease(runLoopObserver);</span><br><span class="line">    runLoopObserver = NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">@interface JTStuckMonitor () &#123;</span><br><span class="line">    CFRunLoopObserverRef runLoopObserver;</span><br><span class="line">    int timeoutCount;</span><br><span class="line">    @public</span><br><span class="line">    CFRunLoopActivity runLoopActivity;</span><br><span class="line">    dispatch_semaphore_t dispatchSemaphore;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation JTStuckMonitor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)start &#123;</span><br><span class="line">    // Dispatch Semaphore保证同步</span><br><span class="line">    dispatchSemaphore = dispatch_semaphore_create(0);</span><br><span class="line">    // 创建一个观察者</span><br><span class="line">    CFRunLoopObserverContext context = &#123;0, (__bridge void *)self, NULL, NULL&#125;;</span><br><span class="line">    runLoopObserver = CFRunLoopObserverCreate(kCFAllocatorDefault,</span><br><span class="line">                                              kCFRunLoopAllActivities,</span><br><span class="line">                                              YES,</span><br><span class="line">                                              0,</span><br><span class="line">                                              &amp;runloopObserverCallBack,</span><br><span class="line">                                              &amp;context);</span><br><span class="line">    </span><br><span class="line">    //将观察者添加到主线程runloop的common模式下的观察中</span><br><span class="line">    CFRunLoopAddObserver(CFRunLoopGetMain(), runLoopObserver, kCFRunLoopCommonModes);</span><br><span class="line">    </span><br><span class="line">    // 创建子线程监控</span><br><span class="line">    dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;</span><br><span class="line">        //子线程开启一个持续的loop用来进行监控</span><br><span class="line">        while (YES) &#123;</span><br><span class="line">            // 假定连续5次超时50ms认为卡顿(当然也包含了单次超时250ms)</span><br><span class="line">            long semaphoreWait = dispatch_semaphore_wait(self-&gt;dispatchSemaphore, dispatch_time(DISPATCH_TIME_NOW, 50*NSEC_PER_MSEC));</span><br><span class="line">            if (semaphoreWait != 0) &#123;</span><br><span class="line">                if (!self-&gt;runLoopObserver) &#123;</span><br><span class="line">                    self-&gt;timeoutCount = 0;</span><br><span class="line">                    self-&gt;dispatchSemaphore = 0;</span><br><span class="line">                    self-&gt;runLoopActivity = 0;</span><br><span class="line">                    return;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                //两个runloop的状态，BeforeSources 和 AfterWaiting 这两个状态区间时间能够检测到是否卡顿</span><br><span class="line">                if (self-&gt;runLoopActivity == kCFRunLoopBeforeSources || self-&gt;runLoopActivity == kCFRunLoopAfterWaiting) &#123;</span><br><span class="line">                    if (++self-&gt;timeoutCount &lt; 5) &#123;</span><br><span class="line">                        continue;</span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                    // 检测到卡顿，抓取堆栈信息</span><br><span class="line">                    </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            self-&gt;timeoutCount = 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> 如果 RunLoop 的线程，进入睡眠前方法的执行时间过长而导致无法进入睡眠，或者线程唤醒后接收消息时间过长而无法进入下一步的话，就可以认为是线程受阻了。如果这个线程是主线程的话，表现出来的就是出现了卡顿。</span><br><span class="line"> </span><br><span class="line"> 所以，如果我们要利用 RunLoop 原理来监控卡顿的话，就是要关注这两个阶段。RunLoop 在进入睡眠之前和唤醒后的两个 loop 状态定义的值，分别是 kCFRunLoopBeforeSources 和 kCFRunLoopAfterWaiting ，也就是要触发 Source0 回调和接收 mach_port 消息两个状态。</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">static void runloopObserverCallBack(CFRunLoopObserverRef observer,</span><br><span class="line">                                    CFRunLoopActivity activity,</span><br><span class="line">                                    void *info) &#123;</span><br><span class="line">    JTStuckMonitor *stuckMonitor = (__bridge JTStuckMonitor *)info;</span><br><span class="line">    stuckMonitor-&gt;runLoopActivity = activity;</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     kCFRunLoopEntry = (1UL &lt;&lt; 0),</span><br><span class="line">     kCFRunLoopBeforeTimers = (1UL &lt;&lt; 1),</span><br><span class="line">     kCFRunLoopBeforeSources = (1UL &lt;&lt; 2),</span><br><span class="line">     kCFRunLoopBeforeWaiting = (1UL &lt;&lt; 5),</span><br><span class="line">     kCFRunLoopAfterWaiting = (1UL &lt;&lt; 6),</span><br><span class="line">     kCFRunLoopExit = (1UL &lt;&lt; 7),</span><br><span class="line">     kCFRunLoopAllActivities =</span><br><span class="line">     */</span><br><span class="line">    switch (activity) &#123;</span><br><span class="line">        case kCFRunLoopEntry:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopEntry  进入 loop-------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        case kCFRunLoopBeforeTimers:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopBeforeTimers  触发 Timer 回调 -------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        case kCFRunLoopBeforeSources:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopBeforeSources  触发 Source0 回调 -------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        case kCFRunLoopBeforeWaiting:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopBeforeWaiting  等待 mach_port 消息 -------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        case kCFRunLoopAfterWaiting:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopAfterWaiting  接收 mach_port 消息 -------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        case kCFRunLoopExit:</span><br><span class="line">            NSLog(@&quot;------- kCFRunLoopExit  退出 loop -------&quot;);</span><br><span class="line">            break;</span><br><span class="line">        default:</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    dispatch_semaphore_t semaphore = stuckMonitor-&gt;dispatchSemaphore;</span><br><span class="line">    dispatch_semaphore_signal(semaphore);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)end &#123;</span><br><span class="line">    if (!runLoopObserver) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    CFRunLoopRemoveObserver(CFRunLoopGetMain(), runLoopObserver, kCFRunLoopCommonModes);</span><br><span class="line">    CFRelease(runLoopObserver);</span><br><span class="line">    runLoopObserver = NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 
-      
+
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/03/01/预加载——UIViewController/" rel="next" title="预加载——UIViewController">
-                <i class="fa fa-chevron-left"></i> 预加载——UIViewController
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/26/SDWebImage源码学习/" rel="prev" title="SDWebImage源码学习">
-                SDWebImage源码学习 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/03/01/%E9%A2%84%E5%8A%A0%E8%BD%BD%E2%80%94%E2%80%94UIViewController/" rel="prev" title="预加载——UIViewController">
+                  <i class="fa fa-chevron-left"></i> 预加载——UIViewController
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本渲染原理"><span class="nav-number">1.</span> <span class="nav-text">基本渲染原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS-渲染架构"><span class="nav-number">1.1.</span> <span class="nav-text">iOS 渲染架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Commit-Transaction-做了什么？"><span class="nav-number">1.1.1.</span> <span class="nav-text">Commit Transaction 做了什么？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#离屏渲染"><span class="nav-number">2.</span> <span class="nav-text">离屏渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染的过程"><span class="nav-number">2.1.</span> <span class="nav-text">离屏渲染的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染的效率问题"><span class="nav-number">2.2.</span> <span class="nav-text">离屏渲染的效率问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么会离屏渲染"><span class="nav-number">2.3.</span> <span class="nav-text">为什么会离屏渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要使用离屏渲染"><span class="nav-number">2.4.</span> <span class="nav-text">为什么需要使用离屏渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染场景"><span class="nav-number">2.5.</span> <span class="nav-text">离屏渲染场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊的离屏渲染——CPU离屏渲染"><span class="nav-number">2.6.</span> <span class="nav-text">特殊的离屏渲染——CPU离屏渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离屏渲染的优化手段"><span class="nav-number">2.7.</span> <span class="nav-text">离屏渲染的优化手段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卡顿监控"><span class="nav-number">3.</span> <span class="nav-text">卡顿监控</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FPS"><span class="nav-number">3.1.</span> <span class="nav-text">FPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runloop"><span class="nav-number">3.2.</span> <span class="nav-text">Runloop</span></a></li></ol></li></ol></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2020/04/26/SDWebImage%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/" rel="next" title="SDWebImage源码学习">
+                  SDWebImage源码学习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -883,34 +507,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

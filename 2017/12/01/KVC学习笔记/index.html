@@ -1,376 +1,275 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="前言 一、概述KVC全称是Key Value Coding（键值编码），是可以通过对象属性名称（Key）直接对属性值（value）编码（coding）“编码”可以理解为“赋值及访问”。而不需要调用明确的存取方法。这样就可以在运行时动态在访问和修改对象的属性，而不是在编译时确定。 KVC的优势是在没有访问器(setter、getter)方法的类中，此时点语法无法使用。 KVC提供了一种间接访问其属性">
+    <meta name="description" content="前言  一、概述KVC全称是Key Value Coding（键值编码），是可以通过对象属性名称（Key）直接对属性值（value）编码（coding）“编码”可以理解为“赋值及访问”。而不需要调用明确的存取方法。这样就可以在运行时动态在访问和修改对象的属性，而不是在编译时确定。 KVC的优势是在没有访问器(setter、getter)方法的类中，此时点语法无法使用。 KVC提供了一种间接访问其属">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KVC学习笔记">
-<meta property="og:url" content="http://yoursite.com/2017/12/01/KVC学习笔记/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/12/01/KVC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="江涛的博客">
-<meta property="og:description" content="前言 一、概述KVC全称是Key Value Coding（键值编码），是可以通过对象属性名称（Key）直接对属性值（value）编码（coding）“编码”可以理解为“赋值及访问”。而不需要调用明确的存取方法。这样就可以在运行时动态在访问和修改对象的属性，而不是在编译时确定。 KVC的优势是在没有访问器(setter、getter)方法的类中，此时点语法无法使用。 KVC提供了一种间接访问其属性">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2017/12/01/KVC学习笔记/KVC_MindNode.png">
-<meta property="og:image" content="http://yoursite.com/2017/12/01/KVC学习笔记/Modify_Properties.png">
-<meta property="og:updated_time" content="2020-07-28T14:56:44.000Z">
+<meta property="og:description" content="前言  一、概述KVC全称是Key Value Coding（键值编码），是可以通过对象属性名称（Key）直接对属性值（value）编码（coding）“编码”可以理解为“赋值及访问”。而不需要调用明确的存取方法。这样就可以在运行时动态在访问和修改对象的属性，而不是在编译时确定。 KVC的优势是在没有访问器(setter、getter)方法的类中，此时点语法无法使用。 KVC提供了一种间接访问其属">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2017/12/01/KVC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/KVC_MindNode.png">
+<meta property="og:image" content="http://yoursite.com/2017/12/01/KVC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Modify_Properties.png">
+<meta property="article:published_time" content="2017-12-01T08:53:43.000Z">
+<meta property="article:modified_time" content="2020-07-28T14:56:44.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KVC学习笔记">
-<meta name="twitter:description" content="前言 一、概述KVC全称是Key Value Coding（键值编码），是可以通过对象属性名称（Key）直接对属性值（value）编码（coding）“编码”可以理解为“赋值及访问”。而不需要调用明确的存取方法。这样就可以在运行时动态在访问和修改对象的属性，而不是在编译时确定。 KVC的优势是在没有访问器(setter、getter)方法的类中，此时点语法无法使用。 KVC提供了一种间接访问其属性">
-<meta name="twitter:image" content="http://yoursite.com/2017/12/01/KVC学习笔记/KVC_MindNode.png">
+<meta name="twitter:image" content="http://yoursite.com/2017/12/01/KVC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/KVC_MindNode.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2017/12/01/KVC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2017/12/01/KVC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/","path":"2017/12/01/KVC学习笔记/","title":"KVC学习笔记"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2017/12/01/KVC学习笔记/">
-
-
-
-
-
-  <title>KVC学习笔记 | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>KVC学习笔记 | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">二、使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">3.0.1.</span> <span class="nav-text">1、基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%BA%95%E5%B1%82%E6%89%A7%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="nav-number">3.0.2.</span> <span class="nav-text">2、底层执行机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E9%94%AE%E5%80%BC%E9%AA%8C%E8%AF%81"><span class="nav-number">3.0.3.</span> <span class="nav-text">3、键值验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84key%E5%8F%8Anil%E5%80%BC%E5%A4%84%E7%90%86"><span class="nav-number">3.0.4.</span> <span class="nav-text">4、不存在的key及nil值处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81%E4%B8%80%E4%BA%9B%E5%87%BD%E6%95%B0%E6%93%8D%E4%BD%9C"><span class="nav-number">3.0.5.</span> <span class="nav-text">5、一些函数操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">三、实际应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E8%AE%BF%E9%97%AE%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F"><span class="nav-number">4.0.1.</span> <span class="nav-text">1、访问私有变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E4%BF%AE%E6%94%B9%E4%B8%80%E4%BA%9B%E6%8E%A7%E4%BB%B6%E7%9A%84%E5%86%85%E9%83%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">4.0.2.</span> <span class="nav-text">2、修改一些控件的内部属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E7%BB%93%E5%90%88Runtime%E6%89%93%E9%80%A0%E5%AD%97%E5%85%B8%E8%BD%ACmodel"><span class="nav-number">4.0.3.</span> <span class="nav-text">3、结合Runtime打造字典转model</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">四、总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/01/KVC学习笔记/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/01/KVC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="KVC学习笔记 | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          KVC学习笔记
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">KVC学习笔记</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-01T16:53:43+08:00">
-                2017-12-01
-              </time>
-            
+      <time title="Created: 2017-12-01 16:53:43" itemprop="dateCreated datePublished" datetime="2017-12-01T16:53:43+08:00">2017-12-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-07-28 22:56:44" itemprop="dateModified" datetime="2020-07-28T22:56:44+08:00">2020-07-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS%E5%B8%B8%E8%A7%81%E7%9F%A5%E8%AF%86%E7%82%B9/" itemprop="url" rel="index"><span itemprop="name">iOS常见知识点</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS常见知识点/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS常见知识点</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><img src="/2017/12/01/KVC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/KVC_MindNode.png" class="" title="MindNode">
 
-      
-      
-
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><img src="/2017/12/01/KVC学习笔记/KVC_MindNode.png" title="MindNode">
 <h2 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h2><p>KVC全称是<strong>Key Value Coding</strong>（键值编码），是可以通过对象属性名称（Key）直接对属性值（value）编码（coding）“编码”可以理解为“赋值及访问”。而不需要调用明确的存取方法。这样就可以在运行时动态在访问和修改对象的属性，而不是在编译时确定。</p>
 <p>KVC的优势是在没有访问器(setter、getter)方法的类中，此时点语法无法使用。</p>
 <p>KVC提供了一种间接访问其属性方法或成员变量的机制，可以通过字符串来访问对应的属性方法或成员变量。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <h2 id="二、使用"><a href="#二、使用" class="headerlink" title="二、使用"></a>二、使用</h2><p>KVC的定义都是对NSObject的扩展来实现的，Objective-c中有个显式的NSKeyValueCoding类别名，所以对于所有继承了NSObject在类型，都能使用KVC。</p>
 <p>在 Swift 中处理 KVC和 Objective-C 中还是有些细微的差别。比如，Objective-C 中所有的类都继承自 NSObject，而 Swift 中却不是，所以我们在 Swift 中需要显式的声明继承自 NSObject。</p>
 <p>因为 Swift 中的 Optional 机制，所以 valueForKey 方法返回的是一个 Optional 值，我们还需要对返回值做一次解包处理，才能得到实际的属性值。</p>
 <h4 id="1、基本使用"><a href="#1、基本使用" class="headerlink" title="1、基本使用"></a>1、基本使用</h4><p>下面是KVC中最常用的几个方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//直接通过Key来取值</span><br><span class="line">- (nullable id)valueForKey:(NSString *)key; </span><br><span class="line"></span><br><span class="line">//通过Key来设值</span><br><span class="line">- (void)setValue:(nullable id)value forKey:(NSString *)key;</span><br><span class="line"></span><br><span class="line">//通过KeyPath来取值</span><br><span class="line">- (nullable id)valueForKeyPath:(NSString *)keyPath;</span><br><span class="line"></span><br><span class="line">//通过KeyPath来设值</span><br><span class="line">- (void)setValue:(nullable id)value forKeyPath:(NSString *)keyPath;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//直接通过Key来取值</span><br><span class="line">- (nullable id)valueForKey:(NSString *)key; </span><br><span class="line"></span><br><span class="line">//通过Key来设值</span><br><span class="line">- (void)setValue:(nullable id)value forKey:(NSString *)key;</span><br><span class="line"></span><br><span class="line">//通过KeyPath来取值</span><br><span class="line">- (nullable id)valueForKeyPath:(NSString *)keyPath;</span><br><span class="line"></span><br><span class="line">//通过KeyPath来设值</span><br><span class="line">- (void)setValue:(nullable id)value forKeyPath:(NSString *)keyPath;</span><br></pre></td></tr></table></figure>
+
 <p>举例：Book类拥有书名name属性以及author，且author类拥有一个address属性。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@interface Author : NSObject</span><br><span class="line">@property(strong, nonatomic) NSString* address;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Author</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface Book : NSObject</span><br><span class="line">@property(strong, nonatomic) NSString* name;// 书名</span><br><span class="line">@property(strong, nonatomic) Author* author;// 作者</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Book</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@interface Author : NSObject</span><br><span class="line">@property(strong, nonatomic) NSString* address;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Author</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface Book : NSObject</span><br><span class="line">@property(strong, nonatomic) NSString* name;// 书名</span><br><span class="line">@property(strong, nonatomic) Author* author;// 作者</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Book</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
 <p>使用时：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//  ViewController.m</span><br><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;Book.h&quot;</span><br><span class="line"></span><br><span class="line">@interface ViewController ()</span><br><span class="line">@end</span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    Book *book = [[Book alloc]init];</span><br><span class="line">    [book setValue:@&quot;Hello world&quot; forKey:@&quot;name&quot;]; // 设置值</span><br><span class="line">    NSLog(@&quot;age=%@&quot;,[book valueForKey:@&quot;name&quot;]);  // 取值</span><br><span class="line">    </span><br><span class="line">    // keyPath 方式</span><br><span class="line">    [book setValue:@&quot;ShangHai&quot; forKeyPath:@&quot;author.address&quot;]; // 设置值</span><br><span class="line">    NSLog(@&quot;author.address=%@&quot;,[book valueForKeyPath:@&quot;author.address&quot;]);//取值</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//  ViewController.m</span><br><span class="line">#import &quot;ViewController.h&quot;</span><br><span class="line">#import &quot;Book.h&quot;</span><br><span class="line"></span><br><span class="line">@interface ViewController ()</span><br><span class="line">@end</span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    Book *book = [[Book alloc]init];</span><br><span class="line">    [book setValue:@&quot;Hello world&quot; forKey:@&quot;name&quot;]; // 设置值</span><br><span class="line">    NSLog(@&quot;age=%@&quot;,[book valueForKey:@&quot;name&quot;]);  // 取值</span><br><span class="line">    </span><br><span class="line">    // keyPath 方式</span><br><span class="line">    [book setValue:@&quot;ShangHai&quot; forKeyPath:@&quot;author.address&quot;]; // 设置值</span><br><span class="line">    NSLog(@&quot;author.address=%@&quot;,[book valueForKeyPath:@&quot;author.address&quot;]);//取值</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
 <h4 id="2、底层执行机制"><a href="#2、底层执行机制" class="headerlink" title="2、底层执行机制"></a>2、底层执行机制</h4><ul>
-<li>[object setValue:@”value” forKey:@”property”] </li>
+<li>[object setValue:@”value” forKey:@”property”]</li>
 </ul>
 <ol>
 <li><p>存取器(setter方法)匹配：先寻找与setKey同名的方法。找到直接赋值。[self setProperty:@”value”]。</p>
 </li>
-<li><p>实例变量匹配：寻找与key，_isKey，_key，isKey同名的实例变量，直接赋值。property = value或_property = value等。</p>
+<li><p>实例变量匹配：寻找与key，_isKey，_key，isKey同名的实例变量，直接赋值。property &#x3D; value或_property &#x3D; value等。</p>
 </li>
 <li><p>找不到,就会直接报错 setValue:forUndefinedKey:报找不到的错误。</p>
 </li>
 </ol>
 <p>如果我们想让这个类禁用KVC，那么重写+ (BOOL)accessInstanceVariablesDirectly方法让其返回NO即可，这样的话如果KVC没有找到set:属性名时，会直接用setValue：forUNdefinedKey：方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ (BOOL)accessInstanceVariablesDirectly;</span><br><span class="line">//默认返回YES，表示如果没有找到Set&lt;Key&gt;方法的话，会按照_key，_iskey，key，iskey的顺序搜索成员，设置成NO就不这样搜索</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ (BOOL)accessInstanceVariablesDirectly;</span><br><span class="line">//默认返回YES，表示如果没有找到Set&lt;Key&gt;方法的话，会按照_key，_iskey，key，iskey的顺序搜索成员，设置成NO就不这样搜索</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>[object valueForKey:@”property”]</li>
 </ul>
@@ -383,22 +282,26 @@
 </li>
 </ol>
 <p>若value值为BOOL或Int等值类型时，KVC可以自动的将数值或结构体型的数据打包或解包成NSNumber或NSValue对象，以达到适配的目的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Ps：swift中使用keyPath的方式，但是仅支持struct</span><br><span class="line"></span><br><span class="line">struct Book &#123;</span><br><span class="line">    var name:String</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var book = Book(name: &quot;Swift&quot;)</span><br><span class="line">// set</span><br><span class="line">book[keyPath: name] = &quot;swift4&quot;</span><br><span class="line">// get</span><br><span class="line">let valueOfName = book[keyPath:name]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Ps：swift中使用keyPath的方式，但是仅支持struct</span><br><span class="line"></span><br><span class="line">struct Book &#123;</span><br><span class="line">    var name:String</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var book = Book(name: &quot;Swift&quot;)</span><br><span class="line">// set</span><br><span class="line">book[keyPath: name] = &quot;swift4&quot;</span><br><span class="line">// get</span><br><span class="line">let valueOfName = book[keyPath:name]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h4 id="3、键值验证"><a href="#3、键值验证" class="headerlink" title="3、键值验证"></a>3、键值验证</h4><p>在实际开发中我们获取对一些Key的value值有一些特殊的要求。KVC为我们提供了验证Key对应的Value是否可用的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)validateValue:(inoutid*)ioValue forKey:(NSString*)inKey error:(outNSError**)outError;</span><br></pre></td></tr></table></figure>
-<p>这为我们提供了一次纠错的机会。但是，KVC是不会自动调用键值验证方法的，就是说我们如果想要键值验证则需要手动验证。也就是说，需要自己需要验证的类中重写-(BOOL)-validate<key>:error:，默认返回Yes。</key></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)validateValue:(inoutid*)ioValue forKey:(NSString*)inKey error:(outNSError**)outError;</span><br></pre></td></tr></table></figure>
+<p>这为我们提供了一次纠错的机会。但是，KVC是不会自动调用键值验证方法的，就是说我们如果想要键值验证则需要手动验证。也就是说，需要自己需要验证的类中重写-(BOOL)-validate<Key>:error:，默认返回Yes。</p>
 <p>举例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@implementation Book</span><br><span class="line">- (BOOL)validateName:(id *)value error:(out NSError * _Nullable __autoreleasing *)outError&#123;</span><br><span class="line">    NSString* name = *value;</span><br><span class="line">    name = name.capitalizedString;</span><br><span class="line">    if ([name isEqualToString:@&quot;Not-name&quot;]) &#123;</span><br><span class="line">        return NO;</span><br><span class="line">    &#125;</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    Book *book = [[Book alloc]init];</span><br><span class="line">    NSError* error;</span><br><span class="line">    NSString *value = @&quot;Not-name&quot;; // result 为 NO </span><br><span class="line">    //NSString *value = @&quot;BookName&quot;;  // result 为 YES</span><br><span class="line">    BOOL result = [book validateValue:&amp;value forKey:@&quot;name&quot; error:&amp;error];</span><br><span class="line">    if (result) &#123;</span><br><span class="line">        NSLog(@&quot;OK&quot;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        NSLog(@&quot;NO&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@implementation Book</span><br><span class="line">- (BOOL)validateName:(id *)value error:(out NSError * _Nullable __autoreleasing *)outError&#123;</span><br><span class="line">    NSString* name = *value;</span><br><span class="line">    name = name.capitalizedString;</span><br><span class="line">    if ([name isEqualToString:@&quot;Not-name&quot;]) &#123;</span><br><span class="line">        return NO;</span><br><span class="line">    &#125;</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    Book *book = [[Book alloc]init];</span><br><span class="line">    NSError* error;</span><br><span class="line">    NSString *value = @&quot;Not-name&quot;; // result 为 NO </span><br><span class="line">    //NSString *value = @&quot;BookName&quot;;  // result 为 YES</span><br><span class="line">    BOOL result = [book validateValue:&amp;value forKey:@&quot;name&quot; error:&amp;error];</span><br><span class="line">    if (result) &#123;</span><br><span class="line">        NSLog(@&quot;OK&quot;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        NSLog(@&quot;NO&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h4 id="4、不存在的key及nil值处理"><a href="#4、不存在的key及nil值处理" class="headerlink" title="4、不存在的key及nil值处理"></a>4、不存在的key及nil值处理</h4><ul>
 <li>处理不存在的key值</li>
 </ul>
 <p>我们可以考虑重写setValue: forUndefinedKey:方法与valueForUndefinedKey:方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (void)setValue:(id)value forUndefinedKey:(NSString *)key &#123;</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;您设置的key：[%@]不存在&quot;, key);</span><br><span class="line">    NSLog(@&quot;您设置的value为：[%@]&quot;, value);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)valueForUndefinedKey:(NSString *)key &#123;</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;您访问的key:[%@]不存在&quot;, key);</span><br><span class="line">    return nil;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (void)setValue:(id)value forUndefinedKey:(NSString *)key &#123;</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;您设置的key：[%@]不存在&quot;, key);</span><br><span class="line">    NSLog(@&quot;您设置的value为：[%@]&quot;, value);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (id)valueForUndefinedKey:(NSString *)key &#123;</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;您访问的key:[%@]不存在&quot;, key);</span><br><span class="line">    return nil;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>value为nil的处理</li>
 </ul>
 <p>当程序尝试为某个属性设置nil值时，如果该属性并不接受nil值，那么程序将会自动执行该对象的setNilValueForKey:方法。我们同样可以重写这个方法:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)setNilValueForKey:(NSString *)key &#123;</span><br><span class="line">    //对不能接受nil的属性进行处理</span><br><span class="line">    if ([key isEqualToString:@&quot;price&quot;]) &#123;</span><br><span class="line">        //对应你具体的业务来处理</span><br><span class="line">        price = 0;</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        [super setNilValueForKey:key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)setNilValueForKey:(NSString *)key &#123;</span><br><span class="line">    //对不能接受nil的属性进行处理</span><br><span class="line">    if ([key isEqualToString:@&quot;price&quot;]) &#123;</span><br><span class="line">        //对应你具体的业务来处理</span><br><span class="line">        price = 0;</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        [super setNilValueForKey:key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h4 id="5、一些函数操作"><a href="#5、一些函数操作" class="headerlink" title="5、一些函数操作"></a>5、一些函数操作</h4><p>KVC同时还提供了一些较复杂的函数，主要有下面这些：</p>
 <ul>
 <li>集合运算符</li>
@@ -410,355 +313,73 @@
 <p>共有两个：@distinctUnionOfObjects 及 @unionOfObjects</p>
 <p>它们的返回值都是NSArray。两者的区别在于：前者会去除返回值中重复的数据，后者则将数据全部返回。</p>
 <p>举例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">@interface Book : NSObject</span><br><span class="line">@property(assign, nonatomic) NSInteger price;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Book</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    Book *book1 = [Book new];</span><br><span class="line">    book1.price = 40;</span><br><span class="line">    Book *book2 = [Book new];</span><br><span class="line">    book2.price = 20;</span><br><span class="line">    Book *book3 = [Book new];</span><br><span class="line">    book3.price = 30;</span><br><span class="line">    Book *book4 = [Book new];</span><br><span class="line">    book4.price = 10;</span><br><span class="line">    // 价格重复的</span><br><span class="line">    Book *book5 = [Book new];</span><br><span class="line">    book5.price = 10;</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;----------集合运算符----------&quot;);</span><br><span class="line">    NSArray* arr = @[book1,book2,book3,book4];</span><br><span class="line">    NSNumber* sum = [arr valueForKeyPath:@&quot;@sum.price&quot;];</span><br><span class="line">    NSLog(@&quot;sum:%f&quot;,sum.floatValue);</span><br><span class="line">    NSNumber* avg = [arr valueForKeyPath:@&quot;@avg.price&quot;];</span><br><span class="line">    NSLog(@&quot;avg:%f&quot;,avg.floatValue);</span><br><span class="line">    NSNumber* count = [arr valueForKeyPath:@&quot;@count&quot;];</span><br><span class="line">    NSLog(@&quot;count:%f&quot;,count.floatValue);</span><br><span class="line">    NSNumber* min = [arr valueForKeyPath:@&quot;@min.price&quot;];</span><br><span class="line">    NSLog(@&quot;min:%f&quot;,min.floatValue);</span><br><span class="line">    NSNumber* max = [arr valueForKeyPath:@&quot;@max.price&quot;];</span><br><span class="line">    NSLog(@&quot;max:%f&quot;,max.floatValue);</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;----------对象操作符----------&quot;);</span><br><span class="line">    NSArray* arrBooks = @[book1,book2,book3,book4, book5];</span><br><span class="line">    NSLog(@&quot;distinctUnionOfObjects&quot;);</span><br><span class="line">    NSArray* arrDistinct = [arrBooks valueForKeyPath:@&quot;@distinctUnionOfObjects.price&quot;];</span><br><span class="line">    for (NSNumber *price in arrDistinct) &#123;</span><br><span class="line">        NSLog(@&quot;%f&quot;,price.floatValue);</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;unionOfObjects&quot;);</span><br><span class="line">    NSArray* arrUnion = [arrBooks valueForKeyPath:@&quot;@unionOfObjects.price&quot;];</span><br><span class="line">    for (NSNumber *price in arrUnion) &#123;</span><br><span class="line">        NSLog(@&quot;%f&quot;,price.floatValue);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">---输出结果：---</span><br><span class="line">----------集合运算符----------</span><br><span class="line">sum:100.000000</span><br><span class="line">avg:25.000000</span><br><span class="line">count:4.000000</span><br><span class="line">min:10.000000</span><br><span class="line">max:40.000000</span><br><span class="line"></span><br><span class="line">----------对象操作符----------</span><br><span class="line">distinctUnionOfObjects</span><br><span class="line">10.000000</span><br><span class="line">20.000000</span><br><span class="line">30.000000</span><br><span class="line">40.000000</span><br><span class="line">unionOfObjects</span><br><span class="line">40.000000</span><br><span class="line">20.000000</span><br><span class="line">30.000000</span><br><span class="line">10.000000</span><br><span class="line">10.000000</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">@interface Book : NSObject</span><br><span class="line">@property(assign, nonatomic) NSInteger price;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation Book</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    Book *book1 = [Book new];</span><br><span class="line">    book1.price = 40;</span><br><span class="line">    Book *book2 = [Book new];</span><br><span class="line">    book2.price = 20;</span><br><span class="line">    Book *book3 = [Book new];</span><br><span class="line">    book3.price = 30;</span><br><span class="line">    Book *book4 = [Book new];</span><br><span class="line">    book4.price = 10;</span><br><span class="line">    // 价格重复的</span><br><span class="line">    Book *book5 = [Book new];</span><br><span class="line">    book5.price = 10;</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;----------集合运算符----------&quot;);</span><br><span class="line">    NSArray* arr = @[book1,book2,book3,book4];</span><br><span class="line">    NSNumber* sum = [arr valueForKeyPath:@&quot;@sum.price&quot;];</span><br><span class="line">    NSLog(@&quot;sum:%f&quot;,sum.floatValue);</span><br><span class="line">    NSNumber* avg = [arr valueForKeyPath:@&quot;@avg.price&quot;];</span><br><span class="line">    NSLog(@&quot;avg:%f&quot;,avg.floatValue);</span><br><span class="line">    NSNumber* count = [arr valueForKeyPath:@&quot;@count&quot;];</span><br><span class="line">    NSLog(@&quot;count:%f&quot;,count.floatValue);</span><br><span class="line">    NSNumber* min = [arr valueForKeyPath:@&quot;@min.price&quot;];</span><br><span class="line">    NSLog(@&quot;min:%f&quot;,min.floatValue);</span><br><span class="line">    NSNumber* max = [arr valueForKeyPath:@&quot;@max.price&quot;];</span><br><span class="line">    NSLog(@&quot;max:%f&quot;,max.floatValue);</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;----------对象操作符----------&quot;);</span><br><span class="line">    NSArray* arrBooks = @[book1,book2,book3,book4, book5];</span><br><span class="line">    NSLog(@&quot;distinctUnionOfObjects&quot;);</span><br><span class="line">    NSArray* arrDistinct = [arrBooks valueForKeyPath:@&quot;@distinctUnionOfObjects.price&quot;];</span><br><span class="line">    for (NSNumber *price in arrDistinct) &#123;</span><br><span class="line">        NSLog(@&quot;%f&quot;,price.floatValue);</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;unionOfObjects&quot;);</span><br><span class="line">    NSArray* arrUnion = [arrBooks valueForKeyPath:@&quot;@unionOfObjects.price&quot;];</span><br><span class="line">    for (NSNumber *price in arrUnion) &#123;</span><br><span class="line">        NSLog(@&quot;%f&quot;,price.floatValue);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">---输出结果：---</span><br><span class="line">----------集合运算符----------</span><br><span class="line">sum:100.000000</span><br><span class="line">avg:25.000000</span><br><span class="line">count:4.000000</span><br><span class="line">min:10.000000</span><br><span class="line">max:40.000000</span><br><span class="line"></span><br><span class="line">----------对象操作符----------</span><br><span class="line">distinctUnionOfObjects</span><br><span class="line">10.000000</span><br><span class="line">20.000000</span><br><span class="line">30.000000</span><br><span class="line">40.000000</span><br><span class="line">unionOfObjects</span><br><span class="line">40.000000</span><br><span class="line">20.000000</span><br><span class="line">30.000000</span><br><span class="line">10.000000</span><br><span class="line">10.000000</span><br></pre></td></tr></table></figure>
+
 <h2 id="三、实际应用"><a href="#三、实际应用" class="headerlink" title="三、实际应用"></a>三、实际应用</h2><h4 id="1、访问私有变量"><a href="#1、访问私有变量" class="headerlink" title="1、访问私有变量"></a>1、访问私有变量</h4><p>对于类里的私有属性，Objective-C是无法直接访问的，但是KVC是可以的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@interface Book : NSObject</span><br><span class="line">&#123;</span><br><span class="line">    NSString * owner;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    Book *book = [Book new];</span><br><span class="line">    </span><br><span class="line">    // 这种访问方式，会直接报错。因为owner是私有属性。</span><br><span class="line">    // book.owner = @&quot;tao&quot;; </span><br><span class="line">    </span><br><span class="line">    // 利用KVC访问到私有变量</span><br><span class="line">    [book setValue:@&quot;tao&quot; forKey:@&quot;owner&quot;];</span><br><span class="line">    NSLog([book valueForKey:@&quot;owner&quot;]); // 输出 tao</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@interface Book : NSObject</span><br><span class="line">&#123;</span><br><span class="line">    NSString * owner;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    Book *book = [Book new];</span><br><span class="line">    </span><br><span class="line">    // 这种访问方式，会直接报错。因为owner是私有属性。</span><br><span class="line">    // book.owner = @&quot;tao&quot;; </span><br><span class="line">    </span><br><span class="line">    // 利用KVC访问到私有变量</span><br><span class="line">    [book setValue:@&quot;tao&quot; forKey:@&quot;owner&quot;];</span><br><span class="line">    NSLog([book valueForKey:@&quot;owner&quot;]); // 输出 tao</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
 <h4 id="2、修改一些控件的内部属性"><a href="#2、修改一些控件的内部属性" class="headerlink" title="2、修改一些控件的内部属性"></a>2、修改一些控件的内部属性</h4><p>在开发中，我们常常需要对一些控件的某些属性做修改，但是很多UI控件都由很多内部UI控件组合而成的，系统并没有提供这访问这些控件的API，这样我们就无法正常地访问和修改这些控件的样式。但是，KVC可以帮我们解决大部分这种类型的问题。</p>
-<img src="/2017/12/01/KVC学习笔记/Modify_Properties.png">
-<h4 id="3、结合Runtime打造字典转model"><a href="#3、结合Runtime打造字典转model" class="headerlink" title="3、结合Runtime打造字典转model"></a>3、结合Runtime打造字典转model</h4><p>可以利用KVC和运行时将字典转换为模型。<br>具体代码可以<a href="https://github.com/CoderJTao/BaseModel" target="_blank" rel="noopener">我的Github</a>上查看。</p>
-<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p>上面的几点就是本人对KVC学习的一些记录，如有不妥之处，请大家多多指正。关于KVC更多更详细的资料，大家可以去到官方文档<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/index.html" target="_blank" rel="noopener">Key-Value Coding Programming Guide</a>查看学习。</p>
+<img src="/2017/12/01/KVC%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Modify_Properties.png" class="">
 
-      
+
+<h4 id="3、结合Runtime打造字典转model"><a href="#3、结合Runtime打造字典转model" class="headerlink" title="3、结合Runtime打造字典转model"></a>3、结合Runtime打造字典转model</h4><p>可以利用KVC和运行时将字典转换为模型。<br>具体代码可以<a target="_blank" rel="noopener" href="https://github.com/CoderJTao/BaseModel">我的Github</a>上查看。</p>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p>上面的几点就是本人对KVC学习的一些记录，如有不妥之处，请大家多多指正。关于KVC更多更详细的资料，大家可以去到官方文档<a target="_blank" rel="noopener" href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/index.html">Key-Value Coding Programming Guide</a>查看学习。</p>
+
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/11/18/Block学习笔记/" rel="next" title="Block学习笔记">
-                <i class="fa fa-chevron-left"></i> Block学习笔记
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/10/KVO学习笔记/" rel="prev" title="KVO学习笔记">
-                KVO学习笔记 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/11/18/Block%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="Block学习笔记">
+                  <i class="fa fa-chevron-left"></i> Block学习笔记
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概述"><span class="nav-number">2.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、使用"><span class="nav-number">3.</span> <span class="nav-text">二、使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、基本使用"><span class="nav-number">3.0.1.</span> <span class="nav-text">1、基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、底层执行机制"><span class="nav-number">3.0.2.</span> <span class="nav-text">2、底层执行机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、键值验证"><span class="nav-number">3.0.3.</span> <span class="nav-text">3、键值验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、不存在的key及nil值处理"><span class="nav-number">3.0.4.</span> <span class="nav-text">4、不存在的key及nil值处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、一些函数操作"><span class="nav-number">3.0.5.</span> <span class="nav-text">5、一些函数操作</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#三、实际应用"><span class="nav-number">4.</span> <span class="nav-text">三、实际应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、访问私有变量"><span class="nav-number">4.0.1.</span> <span class="nav-text">1、访问私有变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、修改一些控件的内部属性"><span class="nav-number">4.0.2.</span> <span class="nav-text">2、修改一些控件的内部属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、结合Runtime打造字典转model"><span class="nav-number">4.0.3.</span> <span class="nav-text">3、结合Runtime打造字典转model</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、总结"><span class="nav-number">5.</span> <span class="nav-text">四、总结</span></a></li></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2017/12/10/KVO%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="KVO学习笔记">
+                  KVO学习笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -771,34 +392,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

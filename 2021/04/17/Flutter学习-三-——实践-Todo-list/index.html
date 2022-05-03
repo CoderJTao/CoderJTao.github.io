@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="理论学习总是比较枯燥的，而且新接触一个东西的时候，如果都是理论学习很难让自己获得成就感和满足感，这样就很坚持下去了。 现在开始，来一个小小的实践练习，当将理论知识变成能看得到的画面的时候，成就感油然而生，给自己的理论学习增加动力。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter学习(三)——实践 Todo-list（1）">
+<meta property="og:url" content="http://yoursite.com/2021/04/17/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%89-%E2%80%94%E2%80%94%E5%AE%9E%E8%B7%B5-Todo-list/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="理论学习总是比较枯燥的，而且新接触一个东西的时候，如果都是理论学习很难让自己获得成就感和满足感，这样就很坚持下去了。 现在开始，来一个小小的实践练习，当将理论知识变成能看得到的画面的时候，成就感油然而生，给自己的理论学习增加动力。">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2021/04/17/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%89-%E2%80%94%E2%80%94%E5%AE%9E%E8%B7%B5-Todo-list/demo.gif">
+<meta property="article:published_time" content="2021-04-16T16:41:05.000Z">
+<meta property="article:modified_time" content="2022-04-21T12:08:29.593Z">
+<meta property="article:author" content="JTao">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/04/17/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%89-%E2%80%94%E2%80%94%E5%AE%9E%E8%B7%B5-Todo-list/demo.gif">
+
+
+<link rel="canonical" href="http://yoursite.com/2021/04/17/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%89-%E2%80%94%E2%80%94%E5%AE%9E%E8%B7%B5-Todo-list/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2021/04/17/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%89-%E2%80%94%E2%80%94%E5%AE%9E%E8%B7%B5-Todo-list/","path":"2021/04/17/Flutter学习-三-——实践-Todo-list/","title":"Flutter学习(三)——实践 Todo-list（1）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Flutter学习(三)——实践 Todo-list（1） | 江涛的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">数据准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%88%97%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">创建列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%98%BE%E7%A4%BA%E7%9A%84-Item"><span class="nav-number">4.</span> <span class="nav-text">创建显示的 Item</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E-Todo"><span class="nav-number">5.</span> <span class="nav-text">新增 Todo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E8%A3%85%E5%AE%8C%E6%88%90"><span class="nav-number">6.</span> <span class="nav-text">组装完成</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/04/17/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%89-%E2%80%94%E2%80%94%E5%AE%9E%E8%B7%B5-Todo-list/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flutter学习(三)——实践 Todo-list（1） | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter学习(三)——实践 Todo-list（1）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-17 00:41:05" itemprop="dateCreated datePublished" datetime="2021-04-17T00:41:05+08:00">2021-04-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-04-21 20:08:29" itemprop="dateModified" datetime="2022-04-21T20:08:29+08:00">2022-04-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Flutter-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">Flutter 学习之路</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>理论学习总是比较枯燥的，而且新接触一个东西的时候，如果都是理论学习很难让自己获得成就感和满足感，这样就很坚持下去了。</p>
+<p>现在开始，来一个小小的实践练习，当将理论知识变成能看得到的画面的时候，成就感油然而生，给自己的理论学习增加动力。</p>
+<img src="/2021/04/17/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%89-%E2%80%94%E2%80%94%E5%AE%9E%E8%B7%B5-Todo-list/demo.gif" class="" title="示例图">
+
+<span id="more"></span>
+
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>在终端执行命令，创建初始项目：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter create todolist</span><br></pre></td></tr></table></figure>
+<p>找到 main.dart 文件，将其中 _MyHomePageState 代码删减：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class _MyHomePageState extends State&lt;MyHomePage&gt; &#123;</span><br><span class="line">  void _incrementTodo() &#123;</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      _counter++;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(widget.title),</span><br><span class="line">      ),</span><br><span class="line">      body: Text(&quot;Placeholder&quot;),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: _incrementTodo,</span><br><span class="line">        tooltip: &#x27;Increment&#x27;,</span><br><span class="line">        child: const Icon(Icons.add),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h4><p>首先，我们需要每一行显示的数据，包含了：标题、描述和是否选中的状态三个数据。我们为此创建模型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class TodoModel &#123;</span><br><span class="line">  final String title;</span><br><span class="line">  final String subTitle;</span><br><span class="line">  bool isChecked;</span><br><span class="line"></span><br><span class="line">  TodoModel(&#123;</span><br><span class="line">    required this.title,</span><br><span class="line">    required this.subTitle,</span><br><span class="line">    this.isChecked = false</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后，再来一个数组容器装着前面创建的模型数据，给列表提供数据就可以了。</p>
+<blockquote>
+<p>变量以下划线 _ 开头，在 Dart 语言中使用下划线前缀标识符，会强制其变成私有的。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class _MyHomePageState extends State&lt;MyHomePage&gt; &#123;</span><br><span class="line"></span><br><span class="line">  final _todos = &lt;TodoModel&gt;[</span><br><span class="line">    TodoModel(title: &quot;Todo_list Title&quot;, subTitle: &quot;Todo_list Subtitle&quot;)</span><br><span class="line">  ]; </span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(widget.title),</span><br><span class="line">      ),</span><br><span class="line">      body: Text(&quot;Placeholder&quot;)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建列表"><a href="#创建列表" class="headerlink" title="创建列表"></a>创建列表</h4><p>现在需要创建主体的列表了，这里新建一个方法，用来返回列表 ListView 的 Widget。这里使用了 ListView.separated 构造器，方便创建每个条目之间的分割线。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Widget _buildList() &#123;</span><br><span class="line">    return ListView.separated(</span><br><span class="line">        separatorBuilder: (context, index) =&gt; const Divider(</span><br><span class="line">        thickness: 1,</span><br><span class="line">        height: 1,</span><br><span class="line">        color: Color.fromARGB(255, 232, 236, 236),</span><br><span class="line">        ),</span><br><span class="line">        itemCount: _todos.length,</span><br><span class="line">        itemBuilder: (context, i) &#123;</span><br><span class="line">            return _buildItem(_todos[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>itemBuilder 会根据传入的数量，从 0 开始迭代并调用 itemBuilder 属性中传入的函数。这个函数返回每一行显示的 Item。</p>
+<h4 id="创建显示的-Item"><a href="#创建显示的-Item" class="headerlink" title="创建显示的 Item"></a>创建显示的 Item</h4><p>同样的，新建一个方法 _buildItem 用来返回每一行 Item 显示的 Widget。这里 Todo 的显示样式，直接使用了系统提供的 CheckboxListTile 来显示。接下来开始编写这个函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">Widget _buildItem(TodoModel model) &#123;</span><br><span class="line">    return SizedBox(</span><br><span class="line">        height: 60,</span><br><span class="line">        child: CheckboxListTile(</span><br><span class="line">          value: model.isChecked, </span><br><span class="line">          title: Text(</span><br><span class="line">              model.title,</span><br><span class="line">              softWrap: false,</span><br><span class="line">              maxLines: 1,</span><br><span class="line">              overflow: TextOverflow.ellipsis,</span><br><span class="line">              style: const TextStyle(</span><br><span class="line">                color: Colors.black,</span><br><span class="line">                fontSize: 18,</span><br><span class="line">                fontWeight: FontWeight.w400</span><br><span class="line">              ),</span><br><span class="line">            ),</span><br><span class="line">          subtitle: Text(</span><br><span class="line">              model.subTitle,</span><br><span class="line">              softWrap: false,</span><br><span class="line">              maxLines: 1,</span><br><span class="line">              overflow: TextOverflow.ellipsis,</span><br><span class="line">              style: const TextStyle(</span><br><span class="line">                color: Colors.grey,</span><br><span class="line">                fontSize: 14,</span><br><span class="line">                fontWeight: FontWeight.normal</span><br><span class="line">              ),</span><br><span class="line">            ),</span><br><span class="line">          // activeColor: Colors.red,</span><br><span class="line">          dense: true,</span><br><span class="line">          isThreeLine: false,</span><br><span class="line">          controlAffinity: ListTileControlAffinity.leading,</span><br><span class="line">          onChanged: (value) &#123;</span><br><span class="line">            setState(() &#123;</span><br><span class="line">              model.isChecked = value!;</span><br><span class="line">            &#125;);</span><br><span class="line">            Future.delayed(const Duration(seconds: 1), ()&#123;</span><br><span class="line">              setState(() &#123;</span><br><span class="line">                _todos.remove(model);</span><br><span class="line">              &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">          &#125;</span><br><span class="line">        )    </span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 CheckboxListTile 中，需要显示的数据都是来源于 _todos 的模型数据。在 CheckboxListTile 的 onChanged 的方法中，更改了当前 model 的数据，并刷新当前页面显示状态。并利用 Future 的 delayed 方法，延时 1s 将当前 勾选的 Todo 从列表中删除。</p>
+<h4 id="新增-Todo"><a href="#新增-Todo" class="headerlink" title="新增 Todo"></a>新增 Todo</h4><p>这里直接使用项目初始化时，模板工程中的 FloatingActionButton 就可以了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">class _MyHomePageState extends State&lt;MyHomePage&gt; &#123;</span><br><span class="line"></span><br><span class="line">  final _todos = &lt;TodoModel&gt;[</span><br><span class="line">    TodoModel(title: &quot;Todo_list Title&quot;, subTitle: &quot;Todo_list Subtitle&quot;)</span><br><span class="line">  ]; </span><br><span class="line"></span><br><span class="line">  int _count = 0;</span><br><span class="line"></span><br><span class="line">  void _incrementTodo() &#123;</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      _counter++;</span><br><span class="line">      </span><br><span class="line">      // 将当前时间转化为字符串</span><br><span class="line">      var date = DateTime.now();</span><br><span class="line">      String createTime = &quot;$&#123;date.year.toString()&#125;-$&#123;date.month.toString()&#125;-$&#123;date.day.toString()&#125; $&#123;date.hour.toString()&#125;:$&#123;date.minute.toString()&#125;&quot;;</span><br><span class="line">      _todos.add(TodoModel(title: &quot;Todo_list Title - add $_count&quot;, subTitle: &quot;create at $createTime&quot;));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(widget.title),</span><br><span class="line">      ),</span><br><span class="line">      body: Text(&quot;Placeholder&quot;),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: _incrementTodo,</span><br><span class="line">        tooltip: &#x27;Increment&#x27;,</span><br><span class="line">        child: const Icon(Icons.add),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="组装完成"><a href="#组装完成" class="headerlink" title="组装完成"></a>组装完成</h4><p>更新一下 _MyHomePageState 的 build 方法。将新建的列表创建方法传入。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class _MyHomePageState extends State&lt;MyHomePage&gt; &#123;</span><br><span class="line">  ...</span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(widget.title),</span><br><span class="line">      ),</span><br><span class="line">      body: _buildList(),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        onPressed: _incrementTodo,</span><br><span class="line">        tooltip: &#x27;Increment&#x27;,</span><br><span class="line">        child: const Icon(Icons.add),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>好了，现在所有步骤都已经完成了，保存并重新运行程序，就可以得到一个和开篇时一样的项目了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/28/Flutter%E5%AD%A6%E4%B9%A0-%E4%BA%8C-%E2%80%94%E2%80%94%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6%E5%92%8C%E6%89%8B%E5%8A%BF/" rel="prev" title="Flutter学习(二)——触摸事件和手势">
+                  <i class="fa fa-chevron-left"></i> Flutter学习(二)——触摸事件和手势
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/05/05/Flutter%E5%AD%A6%E4%B9%A0-%E5%9B%9B-%E2%80%94%E2%80%94%E8%B7%AF%E7%94%B1%E5%92%8C%E5%AF%BC%E8%88%AA/" rel="next" title="Flutter学习(四)——路由和导航">
+                  Flutter学习(四)——路由和导航 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

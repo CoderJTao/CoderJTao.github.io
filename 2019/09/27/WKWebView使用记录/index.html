@@ -1,346 +1,239 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="WKWebView 创建 WKWebView 代理方法介绍 WKWebView 与 H5 交互 js call native native call js   WKWebView 补充设置  现在在做的 App 中有很多页面都需要动态的需求，项目中大量使用了 WKWebView 老加载 h5 页面，这篇文章记录下 WKWebView 的使用。 WKWebView 可将网页处理限制在App的网页视">
+    <meta name="description" content="WKWebView 创建 WKWebView 代理方法介绍 WKWebView 与 H5 交互 js call native native call js   WKWebView 补充设置  现在在做的 App 中有很多页面都需要动态的需求，项目中大量使用了 WKWebView 老加载 h5 页面，这篇文章记录下 WKWebView 的使用。 WKWebView 可将网页处理限制在App的网页视">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WKWebView使用记录">
-<meta property="og:url" content="http://yoursite.com/2019/09/27/WKWebView使用记录/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/09/27/WKWebView%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="WKWebView 创建 WKWebView 代理方法介绍 WKWebView 与 H5 交互 js call native native call js   WKWebView 补充设置  现在在做的 App 中有很多页面都需要动态的需求，项目中大量使用了 WKWebView 老加载 h5 页面，这篇文章记录下 WKWebView 的使用。 WKWebView 可将网页处理限制在App的网页视">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-29T05:57:22.000Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-09-27T15:47:24.000Z">
+<meta property="article:modified_time" content="2020-07-29T05:57:22.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WKWebView使用记录">
-<meta name="twitter:description" content="WKWebView 创建 WKWebView 代理方法介绍 WKWebView 与 H5 交互 js call native native call js   WKWebView 补充设置  现在在做的 App 中有很多页面都需要动态的需求，项目中大量使用了 WKWebView 老加载 h5 页面，这篇文章记录下 WKWebView 的使用。 WKWebView 可将网页处理限制在App的网页视">
+
+
+<link rel="canonical" href="http://yoursite.com/2019/09/27/WKWebView%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2019/09/27/WKWebView%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/","path":"2019/09/27/WKWebView使用记录/","title":"WKWebView使用记录"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2019/09/27/WKWebView使用记录/">
-
-
-
-
-
-  <title>WKWebView使用记录 | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>WKWebView使用记录 | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WKWebView-%E5%88%9B%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">WKWebView 创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WKWebView-%E4%BB%A3%E7%90%86%E6%96%B9%E6%B3%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">WKWebView 代理方法介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WKNavigationDelegate"><span class="nav-number">2.0.1.</span> <span class="nav-text">WKNavigationDelegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WKUIDelegate"><span class="nav-number">2.0.2.</span> <span class="nav-text">WKUIDelegate</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WKWebView-%E4%B8%8E-H5-%E4%BA%A4%E4%BA%92"><span class="nav-number">3.</span> <span class="nav-text">WKWebView 与 H5 交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#js-%E4%B8%8E-OC-%E4%BA%A4%E4%BA%92"><span class="nav-number">3.1.</span> <span class="nav-text">js 与 OC 交互</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%A6%E6%88%AA-url"><span class="nav-number">3.1.0.1.</span> <span class="nav-text">拦截 url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WKScriptMessageHandler"><span class="nav-number">3.1.0.2.</span> <span class="nav-text">WKScriptMessageHandler</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OC-%E4%B8%8E-js-%E4%BA%A4%E4%BA%92"><span class="nav-number">3.2.</span> <span class="nav-text">OC 与 js 交互</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WKWebView-%E8%A1%A5%E5%85%85%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">WKWebView 补充设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-UserAgent"><span class="nav-number">4.0.1.</span> <span class="nav-text">设置 UserAgent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-cookie"><span class="nav-number">4.0.2.</span> <span class="nav-text">设置 cookie</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/27/WKWebView使用记录/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/27/WKWebView%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="WKWebView使用记录 | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WKWebView使用记录
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">WKWebView使用记录</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-27T23:47:24+08:00">
-                2019-09-27
-              </time>
-            
+      <time title="Created: 2019-09-27 23:47:24" itemprop="dateCreated datePublished" datetime="2019-09-27T23:47:24+08:00">2019-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-07-29 13:57:22" itemprop="dateModified" datetime="2020-07-29T13:57:22+08:00">2020-07-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">iOS学习记录</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS学习记录/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS学习记录</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         <ul>
 <li><a href="#create">WKWebView 创建</a></li>
 <li><a href="#delegate">WKWebView 代理方法介绍</a></li>
@@ -355,11 +248,13 @@
 <p>WKWebView 可将网页处理限制在App的网页视图中，从而确保不安全的网站内容不会影响到 App 的其他部分，并且苹果表示2020年12月起将不再接受使用 UIWebView 的 App 更新。</p>
 <p>苹果爸爸的推动加上 WKWebView 本身相较于 UIWebView 有许多优点：内存开销比 UIWebView 小很多，支持了更多的 HTML5 特性，流程粒度上更加细致，可以在请求时候询问是否请求数据还可以在返回数据后询问是否加载数据，在返回错误时候也更加细致。</p>
 <p>所以，好好了解一下 WKWebView 是很有必要的。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <p><span id="create"></span></p>
-<h1 id="WKWebView-创建"><a href="#WKWebView-创建" class="headerlink" title="WKWebView 创建"></a>WKWebView 创建</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">- (WKWebView *)webView &#123;</span><br><span class="line">    if (!_webView) &#123;</span><br><span class="line">        WKWebViewConfiguration* webViewConfig = [[WKWebViewConfiguration alloc] init];</span><br><span class="line">        webViewConfig.allowsInlineMediaPlayback = YES;</span><br><span class="line"></span><br><span class="line">        _webView = [[WKWebView alloc] initWithFrame:self.view.bounds];</span><br><span class="line">        _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;</span><br><span class="line">        if (@available(iOS 11.0, *)) &#123;</span><br><span class="line">            _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;</span><br><span class="line">        &#125;</span><br><span class="line">        _webView.backgroundColor = [UIColor whiteColor];</span><br><span class="line">        _webView.allowsBackForwardNavigationGestures = YES;</span><br><span class="line">        _webView.scrollView.contentOffset = CGPointZero;</span><br><span class="line">        _webView.UIDelegate = self;</span><br><span class="line">        _webView.navigationDelegate = self;</span><br><span class="line">        </span><br><span class="line">        [_webView addObserver:self forKeyPath:@&quot;canGoBack&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];</span><br><span class="line">        [_webView addObserver:self forKeyPath:@&quot;estimatedProgress&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];</span><br><span class="line">        [_webView addObserver:self forKeyPath:@&quot;title&quot; options:NSKeyValueObservingOptionNew context:NULL];</span><br><span class="line">    &#125;</span><br><span class="line">    return _webView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath</span><br><span class="line">                      ofObject:(id)object</span><br><span class="line">                        change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change</span><br><span class="line">                       context:(void *)context &#123;</span><br><span class="line">    if ([keyPath isEqualToString:@&quot;canGoBack&quot;]) &#123;</span><br><span class="line">        /// 导航栏返回和关闭按钮</span><br><span class="line">    &#125; else if ([keyPath isEqualToString:@&quot;estimatedProgress&quot;]) &#123;</span><br><span class="line">        /// 加载进度条</span><br><span class="line">    &#125; else if ([keyPath isEqualToString:@&quot;title&quot;]) &#123;</span><br><span class="line">        /// 导航栏标题  </span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="WKWebView-创建"><a href="#WKWebView-创建" class="headerlink" title="WKWebView 创建"></a>WKWebView 创建</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">- (WKWebView *)webView &#123;</span><br><span class="line">    if (!_webView) &#123;</span><br><span class="line">        WKWebViewConfiguration* webViewConfig = [[WKWebViewConfiguration alloc] init];</span><br><span class="line">        webViewConfig.allowsInlineMediaPlayback = YES;</span><br><span class="line"></span><br><span class="line">        _webView = [[WKWebView alloc] initWithFrame:self.view.bounds];</span><br><span class="line">        _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;</span><br><span class="line">        if (@available(iOS 11.0, *)) &#123;</span><br><span class="line">            _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;</span><br><span class="line">        &#125;</span><br><span class="line">        _webView.backgroundColor = [UIColor whiteColor];</span><br><span class="line">        _webView.allowsBackForwardNavigationGestures = YES;</span><br><span class="line">        _webView.scrollView.contentOffset = CGPointZero;</span><br><span class="line">        _webView.UIDelegate = self;</span><br><span class="line">        _webView.navigationDelegate = self;</span><br><span class="line">        </span><br><span class="line">        [_webView addObserver:self forKeyPath:@&quot;canGoBack&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];</span><br><span class="line">        [_webView addObserver:self forKeyPath:@&quot;estimatedProgress&quot; options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];</span><br><span class="line">        [_webView addObserver:self forKeyPath:@&quot;title&quot; options:NSKeyValueObservingOptionNew context:NULL];</span><br><span class="line">    &#125;</span><br><span class="line">    return _webView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath</span><br><span class="line">                      ofObject:(id)object</span><br><span class="line">                        change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change</span><br><span class="line">                       context:(void *)context &#123;</span><br><span class="line">    if ([keyPath isEqualToString:@&quot;canGoBack&quot;]) &#123;</span><br><span class="line">        /// 导航栏返回和关闭按钮</span><br><span class="line">    &#125; else if ([keyPath isEqualToString:@&quot;estimatedProgress&quot;]) &#123;</span><br><span class="line">        /// 加载进度条</span><br><span class="line">    &#125; else if ([keyPath isEqualToString:@&quot;title&quot;]) &#123;</span><br><span class="line">        /// 导航栏标题  </span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>webViewConfig.allowsInlineMediaPlayback = YES; 这个属性是支持视频页面内播放，不设置这个属性会导致页面内的视频都是打开视频播放器全屏播放的，使用 UIWebview 时候没有这个问题。</li>
+<li>webViewConfig.allowsInlineMediaPlayback &#x3D; YES; 这个属性是支持视频页面内播放，不设置这个属性会导致页面内的视频都是打开视频播放器全屏播放的，使用 UIWebview 时候没有这个问题。</li>
 <li>KVO 添加了对 WKWebView 几个属性的观察：<ul>
 <li>title：网页标题，设置到原生的导航栏上。 </li>
 <li>estimatedProgress：网页的加载进度，可以自制加载进度条。</li>
@@ -371,376 +266,100 @@
 <h1 id="WKWebView-代理方法介绍"><a href="#WKWebView-代理方法介绍" class="headerlink" title="WKWebView 代理方法介绍"></a>WKWebView 代理方法介绍</h1><p>创建 WKWebView 时，遵守了两个代理，这里分别介绍一下代理的常用方法。</p>
 <p>WKNavigationDelegate 主要是处理一些跳转、加载处理操作，WKUIDelegate 主要处理 JS 脚本，确认框，警告框等。</p>
 <h3 id="WKNavigationDelegate"><a href="#WKNavigationDelegate" class="headerlink" title="WKNavigationDelegate"></a>WKNavigationDelegate</h3><p>常用代理方法介绍：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/** 开始请求服务器并加载页面 */</span><br><span class="line">- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation;</span><br><span class="line"></span><br><span class="line">/** 开始渲染页面时调用，响应的内容到达主页面的时候响应,刚准备开始渲染页面*/</span><br><span class="line">- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation;</span><br><span class="line"></span><br><span class="line">/** 页面渲染完成后调用 */</span><br><span class="line">- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation;</span><br><span class="line"></span><br><span class="line">/** 页面加载出错调用 */</span><br><span class="line">- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error;</span><br><span class="line"></span><br><span class="line">/** 请求服务器发生错误 (如果是goBack时，当前页面也会回调这个方法，原因是NSURLErrorCancelled取消加载) */</span><br><span class="line">- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error;</span><br><span class="line"></span><br><span class="line">/** 接收到服务器跳转请求即服务重定向时之后调用 */</span><br><span class="line">- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation;</span><br><span class="line"></span><br><span class="line">/** 是否允许页面加载 */</span><br><span class="line">- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler;</span><br><span class="line"></span><br><span class="line">/** 收到服务器响应后，决定是否跳转。 当实现了这个方法，上一个方法将不会回调 */</span><br><span class="line">- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/** 开始请求服务器并加载页面 */</span><br><span class="line">- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation;</span><br><span class="line"></span><br><span class="line">/** 开始渲染页面时调用，响应的内容到达主页面的时候响应,刚准备开始渲染页面*/</span><br><span class="line">- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation;</span><br><span class="line"></span><br><span class="line">/** 页面渲染完成后调用 */</span><br><span class="line">- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation;</span><br><span class="line"></span><br><span class="line">/** 页面加载出错调用 */</span><br><span class="line">- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error;</span><br><span class="line"></span><br><span class="line">/** 请求服务器发生错误 (如果是goBack时，当前页面也会回调这个方法，原因是NSURLErrorCancelled取消加载) */</span><br><span class="line">- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error;</span><br><span class="line"></span><br><span class="line">/** 接收到服务器跳转请求即服务重定向时之后调用 */</span><br><span class="line">- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation;</span><br><span class="line"></span><br><span class="line">/** 是否允许页面加载 */</span><br><span class="line">- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler;</span><br><span class="line"></span><br><span class="line">/** 收到服务器响应后，决定是否跳转。 当实现了这个方法，上一个方法将不会回调 */</span><br><span class="line">- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler;</span><br></pre></td></tr></table></figure>
+
 <p>其中 decidePolicyForNavigationAction 相当于 uiwebview的shouldStartLoadWithRequest 方法，在这个方法里可以对页面跳转进行拦截处理，decisionHandler(WKNavigationActionPolicyAllow) 是允许跳转，decisionHandler(WKNavigationActionPolicyCancel) 是取消跳转，注意当处理情况比较多时候执行完 decisionHandler() 这个回调后要加上 return，否则会引起崩溃。</p>
 <h3 id="WKUIDelegate"><a href="#WKUIDelegate" class="headerlink" title="WKUIDelegate"></a>WKUIDelegate</h3><p>常用代理方法介绍：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> /   *  web界面中有弹出警告框时调用</span><br><span class="line">     *</span><br><span class="line">     *  @param webView           实现该代理的webview</span><br><span class="line">     *  @param message           警告框中的内容</span><br><span class="line">     *  @param completionHandler 警告框消失调用</span><br><span class="line">     */</span><br><span class="line">- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler;</span><br><span class="line"></span><br><span class="line">/** 输入框 */</span><br><span class="line">- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable result))completionHandler;</span><br><span class="line"></span><br><span class="line">/** 确认框 */</span><br><span class="line">- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler;</span><br><span class="line"></span><br><span class="line">/** 创建一个新的webView,可以解决点击内部链接没有反应问题 */</span><br><span class="line">- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> /   *  web界面中有弹出警告框时调用</span><br><span class="line">     *</span><br><span class="line">     *  @param webView           实现该代理的webview</span><br><span class="line">     *  @param message           警告框中的内容</span><br><span class="line">     *  @param completionHandler 警告框消失调用</span><br><span class="line">     */</span><br><span class="line">- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler;</span><br><span class="line"></span><br><span class="line">/** 输入框 */</span><br><span class="line">- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable result))completionHandler;</span><br><span class="line"></span><br><span class="line">/** 确认框 */</span><br><span class="line">- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler;</span><br><span class="line"></span><br><span class="line">/** 创建一个新的webView,可以解决点击内部链接没有反应问题 */</span><br><span class="line">- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures;</span><br></pre></td></tr></table></figure>
+
 <p>这里注意下，在使用 WKWebview 时发现有些三方播放页面点击链接不跳转的问题，用户点击网页上的链接，需要打开新页面时，将先调用 decidePolicyForNavigationAction 方法，其中的 WKNavigationAction 有两个属性 sourceFrame 和 targetFrame，类型是 WKFrameInfo，WKFrameInfo 的 mainFrame 属性标记着这个 frame 是在主 frame 里还是新开一个 frame。<br>如果 targetFrame 的 mainFrame 属性为 NO，将会新开一个页面，WKWebView 遇到这种情况，将会调用它的  WKUIDelegate 代理中的 createWebViewWithConfiguration 方法，所以如果我们不实现这个协议就会出现点击无反应的情况，因此对于这种情况需要特殊处理，可以采取下边的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures &#123;</span><br><span class="line">    if (!navigationAction.targetFrame.isMainFrame) &#123;</span><br><span class="line">        [webView loadRequest:navigationAction.request];</span><br><span class="line">    &#125;</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures &#123;</span><br><span class="line">    if (!navigationAction.targetFrame.isMainFrame) &#123;</span><br><span class="line">        [webView loadRequest:navigationAction.request];</span><br><span class="line">    &#125;</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>相当于放弃原来页面直接打开新的页面。</p>
 <p><span id="native_h5"></span></p>
 <h1 id="WKWebView-与-H5-交互"><a href="#WKWebView-与-H5-交互" class="headerlink" title="WKWebView 与 H5 交互"></a>WKWebView 与 H5 交互</h1><p><span id="jscalln"></span></p>
 <h2 id="js-与-OC-交互"><a href="#js-与-OC-交互" class="headerlink" title="js 与 OC 交互"></a>js 与 OC 交互</h2><p>js 向 OC 传值的方式有两种：</p>
 <h4 id="拦截-url"><a href="#拦截-url" class="headerlink" title="拦截 url"></a>拦截 url</h4><p>可以通过拦截 url 中的字段来进行处理，有些情况下通过 url 传参数比较方便，可以及时处理参数减少打开 h5 页面的延迟，但是需要视具体业务逻辑来处理。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler &#123;</span><br><span class="line">    NSURL *url = navigationAction.request.URL;</span><br><span class="line">    if ([url.scheme isEqualToString:@&quot;should_get_param&quot;]) &#123;</span><br><span class="line">     // 做截取参数的操作</span><br><span class="line">     decisionHandler(WKNavigationActionPolicyAllow);</span><br><span class="line">      return;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">     //do other things。。。</span><br><span class="line">     decisionHandler(WKNavigationActionPolicyAllow);</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler &#123;</span><br><span class="line">    NSURL *url = navigationAction.request.URL;</span><br><span class="line">    if ([url.scheme isEqualToString:@&quot;should_get_param&quot;]) &#123;</span><br><span class="line">     // 做截取参数的操作</span><br><span class="line">     decisionHandler(WKNavigationActionPolicyAllow);</span><br><span class="line">      return;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">     //do other things。。。</span><br><span class="line">     decisionHandler(WKNavigationActionPolicyAllow);</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h4 id="WKScriptMessageHandler"><a href="#WKScriptMessageHandler" class="headerlink" title="WKScriptMessageHandler"></a>WKScriptMessageHandler</h4><p>使用 WKScriptMessageHandler 代理方法，然后和前端同学约定好调用方法的 name，在创建 webView 时候添加监听。例如：webCallNative。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// webView 设置时，添加监听</span><br><span class="line">WKUserContentController *userContent = self.webView.configuration.userContentController;</span><br><span class="line"></span><br><span class="line">[userContent addScriptMessageHandler:self.messageHandler name:@&quot;webCallNative&quot;];</span><br><span class="line"></span><br><span class="line">// 在 WKScriptMessageHandler 的代理方法中实现逻辑</span><br><span class="line">- (void)userContentController:(WKUserContentController *)userContentController</span><br><span class="line">      didReceiveScriptMessage:(WKScriptMessage *)message &#123;</span><br><span class="line">    NSLog(@&quot;[WebView] : H5对客户端发起调用 name : %@, body : %@&quot;, message.name, message.body);</span><br><span class="line">    </span><br><span class="line">    if ([message.name isEqualToString:@&quot;jsCallOC&quot;] &amp;&amp; [message.body isKindOfClass:[NSString class]]) &#123;</span><br><span class="line">        NSDictionary *result = [message.body JSONDictionary];</span><br><span class="line">        NSString *value = [result stringOrEmptyStringForKey:@&quot;value&quot;]; //value为h5传过来的值</span><br><span class="line">        // 得到 js 传来的数据</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里添加监听时，我们传入的 handler 是一个我们自己定义的一个 handler，这里的操作其实是为了避免 WKWebView 的内存泄漏问题。可以参考 <a href="https://stackoverflow.com/questions/26383031/wkwebview-causes-my-view-controller-to-leak" target="_blank" rel="noopener">这篇文章</a>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// webView 设置时，添加监听</span><br><span class="line">WKUserContentController *userContent = self.webView.configuration.userContentController;</span><br><span class="line"></span><br><span class="line">[userContent addScriptMessageHandler:self.messageHandler name:@&quot;webCallNative&quot;];</span><br><span class="line"></span><br><span class="line">// 在 WKScriptMessageHandler 的代理方法中实现逻辑</span><br><span class="line">- (void)userContentController:(WKUserContentController *)userContentController</span><br><span class="line">      didReceiveScriptMessage:(WKScriptMessage *)message &#123;</span><br><span class="line">    NSLog(@&quot;[WebView] : H5对客户端发起调用 name : %@, body : %@&quot;, message.name, message.body);</span><br><span class="line">    </span><br><span class="line">    if ([message.name isEqualToString:@&quot;jsCallOC&quot;] &amp;&amp; [message.body isKindOfClass:[NSString class]]) &#123;</span><br><span class="line">        NSDictionary *result = [message.body JSONDictionary];</span><br><span class="line">        NSString *value = [result stringOrEmptyStringForKey:@&quot;value&quot;]; //value为h5传过来的值</span><br><span class="line">        // 得到 js 传来的数据</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里添加监听时，我们传入的 handler 是一个我们自己定义的一个 handler，这里的操作其实是为了避免 WKWebView 的内存泄漏问题。可以参考 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/26383031/wkwebview-causes-my-view-controller-to-leak">这篇文章</a>。</p>
 <p>这里的 handler 是我们自定义的一个 WeakScriptMessageHandler，它实现了 WKScriptMessageHandler 协议。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// MARK : 防止 WKUserContentController 注入 JS 产生内存泄漏</span><br><span class="line">@interface WeakScriptMessageHandler : NSObject &lt;WKScriptMessageHandler&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, weak) id&lt;WKScriptMessageHandler&gt; scriptDelegate;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithDelegate:(id&lt;WKScriptMessageHandler&gt;)scriptDelegate;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// MARK : 实现</span><br><span class="line">@implementation WeakScriptMessageHandler</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithDelegate:(id&lt;WKScriptMessageHandler&gt;)scriptDelegate &#123;</span><br><span class="line">    if (self = [super init]) &#123;</span><br><span class="line">        _scriptDelegate = scriptDelegate;</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - WKScriptMessageHandler</span><br><span class="line">- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message &#123;</span><br><span class="line">    [self.scriptDelegate userContentController:userContentController didReceiveScriptMessage:message];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// MARK : 防止 WKUserContentController 注入 JS 产生内存泄漏</span><br><span class="line">@interface WeakScriptMessageHandler : NSObject &lt;WKScriptMessageHandler&gt;</span><br><span class="line"></span><br><span class="line">@property (nonatomic, weak) id&lt;WKScriptMessageHandler&gt; scriptDelegate;</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithDelegate:(id&lt;WKScriptMessageHandler&gt;)scriptDelegate;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// MARK : 实现</span><br><span class="line">@implementation WeakScriptMessageHandler</span><br><span class="line"></span><br><span class="line">- (instancetype)initWithDelegate:(id&lt;WKScriptMessageHandler&gt;)scriptDelegate &#123;</span><br><span class="line">    if (self = [super init]) &#123;</span><br><span class="line">        _scriptDelegate = scriptDelegate;</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - WKScriptMessageHandler</span><br><span class="line">- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message &#123;</span><br><span class="line">    [self.scriptDelegate userContentController:userContentController didReceiveScriptMessage:message];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
 <p>需要注意的是，利用 WeakScriptMessageHandler 我们可以正常释放承载 webView 的控制器了，在控制器的 dealloc 方法中，我们需要对 WeakScriptMessageHandler 实例进行释放。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">- (void)dealloc &#123;</span><br><span class="line">    [self.webView removeObserver:self forKeyPath:@&quot;title&quot;];</span><br><span class="line">    [self.webView removeObserver:self forKeyPath:@&quot;canGoBack&quot;];</span><br><span class="line">    [self.webView removeObserver:self forKeyPath:@&quot;estimatedProgress&quot;];</span><br><span class="line">    [self.webView.configuration.userContentController removeAllUserScripts];</span><br><span class="line">    [self.webView setNavigationDelegate:nil];</span><br><span class="line">    [self.webView setUIDelegate:nil];</span><br><span class="line">    NSLog(@&quot;&lt;%@&gt;被释放&quot;,NSStringFromClass(self.class));</span><br><span class="line">    </span><br><span class="line">    [self clearWebCache];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// MARK : 清理 webView 的缓存。可以按需清理</span><br><span class="line">- (void)clearWebCache &#123;</span><br><span class="line">    /*</span><br><span class="line">     在磁盘缓存上。</span><br><span class="line">     WKWebsiteDataTypeDiskCache,</span><br><span class="line">     </span><br><span class="line">     html离线Web应用程序缓存。</span><br><span class="line">     WKWebsiteDataTypeOfflineWebApplicationCache,</span><br><span class="line">     </span><br><span class="line">     内存缓存。</span><br><span class="line">     WKWebsiteDataTypeMemoryCache,</span><br><span class="line">     </span><br><span class="line">     本地存储。</span><br><span class="line">     WKWebsiteDataTypeLocalStorage,</span><br><span class="line">     </span><br><span class="line">     Cookies</span><br><span class="line">     WKWebsiteDataTypeCookies,</span><br><span class="line">     </span><br><span class="line">     会话存储</span><br><span class="line">     WKWebsiteDataTypeSessionStorage,</span><br><span class="line">     </span><br><span class="line">     IndexedDB数据库。</span><br><span class="line">     WKWebsiteDataTypeIndexedDBDatabases,</span><br><span class="line">     </span><br><span class="line">     查询数据库。</span><br><span class="line">     WKWebsiteDataTypeWebSQLDatabases</span><br><span class="line">     */</span><br><span class="line">    </span><br><span class="line">    //allWebsiteDataTypes清除所有缓存</span><br><span class="line">    NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];</span><br><span class="line">    NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];</span><br><span class="line">    [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">- (void)dealloc &#123;</span><br><span class="line">    [self.webView removeObserver:self forKeyPath:@&quot;title&quot;];</span><br><span class="line">    [self.webView removeObserver:self forKeyPath:@&quot;canGoBack&quot;];</span><br><span class="line">    [self.webView removeObserver:self forKeyPath:@&quot;estimatedProgress&quot;];</span><br><span class="line">    [self.webView.configuration.userContentController removeAllUserScripts];</span><br><span class="line">    [self.webView setNavigationDelegate:nil];</span><br><span class="line">    [self.webView setUIDelegate:nil];</span><br><span class="line">    NSLog(@&quot;&lt;%@&gt;被释放&quot;,NSStringFromClass(self.class));</span><br><span class="line">    </span><br><span class="line">    [self clearWebCache];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// MARK : 清理 webView 的缓存。可以按需清理</span><br><span class="line">- (void)clearWebCache &#123;</span><br><span class="line">    /*</span><br><span class="line">     在磁盘缓存上。</span><br><span class="line">     WKWebsiteDataTypeDiskCache,</span><br><span class="line">     </span><br><span class="line">     html离线Web应用程序缓存。</span><br><span class="line">     WKWebsiteDataTypeOfflineWebApplicationCache,</span><br><span class="line">     </span><br><span class="line">     内存缓存。</span><br><span class="line">     WKWebsiteDataTypeMemoryCache,</span><br><span class="line">     </span><br><span class="line">     本地存储。</span><br><span class="line">     WKWebsiteDataTypeLocalStorage,</span><br><span class="line">     </span><br><span class="line">     Cookies</span><br><span class="line">     WKWebsiteDataTypeCookies,</span><br><span class="line">     </span><br><span class="line">     会话存储</span><br><span class="line">     WKWebsiteDataTypeSessionStorage,</span><br><span class="line">     </span><br><span class="line">     IndexedDB数据库。</span><br><span class="line">     WKWebsiteDataTypeIndexedDBDatabases,</span><br><span class="line">     </span><br><span class="line">     查询数据库。</span><br><span class="line">     WKWebsiteDataTypeWebSQLDatabases</span><br><span class="line">     */</span><br><span class="line">    </span><br><span class="line">    //allWebsiteDataTypes清除所有缓存</span><br><span class="line">    NSSet *websiteDataTypes = [WKWebsiteDataStore allWebsiteDataTypes];</span><br><span class="line">    NSDate *dateFrom = [NSDate dateWithTimeIntervalSince1970:0];</span><br><span class="line">    [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes modifiedSince:dateFrom completionHandler:^&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>js 端调用方法的方式：注意传值时候的JSON格式处理，处理不正确会出现传值失败无法调用成功的问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.webkit&amp;&amp;window.webkit.messageHandlers.webCallNative.postMessage(JSON.stringify(data));</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window.webkit&amp;&amp;window.webkit.messageHandlers.webCallNative.postMessage(JSON.stringify(data));</span><br></pre></td></tr></table></figure>
+
 <p><span id="ncalljs"></span></p>
-<h2 id="OC-与-js-交互"><a href="#OC-与-js-交互" class="headerlink" title="OC 与 js 交互"></a>OC 与 js 交互</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSString * NativeCallJs = [NSString stringWithFormat:@&quot;NativeCallJs(&apos;%@&apos;)&quot;, value]; //注意调用js方法传参数要加上单引号！！！</span><br><span class="line">[self.webView evaluateJavaScript:OCCallJs completionHandler:^(id result, NSError *error) &#123;</span><br><span class="line">                </span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h2 id="OC-与-js-交互"><a href="#OC-与-js-交互" class="headerlink" title="OC 与 js 交互"></a>OC 与 js 交互</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NSString * NativeCallJs = [NSString stringWithFormat:@&quot;NativeCallJs(&#x27;%@&#x27;)&quot;, value]; //注意调用js方法传参数要加上单引号！！！</span><br><span class="line">[self.webView evaluateJavaScript:OCCallJs completionHandler:^(id result, NSError *error) &#123;</span><br><span class="line">                </span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+
 <p><span id="more"></span></p>
-<h1 id="WKWebView-补充设置"><a href="#WKWebView-补充设置" class="headerlink" title="WKWebView 补充设置"></a>WKWebView 补充设置</h1><h3 id="设置-UserAgent"><a href="#设置-UserAgent" class="headerlink" title="设置 UserAgent"></a>设置 UserAgent</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">if (@available(iOS 9.0, *)) &#123;</span><br><span class="line">    [webView evaluateJavaScript:@&quot;navigator.userAgent&quot; completionHandler:^(id obj, NSError *error) &#123;</span><br><span class="line">        if ([obj isKindOfClass:[NSString class]]) &#123;</span><br><span class="line">            NSString * userAgent = obj; </span><br><span class="line">            if (![userAgent containsString:@&quot;customUA&quot;]) &#123;</span><br><span class="line">                userAgent = [userAgent stringByAppendingString:@&quot;customUA&quot;];</span><br><span class="line">            &#125;</span><br><span class="line">            [[NSUserDefaults standardUserDefaults] registerDefaults:@&#123; @&quot;UserAgent&quot;: userAgent OR @&quot;&quot;&#125;];</span><br><span class="line">            [[NSUserDefaults standardUserDefaults] setObject:userAgent forKey:uaKey];</span><br><span class="line">            self.webView.customUserAgent = userAgent;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    [self.webView setValue: userAgent forKey:@&quot;applicationNameForUserAgent&quot;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="设置-cookie"><a href="#设置-cookie" class="headerlink" title="设置 cookie"></a>设置 cookie</h3><p>因为 WKWebview 不会像 UIWebview 那样每次在请求之前会将 NSHTTPCookieStorage 里面的 cookie 自动添加到请求中，所以应采用将 cookie 通过 js 注入到 WKWebview 中的方法，<a href="https://www.jianshu.com/p/277c2141303d" target="_blank" rel="noopener">参考这篇文章的思路</a>，使用同一个 processPool 的方法，创建了两个 WKWebView，其中的一个用来加载 h5，另一个专门用来加载 cookie，解决了 WKWebview 种 cookie 的问题。</p>
+<h1 id="WKWebView-补充设置"><a href="#WKWebView-补充设置" class="headerlink" title="WKWebView 补充设置"></a>WKWebView 补充设置</h1><h3 id="设置-UserAgent"><a href="#设置-UserAgent" class="headerlink" title="设置 UserAgent"></a>设置 UserAgent</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">if (@available(iOS 9.0, *)) &#123;</span><br><span class="line">    [webView evaluateJavaScript:@&quot;navigator.userAgent&quot; completionHandler:^(id obj, NSError *error) &#123;</span><br><span class="line">        if ([obj isKindOfClass:[NSString class]]) &#123;</span><br><span class="line">            NSString * userAgent = obj; </span><br><span class="line">            if (![userAgent containsString:@&quot;customUA&quot;]) &#123;</span><br><span class="line">                userAgent = [userAgent stringByAppendingString:@&quot;customUA&quot;];</span><br><span class="line">            &#125;</span><br><span class="line">            [[NSUserDefaults standardUserDefaults] registerDefaults:@&#123; @&quot;UserAgent&quot;: userAgent OR @&quot;&quot;&#125;];</span><br><span class="line">            [[NSUserDefaults standardUserDefaults] setObject:userAgent forKey:uaKey];</span><br><span class="line">            self.webView.customUserAgent = userAgent;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    [self.webView setValue: userAgent forKey:@&quot;applicationNameForUserAgent&quot;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置-cookie"><a href="#设置-cookie" class="headerlink" title="设置 cookie"></a>设置 cookie</h3><p>因为 WKWebview 不会像 UIWebview 那样每次在请求之前会将 NSHTTPCookieStorage 里面的 cookie 自动添加到请求中，所以应采用将 cookie 通过 js 注入到 WKWebview 中的方法，<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/277c2141303d">参考这篇文章的思路</a>，使用同一个 processPool 的方法，创建了两个 WKWebView，其中的一个用来加载 h5，另一个专门用来加载 cookie，解决了 WKWebview 种 cookie 的问题。</p>
 <p>由于 UIWebview 的 Cookie 是由 NSHTTPCookieStorage 管理的，NSHTTPCookieStorage 是一个单例可以管理整个项目的 Cookie，在请求时候会自动带上上次保存的 Cookie，但是 WKWebview 的 Cookie 信息并不存储在 NSHTTPCookieStorage 中，是由 WKProcessPool 管理的，所以对于多个 WKWebview 之间可以通过将 WKProcessPool 单例化来解决 Cookie 共享的问题。</p>
 <p>设置 cookie 可在第一次请求 host 时使用一个 cookieWebview 来加载并设置好 cookie，然后再使用 self.webview 来继续加载 url，self.webview 与 cookieWebview 共用单例 sharedProcessPool，因此可以解决 WKWebview 种 cookie 的问题。</p>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/08/19/性能优化——App启动速度优化/" rel="next" title="性能优化——App启动速度优化">
-                <i class="fa fa-chevron-left"></i> 性能优化——App启动速度优化
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/20/内存管理随记/" rel="prev" title="iOS 内存管理随记">
-                iOS 内存管理随记 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/08/19/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E2%80%94%E2%80%94App%E5%90%AF%E5%8A%A8%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/" rel="prev" title="性能优化——App启动速度优化">
+                  <i class="fa fa-chevron-left"></i> 性能优化——App启动速度优化
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WKWebView-创建"><span class="nav-number">1.</span> <span class="nav-text">WKWebView 创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WKWebView-代理方法介绍"><span class="nav-number">2.</span> <span class="nav-text">WKWebView 代理方法介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WKNavigationDelegate"><span class="nav-number">2.0.1.</span> <span class="nav-text">WKNavigationDelegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WKUIDelegate"><span class="nav-number">2.0.2.</span> <span class="nav-text">WKUIDelegate</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#WKWebView-与-H5-交互"><span class="nav-number">3.</span> <span class="nav-text">WKWebView 与 H5 交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#js-与-OC-交互"><span class="nav-number">3.1.</span> <span class="nav-text">js 与 OC 交互</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截-url"><span class="nav-number">3.1.0.1.</span> <span class="nav-text">拦截 url</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WKScriptMessageHandler"><span class="nav-number">3.1.0.2.</span> <span class="nav-text">WKScriptMessageHandler</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OC-与-js-交互"><span class="nav-number">3.2.</span> <span class="nav-text">OC 与 js 交互</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WKWebView-补充设置"><span class="nav-number">4.</span> <span class="nav-text">WKWebView 补充设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置-UserAgent"><span class="nav-number">4.0.1.</span> <span class="nav-text">设置 UserAgent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置-cookie"><span class="nav-number">4.0.2.</span> <span class="nav-text">设置 cookie</span></a></li></ol></li></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2019/10/20/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E9%9A%8F%E8%AE%B0/" rel="next" title="iOS 内存管理随记">
+                  iOS 内存管理随记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -753,34 +372,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

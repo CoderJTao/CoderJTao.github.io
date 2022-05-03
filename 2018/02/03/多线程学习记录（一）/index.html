@@ -1,353 +1,248 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="前言 文章主要记录了iOS中多线程的基础概念及使用方法，在此做一个记录。一是加深印象，以后自己使用时也可以方便查找及复习，二是在自己的学习过程中，总有大牛的文章作为引导，希望自己也能给需要这方面知识的人一些帮助。 关于这篇文章的Demo可以去我的github中MultiThreadDemo查看源码，如有不当之处，希望大家指出。">
+    <meta name="description" content="前言  文章主要记录了iOS中多线程的基础概念及使用方法，在此做一个记录。一是加深印象，以后自己使用时也可以方便查找及复习，二是在自己的学习过程中，总有大牛的文章作为引导，希望自己也能给需要这方面知识的人一些帮助。 关于这篇文章的Demo可以去我的github中MultiThreadDemo查看源码，如有不当之处，希望大家指出。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多线程学习记录（一）">
-<meta property="og:url" content="http://yoursite.com/2018/02/03/多线程学习记录（一）/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/02/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="江涛的博客">
-<meta property="og:description" content="前言 文章主要记录了iOS中多线程的基础概念及使用方法，在此做一个记录。一是加深印象，以后自己使用时也可以方便查找及复习，二是在自己的学习过程中，总有大牛的文章作为引导，希望自己也能给需要这方面知识的人一些帮助。 关于这篇文章的Demo可以去我的github中MultiThreadDemo查看源码，如有不当之处，希望大家指出。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/02/03/多线程学习记录（一）/Thread_MindNode.png">
-<meta property="og:image" content="http://yoursite.com/2018/02/03/多线程学习记录（一）/Thread_change.jpg">
-<meta property="og:updated_time" content="2020-07-28T14:56:23.000Z">
+<meta property="og:description" content="前言  文章主要记录了iOS中多线程的基础概念及使用方法，在此做一个记录。一是加深印象，以后自己使用时也可以方便查找及复习，二是在自己的学习过程中，总有大牛的文章作为引导，希望自己也能给需要这方面知识的人一些帮助。 关于这篇文章的Demo可以去我的github中MultiThreadDemo查看源码，如有不当之处，希望大家指出。">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2018/02/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/Thread_MindNode.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/Thread_change.jpg">
+<meta property="article:published_time" content="2018-02-03T15:01:55.000Z">
+<meta property="article:modified_time" content="2020-07-28T14:56:23.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="多线程学习记录（一）">
-<meta name="twitter:description" content="前言 文章主要记录了iOS中多线程的基础概念及使用方法，在此做一个记录。一是加深印象，以后自己使用时也可以方便查找及复习，二是在自己的学习过程中，总有大牛的文章作为引导，希望自己也能给需要这方面知识的人一些帮助。 关于这篇文章的Demo可以去我的github中MultiThreadDemo查看源码，如有不当之处，希望大家指出。">
-<meta name="twitter:image" content="http://yoursite.com/2018/02/03/多线程学习记录（一）/Thread_MindNode.png">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/Thread_MindNode.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2018/02/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2018/02/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/","path":"2018/02/03/多线程学习记录（一）/","title":"多线程学习记录（一）"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2018/02/03/多线程学习记录（一）/">
-
-
-
-
-
-  <title>多线程学习记录（一） | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>多线程学习记录（一） | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1%E3%80%81%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">1、概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%87%86%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 准备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-%E5%90%8C%E6%AD%A5%E5%92%8C%E5%BC%82%E6%AD%A5"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1.1 同步和异步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.1.2.</span> <span class="nav-text">1.1.2 进程与线程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%8E%9F%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 多线程基本概念及原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E6%80%BB%E7%BB%93"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2%E3%80%81-%E4%B8%89%E7%A7%8D%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">2、 三种多线程方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Thread"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 Thread</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.1.1.</span> <span class="nav-text">2.1.1 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">3.1.2.</span> <span class="nav-text">2.1.2 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="nav-number">3.1.3.</span> <span class="nav-text">2.1.3 线程间通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">3.1.4.</span> <span class="nav-text">2.1.4 线程优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-5-%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">3.1.5.</span> <span class="nav-text">2.1.5 线程状态与生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-6-%E5%85%B6%E5%AE%83%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.6.</span> <span class="nav-text">2.1.6 其它常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Operation-%E5%92%8C-OperationQueue"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 Operation 和 OperationQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.2.1 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-number">3.2.1.0.1.</span> <span class="nav-text">优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2.2 基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E2%91%A0%E5%88%9B%E5%BB%BA%E6%93%8D%E4%BD%9C"><span class="nav-number">3.2.2.0.1.</span> <span class="nav-text">①创建操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E2%91%A1%E5%88%9B%E5%BB%BA%E9%98%9F%E5%88%97"><span class="nav-number">3.2.2.0.2.</span> <span class="nav-text">②创建队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E2%91%A2%E5%B0%86%E6%93%8D%E4%BD%9C%E5%8A%A0%E5%85%A5%E9%98%9F%E5%88%97"><span class="nav-number">3.2.2.0.3.</span> <span class="nav-text">③将操作加入队列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-%E4%B8%B2%E8%A1%8C%EF%BC%8C%E5%B9%B6%E8%A1%8C%E6%8E%A7%E5%88%B6"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.2.3 串行，并行控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-%E6%93%8D%E4%BD%9C%E4%BE%9D%E8%B5%96"><span class="nav-number">3.2.4.</span> <span class="nav-text">2.2.4 操作依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-5-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">3.2.5.</span> <span class="nav-text">2.2.5 线程优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-6-%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="nav-number">3.2.6.</span> <span class="nav-text">2.2.6 线程间通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-7-%E5%85%B6%E5%AE%83%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.7.</span> <span class="nav-text">2.2.7 其它常用方法</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/03/多线程学习记录（一）/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="多线程学习记录（一） | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          多线程学习记录（一）
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">多线程学习记录（一）</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-03T23:01:55+08:00">
-                2018-02-03
-              </time>
-            
+      <time title="Created: 2018-02-03 23:01:55" itemprop="dateCreated datePublished" datetime="2018-02-03T23:01:55+08:00">2018-02-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-07-28 22:56:23" itemprop="dateModified" datetime="2020-07-28T22:56:23+08:00">2020-07-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS%E5%B8%B8%E8%A7%81%E7%9F%A5%E8%AF%86%E7%82%B9/" itemprop="url" rel="index"><span itemprop="name">iOS常见知识点</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS常见知识点/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS常见知识点</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><img src="/2018/02/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/Thread_MindNode.png" class="" title="MindNode">
 
-      
-      
-
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><img src="/2018/02/03/多线程学习记录（一）/Thread_MindNode.png" title="MindNode">
 <p>文章主要记录了iOS中多线程的基础概念及使用方法，在此做一个记录。一是加深印象，以后自己使用时也可以方便查找及复习，二是在自己的学习过程中，总有大牛的文章作为引导，希望自己也能给需要这方面知识的人一些帮助。</p>
-<p>关于这篇文章的Demo可以去我的github中<a href="https://github.com/CoderJTao/MultiThreadDemo" target="_blank" rel="noopener">MultiThreadDemo</a>查看源码，如有不当之处，希望大家指出。</p>
-<a id="more"></a>
+<p>关于这篇文章的Demo可以去我的github中<a target="_blank" rel="noopener" href="https://github.com/CoderJTao/MultiThreadDemo">MultiThreadDemo</a>查看源码，如有不当之处，希望大家指出。</p>
+<span id="more"></span>
+
 <p>GCD方面的知识点，后续会继续更新。。。</p>
 <h1 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h1><h2 id="1-1-准备知识"><a href="#1-1-准备知识" class="headerlink" title="1.1 准备知识"></a>1.1 准备知识</h2><h3 id="1-1-1-同步和异步"><a href="#1-1-1-同步和异步" class="headerlink" title="1.1.1 同步和异步"></a>1.1.1 同步和异步</h3><ul>
 <li><strong>同步：</strong> 必须等待当前语句执行完毕，才可以执行下一个语句。</li>
@@ -396,20 +291,26 @@
 <li>使用比较简单，但是需要手动管理创建线程的生命周期、同步、异步、加锁等问题。</li>
 </ul>
 <h3 id="2-1-2-基本使用"><a href="#2-1-2-基本使用" class="headerlink" title="2.1.2 基本使用"></a>2.1.2 基本使用</h3><p>这里介绍Thread的三种创建方式。下方三中创建方式中的Target类为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Receiver: NSObject &#123;</span><br><span class="line">    @objc func runThread() &#123;</span><br><span class="line">        print(Thread.current)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Receiver: NSObject &#123;</span><br><span class="line">    @objc func runThread() &#123;</span><br><span class="line">        print(Thread.current)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ol>
 <li><strong>创建实例，手动启动</strong></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 1.创建线程</span><br><span class="line">let thread_one = Thread(target: Receiver(), selector: #selector(Receiver.runThread), object: nil)</span><br><span class="line"></span><br><span class="line">let thread_two = Thread &#123;</span><br><span class="line">    // TODO</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 2.启动线程</span><br><span class="line">thread_one.start()</span><br><span class="line"></span><br><span class="line">thread_two.start()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 1.创建线程</span><br><span class="line">let thread_one = Thread(target: Receiver(), selector: #selector(Receiver.runThread), object: nil)</span><br><span class="line"></span><br><span class="line">let thread_two = Thread &#123;</span><br><span class="line">    // TODO</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 2.启动线程</span><br><span class="line">thread_one.start()</span><br><span class="line"></span><br><span class="line">thread_two.start()</span><br></pre></td></tr></table></figure>
+
 <ol start="2">
 <li><strong>类方法创建并启动</strong></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 创建线程后自动启动线程</span><br><span class="line">Thread.detachNewThread &#123;</span><br><span class="line">    // TODO</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Thread.detachNewThreadSelector(#selector(Receiver.runThread), toTarget: Receiver(), with: nil)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 创建线程后自动启动线程</span><br><span class="line">Thread.detachNewThread &#123;</span><br><span class="line">    // TODO</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Thread.detachNewThreadSelector(#selector(Receiver.runThread), toTarget: Receiver(), with: nil)</span><br></pre></td></tr></table></figure>
+
 <ol start="3">
 <li><strong>隐式创建并启动</strong></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let obj = Receiver()</span><br><span class="line"></span><br><span class="line">// 隐式创建并启动线程</span><br><span class="line">obj.performSelector(inBackground: #selector(obj.runThread), with: nil)</span><br></pre></td></tr></table></figure>
-<h3 id="2-1-3-线程间通信"><a href="#2-1-3-线程间通信" class="headerlink" title="2.1.3 线程间通信"></a>2.1.3 线程间通信</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 去主线程执行指定方法</span><br><span class="line">performSelector(onMainThread: Selector, with: Any?, waitUntilDone: Bool, modes: [String]?)</span><br><span class="line"></span><br><span class="line">// 去指定线程执行方法</span><br><span class="line">perform(aSelector: Selector, on: Thread, with: Any?, waitUntilDone: Bool, modes: [String]?)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let obj = Receiver()</span><br><span class="line"></span><br><span class="line">// 隐式创建并启动线程</span><br><span class="line">obj.performSelector(inBackground: #selector(obj.runThread), with: nil)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-3-线程间通信"><a href="#2-1-3-线程间通信" class="headerlink" title="2.1.3 线程间通信"></a>2.1.3 线程间通信</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 去主线程执行指定方法</span><br><span class="line">performSelector(onMainThread: Selector, with: Any?, waitUntilDone: Bool, modes: [String]?)</span><br><span class="line"></span><br><span class="line">// 去指定线程执行方法</span><br><span class="line">perform(aSelector: Selector, on: Thread, with: Any?, waitUntilDone: Bool, modes: [String]?)</span><br></pre></td></tr></table></figure>
+
+
 <ul>
 <li><font color="red">Any?：</font> 需要传递的数据</li>
 <li><font color="red">modes?：</font> Runloop Mode值</li>
@@ -417,9 +318,11 @@
 <h3 id="2-1-4-线程优先级"><a href="#2-1-4-线程优先级" class="headerlink" title="2.1.4 线程优先级"></a>2.1.4 线程优先级</h3><p>设置线程优先级时，接收一个Double类型。</p>
 <p>数值范围为：0.0 ~ 1.0。 </p>
 <p>对于新创建的thread来说，Priority的值一般是 0.5。但是，因为优先级是由系统内核决定的,并不能保证这个值会是什么。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var threadPriority: Double &#123; get set &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var threadPriority: Double &#123; get set &#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="2-1-5-线程状态与生命周期"><a href="#2-1-5-线程状态与生命周期" class="headerlink" title="2.1.5 线程状态与生命周期"></a>2.1.5 线程状态与生命周期</h3><p>与线程状态及生命周期相关的函数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// - 启动线程的方法，进入就绪状态等待CPU调用</span><br><span class="line">func start()</span><br><span class="line"></span><br><span class="line">// - 阻塞（暂停）线程方法，进入阻塞状态</span><br><span class="line">class func sleep(until date: Date)</span><br><span class="line">class func sleep(forTimeInterval ti: TimeInterval)</span><br><span class="line"></span><br><span class="line">// - 取消线程的操作，在线程执行完当前操作后，不会再继续执行任务</span><br><span class="line">func cancel()</span><br><span class="line"></span><br><span class="line">// - 强制停止线程，进入死亡状态</span><br><span class="line">class func exit()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// - 启动线程的方法，进入就绪状态等待CPU调用</span><br><span class="line">func start()</span><br><span class="line"></span><br><span class="line">// - 阻塞（暂停）线程方法，进入阻塞状态</span><br><span class="line">class func sleep(until date: Date)</span><br><span class="line">class func sleep(forTimeInterval ti: TimeInterval)</span><br><span class="line"></span><br><span class="line">// - 取消线程的操作，在线程执行完当前操作后，不会再继续执行任务</span><br><span class="line">func cancel()</span><br><span class="line"></span><br><span class="line">// - 强制停止线程，进入死亡状态</span><br><span class="line">class func exit()</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>cancel()：方法并不是立即取消当前线程，而是更改线程的状态，以指示它应该退出。</p>
 <p>exit()：应该避免调用此方法，因为它不会让线程有机会清理它在执行期间分配的任何资源。</p>
@@ -429,19 +332,22 @@
 <li><strong>就绪（Runnable）：</strong> 向线程对象发送start消息，线程对象被加入可调度线程池等待CPU调度。</li>
 <li><strong>运行（Running）：</strong> CPU负责调度可调度线程池中线程的执行。线程执行完成之前，状态可能会在就绪和运行之间来回切换。就绪和运行之间的状态变化由CPU负责，程序员不能干预。</li>
 <li><strong>阻塞（Blocked）：</strong> 当满足某个预定条件时，可以使用休眠或锁，阻塞线程执行。sleepForTimeInterval（休眠指定时长），sleepUntilDate（休眠到指定日期），@synchronized(self)：（互斥锁）。</li>
-<li><strong>死亡（Dead）：</strong> 正常死亡，线程执行完毕。非正常死亡，当满足某个条件后，在线程内部中止执行/在主线程中止线程对象</li>
+<li><strong>死亡（Dead）：</strong> 正常死亡，线程执行完毕。非正常死亡，当满足某个条件后，在线程内部中止执行&#x2F;在主线程中止线程对象</li>
 </ul>
-<img src="/2018/02/03/多线程学习记录（一）/Thread_change.jpg">
+<img src="/2018/02/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/Thread_change.jpg" class="">
+
 <p>系统还定义了几个NSNotification。若你对当前线程状态的改变感兴趣，可以订阅这几个通知：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 当除了主线程外的最后一个线程退出时</span><br><span class="line">static let NSDidBecomeSingleThreaded: NSNotification.Name</span><br><span class="line"></span><br><span class="line">// 当线程接收到exit()消息时</span><br><span class="line">static let NSThreadWillExit: NSNotification.Name</span><br><span class="line"></span><br><span class="line">// 当创建第一个除主线程外的子线程时发布，而后再创建子线程时不会再发出通知。</span><br><span class="line">// 通知的观察者的通知方法在主线程调用</span><br><span class="line">NSWillBecomeMultiThreaded: NSNotification.Name</span><br></pre></td></tr></table></figure>
-<h3 id="2-1-6-其它常用方法"><a href="#2-1-6-其它常用方法" class="headerlink" title="2.1.6 其它常用方法"></a>2.1.6 其它常用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 获取主线程</span><br><span class="line">Thread.main</span><br><span class="line">        </span><br><span class="line">// 获取当前线程</span><br><span class="line">Thread.current</span><br><span class="line">        </span><br><span class="line">// 获取当前线程状态</span><br><span class="line">Thread.current.isCancelled</span><br><span class="line">Thread.current.isFinished</span><br><span class="line">Thread.current.isFinished</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 当除了主线程外的最后一个线程退出时</span><br><span class="line">static let NSDidBecomeSingleThreaded: NSNotification.Name</span><br><span class="line"></span><br><span class="line">// 当线程接收到exit()消息时</span><br><span class="line">static let NSThreadWillExit: NSNotification.Name</span><br><span class="line"></span><br><span class="line">// 当创建第一个除主线程外的子线程时发布，而后再创建子线程时不会再发出通知。</span><br><span class="line">// 通知的观察者的通知方法在主线程调用</span><br><span class="line">NSWillBecomeMultiThreaded: NSNotification.Name</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-6-其它常用方法"><a href="#2-1-6-其它常用方法" class="headerlink" title="2.1.6 其它常用方法"></a>2.1.6 其它常用方法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 获取主线程</span><br><span class="line">Thread.main</span><br><span class="line">        </span><br><span class="line">// 获取当前线程</span><br><span class="line">Thread.current</span><br><span class="line">        </span><br><span class="line">// 获取当前线程状态</span><br><span class="line">Thread.current.isCancelled</span><br><span class="line">Thread.current.isFinished</span><br><span class="line">Thread.current.isFinished</span><br></pre></td></tr></table></figure>
+
 <hr>
 <h2 id="2-2-Operation-和-OperationQueue"><a href="#2-2-Operation-和-OperationQueue" class="headerlink" title="2.2 Operation 和 OperationQueue"></a>2.2 Operation 和 OperationQueue</h2><h3 id="2-2-1-介绍"><a href="#2-2-1-介绍" class="headerlink" title="2.2.1 介绍"></a>2.2.1 介绍</h3><ul>
-<li><a href="https://developer.apple.com/documentation/foundation/operation" target="_blank" rel="noopener">Operation</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/foundation/operation">Operation</a></li>
 </ul>
 <p>Operation是一个抽象类，可以用来封装一个任务，其中包含代码逻辑和数据。因为Operation是抽象类，所以编写代码时不能直接使用，要使用它的子类，系统默认提供的有NSInvocationOperation（Swift中不可用）和BlockOperation。</p>
 <ul>
-<li><a href="https://developer.apple.com/documentation/foundation/operationqueue" target="_blank" rel="noopener">OperationQueue</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/foundation/operationqueue">OperationQueue</a></li>
 </ul>
 <p>OperationQueue（操作队列）是用来控制一系列操作对象执行的。操作对象被添加进队列后，一直存在到操作被取消或者执行完成。队列里的操作对象执行的顺序由操作的优先级和操作之间的依赖决定。一个应用里可以创建多个队列进行操作处理。</p>
 <h5 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h5><ol>
@@ -462,12 +368,14 @@
 <li>NSInvocationOperation（Swift不支持）</li>
 </ul>
 <p>默认是不会开启线程的,只会在当前的线程中执行操作,可以通过Operation和OperationQueue实现多线程。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 1.创建 NSInvocationOperation 对象</span><br><span class="line">NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(task1) object:nil];</span><br><span class="line"></span><br><span class="line">// 2.调用 start 方法开始执行操作</span><br><span class="line">// 不会开启线程</span><br><span class="line">[op start];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 1.创建 NSInvocationOperation 对象</span><br><span class="line">NSInvocationOperation *op = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(task1) object:nil];</span><br><span class="line"></span><br><span class="line">// 2.调用 start 方法开始执行操作</span><br><span class="line">// 不会开启线程</span><br><span class="line">[op start];</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>BlockOperation </li>
+<li>BlockOperation</li>
 </ul>
 <p>BlockOperation 是否开启新线程，取决于操作的个数。如果添加的操作的个数多，就会自动开启新线程。当然开启的线程数是由系统来决定的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 1. 创建BlockOperation对象，并封装操作</span><br><span class="line">let op = BlockOperation.init &#123;</span><br><span class="line">    print(&quot;init + \(Thread.current)&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 2. 调用 start 方法开始执行操作</span><br><span class="line">op.start()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 1. 创建BlockOperation对象，并封装操作</span><br><span class="line">let op = BlockOperation.init &#123;</span><br><span class="line">    print(&quot;init + \(Thread.current)&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 2. 调用 start 方法开始执行操作</span><br><span class="line">op.start()</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>自定义继承自 Operation 的子类</li>
 </ul>
@@ -479,9 +387,11 @@
 <li><strong>isFinished：</strong> 是否已完成，需要实现KVO通知机制。</li>
 <li><strong>isAsynchronous：</strong>该方法默认返回false，表示非并发执行。并发执行需要自定义并且返回true。后面会根据这个返回值来决定是否并发。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h5 id="②创建队列"><a href="#②创建队列" class="headerlink" title="②创建队列"></a><strong>②创建队列</strong></h5><p>OperationQueue 一共有两种队列：主队列、自定义队列。其中自定义队列同时包含了串行、并发功能。下边是主队列、自定义队列的基本创建方法和特点。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 主队列获取方法</span><br><span class="line">let mainQueue = OperationQueue.main</span><br><span class="line"></span><br><span class="line">// 自定义队列创建方法</span><br><span class="line">let queue = OperationQueue()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 主队列获取方法</span><br><span class="line">let mainQueue = OperationQueue.main</span><br><span class="line"></span><br><span class="line">// 自定义队列创建方法</span><br><span class="line">let queue = OperationQueue()</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>主队列<ul>
 <li>凡是添加到主队列中的操作，都会放到主线程中执行。</li>
@@ -514,14 +424,19 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">let queue = OperationQueue()</span><br><span class="line"></span><br><span class="line">queue.maxConcurrentOperationCount = 1</span><br><span class="line"></span><br><span class="line">queue.addOperation &#123;</span><br><span class="line">    sleep(1)</span><br><span class="line">    print(&quot;1---\(Thread.current)----\(Date.timeIntervalSinceReferenceDate)&quot;)</span><br><span class="line">&#125;</span><br><span class="line">queue.addOperation &#123;</span><br><span class="line">    sleep(1)</span><br><span class="line">    print(&quot;2---\(Thread.current)----\(Date.timeIntervalSinceReferenceDate)&quot;)</span><br><span class="line">&#125;</span><br><span class="line">queue.addOperation &#123;</span><br><span class="line">    sleep(1)</span><br><span class="line">    print(&quot;3---\(Thread.current)----\(Date.timeIntervalSinceReferenceDate)&quot;)</span><br><span class="line">&#125;</span><br><span class="line">queue.addOperation &#123;</span><br><span class="line">    sleep(1)</span><br><span class="line">    print(&quot;4---\(Thread.current)----\(Date.timeIntervalSinceReferenceDate)&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-----最大并发操作数为1，输出结果：------</span><br><span class="line">1---&lt;NSThread: 0x600001ddc200&gt;&#123;number = 5, name = (null)&#125;----576945144.766482</span><br><span class="line">2---&lt;NSThread: 0x600001dd0280&gt;&#123;number = 6, name = (null)&#125;----576945145.775298</span><br><span class="line">3---&lt;NSThread: 0x600001dfbd00&gt;&#123;number = 4, name = (null)&#125;----576945146.775842</span><br><span class="line">4---&lt;NSThread: 0x600001dd0280&gt;&#123;number = 6, name = (null)&#125;----576945147.779273</span><br><span class="line"></span><br><span class="line">-----最大并发操作数为3，输出结果：------</span><br><span class="line">2---&lt;NSThread: 0x6000018dc0c0&gt;&#123;number = 5, name = (null)&#125;----576945253.401897</span><br><span class="line">1---&lt;NSThread: 0x6000018c5d00&gt;&#123;number = 7, name = (null)&#125;----576945253.401891</span><br><span class="line">3---&lt;NSThread: 0x6000018ca540&gt;&#123;number = 6, name = (null)&#125;----576945253.401913</span><br><span class="line">4---&lt;NSThread: 0x6000018dc100&gt;&#123;number = 8, name = (null)&#125;----576945254.403032</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">let queue = OperationQueue()</span><br><span class="line"></span><br><span class="line">queue.maxConcurrentOperationCount = 1</span><br><span class="line"></span><br><span class="line">queue.addOperation &#123;</span><br><span class="line">    sleep(1)</span><br><span class="line">    print(&quot;1---\(Thread.current)----\(Date.timeIntervalSinceReferenceDate)&quot;)</span><br><span class="line">&#125;</span><br><span class="line">queue.addOperation &#123;</span><br><span class="line">    sleep(1)</span><br><span class="line">    print(&quot;2---\(Thread.current)----\(Date.timeIntervalSinceReferenceDate)&quot;)</span><br><span class="line">&#125;</span><br><span class="line">queue.addOperation &#123;</span><br><span class="line">    sleep(1)</span><br><span class="line">    print(&quot;3---\(Thread.current)----\(Date.timeIntervalSinceReferenceDate)&quot;)</span><br><span class="line">&#125;</span><br><span class="line">queue.addOperation &#123;</span><br><span class="line">    sleep(1)</span><br><span class="line">    print(&quot;4---\(Thread.current)----\(Date.timeIntervalSinceReferenceDate)&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-----最大并发操作数为1，输出结果：------</span><br><span class="line">1---&lt;NSThread: 0x600001ddc200&gt;&#123;number = 5, name = (null)&#125;----576945144.766482</span><br><span class="line">2---&lt;NSThread: 0x600001dd0280&gt;&#123;number = 6, name = (null)&#125;----576945145.775298</span><br><span class="line">3---&lt;NSThread: 0x600001dfbd00&gt;&#123;number = 4, name = (null)&#125;----576945146.775842</span><br><span class="line">4---&lt;NSThread: 0x600001dd0280&gt;&#123;number = 6, name = (null)&#125;----576945147.779273</span><br><span class="line"></span><br><span class="line">-----最大并发操作数为3，输出结果：------</span><br><span class="line">2---&lt;NSThread: 0x6000018dc0c0&gt;&#123;number = 5, name = (null)&#125;----576945253.401897</span><br><span class="line">1---&lt;NSThread: 0x6000018c5d00&gt;&#123;number = 7, name = (null)&#125;----576945253.401891</span><br><span class="line">3---&lt;NSThread: 0x6000018ca540&gt;&#123;number = 6, name = (null)&#125;----576945253.401913</span><br><span class="line">4---&lt;NSThread: 0x6000018dc100&gt;&#123;number = 8, name = (null)&#125;----576945254.403032</span><br></pre></td></tr></table></figure>
+
 <p>上方输出的结果中，分析线程及输出时间可以看出：从当最大并发操作数为1时，操作是按顺序串行执行的。当最大操作并发数为3时，有3个操作是并发执行的，延迟1s后执行另一个。而开启线程数量是由系统决定的，不需要我们来管理。</p>
 <h3 id="2-2-4-操作依赖"><a href="#2-2-4-操作依赖" class="headerlink" title="2.2.4 操作依赖"></a>2.2.4 操作依赖</h3><p>Operation 提供了3个接口供我们管理和查看依赖。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 添加依赖，使当前操作依赖于操作 op 的完成。</span><br><span class="line">func addDependency(_ op: Operation)</span><br><span class="line"></span><br><span class="line">// 移除依赖，取消当前操作对操作 op 的依赖。</span><br><span class="line">func removeDependency(_ op: Operation)</span><br><span class="line"></span><br><span class="line">// 必须在当前对象开始执行之前完成执行的操作对象数组。</span><br><span class="line">var dependencies: [Operation] &#123; get &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 添加依赖，使当前操作依赖于操作 op 的完成。</span><br><span class="line">func addDependency(_ op: Operation)</span><br><span class="line"></span><br><span class="line">// 移除依赖，取消当前操作对操作 op 的依赖。</span><br><span class="line">func removeDependency(_ op: Operation)</span><br><span class="line"></span><br><span class="line">// 必须在当前对象开始执行之前完成执行的操作对象数组。</span><br><span class="line">var dependencies: [Operation] &#123; get &#125;</span><br></pre></td></tr></table></figure>
+
 <p>通过添加操作依赖，无论运行几次，其结果都是 op2 先执行，op1 后执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">let queue = OperationQueue()</span><br><span class="line"></span><br><span class="line">let op1 = BlockOperation &#123;</span><br><span class="line">    print(&quot;op1&quot;)</span><br><span class="line">&#125;</span><br><span class="line">let op2 = BlockOperation &#123;</span><br><span class="line">    print(&quot;op2&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">op1.addDependency(op2)</span><br><span class="line"></span><br><span class="line">queue.addOperation(op1)</span><br><span class="line">queue.addOperation(op2)</span><br><span class="line"></span><br><span class="line">----输出结果：----</span><br><span class="line">op2</span><br><span class="line">op1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">let queue = OperationQueue()</span><br><span class="line"></span><br><span class="line">let op1 = BlockOperation &#123;</span><br><span class="line">    print(&quot;op1&quot;)</span><br><span class="line">&#125;</span><br><span class="line">let op2 = BlockOperation &#123;</span><br><span class="line">    print(&quot;op2&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">op1.addDependency(op2)</span><br><span class="line"></span><br><span class="line">queue.addOperation(op1)</span><br><span class="line">queue.addOperation(op2)</span><br><span class="line"></span><br><span class="line">----输出结果：----</span><br><span class="line">op2</span><br><span class="line">op1</span><br></pre></td></tr></table></figure>
+
+
 <h3 id="2-2-5-线程优先级"><a href="#2-2-5-线程优先级" class="headerlink" title="2.2.5 线程优先级"></a>2.2.5 线程优先级</h3><p>OperationQueue 提供了queuePriority（优先级）属性，queuePriority属性适用于同一操作队列中的操作，不适用于不同操作队列中的操作。默认情况下，所有新创建的操作对象优先级都是normal。但是我们可以通过赋值来改变当前操作在同一队列中的执行优先级。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 优先级的取值</span><br><span class="line">public enum QueuePriority : Int &#123;</span><br><span class="line">        case veryLow</span><br><span class="line">        case low</span><br><span class="line">        case normal // default value</span><br><span class="line">        case high</span><br><span class="line">        case veryHigh</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 优先级的取值</span><br><span class="line">public enum QueuePriority : Int &#123;</span><br><span class="line">        case veryLow</span><br><span class="line">        case low</span><br><span class="line">        case normal // default value</span><br><span class="line">        case high</span><br><span class="line">        case veryHigh</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 <p>对于添加到队列中的操作，首先进入准备就绪的状态（就绪状态取决于操作之间的依赖关系），然后进入就绪状态的操作的开始执行顺序（非结束执行顺序）由操作之间相对的优先级决定（优先级是操作对象自身的属性）。</p>
 <p>理解了进入就绪状态的操作，那么我们就理解了queuePriority 属性的作用对象。</p>
 <ul>
@@ -529,15 +444,18 @@
 <li>如果一个队列中既包含高优先级操作，又包含低优先级操作，并且两个操作都已经准备就绪，那么队列先执行高优先级操作。</li>
 <li>如果，一个队列中既包含了准备就绪状态的操作，又包含了未准备就绪的操作，未准备就绪的操作优先级比准备就绪的操作优先级高。那么，虽然准备就绪的操作优先级低，也会优先执行。优先级不能取代依赖关系。如果要控制操作间的启动顺序，则必须使用依赖关系。</li>
 </ul>
-<h3 id="2-2-6-线程间通信"><a href="#2-2-6-线程间通信" class="headerlink" title="2.2.6 线程间通信"></a>2.2.6 线程间通信</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">let queue = OperationQueue()</span><br><span class="line"></span><br><span class="line">let op = BlockOperation &#123;</span><br><span class="line">    print(&quot;异步操作 -- \(Thread.current)&quot;)</span><br><span class="line">    </span><br><span class="line">    // 回到主线程</span><br><span class="line">    OperationQueue.main.addOperation(&#123;</span><br><span class="line">        print(&quot;回到主线程了 -- \(Thread.current)&quot;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">queue.addOperation(op)</span><br><span class="line"></span><br><span class="line">-----输出结果：-----</span><br><span class="line">异步操作 -- &lt;NSThread: 0x60000102f540&gt;&#123;number = 3, name = (null)&#125;</span><br><span class="line">回到主线程了 -- &lt;NSThread: 0x60000100d680&gt;&#123;number = 1, name = main&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-6-线程间通信"><a href="#2-2-6-线程间通信" class="headerlink" title="2.2.6 线程间通信"></a>2.2.6 线程间通信</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">let queue = OperationQueue()</span><br><span class="line"></span><br><span class="line">let op = BlockOperation &#123;</span><br><span class="line">    print(&quot;异步操作 -- \(Thread.current)&quot;)</span><br><span class="line">    </span><br><span class="line">    // 回到主线程</span><br><span class="line">    OperationQueue.main.addOperation(&#123;</span><br><span class="line">        print(&quot;回到主线程了 -- \(Thread.current)&quot;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">queue.addOperation(op)</span><br><span class="line"></span><br><span class="line">-----输出结果：-----</span><br><span class="line">异步操作 -- &lt;NSThread: 0x60000102f540&gt;&#123;number = 3, name = (null)&#125;</span><br><span class="line">回到主线程了 -- &lt;NSThread: 0x60000100d680&gt;&#123;number = 1, name = main&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h3 id="2-2-7-其它常用方法"><a href="#2-2-7-其它常用方法" class="headerlink" title="2.2.7 其它常用方法"></a>2.2.7 其它常用方法</h3><ul>
 <li>Operation 常用属性和方法</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 取消操作的方法</span><br><span class="line">	* func cancel() 可取消操作，实质是标记 isCancelled 状态。</span><br><span class="line">2. 判断操作状态的方法</span><br><span class="line">	* isFinished 判断操作是否已经结束。</span><br><span class="line">	* isCancelled 判断操作是否已经标记为取消。</span><br><span class="line">	* isExecuting 判断操作是否正在在运行。</span><br><span class="line">	* isAsynchronous 判断操作是否异步执行其任务。</span><br><span class="line">	* isReady 判断操作是否处于准备就绪状态，这个值和操作的依赖关系相关。</span><br><span class="line">3. 操作同步</span><br><span class="line">	* func waitUntilFinished() 阻塞当前线程，直到该操作结束。可用于线程执行顺序的同步。</span><br><span class="line">	* completionBlock: (() -&gt; Void)? 会在当前操作执行完毕时执行 completionBlock。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 取消操作的方法</span><br><span class="line">	* func cancel() 可取消操作，实质是标记 isCancelled 状态。</span><br><span class="line">2. 判断操作状态的方法</span><br><span class="line">	* isFinished 判断操作是否已经结束。</span><br><span class="line">	* isCancelled 判断操作是否已经标记为取消。</span><br><span class="line">	* isExecuting 判断操作是否正在在运行。</span><br><span class="line">	* isAsynchronous 判断操作是否异步执行其任务。</span><br><span class="line">	* isReady 判断操作是否处于准备就绪状态，这个值和操作的依赖关系相关。</span><br><span class="line">3. 操作同步</span><br><span class="line">	* func waitUntilFinished() 阻塞当前线程，直到该操作结束。可用于线程执行顺序的同步。</span><br><span class="line">	* completionBlock: (() -&gt; Void)? 会在当前操作执行完毕时执行 completionBlock。</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>OperationQueue 常用属性及方法</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1. 取消/暂停/恢复操作</span><br><span class="line">	* func cancelAllOperations() 可以取消队列的所有操作。</span><br><span class="line">	* isSuspended 判断及设置队列是否处于暂停状态。true为暂停状态，false为恢复状态。</span><br><span class="line">2. 操作同步</span><br><span class="line">	* func waitUntilAllOperationsAreFinished() 阻塞当前线程，直到队列中的操作全部执行完毕。</span><br><span class="line">3. 添加/获取操作</span><br><span class="line">	* func addOperations(_ ops: [Operation], waitUntilFinished wait: Bool) 向队列中添加操作数组，wait 标志是否阻塞当前线程直到所有操作结束</span><br><span class="line">	* operations 当前在队列中的操作数组（某个操作执行结束后会自动从这个数组清除）。</span><br><span class="line">	* operationCount 当前队列中的操作数。</span><br><span class="line">4. 获取队列</span><br><span class="line">	* current 获取当前队列，如果当前线程不是在 OperationQueue 上运行则返回 nil。</span><br><span class="line">	* main 获取主队列。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1. 取消/暂停/恢复操作</span><br><span class="line">	* func cancelAllOperations() 可以取消队列的所有操作。</span><br><span class="line">	* isSuspended 判断及设置队列是否处于暂停状态。true为暂停状态，false为恢复状态。</span><br><span class="line">2. 操作同步</span><br><span class="line">	* func waitUntilAllOperationsAreFinished() 阻塞当前线程，直到队列中的操作全部执行完毕。</span><br><span class="line">3. 添加/获取操作</span><br><span class="line">	* func addOperations(_ ops: [Operation], waitUntilFinished wait: Bool) 向队列中添加操作数组，wait 标志是否阻塞当前线程直到所有操作结束</span><br><span class="line">	* operations 当前在队列中的操作数组（某个操作执行结束后会自动从这个数组清除）。</span><br><span class="line">	* operationCount 当前队列中的操作数。</span><br><span class="line">4. 获取队列</span><br><span class="line">	* current 获取当前队列，如果当前线程不是在 OperationQueue 上运行则返回 nil。</span><br><span class="line">	* main 获取主队列。</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>注意:</p>
 <ol>
@@ -546,347 +464,61 @@
 </ol>
 </blockquote>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/01/21/不规则Button点击（二）/" rel="next" title="不规则Button点击（二）">
-                <i class="fa fa-chevron-left"></i> 不规则Button点击（二）
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/04/多线程学习记录（二）/" rel="prev" title="多线程学习记录（二）">
-                多线程学习记录（二） <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/01/21/%E4%B8%8D%E8%A7%84%E5%88%99Button%E7%82%B9%E5%87%BB%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="不规则Button点击（二）">
+                  <i class="fa fa-chevron-left"></i> 不规则Button点击（二）
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、概述"><span class="nav-number">2.</span> <span class="nav-text">1、概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-准备知识"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 准备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-同步和异步"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1.1 同步和异步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-进程与线程"><span class="nav-number">2.1.2.</span> <span class="nav-text">1.1.2 进程与线程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-多线程基本概念及原理"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 多线程基本概念及原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-优缺点"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-总结"><span class="nav-number">2.4.</span> <span class="nav-text">1.4 总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、-三种多线程方案"><span class="nav-number">3.</span> <span class="nav-text">2、 三种多线程方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Thread"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 Thread</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-介绍"><span class="nav-number">3.1.1.</span> <span class="nav-text">2.1.1 介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-基本使用"><span class="nav-number">3.1.2.</span> <span class="nav-text">2.1.2 基本使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-线程间通信"><span class="nav-number">3.1.3.</span> <span class="nav-text">2.1.3 线程间通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-线程优先级"><span class="nav-number">3.1.4.</span> <span class="nav-text">2.1.4 线程优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-5-线程状态与生命周期"><span class="nav-number">3.1.5.</span> <span class="nav-text">2.1.5 线程状态与生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-6-其它常用方法"><span class="nav-number">3.1.6.</span> <span class="nav-text">2.1.6 其它常用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Operation-和-OperationQueue"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 Operation 和 OperationQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-介绍"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.2.1 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#优势"><span class="nav-number">3.2.1.0.1.</span> <span class="nav-text">优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-基本使用"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2.2 基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#①创建操作"><span class="nav-number">3.2.2.0.1.</span> <span class="nav-text">①创建操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#②创建队列"><span class="nav-number">3.2.2.0.2.</span> <span class="nav-text">②创建队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#③将操作加入队列"><span class="nav-number">3.2.2.0.3.</span> <span class="nav-text">③将操作加入队列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-串行，并行控制"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.2.3 串行，并行控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-4-操作依赖"><span class="nav-number">3.2.4.</span> <span class="nav-text">2.2.4 操作依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-5-线程优先级"><span class="nav-number">3.2.5.</span> <span class="nav-text">2.2.5 线程优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-6-线程间通信"><span class="nav-number">3.2.6.</span> <span class="nav-text">2.2.6 线程间通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-7-其它常用方法"><span class="nav-number">3.2.7.</span> <span class="nav-text">2.2.7 其它常用方法</span></a></li></ol></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2018/03/04/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="多线程学习记录（二）">
+                  多线程学习记录（二） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -899,34 +531,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

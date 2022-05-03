@@ -1,392 +1,314 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="记录一些 Swift 和 OC 混编时的一些 tips。">
+    <meta name="description" content="记录一些 Swift 和 OC 混编时的一些 tips。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Swift OC 混编Tips">
-<meta property="og:url" content="http://yoursite.com/2020/07/26/Swift-OC-混编Tips/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/07/26/Swift-OC-%E6%B7%B7%E7%BC%96Tips/index.html">
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="记录一些 Swift 和 OC 混编时的一些 tips。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2022-04-02T01:26:13.000Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-07-26T09:39:11.000Z">
+<meta property="article:modified_time" content="2022-04-02T01:26:13.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift OC 混编Tips">
-<meta name="twitter:description" content="记录一些 Swift 和 OC 混编时的一些 tips。">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/07/26/Swift-OC-%E6%B7%B7%E7%BC%96Tips/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2020/07/26/Swift-OC-%E6%B7%B7%E7%BC%96Tips/","path":"2020/07/26/Swift-OC-混编Tips/","title":"Swift OC 混编Tips"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2020/07/26/Swift-OC-混编Tips/">
-
-
-
-
-
-  <title>Swift OC 混编Tips | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Swift OC 混编Tips | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-%E6%9E%9A%E4%B8%BE%E5%AE%8F"><span class="nav-number">1.</span> <span class="nav-text">Objective-C 枚举宏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-ENUM"><span class="nav-number">1.0.1.</span> <span class="nav-text">NS_ENUM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-CLOSED-ENUM"><span class="nav-number">1.0.2.</span> <span class="nav-text">NS_CLOSED_ENUM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-OPTIONS"><span class="nav-number">1.0.3.</span> <span class="nav-text">NS_OPTIONS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-TYPED-ENUM"><span class="nav-number">1.0.4.</span> <span class="nav-text">NS_TYPED_ENUM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-STRING-ENUM"><span class="nav-number">1.0.5.</span> <span class="nav-text">NS_STRING_ENUM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-TYPED-EXTENSIBLE-ENUM"><span class="nav-number">1.0.6.</span> <span class="nav-text">NS_TYPED_EXTENSIBLE_ENUM</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.1.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-%E7%B1%BB%E5%9E%8B%E5%AE%9A%E4%B9%89-typedef-%E8%BD%AC%E6%8D%A2"><span class="nav-number">2.</span> <span class="nav-text">Objective-C 类型定义 typedef 转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-SWIFT-BRIDGED-TYPEDEF"><span class="nav-number">2.0.1.</span> <span class="nav-text">NS_SWIFT_BRIDGED_TYPEDEF</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-API-%E9%87%8D%E5%91%BD%E5%90%8D%E8%87%B3-Swift"><span class="nav-number">3.</span> <span class="nav-text">Objective-C API 重命名至 Swift</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-SWIFT-NAME"><span class="nav-number">3.0.1.</span> <span class="nav-text">NS_SWIFT_NAME</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA-Swift-%E6%94%B9%E8%BF%9B-Objective-C-API"><span class="nav-number">4.</span> <span class="nav-text">为 Swift 改进 Objective-C API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-REFINED-FOR-SWIFT"><span class="nav-number">4.0.1.</span> <span class="nav-text">NS_REFINED_FOR_SWIFT</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-%E9%99%90%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">API 限制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-SWIFT-UNAVAILABLE"><span class="nav-number">5.0.1.</span> <span class="nav-text">NS_SWIFT_UNAVAILABLE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-%E9%80%82%E9%85%8D-Optional"><span class="nav-number">6.</span> <span class="nav-text">Objective-C 适配 Optional</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83"><span class="nav-number">6.1.</span> <span class="nav-text">使用规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="nav-number">6.2.</span> <span class="nav-text">使用举例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-ASSUME-NONNULL-BEGIN-%E5%92%8C-NS-ASSUME-NONNULL-END"><span class="nav-number">6.2.1.</span> <span class="nav-text">NS_ASSUME_NONNULL_BEGIN 和 NS_ASSUME_NONNULL_END</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/26/Swift-OC-混编Tips/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/26/Swift-OC-%E6%B7%B7%E7%BC%96Tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Swift OC 混编Tips | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Swift OC 混编Tips
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">Swift OC 混编Tips</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-26T17:39:11+08:00">
-                2020-07-26
-              </time>
-            
+      <time title="Created: 2020-07-26 17:39:11" itemprop="dateCreated datePublished" datetime="2020-07-26T17:39:11+08:00">2020-07-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-04-02 09:26:13" itemprop="dateModified" datetime="2022-04-02T09:26:13+08:00">2022-04-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Swift-Tips/" itemprop="url" rel="index"><span itemprop="name">Swift Tips</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift-Tips/" itemprop="url" rel="index">
-                    <span itemprop="name">Swift Tips</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         <p>记录一些 Swift 和 OC 混编时的一些 tips。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <h2 id="Objective-C-枚举宏"><a href="#Objective-C-枚举宏" class="headerlink" title="Objective-C 枚举宏"></a>Objective-C 枚举宏</h2><h4 id="NS-ENUM"><a href="#NS-ENUM" class="headerlink" title="NS_ENUM"></a>NS_ENUM</h4><p>用于简单的枚举</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Declare in Objective-C</span><br><span class="line">typedef NS_ENUM(NSInteger, UITableViewCellStyle) &#123;</span><br><span class="line">UITableViewCellStyleDefault,</span><br><span class="line">UITableViewCellStyleValue1,</span><br><span class="line">UITableViewCellStyleValue2,</span><br><span class="line">UITableViewCellStyleSubtitle</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// In Swift, the UITableViewCellStyle enumeration is imported like this:</span><br><span class="line">public enum UITableViewCellStyle : Int &#123;</span><br><span class="line">case `default` = 0</span><br><span class="line">case value1 = 1</span><br><span class="line">case value2 = 2</span><br><span class="line">case subtitle = 3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// Declare in Objective-C</span><br><span class="line">typedef NS_ENUM(NSInteger, UITableViewCellStyle) &#123;</span><br><span class="line">UITableViewCellStyleDefault,</span><br><span class="line">UITableViewCellStyleValue1,</span><br><span class="line">UITableViewCellStyleValue2,</span><br><span class="line">UITableViewCellStyleSubtitle</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// In Swift, the UITableViewCellStyle enumeration is imported like this:</span><br><span class="line">public enum UITableViewCellStyle : Int &#123;</span><br><span class="line">case `default` = 0</span><br><span class="line">case value1 = 1</span><br><span class="line">case value2 = 2</span><br><span class="line">case subtitle = 3</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
 <h4 id="NS-CLOSED-ENUM"><a href="#NS-CLOSED-ENUM" class="headerlink" title="NS_CLOSED_ENUM"></a>NS_CLOSED_ENUM</h4><p>用于不会变更枚举成员的简单的枚举（简称 “冻结枚举” ）。对应 Swift 中的 @frozen 关键字。</p>
 <p>相比较于非冻结枚举，冻结枚举降低了灵活性，但提升了性能。一旦枚举被标记为冻结枚举，那么在未来版本的库中就不能通过添加、删除或重新排序枚举的 case，否则会破坏 ABI 兼容性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// Declare in Objective-C</span><br><span class="line">typedef NS_CLOSED_ENUM(NSInteger, NSComparisonResult) &#123;</span><br><span class="line">NSOrderedAscending = -1L,</span><br><span class="line">NSOrderedSame,</span><br><span class="line">NSOrderedDescending</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// In Swift, the NSComparisonResult enumeration is imported like this:</span><br><span class="line">@frozen public enum NSComparisonResult : Int &#123;</span><br><span class="line">case orderedAscending = -1</span><br><span class="line">case orderedSame = 0</span><br><span class="line">case orderedDescending = 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// Declare in Objective-C</span><br><span class="line">typedef NS_CLOSED_ENUM(NSInteger, NSComparisonResult) &#123;</span><br><span class="line">NSOrderedAscending = -1L,</span><br><span class="line">NSOrderedSame,</span><br><span class="line">NSOrderedDescending</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// In Swift, the NSComparisonResult enumeration is imported like this:</span><br><span class="line">@frozen public enum NSComparisonResult : Int &#123;</span><br><span class="line">case orderedAscending = -1</span><br><span class="line">case orderedSame = 0</span><br><span class="line">case orderedDescending = 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>使用 NS_ENUM 和 NS_CLOSED_ENUM 枚举宏在导入到 Swift 时生成的是实际 Enum 类型，而其它枚举宏都是生成 Struct 类型。</p>
 </blockquote>
 <h4 id="NS-OPTIONS"><a href="#NS-OPTIONS" class="headerlink" title="NS_OPTIONS"></a>NS_OPTIONS</h4><p>用于可选类型枚举</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// Declare in Objective-C</span><br><span class="line">typedef NS_OPTIONS(NSUInteger, UIViewAutoresizing) &#123;</span><br><span class="line">UIViewAutoresizingNone = 0,</span><br><span class="line">UIViewAutoresizingFlexibleLeftMargin = 1 &lt;&lt; 0,</span><br><span class="line">UIViewAutoresizingFlexibleWidth = 1 &lt;&lt; 1,</span><br><span class="line">UIViewAutoresizingFlexibleRightMargin = 1 &lt;&lt; 2,</span><br><span class="line">UIViewAutoresizingFlexibleTopMargin = 1 &lt;&lt; 3,</span><br><span class="line">UIViewAutoresizingFlexibleHeight = 1 &lt;&lt; 4,</span><br><span class="line">UIViewAutoresizingFlexibleBottomMargin = 1 &lt;&lt; 5</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// In Swift, the UIViewAutoresizing type is imported like this:</span><br><span class="line">public struct UIViewAutoresizing: OptionSet &#123;</span><br><span class="line">public init(rawValue: UInt)</span><br><span class="line"></span><br><span class="line">public static var flexibleLeftMargin: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">public static var flexibleWidth: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">public static var flexibleRightMargin: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">public static var flexibleTopMargin: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">public static var flexibleHeight: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">public static var flexibleBottomMargin: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// Declare in Objective-C</span><br><span class="line">typedef NS_OPTIONS(NSUInteger, UIViewAutoresizing) &#123;</span><br><span class="line">UIViewAutoresizingNone = 0,</span><br><span class="line">UIViewAutoresizingFlexibleLeftMargin = 1 &lt;&lt; 0,</span><br><span class="line">UIViewAutoresizingFlexibleWidth = 1 &lt;&lt; 1,</span><br><span class="line">UIViewAutoresizingFlexibleRightMargin = 1 &lt;&lt; 2,</span><br><span class="line">UIViewAutoresizingFlexibleTopMargin = 1 &lt;&lt; 3,</span><br><span class="line">UIViewAutoresizingFlexibleHeight = 1 &lt;&lt; 4,</span><br><span class="line">UIViewAutoresizingFlexibleBottomMargin = 1 &lt;&lt; 5</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// In Swift, the UIViewAutoresizing type is imported like this:</span><br><span class="line">public struct UIViewAutoresizing: OptionSet &#123;</span><br><span class="line">public init(rawValue: UInt)</span><br><span class="line"></span><br><span class="line">public static var flexibleLeftMargin: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">public static var flexibleWidth: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">public static var flexibleRightMargin: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">public static var flexibleTopMargin: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">public static var flexibleHeight: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">public static var flexibleBottomMargin: UIViewAutoresizing &#123; get &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h4 id="NS-TYPED-ENUM"><a href="#NS-TYPED-ENUM" class="headerlink" title="NS_TYPED_ENUM"></a>NS_TYPED_ENUM</h4><p>用于类型常量枚举</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// Store the three traffic light color options as 0, 1, and 2.</span><br><span class="line">typedef long TrafficLightColor NS_TYPED_ENUM;</span><br><span class="line"></span><br><span class="line">FOUNDATION_EXTERN TrafficLightColor const TrafficLightColorRed;</span><br><span class="line">FOUNDATION_EXTERN TrafficLightColor const TrafficLightColorYellow;</span><br><span class="line">FOUNDATION_EXTERN TrafficLightColor const TrafficLightColorGreen;</span><br><span class="line"></span><br><span class="line">// In Swift, the TrafficLightColor type is imported like this:</span><br><span class="line">public struct TrafficLightColor : Hashable, Equatable, RawRepresentable &#123;</span><br><span class="line">public init(rawValue: Int)</span><br><span class="line">&#125;</span><br><span class="line">extension TrafficLightColor &#123;</span><br><span class="line">public static let red: TrafficLightColor</span><br><span class="line">public static let yellow: TrafficLightColor</span><br><span class="line">public static let green: TrafficLightColor</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="NS-STRING-ENUM"><a href="#NS-STRING-ENUM" class="headerlink" title="NS_STRING_ENUM"></a>NS_STRING_ENUM</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">typedef NSString *DCDictionaryKey NS_STRING_ENUM;</span><br><span class="line"></span><br><span class="line">FOUNDATION_EXTERN DCDictionaryKey const DCDictionaryKeyTitle;</span><br><span class="line">FOUNDATION_EXTERN DCDictionaryKey const DCDictionaryKeySubtitle;</span><br><span class="line">FOUNDATION_EXTERN DCDictionaryKey const DCDictionaryKeyCount;</span><br><span class="line"></span><br><span class="line">// Objective-C 的常数被自动转换成 Swift Struct</span><br><span class="line">public struct DCDictionaryKey : Hashable, Equatable, RawRepresentable &#123;</span><br><span class="line">public init(rawValue: String)</span><br><span class="line">&#125;</span><br><span class="line">extension DCDictionaryKey &#123;</span><br><span class="line">public static let title : DCDictionaryKey</span><br><span class="line">public static let subtitle : DCDictionaryKey</span><br><span class="line">public static let count : DCDictionaryKey</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// Store the three traffic light color options as 0, 1, and 2.</span><br><span class="line">typedef long TrafficLightColor NS_TYPED_ENUM;</span><br><span class="line"></span><br><span class="line">FOUNDATION_EXTERN TrafficLightColor const TrafficLightColorRed;</span><br><span class="line">FOUNDATION_EXTERN TrafficLightColor const TrafficLightColorYellow;</span><br><span class="line">FOUNDATION_EXTERN TrafficLightColor const TrafficLightColorGreen;</span><br><span class="line"></span><br><span class="line">// In Swift, the TrafficLightColor type is imported like this:</span><br><span class="line">public struct TrafficLightColor : Hashable, Equatable, RawRepresentable &#123;</span><br><span class="line">public init(rawValue: Int)</span><br><span class="line">&#125;</span><br><span class="line">extension TrafficLightColor &#123;</span><br><span class="line">public static let red: TrafficLightColor</span><br><span class="line">public static let yellow: TrafficLightColor</span><br><span class="line">public static let green: TrafficLightColor</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="NS-STRING-ENUM"><a href="#NS-STRING-ENUM" class="headerlink" title="NS_STRING_ENUM"></a>NS_STRING_ENUM</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">typedef NSString *DCDictionaryKey NS_STRING_ENUM;</span><br><span class="line"></span><br><span class="line">FOUNDATION_EXTERN DCDictionaryKey const DCDictionaryKeyTitle;</span><br><span class="line">FOUNDATION_EXTERN DCDictionaryKey const DCDictionaryKeySubtitle;</span><br><span class="line">FOUNDATION_EXTERN DCDictionaryKey const DCDictionaryKeyCount;</span><br><span class="line"></span><br><span class="line">// Objective-C 的常数被自动转换成 Swift Struct</span><br><span class="line">public struct DCDictionaryKey : Hashable, Equatable, RawRepresentable &#123;</span><br><span class="line">public init(rawValue: String)</span><br><span class="line">&#125;</span><br><span class="line">extension DCDictionaryKey &#123;</span><br><span class="line">public static let title : DCDictionaryKey</span><br><span class="line">public static let subtitle : DCDictionaryKey</span><br><span class="line">public static let count : DCDictionaryKey</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
 <h4 id="NS-TYPED-EXTENSIBLE-ENUM"><a href="#NS-TYPED-EXTENSIBLE-ENUM" class="headerlink" title="NS_TYPED_EXTENSIBLE_ENUM"></a>NS_TYPED_EXTENSIBLE_ENUM</h4><p>用于可扩展的类型常量枚举</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// declared</span><br><span class="line">typedef long FavoriteColor NS_TYPED_EXTENSIBLE_ENUM;</span><br><span class="line">FOUNDATION_EXTERN FavoriteColor const FavoriteColorBlue;</span><br><span class="line"></span><br><span class="line">// imported</span><br><span class="line">public struct FavoriteColor : Hashable, Equatable, RawRepresentable &#123;</span><br><span class="line">public init(_ rawValue: Int)</span><br><span class="line">public init(rawValue: Int)</span><br><span class="line">&#125;</span><br><span class="line">extension FavoriteColor &#123;</span><br><span class="line">public static let blue: FavoriteColor</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// declared</span><br><span class="line">typedef long FavoriteColor NS_TYPED_EXTENSIBLE_ENUM;</span><br><span class="line">FOUNDATION_EXTERN FavoriteColor const FavoriteColorBlue;</span><br><span class="line"></span><br><span class="line">// imported</span><br><span class="line">public struct FavoriteColor : Hashable, Equatable, RawRepresentable &#123;</span><br><span class="line">public init(_ rawValue: Int)</span><br><span class="line">public init(rawValue: Int)</span><br><span class="line">&#125;</span><br><span class="line">extension FavoriteColor &#123;</span><br><span class="line">public static let blue: FavoriteColor</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
 <li><p>使用 NS_ENUM 和 NS_OPTIONS 来声明简单枚举和选项枚举，以优化 Swift 编程体验。</p>
 </li>
 <li><p>NS_CLOSED_ENUM 用于声明不会变更枚举成员的冻结枚举，对应 Swift 中的 @frozen 关键字，以降低灵活性的代价，换取了性能上的提升。</p>
 </li>
-<li><p>NS_STRING_ENUM/NS_EXTENSIBLE_STRING_ENUM、NS_TYPED_ENUM/NS_TYPED_EXTENSIBLE_ENUM 用于声明字符串常量/类型常量枚举，这在混编时在 Swift 中使用起来更简洁优雅更符合 Swift 的使用习惯。</p>
+<li><p>NS_STRING_ENUM&#x2F;NS_EXTENSIBLE_STRING_ENUM、NS_TYPED_ENUM&#x2F;NS_TYPED_EXTENSIBLE_ENUM 用于声明字符串常量&#x2F;类型常量枚举，这在混编时在 Swift 中使用起来更简洁优雅更符合 Swift 的使用习惯。</p>
 </li>
 </ul>
-<h2 id="Objective-C-类型定义-typedef-转换"><a href="#Objective-C-类型定义-typedef-转换" class="headerlink" title="Objective-C 类型定义 typedef 转换"></a>Objective-C 类型定义 typedef 转换</h2><h4 id="NS-SWIFT-BRIDGED-TYPEDEF"><a href="#NS-SWIFT-BRIDGED-TYPEDEF" class="headerlink" title="NS_SWIFT_BRIDGED_TYPEDEF"></a>NS_SWIFT_BRIDGED_TYPEDEF</h4><p>未使用，导致类型冲突<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">typedef NSString * TimerID;</span><br><span class="line"></span><br><span class="line">@interface Timer : NSObject</span><br><span class="line">+ (void)cancelTimer:(TimerID)timerID NS_SWIFT_NAME(cancel(timerID:));</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">public typealias TimerID = NSString</span><br><span class="line"></span><br><span class="line">open class Timer : NSObject &#123;</span><br><span class="line">open class func cancel(timerID: String)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">typedef NSString * TimerID NS_SWIFT_BRIDGED_TYPEDEF;</span><br><span class="line"></span><br><span class="line">@interface Timer : NSObject</span><br><span class="line">+ (void)cancelTimer:(TimerID)timerID NS_SWIFT_NAME(cancel(timerID:));</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">public typealias TimerID = String // change: NSString -&gt; String</span><br><span class="line"></span><br><span class="line">open class Timer : NSObject &#123;</span><br><span class="line">open class func cancel(timerID: TimerID) // change: String -&gt; TimerID</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Objective-C-类型定义-typedef-转换"><a href="#Objective-C-类型定义-typedef-转换" class="headerlink" title="Objective-C 类型定义 typedef 转换"></a>Objective-C 类型定义 typedef 转换</h2><h4 id="NS-SWIFT-BRIDGED-TYPEDEF"><a href="#NS-SWIFT-BRIDGED-TYPEDEF" class="headerlink" title="NS_SWIFT_BRIDGED_TYPEDEF"></a>NS_SWIFT_BRIDGED_TYPEDEF</h4><p>未使用，导致类型冲突</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">typedef NSString * TimerID;</span><br><span class="line"></span><br><span class="line">@interface Timer : NSObject</span><br><span class="line">+ (void)cancelTimer:(TimerID)timerID NS_SWIFT_NAME(cancel(timerID:));</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">public typealias TimerID = NSString</span><br><span class="line"></span><br><span class="line">open class Timer : NSObject &#123;</span><br><span class="line">open class func cancel(timerID: String)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">typedef NSString * TimerID NS_SWIFT_BRIDGED_TYPEDEF;</span><br><span class="line"></span><br><span class="line">@interface Timer : NSObject</span><br><span class="line">+ (void)cancelTimer:(TimerID)timerID NS_SWIFT_NAME(cancel(timerID:));</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">public typealias TimerID = String // change: NSString -&gt; String</span><br><span class="line"></span><br><span class="line">open class Timer : NSObject &#123;</span><br><span class="line">open class func cancel(timerID: TimerID) // change: String -&gt; TimerID</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>除了 NSString，NS_SWIFT_BRIDGED_TYPEDEF 还可以用在 NSDate、NSArray 等其它 Objective-C 类型别名中。</p>
 <h2 id="Objective-C-API-重命名至-Swift"><a href="#Objective-C-API-重命名至-Swift" class="headerlink" title="Objective-C API 重命名至 Swift"></a>Objective-C API 重命名至 Swift</h2><h4 id="NS-SWIFT-NAME"><a href="#NS-SWIFT-NAME" class="headerlink" title="NS_SWIFT_NAME"></a>NS_SWIFT_NAME</h4><ul>
 <li>类、协议（宏用作前缀）</li>
 <li>枚举、属性、方法或函数、类型别名等其它所有类型（宏用作后缀）</li>
 </ul>
-<p>使用前：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">typedef NS_ENUM(NSInteger, DisplayMode) &#123;</span><br><span class="line">DisplayMode256Color,</span><br><span class="line">DisplayModeThousandsOfColors,</span><br><span class="line">DisplayModeMillionsOfColors</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">enum DisplayMode : Int &#123;</span><br><span class="line">case mode256Colors = 0</span><br><span class="line">case modeThousandsOfColors = 1</span><br><span class="line">case modeMillionsOfColors = 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">typedef NS_ENUM(NSInteger, DisplayMode) &#123;</span><br><span class="line">DisplayMode256Colors NS_SWIFT_NAME(with256Colors),</span><br><span class="line">DisplayModeThousandsOfColors,</span><br><span class="line">DisplayModeMillionsOfColors,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">enum DisplayMode : Int &#123;</span><br><span class="line">case with256Colors = 0</span><br><span class="line">case thousandsOfColors = 1</span><br><span class="line">case millionsOfColors = 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用前：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">@interface SandwichPreferences : NSObject</span><br><span class="line">@property BOOL includesCrust;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface Sandwich : NSObject</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">open class SandwichPreferences : NSObject &#123;</span><br><span class="line">open var includesCrust: Bool</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open class Sandwich : NSObject &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">NS_SWIFT_NAME(Sandwich.Preferences) // 宏用作前缀</span><br><span class="line">@interface SandwichPreferences : NSObject</span><br><span class="line">@property BOOL includesCrust NS_SWIFT_NAME(isCrusty); // 宏用作后缀</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface Sandwich : NSObject</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">extension Sandwich &#123;</span><br><span class="line">open class Preferences : NSObject &#123;</span><br><span class="line">open var isCrusty: Bool</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open class Sandwich : NSObject &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用前：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">typedef NS_ENUM(NSInteger, DisplayMode) &#123;</span><br><span class="line">DisplayMode256Color,</span><br><span class="line">DisplayModeThousandsOfColors,</span><br><span class="line">DisplayModeMillionsOfColors</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">enum DisplayMode : Int &#123;</span><br><span class="line">case mode256Colors = 0</span><br><span class="line">case modeThousandsOfColors = 1</span><br><span class="line">case modeMillionsOfColors = 2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用后：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">typedef NS_ENUM(NSInteger, DisplayMode) &#123;</span><br><span class="line">DisplayMode256Colors NS_SWIFT_NAME(with256Colors),</span><br><span class="line">DisplayModeThousandsOfColors,</span><br><span class="line">DisplayModeMillionsOfColors,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">enum DisplayMode : Int &#123;</span><br><span class="line">case with256Colors = 0</span><br><span class="line">case thousandsOfColors = 1</span><br><span class="line">case millionsOfColors = 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>使用前：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">@interface SandwichPreferences : NSObject</span><br><span class="line">@property BOOL includesCrust;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface Sandwich : NSObject</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">open class SandwichPreferences : NSObject &#123;</span><br><span class="line">open var includesCrust: Bool</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open class Sandwich : NSObject &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用后：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// Objective-C Interface</span><br><span class="line">NS_SWIFT_NAME(Sandwich.Preferences) // 宏用作前缀</span><br><span class="line">@interface SandwichPreferences : NSObject</span><br><span class="line">@property BOOL includesCrust NS_SWIFT_NAME(isCrusty); // 宏用作后缀</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface Sandwich : NSObject</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">extension Sandwich &#123;</span><br><span class="line">open class Preferences : NSObject &#123;</span><br><span class="line">open var isCrusty: Bool</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open class Sandwich : NSObject &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>常用的使用方法</strong></p>
 <p>重命名 Objective-C 方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Declare in Objective-C</span><br><span class="line">- (NSSet&lt;NSString *&gt; *)previousMissionsFlownByAstronaut:(SKAstronaut *)astronaut NS_SWIFT_NAME(previousMissions(flownBy:));</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">open func previousMissions(flownBy astronaut: SKAstronaut) -&gt; Set&lt;String&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Declare in Objective-C</span><br><span class="line">- (NSSet&lt;NSString *&gt; *)previousMissionsFlownByAstronaut:(SKAstronaut *)astronaut NS_SWIFT_NAME(previousMissions(flownBy:));</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">open func previousMissions(flownBy astronaut: SKAstronaut) -&gt; Set&lt;String&gt;</span><br></pre></td></tr></table></figure>
+
 <h2 id="为-Swift-改进-Objective-C-API"><a href="#为-Swift-改进-Objective-C-API" class="headerlink" title="为 Swift 改进 Objective-C API"></a>为 Swift 改进 Objective-C API</h2><h4 id="NS-REFINED-FOR-SWIFT"><a href="#NS-REFINED-FOR-SWIFT" class="headerlink" title="NS_REFINED_FOR_SWIFT"></a>NS_REFINED_FOR_SWIFT</h4><p>可用于在 Swift 中隐藏 Objective-C API，以便在 Swift 中提供相同 API 的更好版本，同时仍然可以使用原始 Objective-C 实现。</p>
 <p>生成的 Swift API 将会以双下划线 __ 开头重命名，且在 Swift 中调用时不会有代码补全提示，相当于隐藏了 API。这样可以一定程度上防止调用者意外地直接使用该 Objective-C API，而没有使用适配后的 Swift API。</p>
-<p>使用前：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@interface Color : NSObject</span><br><span class="line"></span><br><span class="line">/// 获取颜色的 rgba 值</span><br><span class="line">- (void)getRed:(nullable CGFloat *)red</span><br><span class="line">green:(nullable CGFloat *)green</span><br><span class="line">blue:(nullable CGFloat *)blue</span><br><span class="line">alpha:(nullable CGFloat *)alpha;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">/// 默认生成的 Swift </span><br><span class="line">open func getRed(_ red: UnsafeMutablePointer&lt;CGFloat&gt;?, </span><br><span class="line">green: UnsafeMutablePointer&lt;CGFloat&gt;?, </span><br><span class="line">blue: UnsafeMutablePointer&lt;CGFloat&gt;?, </span><br><span class="line">alpha: UnsafeMutablePointer&lt;CGFloat&gt;?)</span><br></pre></td></tr></table></figure></p>
+<p>使用前：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@interface Color : NSObject</span><br><span class="line"></span><br><span class="line">/// 获取颜色的 rgba 值</span><br><span class="line">- (void)getRed:(nullable CGFloat *)red</span><br><span class="line">green:(nullable CGFloat *)green</span><br><span class="line">blue:(nullable CGFloat *)blue</span><br><span class="line">alpha:(nullable CGFloat *)alpha;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">/// 默认生成的 Swift </span><br><span class="line">open func getRed(_ red: UnsafeMutablePointer&lt;CGFloat&gt;?, </span><br><span class="line">green: UnsafeMutablePointer&lt;CGFloat&gt;?, </span><br><span class="line">blue: UnsafeMutablePointer&lt;CGFloat&gt;?, </span><br><span class="line">alpha: UnsafeMutablePointer&lt;CGFloat&gt;?)</span><br></pre></td></tr></table></figure>
+
 <p>使用后：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@interface Color : NSObject</span><br><span class="line"></span><br><span class="line">- (void)getRed:(nullable CGFloat *)red</span><br><span class="line">green:(nullable CGFloat *)green</span><br><span class="line">blue:(nullable CGFloat *)blue</span><br><span class="line">alpha:(nullable CGFloat *)alpha NS_REFINED_FOR_SWIFT;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">/// 在 Swift 中增加适配的 API</span><br><span class="line">extension Color &#123;</span><br><span class="line">var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) &#123;</span><br><span class="line">var r: CGFloat = 0.0</span><br><span class="line">var g: CGFloat = 0.0</span><br><span class="line">var b: CGFloat = 0.0</span><br><span class="line">var a: CGFloat = 0.0</span><br><span class="line">__getRed(&amp;r, green: &amp;g, blue: &amp;b, alpha: &amp;a) // 调用默认转换的实现</span><br><span class="line">return (red: r, green: g, blue: b, alpha: a)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用前：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// Declare in Objective-C</span><br><span class="line">@interface MyClass : NSObject</span><br><span class="line">/// 返回值为 NSNotFound 或者 Int</span><br><span class="line">- (NSInteger)indexOfString:(NSString *)aString; </span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">open func index(of aString: String) -&gt; Int</span><br></pre></td></tr></table></figure></p>
-<p>使用后:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass : NSObject</span><br><span class="line">- (NSInteger)indexOfString:(NSString *)aString NS_REFINED_FOR_SWIFT; </span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">extension MyClass &#123;</span><br><span class="line">func index(of aString: String) -&gt; Int? &#123; </span><br><span class="line">let index = Int(__index(of: aString)) </span><br><span class="line">if (index == NSNotFound) &#123;</span><br><span class="line">return nil </span><br><span class="line">&#125;</span><br><span class="line">return index</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@interface Color : NSObject</span><br><span class="line"></span><br><span class="line">- (void)getRed:(nullable CGFloat *)red</span><br><span class="line">green:(nullable CGFloat *)green</span><br><span class="line">blue:(nullable CGFloat *)blue</span><br><span class="line">alpha:(nullable CGFloat *)alpha NS_REFINED_FOR_SWIFT;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">/// 在 Swift 中增加适配的 API</span><br><span class="line">extension Color &#123;</span><br><span class="line">var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) &#123;</span><br><span class="line">var r: CGFloat = 0.0</span><br><span class="line">var g: CGFloat = 0.0</span><br><span class="line">var b: CGFloat = 0.0</span><br><span class="line">var a: CGFloat = 0.0</span><br><span class="line">__getRed(&amp;r, green: &amp;g, blue: &amp;b, alpha: &amp;a) // 调用默认转换的实现</span><br><span class="line">return (red: r, green: g, blue: b, alpha: a)</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用前：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// Declare in Objective-C</span><br><span class="line">@interface MyClass : NSObject</span><br><span class="line">/// 返回值为 NSNotFound 或者 Int</span><br><span class="line">- (NSInteger)indexOfString:(NSString *)aString; </span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">// Generated Swift Interface</span><br><span class="line">open func index(of aString: String) -&gt; Int</span><br></pre></td></tr></table></figure>
+
+<p>使用后:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@interface MyClass : NSObject</span><br><span class="line">- (NSInteger)indexOfString:(NSString *)aString NS_REFINED_FOR_SWIFT; </span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">extension MyClass &#123;</span><br><span class="line">func index(of aString: String) -&gt; Int? &#123; </span><br><span class="line">let index = Int(__index(of: aString)) </span><br><span class="line">if (index == NSNotFound) &#123;</span><br><span class="line">return nil </span><br><span class="line">&#125;</span><br><span class="line">return index</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="API-限制"><a href="#API-限制" class="headerlink" title="API 限制"></a>API 限制</h2><h4 id="NS-SWIFT-UNAVAILABLE"><a href="#NS-SWIFT-UNAVAILABLE" class="headerlink" title="NS_SWIFT_UNAVAILABLE"></a>NS_SWIFT_UNAVAILABLE</h4><p>标记 Objective-C API 在 Swift 中不可用。</p>
 <h2 id="Objective-C-适配-Optional"><a href="#Objective-C-适配-Optional" class="headerlink" title="Objective-C 适配 Optional"></a>Objective-C 适配 Optional</h2><table>
 <thead>
@@ -396,8 +318,7 @@
 <th>意义</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>nullable、_Nullable 、__nullable</td>
 <td>optional，如 String？</td>
 <td>该值可以是 nil</td>
@@ -417,21 +338,20 @@
 <td>隐式解析 optional，如 String!</td>
 <td>可 set 为 nil，重置为默认值，但 getter 永远不会返回 nil。必须重写 setter 或 getter 做非空处理</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h3 id="使用规范"><a href="#使用规范" class="headerlink" title="使用规范"></a>使用规范</h3><ul>
 <li>弃用双下划线版本（如 __nullable）因为 Apple 保留它只是为了与 Xcode 6.3 兼容。</li>
 <li>对于属性以及方法中返回值和参数是简单对象或 Block 的指针类型，使用 nullable 版本；其它都使用 _Nullable 版本。</li>
 </ul>
 <h3 id="使用举例"><a href="#使用举例" class="headerlink" title="使用举例"></a>使用举例</h3><ul>
 <li><p>属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// Preferred</span><br><span class="line">@property (nullable, nonatomic, copy) NSString *name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// Preferred</span><br><span class="line">@property (nullable, nonatomic, copy) NSString *name;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>方法中，返回值和参数是简单对象或 Block 的指针类型，使用 nullable 版本，写在类型前面</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (nullable MyListItem *)itemWithName:(nonnull NSString *)name block:(nullable void (^)(void))block;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (nullable MyListItem *)itemWithName:(nonnull NSString *)name block:(nullable void (^)(void))block;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在 C 函数中，Block 的指针类型只能用 _Nullable 版本了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void block(void (^ _Nullable block)(void));</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void block(void (^ _Nullable block)(void));</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>对于双指针、Block 的返回值、Block 的参数等其它所有支持的指针类型，不能用 nullable 版本修饰，只能使用 _Nullable 版本，写在类型后面</p>
 </li>
@@ -439,351 +359,66 @@
 <blockquote>
 <p>Block 的返回值和参数类型，如果没有指定可空性的话，默认导入到 Swift 中是可选类型，而不是隐式解析可选类型。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)param:(NSString * _Nullable * _Nullable)param;</span><br><span class="line">- (void)param:(_Nullable id * _Nullable)param; // 也可以写成 (id _Nullable * _Nullable)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)param:(NSString * _Nullable * _Nullable)param;</span><br><span class="line">- (void)param:(_Nullable id * _Nullable)param; // 也可以写成 (id _Nullable * _Nullable)</span><br></pre></td></tr></table></figure>
+
 <h4 id="NS-ASSUME-NONNULL-BEGIN-和-NS-ASSUME-NONNULL-END"><a href="#NS-ASSUME-NONNULL-BEGIN-和-NS-ASSUME-NONNULL-END" class="headerlink" title="NS_ASSUME_NONNULL_BEGIN 和 NS_ASSUME_NONNULL_END"></a>NS_ASSUME_NONNULL_BEGIN 和 NS_ASSUME_NONNULL_END</h4><p>默认生成的 OC 类的声明文件内，会自动加上这两个宏。</p>
 <p>在这两个宏之间的代码，所有未指定可空性限定符的简单指针类型都被假定为 nonnull，因此我们只需要去指定那些 nullable 指针类型即可。</p>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/06/13/RxSwift-核心逻辑记录/" rel="next" title="RxSwift 核心逻辑记录">
-                <i class="fa fa-chevron-left"></i> RxSwift 核心逻辑记录
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/08/30/SwiftUI-与-UIKit-混合开发/" rel="prev" title="SwiftUI 与 UIKit 混合开发">
-                SwiftUI 与 UIKit 混合开发 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/06/13/RxSwift-%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%E8%AE%B0%E5%BD%95/" rel="prev" title="RxSwift 核心逻辑记录">
+                  <i class="fa fa-chevron-left"></i> RxSwift 核心逻辑记录
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-枚举宏"><span class="nav-number">1.</span> <span class="nav-text">Objective-C 枚举宏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-ENUM"><span class="nav-number">1.0.1.</span> <span class="nav-text">NS_ENUM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-CLOSED-ENUM"><span class="nav-number">1.0.2.</span> <span class="nav-text">NS_CLOSED_ENUM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-OPTIONS"><span class="nav-number">1.0.3.</span> <span class="nav-text">NS_OPTIONS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-TYPED-ENUM"><span class="nav-number">1.0.4.</span> <span class="nav-text">NS_TYPED_ENUM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-STRING-ENUM"><span class="nav-number">1.0.5.</span> <span class="nav-text">NS_STRING_ENUM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-TYPED-EXTENSIBLE-ENUM"><span class="nav-number">1.0.6.</span> <span class="nav-text">NS_TYPED_EXTENSIBLE_ENUM</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.1.</span> <span class="nav-text">小结</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-类型定义-typedef-转换"><span class="nav-number">2.</span> <span class="nav-text">Objective-C 类型定义 typedef 转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-SWIFT-BRIDGED-TYPEDEF"><span class="nav-number">2.0.1.</span> <span class="nav-text">NS_SWIFT_BRIDGED_TYPEDEF</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-API-重命名至-Swift"><span class="nav-number">3.</span> <span class="nav-text">Objective-C API 重命名至 Swift</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-SWIFT-NAME"><span class="nav-number">3.0.1.</span> <span class="nav-text">NS_SWIFT_NAME</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为-Swift-改进-Objective-C-API"><span class="nav-number">4.</span> <span class="nav-text">为 Swift 改进 Objective-C API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-REFINED-FOR-SWIFT"><span class="nav-number">4.0.1.</span> <span class="nav-text">NS_REFINED_FOR_SWIFT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-限制"><span class="nav-number">5.</span> <span class="nav-text">API 限制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-SWIFT-UNAVAILABLE"><span class="nav-number">5.0.1.</span> <span class="nav-text">NS_SWIFT_UNAVAILABLE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Objective-C-适配-Optional"><span class="nav-number">6.</span> <span class="nav-text">Objective-C 适配 Optional</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用规范"><span class="nav-number">6.1.</span> <span class="nav-text">使用规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用举例"><span class="nav-number">6.2.</span> <span class="nav-text">使用举例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NS-ASSUME-NONNULL-BEGIN-和-NS-ASSUME-NONNULL-END"><span class="nav-number">6.2.1.</span> <span class="nav-text">NS_ASSUME_NONNULL_BEGIN 和 NS_ASSUME_NONNULL_END</span></a></li></ol></li></ol></li></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2020/08/30/SwiftUI-%E4%B8%8E-UIKit-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91/" rel="next" title="SwiftUI 与 UIKit 混合开发">
+                  SwiftUI 与 UIKit 混合开发 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -796,34 +431,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

@@ -1,356 +1,251 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="Property Wrapper, 属性包装器，顾名思义就是包装属性用的。 属性已经有了属性观察器（willSet、didSet）这些方法来帮助我们控制属性的一些行为，为什么还需要属性包装器呢？ 比如说，我们业务中经常需要对属性值进行安全检查或一些其它处理时，我们可以利用属性观察器进行处理。但是，当有很多类似的场景时，我们当然不希望相同的处理逻辑需要写多次，这样我们就可以用属性包装器进行包装了。">
+    <meta name="description" content="Property Wrapper, 属性包装器，顾名思义就是包装属性用的。 属性已经有了属性观察器（willSet、didSet）这些方法来帮助我们控制属性的一些行为，为什么还需要属性包装器呢？ 比如说，我们业务中经常需要对属性值进行安全检查或一些其它处理时，我们可以利用属性观察器进行处理。但是，当有很多类似的场景时，我们当然不希望相同的处理逻辑需要写多次，这样我们就可以用属性包装器进行包装了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Swift 属性包装器">
-<meta property="og:url" content="http://yoursite.com/2020/10/17/Swift-属性包装器/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/10/17/Swift-%E5%B1%9E%E6%80%A7%E5%8C%85%E8%A3%85%E5%99%A8/index.html">
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="Property Wrapper, 属性包装器，顾名思义就是包装属性用的。 属性已经有了属性观察器（willSet、didSet）这些方法来帮助我们控制属性的一些行为，为什么还需要属性包装器呢？ 比如说，我们业务中经常需要对属性值进行安全检查或一些其它处理时，我们可以利用属性观察器进行处理。但是，当有很多类似的场景时，我们当然不希望相同的处理逻辑需要写多次，这样我们就可以用属性包装器进行包装了。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2022-04-06T11:27:55.000Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-10-17T11:23:06.000Z">
+<meta property="article:modified_time" content="2022-04-06T11:27:55.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Swift 属性包装器">
-<meta name="twitter:description" content="Property Wrapper, 属性包装器，顾名思义就是包装属性用的。 属性已经有了属性观察器（willSet、didSet）这些方法来帮助我们控制属性的一些行为，为什么还需要属性包装器呢？ 比如说，我们业务中经常需要对属性值进行安全检查或一些其它处理时，我们可以利用属性观察器进行处理。但是，当有很多类似的场景时，我们当然不希望相同的处理逻辑需要写多次，这样我们就可以用属性包装器进行包装了。">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/10/17/Swift-%E5%B1%9E%E6%80%A7%E5%8C%85%E8%A3%85%E5%99%A8/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2020/10/17/Swift-%E5%B1%9E%E6%80%A7%E5%8C%85%E8%A3%85%E5%99%A8/","path":"2020/10/17/Swift-属性包装器/","title":"Swift 属性包装器"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2020/10/17/Swift-属性包装器/">
-
-
-
-
-
-  <title>Swift 属性包装器 | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Swift 属性包装器 | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0-propertyWrapper"><span class="nav-number">1.</span> <span class="nav-text">怎么实现 @propertyWrapper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E4%BE%8B%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">几个例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UserDefault"><span class="nav-number">2.0.1.</span> <span class="nav-text">UserDefault</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%BB%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%A9%BA%E6%A0%BC"><span class="nav-number">2.0.2.</span> <span class="nav-text">去除字符串中的空格</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/17/Swift-属性包装器/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/17/Swift-%E5%B1%9E%E6%80%A7%E5%8C%85%E8%A3%85%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Swift 属性包装器 | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Swift 属性包装器
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">Swift 属性包装器</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-17T19:23:06+08:00">
-                2020-10-17
-              </time>
-            
+      <time title="Created: 2020-10-17 19:23:06" itemprop="dateCreated datePublished" datetime="2020-10-17T19:23:06+08:00">2020-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-04-06 19:27:55" itemprop="dateModified" datetime="2022-04-06T19:27:55+08:00">2022-04-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Swift-Tips/" itemprop="url" rel="index"><span itemprop="name">Swift Tips</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Swift-Tips/" itemprop="url" rel="index">
-                    <span itemprop="name">Swift Tips</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         <p>Property Wrapper, 属性包装器，顾名思义就是包装属性用的。</p>
 <p>属性已经有了属性观察器（willSet、didSet）这些方法来帮助我们控制属性的一些行为，为什么还需要属性包装器呢？</p>
 <p>比如说，我们业务中经常需要对属性值进行安全检查或一些其它处理时，我们可以利用属性观察器进行处理。但是，当有很多类似的场景时，我们当然不希望相同的处理逻辑需要写多次，这样我们就可以用属性包装器进行包装了。</p>
-<p>包装后的属性多了哪些东西呢，一般属性包装器是一个 ​​struct​（也可以是 ​​class​ ），有一个 ​​wrappedValue​ 属性作为被包装属性的实际值。属性包装器可以是一个泛型类型，其泛型参数就是被包装属性的类型，由于属性包装器是一个 ​​struct​/​​class​，所以可以有的东西它也不会少，可以定义额外的属性和方法等来帮助属性额外逻辑的实现。</p>
-<a id="more"></a>
+<p>包装后的属性多了哪些东西呢，一般属性包装器是一个 ​​struct​（也可以是 ​​class​ ），有一个 ​​wrappedValue​ 属性作为被包装属性的实际值。属性包装器可以是一个泛型类型，其泛型参数就是被包装属性的类型，由于属性包装器是一个 ​​struct​&#x2F;​​class​，所以可以有的东西它也不会少，可以定义额外的属性和方法等来帮助属性额外逻辑的实现。</p>
+<span id="more"></span>
+
 <blockquote>
 <p>属性观察器监控和响应属性值的变化，每次属性被设置值的时候都会调用属性观察器，即使新值和当前值相同的时候也不例外。</p>
 </blockquote>
 <h2 id="怎么实现-propertyWrapper"><a href="#怎么实现-propertyWrapper" class="headerlink" title="怎么实现 @propertyWrapper"></a>怎么实现 @propertyWrapper</h2><p>这里实现一个简单的<strong>范围控制属性控制器</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">@propertyWrapper</span><br><span class="line">struct RangeValid&lt;Value: Comparable&gt; &#123;</span><br><span class="line">    private var _min: Value?</span><br><span class="line">    private var _max: Value?</span><br><span class="line">    private var _value: Value</span><br><span class="line">    private(set) var projectedValue: Bool</span><br><span class="line"></span><br><span class="line">    init(wrappedValue: Value, min: Value? = nil, max: Value? = nil) &#123;</span><br><span class="line">        self._min = min</span><br><span class="line">        self._max = max</span><br><span class="line">        self._value = wrappedValue</span><br><span class="line"></span><br><span class="line">        adjust(value: wrappedValue)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    var wrappedValue: Value &#123;</span><br><span class="line">        get &#123;</span><br><span class="line">            return self._value</span><br><span class="line">        &#125;</span><br><span class="line">        set &#123;</span><br><span class="line">            update(value: newValue)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private func adjust(value newValue: Value) &#123;</span><br><span class="line">        if let min = _min, newValue &lt; min &#123;</span><br><span class="line">            self._value = min</span><br><span class="line">            projectedValue = false</span><br><span class="line">        &#125; else if let max = _max, newValue &gt; max &#123;</span><br><span class="line">            self._value = max</span><br><span class="line">            projectedValue = false</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            self._value = newValue</span><br><span class="line">            projectedValue = true</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct TestStructure &#123;</span><br><span class="line">    @RangeValid(min: 1, max: 100) var score: Int = 60</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let test = TestStructure()</span><br><span class="line">print(test.score)       // 60</span><br><span class="line">print(test.$score)      // true      </span><br><span class="line"></span><br><span class="line">test.score = 150</span><br><span class="line">print(test.score)       // 100</span><br><span class="line">print(test.$score)      // false   </span><br><span class="line"></span><br><span class="line">test.score = -10</span><br><span class="line">print(test.score)       // 0</span><br><span class="line">print(test.$score)      // false</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">@propertyWrapper</span><br><span class="line">struct RangeValid&lt;Value: Comparable&gt; &#123;</span><br><span class="line">    private var _min: Value?</span><br><span class="line">    private var _max: Value?</span><br><span class="line">    private var _value: Value</span><br><span class="line">    private(set) var projectedValue: Bool</span><br><span class="line"></span><br><span class="line">    init(wrappedValue: Value, min: Value? = nil, max: Value? = nil) &#123;</span><br><span class="line">        self._min = min</span><br><span class="line">        self._max = max</span><br><span class="line">        self._value = wrappedValue</span><br><span class="line"></span><br><span class="line">        adjust(value: wrappedValue)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    var wrappedValue: Value &#123;</span><br><span class="line">        get &#123;</span><br><span class="line">            return self._value</span><br><span class="line">        &#125;</span><br><span class="line">        set &#123;</span><br><span class="line">            update(value: newValue)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private func adjust(value newValue: Value) &#123;</span><br><span class="line">        if let min = _min, newValue &lt; min &#123;</span><br><span class="line">            self._value = min</span><br><span class="line">            projectedValue = false</span><br><span class="line">        &#125; else if let max = _max, newValue &gt; max &#123;</span><br><span class="line">            self._value = max</span><br><span class="line">            projectedValue = false</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            self._value = newValue</span><br><span class="line">            projectedValue = true</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct TestStructure &#123;</span><br><span class="line">    @RangeValid(min: 1, max: 100) var score: Int = 60</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let test = TestStructure()</span><br><span class="line">print(test.score)       // 60</span><br><span class="line">print(test.$score)      // true      </span><br><span class="line"></span><br><span class="line">test.score = 150</span><br><span class="line">print(test.score)       // 100</span><br><span class="line">print(test.$score)      // false   </span><br><span class="line"></span><br><span class="line">test.score = -10</span><br><span class="line">print(test.score)       // 0</span><br><span class="line">print(test.$score)      // false  </span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>_min、 _max</li>
 </ul>
@@ -364,8 +259,10 @@
 </ul>
 <p>映射值，在被修饰的属性前加上 $ 符号，调用的就是 projectedValue 的 get 方法。这个名称也不能更改。</p>
 <p>属性包装器可以返回任何类型的值作为它的被映射值。</p>
-<h2 id="几个例子"><a href="#几个例子" class="headerlink" title="几个例子"></a>几个例子</h2><h4 id="UserDefault"><a href="#UserDefault" class="headerlink" title="UserDefault"></a>UserDefault</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@propertyWrapper</span><br><span class="line">struct UserDefaultWrapper&lt;Value: UserDefaultsSerializable&gt; &#123;</span><br><span class="line">    private let _userDefaults: UserDefaults</span><br><span class="line"></span><br><span class="line">    private var key: String</span><br><span class="line">    </span><br><span class="line">    private var defaultValue: Value?</span><br><span class="line">    </span><br><span class="line">    init(key: String, defaultValue: Value? = nil, userDefault: UserDefaults = .standard) &#123;&#125;</span><br><span class="line">        self.key = key</span><br><span class="line">        self.defaultValue = defaultValue</span><br><span class="line">        self._userDefaults = userDefault</span><br><span class="line"></span><br><span class="line">        // 对key所对应的值进行初始化（已有值则跳过，没有则进行初始化）</span><br><span class="line">        userDefaults.registerDefault(value: defaultValue, key: key)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    var wrappedValue: Value? &#123;</span><br><span class="line">        get &#123;</span><br><span class="line">            return _userDefaults.object(forKey: key) as? Value ?? defaultValue</span><br><span class="line">        &#125;</span><br><span class="line">        set &#123;</span><br><span class="line">            if (newValue == nil) &#123;</span><br><span class="line">                _userDefaults.removeObject(forKey: key)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                _userDefaults.setValue(newValue, forKey: key)</span><br><span class="line">            &#125;</span><br><span class="line">            _userDefaults.synchronize()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="去除字符串中的空格"><a href="#去除字符串中的空格" class="headerlink" title="去除字符串中的空格"></a>去除字符串中的空格</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@propertyWrapper</span><br><span class="line">struct StringWrapper &#123;</span><br><span class="line">    private var value: String?</span><br><span class="line">        </span><br><span class="line">    var wrappedValue: String &#123;</span><br><span class="line">        get &#123;</span><br><span class="line">            return self.value ?? &quot;&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        set &#123;</span><br><span class="line">            self.value = adjust(value: newValue)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private func adjust(value newValue: String) -&gt; String &#123;</span><br><span class="line">        return newValue.trimmingCharacters(in: .whitespacesAndNewlines)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct SomeStructure &#123;</span><br><span class="line">    @StringWrapper var name: String</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var s = SomeStructure()</span><br><span class="line">s.name = &quot;  哈哈哈哈   &quot;</span><br><span class="line">print(s.name)       // 哈哈哈哈</span><br></pre></td></tr></table></figure>
+<h2 id="几个例子"><a href="#几个例子" class="headerlink" title="几个例子"></a>几个例子</h2><h4 id="UserDefault"><a href="#UserDefault" class="headerlink" title="UserDefault"></a>UserDefault</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">@propertyWrapper</span><br><span class="line">struct UserDefaultWrapper&lt;Value: UserDefaultsSerializable&gt; &#123;</span><br><span class="line">    private let _userDefaults: UserDefaults</span><br><span class="line"></span><br><span class="line">    private var key: String</span><br><span class="line">    </span><br><span class="line">    private var defaultValue: Value?</span><br><span class="line">    </span><br><span class="line">    init(key: String, defaultValue: Value? = nil, userDefault: UserDefaults = .standard) &#123;&#125;</span><br><span class="line">        self.key = key</span><br><span class="line">        self.defaultValue = defaultValue</span><br><span class="line">        self._userDefaults = userDefault</span><br><span class="line"></span><br><span class="line">        // 对key所对应的值进行初始化（已有值则跳过，没有则进行初始化）</span><br><span class="line">        userDefaults.registerDefault(value: defaultValue, key: key)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    var wrappedValue: Value? &#123;</span><br><span class="line">        get &#123;</span><br><span class="line">            return _userDefaults.object(forKey: key) as? Value ?? defaultValue</span><br><span class="line">        &#125;</span><br><span class="line">        set &#123;</span><br><span class="line">            if (newValue == nil) &#123;</span><br><span class="line">                _userDefaults.removeObject(forKey: key)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                _userDefaults.setValue(newValue, forKey: key)</span><br><span class="line">            &#125;</span><br><span class="line">            _userDefaults.synchronize()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="去除字符串中的空格"><a href="#去除字符串中的空格" class="headerlink" title="去除字符串中的空格"></a>去除字符串中的空格</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@propertyWrapper</span><br><span class="line">struct StringWrapper &#123;</span><br><span class="line">    private var value: String?</span><br><span class="line">        </span><br><span class="line">    var wrappedValue: String &#123;</span><br><span class="line">        get &#123;</span><br><span class="line">            return self.value ?? &quot;&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        set &#123;</span><br><span class="line">            self.value = adjust(value: newValue)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private func adjust(value newValue: String) -&gt; String &#123;</span><br><span class="line">        return newValue.trimmingCharacters(in: .whitespacesAndNewlines)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct SomeStructure &#123;</span><br><span class="line">    @StringWrapper var name: String</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var s = SomeStructure()</span><br><span class="line">s.name = &quot;  哈哈哈哈   &quot;</span><br><span class="line">print(s.name)       // 哈哈哈哈</span><br></pre></td></tr></table></figure>
+
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
 <li>@propertyWrapper 的本质就是包装修饰属性的 set get 方法。</li>
 <li>@propertyWrapper 可以有效降低代码重复率。</li>
@@ -379,347 +276,61 @@
 <li>不能在协议或扩展中声明带有包装器的属性。</li>
 </ul>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/08/30/SwiftUI-与-UIKit-混合开发/" rel="next" title="SwiftUI 与 UIKit 混合开发">
-                <i class="fa fa-chevron-left"></i> SwiftUI 与 UIKit 混合开发
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/10/28/UILabel高亮显示/" rel="prev" title="UILabel高亮显示">
-                UILabel高亮显示 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/08/30/SwiftUI-%E4%B8%8E-UIKit-%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91/" rel="prev" title="SwiftUI 与 UIKit 混合开发">
+                  <i class="fa fa-chevron-left"></i> SwiftUI 与 UIKit 混合开发
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么实现-propertyWrapper"><span class="nav-number">1.</span> <span class="nav-text">怎么实现 @propertyWrapper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几个例子"><span class="nav-number">2.</span> <span class="nav-text">几个例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UserDefault"><span class="nav-number">2.0.1.</span> <span class="nav-text">UserDefault</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#去除字符串中的空格"><span class="nav-number">2.0.2.</span> <span class="nav-text">去除字符串中的空格</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2020/10/28/UILabel%E9%AB%98%E4%BA%AE%E6%98%BE%E7%A4%BA/" rel="next" title="UILabel高亮显示">
+                  UILabel高亮显示 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -732,34 +343,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

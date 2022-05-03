@@ -1,355 +1,249 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="数据是新时代的石油。——克莱夫·哈姆比(英国数据科学家及数学家) 拷问数据，它会坦白一切。——罗纳德·科斯(英国经济学家、作家及1991年诺贝尔经济学奖获奖者) 数据的重要性不言而喻。 在 iOS 开发中，埋点可以解决两大类问题：一是了解用户使用 App 的行为，二是降低分析线上问题的难度。目前，iOS 开发中常见的埋点方式，主要包括代码埋点、可视化埋点和无痕埋点这三种。">
+    <meta name="description" content="数据是新时代的石油。——克莱夫·哈姆比(英国数据科学家及数学家) 拷问数据，它会坦白一切。——罗纳德·科斯(英国经济学家、作家及1991年诺贝尔经济学奖获奖者) 数据的重要性不言而喻。 在 iOS 开发中，埋点可以解决两大类问题：一是了解用户使用 App 的行为，二是降低分析线上问题的难度。目前，iOS 开发中常见的埋点方式，主要包括代码埋点、可视化埋点和无痕埋点这三种。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 无痕埋点实现">
-<meta property="og:url" content="http://yoursite.com/2019/11/10/iOS无痕埋点实现/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="数据是新时代的石油。——克莱夫·哈姆比(英国数据科学家及数学家) 拷问数据，它会坦白一切。——罗纳德·科斯(英国经济学家、作家及1991年诺贝尔经济学奖获奖者) 数据的重要性不言而喻。 在 iOS 开发中，埋点可以解决两大类问题：一是了解用户使用 App 的行为，二是降低分析线上问题的难度。目前，iOS 开发中常见的埋点方式，主要包括代码埋点、可视化埋点和无痕埋点这三种。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/11/10/iOS无痕埋点实现/埋点1.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/10/iOS无痕埋点实现/埋点2.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/10/iOS无痕埋点实现/埋点3.png">
-<meta property="og:updated_time" content="2020-08-08T16:15:02.000Z">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/%E5%9F%8B%E7%82%B91.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/%E5%9F%8B%E7%82%B92.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/%E5%9F%8B%E7%82%B93.png">
+<meta property="article:published_time" content="2019-11-10T03:51:21.000Z">
+<meta property="article:modified_time" content="2020-08-08T16:15:02.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS 无痕埋点实现">
-<meta name="twitter:description" content="数据是新时代的石油。——克莱夫·哈姆比(英国数据科学家及数学家) 拷问数据，它会坦白一切。——罗纳德·科斯(英国经济学家、作家及1991年诺贝尔经济学奖获奖者) 数据的重要性不言而喻。 在 iOS 开发中，埋点可以解决两大类问题：一是了解用户使用 App 的行为，二是降低分析线上问题的难度。目前，iOS 开发中常见的埋点方式，主要包括代码埋点、可视化埋点和无痕埋点这三种。">
-<meta name="twitter:image" content="http://yoursite.com/2019/11/10/iOS无痕埋点实现/埋点1.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/%E5%9F%8B%E7%82%B91.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/","path":"2019/11/10/iOS无痕埋点实现/","title":"iOS 无痕埋点实现"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2019/11/10/iOS无痕埋点实现/">
-
-
-
-
-
-  <title>iOS 无痕埋点实现 | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>iOS 无痕埋点实现 | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%8B%E7%82%B9%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">埋点方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">无痕埋点实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86"><span class="nav-number">2.1.</span> <span class="nav-text">数据收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Appdelegate"><span class="nav-number">2.1.2.</span> <span class="nav-text">Appdelegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIViewController"><span class="nav-number">2.1.3.</span> <span class="nav-text">UIViewController</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIControl"><span class="nav-number">2.1.4.</span> <span class="nav-text">UIControl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionView%E3%80%81UITableView"><span class="nav-number">2.1.5.</span> <span class="nav-text">UICollectionView、UITableView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UITapGestureRecognizer"><span class="nav-number">2.1.6.</span> <span class="nav-text">UITapGestureRecognizer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E4%BB%B6%E7%9A%84%E5%94%AF%E4%B8%80%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="nav-number">2.2.</span> <span class="nav-text">控件的唯一标识符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/10/iOS无痕埋点实现/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="iOS 无痕埋点实现 | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS 无痕埋点实现
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">iOS 无痕埋点实现</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-10T11:51:21+08:00">
-                2019-11-10
-              </time>
-            
+      <time title="Created: 2019-11-10 11:51:21" itemprop="dateCreated datePublished" datetime="2019-11-10T11:51:21+08:00">2019-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-08-09 00:15:02" itemprop="dateModified" datetime="2020-08-09T00:15:02+08:00">2020-08-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/APM%E7%B3%BB%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">APM系列</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/APM系列/" itemprop="url" rel="index">
-                    <span itemprop="name">APM系列</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         <p>数据是新时代的石油。——克莱夫·哈姆比(英国数据科学家及数学家)</p>
 <p>拷问数据，它会坦白一切。——罗纳德·科斯(英国经济学家、作家及1991年诺贝尔经济学奖获奖者)</p>
 <p>数据的重要性不言而喻。</p>
 <p>在 iOS 开发中，埋点可以解决两大类问题：一是了解用户使用 App 的行为，二是降低分析线上问题的难度。目前，iOS 开发中常见的埋点方式，主要包括代码埋点、可视化埋点和无痕埋点这三种。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <h1 id="埋点方法"><a href="#埋点方法" class="headerlink" title="埋点方法"></a>埋点方法</h1><ul>
 <li><p>代码埋点 </p>
 <p>  通过手写代码的方式来埋点，能很精确的在需要埋点的代码处加上埋点的代码，可以很方便地记录当前环境的变量值，方便调试，并跟踪埋点内容，但存在开发工作量大，并且埋点代码到处都是，后期难以维护等问题。</p>
@@ -368,8 +262,7 @@
 <th>事件</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>App状态切换</td>
 <td>监听通知</td>
 </tr>
@@ -389,30 +282,34 @@
 <td>手势事件 UITapGestureRecognizer</td>
 <td>相应系统事件</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>具体看下方的代码。</p>
 <p>需要注意的是，假如项目中还有其它的类也 hook 了相同的方法，则执行顺序与 Compile Sources 中的顺序相反。</p>
 <ul>
 <li>Compile Sources 顺序</li>
 </ul>
-<img src="/2019/11/10/iOS无痕埋点实现/埋点1.png" title="效果图">
+<img src="/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/%E5%9F%8B%E7%82%B91.png" class="" title="效果图">
+
 <ul>
 <li>执行顺序</li>
 </ul>
-<img src="/2019/11/10/iOS无痕埋点实现/埋点2.png" title="效果图">
+<img src="/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/%E5%9F%8B%E7%82%B92.png" class="" title="效果图">
+
 <!-- https://blog.csdn.net/SandyLoo/article/details/81202105?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.channel_param#唯一标识问题 -->
+
 <!-- https://github.com/FantasticLBP/knowledge-kit/blob/master/Chapter1%20-%20iOS/1.55.md -->
+
 <!-- http://yulingtianxia.com/blog/2016/03/28/Add-UITest-Label-for-UIAutomation/ -->
 <!-- http://yulingtianxia.com/blog/2018/08/13/TBUIAutoTest-Usage/ -->
+
 <!-- https://blog.csdn.net/ciwei_numberone/article/details/46006095  iOS 继承体系 -->
+
 <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
 <li>说明</li>
 </ul>
 <p>先写一个 NSObject 的分类，添加一个交换方法的扩展方法。</p>
 <ul>
-<li>代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;NSObject+MethodSwizzle.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation NSObject (MethodSwizzle)</span><br><span class="line"></span><br><span class="line">+ (void)my_classMethodSwizzleWithClass:(Class)class originalSelector:(SEL)originalSelector swizzleSelector:(SEL)swizzleSelector &#123;</span><br><span class="line">    Class realClass = object_getClass(class);</span><br><span class="line">    Method originalMethod = class_getClassMethod(realClass, originalSelector);</span><br><span class="line">    Method swizzleMethod = class_getClassMethod(realClass, swizzleSelector);</span><br><span class="line">    if (!originalMethod || !swizzleMethod) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class_addMethod(realClass,</span><br><span class="line">                    originalSelector,</span><br><span class="line">                    method_getImplementation(originalMethod),</span><br><span class="line">                    method_getTypeEncoding(originalMethod));</span><br><span class="line">    class_addMethod(realClass,</span><br><span class="line">                    swizzleSelector,</span><br><span class="line">                    method_getImplementation(swizzleMethod),</span><br><span class="line">                    method_getTypeEncoding(swizzleMethod));</span><br><span class="line"></span><br><span class="line">    Method originalMethod2 = class_getClassMethod(class, originalSelector);</span><br><span class="line">    Method swizzleMethod2 = class_getClassMethod(class, swizzleSelector);</span><br><span class="line">    method_exchangeImplementations(originalMethod2, swizzleMethod2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)my_instanceMethodSwizzleWithClass:(Class)class originalSelector:(SEL)originalSelector swizzleSelector:(SEL)swizzleSelector &#123;</span><br><span class="line">    Method originalMethod = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">    Method swizzleMethod = class_getInstanceMethod(class, swizzleSelector);</span><br><span class="line"></span><br><span class="line">    if (!originalMethod || !swizzleMethod) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class_addMethod(class,</span><br><span class="line">                    originalSelector,</span><br><span class="line">                    method_getImplementation(originalMethod),</span><br><span class="line">                    method_getTypeEncoding(originalMethod));</span><br><span class="line">    class_addMethod(class,</span><br><span class="line">                    swizzleSelector,</span><br><span class="line">                    method_getImplementation(swizzleMethod),</span><br><span class="line">                    method_getTypeEncoding(swizzleMethod));</span><br><span class="line"></span><br><span class="line">    Method originalMethod2 = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">    Method swizzleMethod2 = class_getInstanceMethod(class, swizzleSelector);</span><br><span class="line">    method_exchangeImplementations(originalMethod2, swizzleMethod2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-</li>
+<li>代码<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;NSObject+MethodSwizzle.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line"></span><br><span class="line">@implementation NSObject (MethodSwizzle)</span><br><span class="line"></span><br><span class="line">+ (void)my_classMethodSwizzleWithClass:(Class)class originalSelector:(SEL)originalSelector swizzleSelector:(SEL)swizzleSelector &#123;</span><br><span class="line">    Class realClass = object_getClass(class);</span><br><span class="line">    Method originalMethod = class_getClassMethod(realClass, originalSelector);</span><br><span class="line">    Method swizzleMethod = class_getClassMethod(realClass, swizzleSelector);</span><br><span class="line">    if (!originalMethod || !swizzleMethod) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class_addMethod(realClass,</span><br><span class="line">                    originalSelector,</span><br><span class="line">                    method_getImplementation(originalMethod),</span><br><span class="line">                    method_getTypeEncoding(originalMethod));</span><br><span class="line">    class_addMethod(realClass,</span><br><span class="line">                    swizzleSelector,</span><br><span class="line">                    method_getImplementation(swizzleMethod),</span><br><span class="line">                    method_getTypeEncoding(swizzleMethod));</span><br><span class="line"></span><br><span class="line">    Method originalMethod2 = class_getClassMethod(class, originalSelector);</span><br><span class="line">    Method swizzleMethod2 = class_getClassMethod(class, swizzleSelector);</span><br><span class="line">    method_exchangeImplementations(originalMethod2, swizzleMethod2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)my_instanceMethodSwizzleWithClass:(Class)class originalSelector:(SEL)originalSelector swizzleSelector:(SEL)swizzleSelector &#123;</span><br><span class="line">    Method originalMethod = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">    Method swizzleMethod = class_getInstanceMethod(class, swizzleSelector);</span><br><span class="line"></span><br><span class="line">    if (!originalMethod || !swizzleMethod) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class_addMethod(class,</span><br><span class="line">                    originalSelector,</span><br><span class="line">                    method_getImplementation(originalMethod),</span><br><span class="line">                    method_getTypeEncoding(originalMethod));</span><br><span class="line">    class_addMethod(class,</span><br><span class="line">                    swizzleSelector,</span><br><span class="line">                    method_getImplementation(swizzleMethod),</span><br><span class="line">                    method_getTypeEncoding(swizzleMethod));</span><br><span class="line"></span><br><span class="line">    Method originalMethod2 = class_getInstanceMethod(class, originalSelector);</span><br><span class="line">    Method swizzleMethod2 = class_getInstanceMethod(class, swizzleSelector);</span><br><span class="line">    method_exchangeImplementations(originalMethod2, swizzleMethod2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="Appdelegate"><a href="#Appdelegate" class="headerlink" title="Appdelegate"></a>Appdelegate</h3><ul>
 <li>说明</li>
@@ -421,33 +318,34 @@
 <ul>
 <li>代码</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">@implementation BehaviorAnalysisManager</span><br><span class="line">#pragma mark - single</span><br><span class="line">static BehaviorAnalysisManager *_manager;</span><br><span class="line">+ (instancetype)shareInstance &#123;</span><br><span class="line">    return [[self alloc]init];;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (id)allocWithZone:(NSZone *)zone &#123;</span><br><span class="line">    static dispatch_once_t token;</span><br><span class="line">    dispatch_once(&amp;token, ^&#123;</span><br><span class="line">        if(_manager == nil) &#123;</span><br><span class="line">            _manager = [super allocWithZone:zone];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    return _manager;</span><br><span class="line">&#125;</span><br><span class="line">- (id)copyWithZone:(NSZone *)zone &#123;</span><br><span class="line">    return [BehaviorAnalysisManager shareInstance];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">- (id)mutableCopyWithZone:(NSZone *)zone &#123;</span><br><span class="line">    return [BehaviorAnalysisManager shareInstance];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#pragma mark - monitor</span><br><span class="line">- (void)startManager &#123;</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateEventHandler:) name:UIApplicationDidBecomeActiveNotification object:nil];</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateEventHandler:) name:UIApplicationDidEnterBackgroundNotification object:nil];</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateEventHandler:) name:UIApplicationWillEnterForegroundNotification object:nil];</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateEventHandler:) name:UIApplicationWillResignActiveNotification object:nil];</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateEventHandler:) name:UIApplicationWillTerminateNotification object:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)appStateEventHandler:(NSNotification *)noti &#123;</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————App State: %@&quot;, noti.name);</span><br><span class="line">    </span><br><span class="line">    // MARK : 根据对应的状态做自己想做的事</span><br><span class="line">    if ([noti.name isEqualToString:UIApplicationDidBecomeActiveNotification]) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; else if ([noti.name isEqualToString:UIApplicationDidEnterBackgroundNotification]) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; else if ([noti.name isEqualToString:UIApplicationWillEnterForegroundNotification]) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; else if ([noti.name isEqualToString:UIApplicationWillResignActiveNotification]) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; else if ([noti.name isEqualToString:UIApplicationWillTerminateNotification]) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">@implementation BehaviorAnalysisManager</span><br><span class="line">#pragma mark - single</span><br><span class="line">static BehaviorAnalysisManager *_manager;</span><br><span class="line">+ (instancetype)shareInstance &#123;</span><br><span class="line">    return [[self alloc]init];;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (id)allocWithZone:(NSZone *)zone &#123;</span><br><span class="line">    static dispatch_once_t token;</span><br><span class="line">    dispatch_once(&amp;token, ^&#123;</span><br><span class="line">        if(_manager == nil) &#123;</span><br><span class="line">            _manager = [super allocWithZone:zone];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    return _manager;</span><br><span class="line">&#125;</span><br><span class="line">- (id)copyWithZone:(NSZone *)zone &#123;</span><br><span class="line">    return [BehaviorAnalysisManager shareInstance];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">- (id)mutableCopyWithZone:(NSZone *)zone &#123;</span><br><span class="line">    return [BehaviorAnalysisManager shareInstance];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#pragma mark - monitor</span><br><span class="line">- (void)startManager &#123;</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateEventHandler:) name:UIApplicationDidBecomeActiveNotification object:nil];</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateEventHandler:) name:UIApplicationDidEnterBackgroundNotification object:nil];</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateEventHandler:) name:UIApplicationWillEnterForegroundNotification object:nil];</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateEventHandler:) name:UIApplicationWillResignActiveNotification object:nil];</span><br><span class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateEventHandler:) name:UIApplicationWillTerminateNotification object:nil];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)appStateEventHandler:(NSNotification *)noti &#123;</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————App State: %@&quot;, noti.name);</span><br><span class="line">    </span><br><span class="line">    // MARK : 根据对应的状态做自己想做的事</span><br><span class="line">    if ([noti.name isEqualToString:UIApplicationDidBecomeActiveNotification]) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; else if ([noti.name isEqualToString:UIApplicationDidEnterBackgroundNotification]) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; else if ([noti.name isEqualToString:UIApplicationWillEnterForegroundNotification]) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; else if ([noti.name isEqualToString:UIApplicationWillResignActiveNotification]) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125; else if ([noti.name isEqualToString:UIApplicationWillTerminateNotification]) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+
 <h3 id="UIViewController"><a href="#UIViewController" class="headerlink" title="UIViewController"></a>UIViewController</h3><ul>
 <li>说明</li>
 </ul>
 <p>直接在 UIVIewController 的分类中，hook 对应的生命周期函数，在对应的生命周期加入对应的埋点代码。</p>
 <p>可以根据当前展示控制器的类名，标识生命周期所属的 UIViewController。就可以跟踪到具体的展示页面了。</p>
 <ul>
-<li>代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIViewController+baHooks.h&quot;</span><br><span class="line">#import &quot;NSObject+MethodSwizzle.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation UIViewController (baHooks)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        @autoreleasepool &#123;</span><br><span class="line">            [self my_instanceMethodSwizzleWithClass:UIViewController.class originalSelector:@selector(viewWillAppear:) swizzleSelector:@selector(ba_viewWillAppear:)];</span><br><span class="line">            [self my_instanceMethodSwizzleWithClass:UIViewController.class originalSelector:@selector(viewDidAppear:) swizzleSelector:@selector(ba_viewDidAppear:)];</span><br><span class="line">            [self my_instanceMethodSwizzleWithClass:UIViewController.class originalSelector:@selector(viewWillDisappear:) swizzleSelector:@selector(ba_viewWillDisappear:)];</span><br><span class="line">            [self my_instanceMethodSwizzleWithClass:UIViewController.class originalSelector:@selector(viewDidDisappear:) swizzleSelector:@selector(ba_viewDidDisappear:)];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_viewWillAppear:(BOOL)animated &#123;</span><br><span class="line">    NSLog(@&quot;UIViewController hooks:——————%@ ba_viewWillAppear&quot;, NSStringFromClass(self.class));</span><br><span class="line">    [self ba_viewWillAppear:animated];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_viewDidAppear:(BOOL)animated &#123;</span><br><span class="line">    NSLog(@&quot;UIViewController hooks:——————%@ ba_viewDidAppear&quot;, NSStringFromClass(self.class));</span><br><span class="line">    [self ba_viewDidAppear:animated];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_viewWillDisappear:(BOOL)animated &#123;</span><br><span class="line">    NSLog(@&quot;UIViewController hooks:——————%@ ba_viewWillDisappear&quot;, NSStringFromClass(self.class));</span><br><span class="line">    [self ba_viewWillDisappear:animated];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_viewDidDisappear:(BOOL)animated &#123;</span><br><span class="line">    NSLog(@&quot;UIViewController hooks:——————%@ ba_viewDidDisappear&quot;, NSStringFromClass(self.class));</span><br><span class="line">    [self ba_viewDidDisappear:animated];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-</li>
+<li>代码<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIViewController+baHooks.h&quot;</span><br><span class="line">#import &quot;NSObject+MethodSwizzle.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation UIViewController (baHooks)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        @autoreleasepool &#123;</span><br><span class="line">            [self my_instanceMethodSwizzleWithClass:UIViewController.class originalSelector:@selector(viewWillAppear:) swizzleSelector:@selector(ba_viewWillAppear:)];</span><br><span class="line">            [self my_instanceMethodSwizzleWithClass:UIViewController.class originalSelector:@selector(viewDidAppear:) swizzleSelector:@selector(ba_viewDidAppear:)];</span><br><span class="line">            [self my_instanceMethodSwizzleWithClass:UIViewController.class originalSelector:@selector(viewWillDisappear:) swizzleSelector:@selector(ba_viewWillDisappear:)];</span><br><span class="line">            [self my_instanceMethodSwizzleWithClass:UIViewController.class originalSelector:@selector(viewDidDisappear:) swizzleSelector:@selector(ba_viewDidDisappear:)];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_viewWillAppear:(BOOL)animated &#123;</span><br><span class="line">    NSLog(@&quot;UIViewController hooks:——————%@ ba_viewWillAppear&quot;, NSStringFromClass(self.class));</span><br><span class="line">    [self ba_viewWillAppear:animated];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_viewDidAppear:(BOOL)animated &#123;</span><br><span class="line">    NSLog(@&quot;UIViewController hooks:——————%@ ba_viewDidAppear&quot;, NSStringFromClass(self.class));</span><br><span class="line">    [self ba_viewDidAppear:animated];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_viewWillDisappear:(BOOL)animated &#123;</span><br><span class="line">    NSLog(@&quot;UIViewController hooks:——————%@ ba_viewWillDisappear&quot;, NSStringFromClass(self.class));</span><br><span class="line">    [self ba_viewWillDisappear:animated];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_viewDidDisappear:(BOOL)animated &#123;</span><br><span class="line">    NSLog(@&quot;UIViewController hooks:——————%@ ba_viewDidDisappear&quot;, NSStringFromClass(self.class));</span><br><span class="line">    [self ba_viewDidDisappear:animated];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="UIControl"><a href="#UIControl" class="headerlink" title="UIControl"></a>UIControl</h3><ul>
-<li><p>说明</p>
-<p>在 UIKit 框架中点击事件都遵循了 Target-Action 设计模式。我们常用的点击控件：UIButton、UISwitch、UISlider等都是 UIControl 的子类，所以，这里我们直接扩展 UIControl，并 hook 了它的 <em>sendAction:to:forEvent:</em> 方法。</p>
-</li>
-<li><p>代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIControl+baHooks.h&quot;</span><br><span class="line">#import &quot;NSObject+MethodSwizzle.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation UIControl (baHooks)</span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UIControl.class originalSelector:@selector(sendAction:to:forEvent:) swizzleSelector:@selector(ba_sendAction:to:forEvent:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event &#123;</span><br><span class="line">    [self ba_sendAction:action to:target forEvent:event];</span><br><span class="line">    </span><br><span class="line">    NSString *actionString = NSStringFromSelector(action);      // 选择器名</span><br><span class="line">    NSString *targetName = NSStringFromClass([target class]);   // 视图类名</span><br><span class="line">    </span><br><span class="line">    // UIButton 的点击</span><br><span class="line">    NSString *reportMessage;</span><br><span class="line">    if ([self isKindOfClass:UIButton.class]) &#123;</span><br><span class="line">        reportMessage = [NSString stringWithFormat:@&quot;%@_%@_%@&quot;,self.accessibilityIdentifier, targetName, actionString];</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————UIControl hooks event reportMessage: %@&quot;, reportMessage);</span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————UIControl hooks event accessibilityIdentifier: %@&quot;, self.accessibilityIdentifier);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-</li>
+<li>说明</li>
+</ul>
+<p> 在 UIKit 框架中点击事件都遵循了 Target-Action 设计模式。我们常用的点击控件：UIButton、UISwitch、UISlider等都是 UIControl 的子类，所以，这里我们直接扩展 UIControl，并 hook 了它的 <em>sendAction:to:forEvent:</em> 方法。</p>
+<ul>
+<li>代码<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UIControl+baHooks.h&quot;</span><br><span class="line">#import &quot;NSObject+MethodSwizzle.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation UIControl (baHooks)</span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UIControl.class originalSelector:@selector(sendAction:to:forEvent:) swizzleSelector:@selector(ba_sendAction:to:forEvent:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event &#123;</span><br><span class="line">    [self ba_sendAction:action to:target forEvent:event];</span><br><span class="line">    </span><br><span class="line">    NSString *actionString = NSStringFromSelector(action);      // 选择器名</span><br><span class="line">    NSString *targetName = NSStringFromClass([target class]);   // 视图类名</span><br><span class="line">    </span><br><span class="line">    // UIButton 的点击</span><br><span class="line">    NSString *reportMessage;</span><br><span class="line">    if ([self isKindOfClass:UIButton.class]) &#123;</span><br><span class="line">        reportMessage = [NSString stringWithFormat:@&quot;%@_%@_%@&quot;,self.accessibilityIdentifier, targetName, actionString];</span><br><span class="line">    &#125;</span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————UIControl hooks event reportMessage: %@&quot;, reportMessage);</span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————UIControl hooks event accessibilityIdentifier: %@&quot;, self.accessibilityIdentifier);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="UICollectionView、UITableView"><a href="#UICollectionView、UITableView" class="headerlink" title="UICollectionView、UITableView"></a>UICollectionView、UITableView</h3><ul>
 <li>说明</li>
 </ul>
 <p>hook 了对应的 <em>setDelegate:</em> 方法，这样可以得到 delegate class，就可以去 hook 对应的 cell 被点击的事件，从而进行埋点。</p>
 <ul>
-<li>代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">@implementation UITableView (baHooks)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UITableView.class originalSelector:@selector(setDelegate:) swizzleSelector:@selector(ba_tableView_setDelegate:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_tableView_setDelegate:(id&lt;UITableViewDelegate&gt;)delegate &#123;</span><br><span class="line">    [self ba_tableView_setDelegate:delegate];</span><br><span class="line">    </span><br><span class="line">    // delegate 其实就是我们的代理对象，delegate会实现 cell 的点击事件</span><br><span class="line">    SEL sel = @selector(tableView:didSelectRowAtIndexPath:);</span><br><span class="line"></span><br><span class="line">    SEL sel_ =  NSSelectorFromString([NSString stringWithFormat:@&quot;%@_%@_%ld&quot;, NSStringFromClass(delegate.class), NSStringFromClass(self.class),(long)self.tag]);</span><br><span class="line"></span><br><span class="line">    //因为 tableView:didSelectRowAtIndexPath:方法是optional的，所以没有实现的时候直接return</span><br><span class="line">    if (![delegate respondsToSelector:sel]) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    BOOL addsuccess = class_addMethod(delegate.class,</span><br><span class="line">                                      sel_,</span><br><span class="line">                                      method_getImplementation(class_getInstanceMethod([self class], @selector(ba_tableView:didSelectItemAtIndexPath:))),</span><br><span class="line">                                      nil);</span><br><span class="line"></span><br><span class="line">    //如果添加成功了就直接交换实现， 如果没有添加成功，说明之前已经添加过并交换过实现了</span><br><span class="line">    if (addsuccess) &#123;</span><br><span class="line">        Method selMethod = class_getInstanceMethod(delegate.class, sel);</span><br><span class="line">        Method sel_Method = class_getInstanceMethod(delegate.class, sel_);</span><br><span class="line">        method_exchangeImplementations(selMethod, sel_Method);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_tableView:(UITableView *)tableView didSelectItemAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line">    SEL sel = NSSelectorFromString([NSString stringWithFormat:@&quot;%@_%@_%ld&quot;, NSStringFromClass([self class]),  NSStringFromClass(tableView.class), (long)tableView.tag]);</span><br><span class="line">    if ([self respondsToSelector:sel]) &#123;</span><br><span class="line">        IMP imp = [self methodForSelector:sel];</span><br><span class="line">        void (*func)(id, SEL,id,id) = (void *)imp;</span><br><span class="line">        func(self, sel,tableView,indexPath);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 搜集数据</span><br><span class="line">    // tableView 的标识， cell 的标识：类名 + indexPath.section + indexPath.row</span><br><span class="line">    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];</span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————UITableView baHook:—tableView：%@——cell：%@_%ld_%ld&quot;, tableView.accessibilityIdentifier, NSStringFromClass(cell.class), indexPath.section, indexPath.row);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-</li>
+<li>代码<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">@implementation UITableView (baHooks)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UITableView.class originalSelector:@selector(setDelegate:) swizzleSelector:@selector(ba_tableView_setDelegate:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_tableView_setDelegate:(id&lt;UITableViewDelegate&gt;)delegate &#123;</span><br><span class="line">    [self ba_tableView_setDelegate:delegate];</span><br><span class="line">    </span><br><span class="line">    // delegate 其实就是我们的代理对象，delegate会实现 cell 的点击事件</span><br><span class="line">    SEL sel = @selector(tableView:didSelectRowAtIndexPath:);</span><br><span class="line"></span><br><span class="line">    SEL sel_ =  NSSelectorFromString([NSString stringWithFormat:@&quot;%@_%@_%ld&quot;, NSStringFromClass(delegate.class), NSStringFromClass(self.class),(long)self.tag]);</span><br><span class="line"></span><br><span class="line">    //因为 tableView:didSelectRowAtIndexPath:方法是optional的，所以没有实现的时候直接return</span><br><span class="line">    if (![delegate respondsToSelector:sel]) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    BOOL addsuccess = class_addMethod(delegate.class,</span><br><span class="line">                                      sel_,</span><br><span class="line">                                      method_getImplementation(class_getInstanceMethod([self class], @selector(ba_tableView:didSelectItemAtIndexPath:))),</span><br><span class="line">                                      nil);</span><br><span class="line"></span><br><span class="line">    //如果添加成功了就直接交换实现， 如果没有添加成功，说明之前已经添加过并交换过实现了</span><br><span class="line">    if (addsuccess) &#123;</span><br><span class="line">        Method selMethod = class_getInstanceMethod(delegate.class, sel);</span><br><span class="line">        Method sel_Method = class_getInstanceMethod(delegate.class, sel_);</span><br><span class="line">        method_exchangeImplementations(selMethod, sel_Method);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_tableView:(UITableView *)tableView didSelectItemAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line">    SEL sel = NSSelectorFromString([NSString stringWithFormat:@&quot;%@_%@_%ld&quot;, NSStringFromClass([self class]),  NSStringFromClass(tableView.class), (long)tableView.tag]);</span><br><span class="line">    if ([self respondsToSelector:sel]) &#123;</span><br><span class="line">        IMP imp = [self methodForSelector:sel];</span><br><span class="line">        void (*func)(id, SEL,id,id) = (void *)imp;</span><br><span class="line">        func(self, sel,tableView,indexPath);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 搜集数据</span><br><span class="line">    // tableView 的标识， cell 的标识：类名 + indexPath.section + indexPath.row</span><br><span class="line">    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];</span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————UITableView baHook:—tableView：%@——cell：%@_%ld_%ld&quot;, tableView.accessibilityIdentifier, NSStringFromClass(cell.class), indexPath.section, indexPath.row);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">@implementation UICollectionView (baHooks)</span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UICollectionView.class originalSelector:@selector(setDelegate:) swizzleSelector:@selector(ba_collectionView_setDelegate:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)ba_collectionView_setDelegate:(id&lt;UICollectionViewDelegate&gt;)delegate &#123;</span><br><span class="line">    [self ba_collectionView_setDelegate:delegate];</span><br><span class="line">    </span><br><span class="line">    // delegate 其实就是我们的代理对象，delegate会实现 cell 的点击事件</span><br><span class="line">    SEL sel = @selector(collectionView:didSelectItemAtIndexPath:);</span><br><span class="line"></span><br><span class="line">    SEL sel_ =  NSSelectorFromString([NSString stringWithFormat:@&quot;%@_%@_%ld&quot;, NSStringFromClass(delegate.class), NSStringFromClass(self.class),(long)self.tag]);</span><br><span class="line"></span><br><span class="line">    //因为 tableView:didSelectRowAtIndexPath:方法是optional的，所以没有实现的时候直接return</span><br><span class="line">    if (![delegate respondsToSelector:sel]) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    BOOL addsuccess = class_addMethod(delegate.class,</span><br><span class="line">                                      sel_,</span><br><span class="line">                                      method_getImplementation(class_getInstanceMethod([self class], @selector(ba_collectionView:didSelectItemAtIndexPath:))),</span><br><span class="line">                                      nil);</span><br><span class="line"></span><br><span class="line">    //如果添加成功了就直接交换实现， 如果没有添加成功，说明之前已经添加过并交换过实现了</span><br><span class="line">    if (addsuccess) &#123;</span><br><span class="line">        Method selMethod = class_getInstanceMethod(delegate.class, sel);</span><br><span class="line">        Method sel_Method = class_getInstanceMethod(delegate.class, sel_);</span><br><span class="line">        method_exchangeImplementations(selMethod, sel_Method);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line">    SEL sel = NSSelectorFromString([NSString stringWithFormat:@&quot;%@_%@_%ld&quot;, NSStringFromClass([self class]),  NSStringFromClass(collectionView.class), (long)collectionView.tag]);</span><br><span class="line">    if ([self respondsToSelector:sel]) &#123;</span><br><span class="line">        IMP imp = [self methodForSelector:sel];</span><br><span class="line">        void (*func)(id, SEL,id,id) = (void *)imp;</span><br><span class="line">        func(self, sel,collectionView,indexPath);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 搜集数据</span><br><span class="line">    // collectionView 的标识， cell 的标识：类名 + indexPath.section + indexPath.row</span><br><span class="line">    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];</span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————UICollectionView baHook:—collectionView：%@——cell：%@_%ld_%ld&quot;, collectionView.accessibilityIdentifier, NSStringFromClass(cell.class), indexPath.section, indexPath.row);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">@implementation UICollectionView (baHooks)</span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UICollectionView.class originalSelector:@selector(setDelegate:) swizzleSelector:@selector(ba_collectionView_setDelegate:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (void)ba_collectionView_setDelegate:(id&lt;UICollectionViewDelegate&gt;)delegate &#123;</span><br><span class="line">    [self ba_collectionView_setDelegate:delegate];</span><br><span class="line">    </span><br><span class="line">    // delegate 其实就是我们的代理对象，delegate会实现 cell 的点击事件</span><br><span class="line">    SEL sel = @selector(collectionView:didSelectItemAtIndexPath:);</span><br><span class="line"></span><br><span class="line">    SEL sel_ =  NSSelectorFromString([NSString stringWithFormat:@&quot;%@_%@_%ld&quot;, NSStringFromClass(delegate.class), NSStringFromClass(self.class),(long)self.tag]);</span><br><span class="line"></span><br><span class="line">    //因为 tableView:didSelectRowAtIndexPath:方法是optional的，所以没有实现的时候直接return</span><br><span class="line">    if (![delegate respondsToSelector:sel]) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    BOOL addsuccess = class_addMethod(delegate.class,</span><br><span class="line">                                      sel_,</span><br><span class="line">                                      method_getImplementation(class_getInstanceMethod([self class], @selector(ba_collectionView:didSelectItemAtIndexPath:))),</span><br><span class="line">                                      nil);</span><br><span class="line"></span><br><span class="line">    //如果添加成功了就直接交换实现， 如果没有添加成功，说明之前已经添加过并交换过实现了</span><br><span class="line">    if (addsuccess) &#123;</span><br><span class="line">        Method selMethod = class_getInstanceMethod(delegate.class, sel);</span><br><span class="line">        Method sel_Method = class_getInstanceMethod(delegate.class, sel_);</span><br><span class="line">        method_exchangeImplementations(selMethod, sel_Method);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath &#123;</span><br><span class="line">    SEL sel = NSSelectorFromString([NSString stringWithFormat:@&quot;%@_%@_%ld&quot;, NSStringFromClass([self class]),  NSStringFromClass(collectionView.class), (long)collectionView.tag]);</span><br><span class="line">    if ([self respondsToSelector:sel]) &#123;</span><br><span class="line">        IMP imp = [self methodForSelector:sel];</span><br><span class="line">        void (*func)(id, SEL,id,id) = (void *)imp;</span><br><span class="line">        func(self, sel,collectionView,indexPath);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 搜集数据</span><br><span class="line">    // collectionView 的标识， cell 的标识：类名 + indexPath.section + indexPath.row</span><br><span class="line">    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];</span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————UICollectionView baHook:—collectionView：%@——cell：%@_%ld_%ld&quot;, collectionView.accessibilityIdentifier, NSStringFromClass(cell.class), indexPath.section, indexPath.row);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+
 <!-- 众所周知，如果需要处理 UITableView 的点击操作，需要先设置 UITableView 的 delegate 属性，并实现 UITableViewDelegate 协议的 - tableView:didSelectRowAtIndexPath: 方法。因此，我们也很容易就想到使用 Method Swizzling 来交换 - tableView:didSelectRowAtIndexPath: 方法来实现 UITableView $AppClick 事件的全埋点。
 
 大概思路：首先，我们使用 Method Swizzling 交换 UITableView 的 - setDelegate: 方法，然后能获取到实现了 UITableViewDelegate 协议的 delegate 对象，在拿到 delegate 对象之后，就可以交换 delegate 对象的 - tableView:didSelectRowAtIndexPath: 方法，最后，在交换后的方法中触发 $AppClick 事件，从而达到全埋点的效果。
@@ -456,13 +354,14 @@
 
 缺点：会对原始类有入侵，容易造成冲突。
  -->
+
+
 <h3 id="UITapGestureRecognizer"><a href="#UITapGestureRecognizer" class="headerlink" title="UITapGestureRecognizer"></a>UITapGestureRecognizer</h3><ul>
-<li>说明 </li>
+<li>说明</li>
 </ul>
 <p>思路与 UITableView、UICollectionView 一样，通过 hook <em>initWithTarget:action:</em> 方法，可以得到 target class 和所需执行的方法 action，进行 hook 即可。</p>
 <ul>
-<li>代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">@interface UITapGestureRecognizer ()</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) NSString *originalActionName;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation UITapGestureRecognizer (baHooks)</span><br><span class="line"></span><br><span class="line">- (void)setOriginalActionName:(NSArray *)originalActionName &#123;</span><br><span class="line">    objc_setAssociatedObject(self, @selector(originalActionName), originalActionName, OBJC_ASSOCIATION_RETAIN);</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">- (NSString *)originalActionName &#123;</span><br><span class="line">    return objc_getAssociatedObject(self, _cmd);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:self originalSelector:@selector(initWithTarget:action:) swizzleSelector:@selector(ba_initWithTarget:action:)];</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:self originalSelector:@selector(addTarget:action:) swizzleSelector:@selector(ba_addTarget:action:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)ba_initWithTarget:(id)target action:(SEL)action &#123;</span><br><span class="line">    UITapGestureRecognizer *selfGestureRecognizer = [self ba_initWithTarget:target action:action];</span><br><span class="line">    if (!target &amp;&amp; !action) &#123;</span><br><span class="line">        return selfGestureRecognizer;</span><br><span class="line">    &#125;</span><br><span class="line">            </span><br><span class="line">    Class class = [target class];</span><br><span class="line">    </span><br><span class="line">    SEL sel = action;</span><br><span class="line">    </span><br><span class="line">    //创建一个新的方法 方法名为 sel_name</span><br><span class="line">    NSString * sel_name = [NSString stringWithFormat:@&quot;ba_%s_%@&quot;, class_getName([target class]),NSStringFromSelector(action)];</span><br><span class="line">    SEL sel_ =  NSSelectorFromString(sel_name);</span><br><span class="line">    </span><br><span class="line">    //添加一个方法  参数：相应手势的类，添加的方法名，实现方法的函数 ba_responseUserGesture</span><br><span class="line">    BOOL isAddMethod = class_addMethod(class,</span><br><span class="line">                                       sel_,</span><br><span class="line">                                       method_getImplementation(class_getInstanceMethod([self class], @selector(ba_responseUserGesture:))),</span><br><span class="line">                                       nil);</span><br><span class="line"></span><br><span class="line">    self.originalActionName = NSStringFromSelector(action);</span><br><span class="line">    </span><br><span class="line">    //方法添加成功，原先的方法实现 action -&gt; 新的方法实现 ba_responseUserGesture。</span><br><span class="line">    if (isAddMethod) &#123;</span><br><span class="line">        Method selMethod = class_getInstanceMethod(class, sel);</span><br><span class="line">        Method sel_Method = class_getInstanceMethod(class, sel_);</span><br><span class="line">        method_exchangeImplementations(selMethod, sel_Method);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return selfGestureRecognizer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_addTarget:(id)target action:(SEL)action &#123;</span><br><span class="line">    [self ba_addTarget:target action:action];</span><br><span class="line">    </span><br><span class="line">    if (!target &amp;&amp; !action) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">            </span><br><span class="line">    Class class = [target class];</span><br><span class="line">    </span><br><span class="line">    SEL sel = action;</span><br><span class="line">    </span><br><span class="line">    //创建一个新的方法 方法名为 sel_name</span><br><span class="line">    NSString * sel_name = [NSString stringWithFormat:@&quot;ba_%s_%@&quot;, class_getName([target class]),NSStringFromSelector(action)];</span><br><span class="line">    SEL sel_ =  NSSelectorFromString(sel_name);</span><br><span class="line">    </span><br><span class="line">    //添加一个方法  参数：相应手势的类，添加的方法名，实现方法的函数 ba_responseUserGesture</span><br><span class="line">    BOOL isAddMethod = class_addMethod(class,</span><br><span class="line">                                       sel_,</span><br><span class="line">                                       method_getImplementation(class_getInstanceMethod([self class], @selector(ba_responseUserGesture:))),</span><br><span class="line">                                       nil);</span><br><span class="line"></span><br><span class="line">    self.originalActionName = NSStringFromSelector(action);</span><br><span class="line">    </span><br><span class="line">    //方法添加成功，原先的方法实现 action -&gt; 新的方法实现 ba_responseUserGesture。</span><br><span class="line">    if (isAddMethod) &#123;</span><br><span class="line">        Method selMethod = class_getInstanceMethod(class, sel);</span><br><span class="line">        Method sel_Method = class_getInstanceMethod(class, sel_);</span><br><span class="line">        method_exchangeImplementations(selMethod, sel_Method);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_responseUserGesture:(UITapGestureRecognizer *)gesture &#123;</span><br><span class="line">    if (![gesture isKindOfClass:UIGestureRecognizer.class]) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    NSString * identifier = [NSString stringWithFormat:@&quot;ba_%s_%@&quot;, class_getName([self class]),gesture.originalActionName];</span><br><span class="line">    //调用原方法</span><br><span class="line">    SEL sel = NSSelectorFromString(identifier);</span><br><span class="line">    if ([self respondsToSelector:sel]) &#123;</span><br><span class="line">        IMP imp = [self methodForSelector:sel];</span><br><span class="line">        void (*func)(id, SEL,id) = (void *)imp;</span><br><span class="line">        func(self, sel,gesture);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 搜集数据</span><br><span class="line">    UIView *tapView = gesture.view;</span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————UITapGestureRecognizer baHook:—View：%@——action：%@&quot;, tapView.accessibilityIdentifier, self.originalActionName);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-</li>
+<li>代码<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">@interface UITapGestureRecognizer ()</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) NSString *originalActionName;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation UITapGestureRecognizer (baHooks)</span><br><span class="line"></span><br><span class="line">- (void)setOriginalActionName:(NSArray *)originalActionName &#123;</span><br><span class="line">    objc_setAssociatedObject(self, @selector(originalActionName), originalActionName, OBJC_ASSOCIATION_RETAIN);</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">- (NSString *)originalActionName &#123;</span><br><span class="line">    return objc_getAssociatedObject(self, _cmd);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:self originalSelector:@selector(initWithTarget:action:) swizzleSelector:@selector(ba_initWithTarget:action:)];</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:self originalSelector:@selector(addTarget:action:) swizzleSelector:@selector(ba_addTarget:action:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)ba_initWithTarget:(id)target action:(SEL)action &#123;</span><br><span class="line">    UITapGestureRecognizer *selfGestureRecognizer = [self ba_initWithTarget:target action:action];</span><br><span class="line">    if (!target &amp;&amp; !action) &#123;</span><br><span class="line">        return selfGestureRecognizer;</span><br><span class="line">    &#125;</span><br><span class="line">            </span><br><span class="line">    Class class = [target class];</span><br><span class="line">    </span><br><span class="line">    SEL sel = action;</span><br><span class="line">    </span><br><span class="line">    //创建一个新的方法 方法名为 sel_name</span><br><span class="line">    NSString * sel_name = [NSString stringWithFormat:@&quot;ba_%s_%@&quot;, class_getName([target class]),NSStringFromSelector(action)];</span><br><span class="line">    SEL sel_ =  NSSelectorFromString(sel_name);</span><br><span class="line">    </span><br><span class="line">    //添加一个方法  参数：相应手势的类，添加的方法名，实现方法的函数 ba_responseUserGesture</span><br><span class="line">    BOOL isAddMethod = class_addMethod(class,</span><br><span class="line">                                       sel_,</span><br><span class="line">                                       method_getImplementation(class_getInstanceMethod([self class], @selector(ba_responseUserGesture:))),</span><br><span class="line">                                       nil);</span><br><span class="line"></span><br><span class="line">    self.originalActionName = NSStringFromSelector(action);</span><br><span class="line">    </span><br><span class="line">    //方法添加成功，原先的方法实现 action -&gt; 新的方法实现 ba_responseUserGesture。</span><br><span class="line">    if (isAddMethod) &#123;</span><br><span class="line">        Method selMethod = class_getInstanceMethod(class, sel);</span><br><span class="line">        Method sel_Method = class_getInstanceMethod(class, sel_);</span><br><span class="line">        method_exchangeImplementations(selMethod, sel_Method);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return selfGestureRecognizer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_addTarget:(id)target action:(SEL)action &#123;</span><br><span class="line">    [self ba_addTarget:target action:action];</span><br><span class="line">    </span><br><span class="line">    if (!target &amp;&amp; !action) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">            </span><br><span class="line">    Class class = [target class];</span><br><span class="line">    </span><br><span class="line">    SEL sel = action;</span><br><span class="line">    </span><br><span class="line">    //创建一个新的方法 方法名为 sel_name</span><br><span class="line">    NSString * sel_name = [NSString stringWithFormat:@&quot;ba_%s_%@&quot;, class_getName([target class]),NSStringFromSelector(action)];</span><br><span class="line">    SEL sel_ =  NSSelectorFromString(sel_name);</span><br><span class="line">    </span><br><span class="line">    //添加一个方法  参数：相应手势的类，添加的方法名，实现方法的函数 ba_responseUserGesture</span><br><span class="line">    BOOL isAddMethod = class_addMethod(class,</span><br><span class="line">                                       sel_,</span><br><span class="line">                                       method_getImplementation(class_getInstanceMethod([self class], @selector(ba_responseUserGesture:))),</span><br><span class="line">                                       nil);</span><br><span class="line"></span><br><span class="line">    self.originalActionName = NSStringFromSelector(action);</span><br><span class="line">    </span><br><span class="line">    //方法添加成功，原先的方法实现 action -&gt; 新的方法实现 ba_responseUserGesture。</span><br><span class="line">    if (isAddMethod) &#123;</span><br><span class="line">        Method selMethod = class_getInstanceMethod(class, sel);</span><br><span class="line">        Method sel_Method = class_getInstanceMethod(class, sel_);</span><br><span class="line">        method_exchangeImplementations(selMethod, sel_Method);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)ba_responseUserGesture:(UITapGestureRecognizer *)gesture &#123;</span><br><span class="line">    if (![gesture isKindOfClass:UIGestureRecognizer.class]) &#123;</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    NSString * identifier = [NSString stringWithFormat:@&quot;ba_%s_%@&quot;, class_getName([self class]),gesture.originalActionName];</span><br><span class="line">    //调用原方法</span><br><span class="line">    SEL sel = NSSelectorFromString(identifier);</span><br><span class="line">    if ([self respondsToSelector:sel]) &#123;</span><br><span class="line">        IMP imp = [self methodForSelector:sel];</span><br><span class="line">        void (*func)(id, SEL,id) = (void *)imp;</span><br><span class="line">        func(self, sel,gesture);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 搜集数据</span><br><span class="line">    UIView *tapView = gesture.view;</span><br><span class="line">    NSLog(@&quot;BehaviorAnalysis log————UITapGestureRecognizer baHook:—View：%@——action：%@&quot;, tapView.accessibilityIdentifier, self.originalActionName);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="控件的唯一标识符"><a href="#控件的唯一标识符" class="headerlink" title="控件的唯一标识符"></a>控件的唯一标识符</h2><ul>
 <li>说明</li>
@@ -488,8 +387,7 @@
 <th>标识参数</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>UIControl</td>
 <td>target、action</td>
 </tr>
@@ -501,364 +399,84 @@
 <td>UITapGestureRecognizer</td>
 <td>action</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <ul>
 <li>代码</li>
 </ul>
 <p>采用 hook 的方式来在运行时生成标签。hook UIView 中的 accessibilityIdentifier 的原因是此时的视图层级更全，并且是惰性生成标签。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIView (uniqueId)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UIView.class originalSelector:@selector(accessibilityIdentifier) swizzleSelector:@selector(ba_accessibilityIdentifier)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)ba_accessibilityIdentifier &#123;</span><br><span class="line">    NSString *accessibilityIdentifier = [self ba_accessibilityIdentifier];</span><br><span class="line">    if (accessibilityIdentifier.length &gt; 0 &amp;&amp; [[accessibilityIdentifier substringToIndex:1] isEqualToString:@&quot;(&quot;]) &#123;</span><br><span class="line">        return accessibilityIdentifier;</span><br><span class="line">    &#125;</span><br><span class="line">    else if ([accessibilityIdentifier isEqualToString:@&quot;null&quot;]) &#123;</span><br><span class="line">        accessibilityIdentifier = @&quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // MARK : 定位 xPath</span><br><span class="line">    NSMutableString *pathStr = [NSMutableString string];</span><br><span class="line">    UIView *view = self;</span><br><span class="line">    while (view.nextResponder) &#123;</span><br><span class="line">        NSString *clsName = NSStringFromClass(view.class);</span><br><span class="line">        if (clsName) &#123;</span><br><span class="line">            [pathStr appendFormat:@&quot;%@,&quot;, clsName];</span><br><span class="line">        &#125;</span><br><span class="line">        if ([view.class isSubclassOfClass:[UIViewController class]]) &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        view = (id)view.nextResponder;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (pathStr.length == 0 || [pathStr isEqualToString:@&quot;null&quot;]) &#123;</span><br><span class="line">        pathStr = [NSMutableString stringWithString:@&quot;xpath&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // MARK : 查找当前view是否是属性持有，并返回属性名</span><br><span class="line">    NSString *propStr = [self.superview findNameWithInstance:self];</span><br><span class="line">    </span><br><span class="line">    if (!propStr || propStr.length == 0 || [propStr isEqualToString:@&quot;null&quot;]) &#123;</span><br><span class="line">        propStr = @&quot;propName&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // MARK : 特殊处理标识</span><br><span class="line">    NSString *tagStr = @&quot;&quot;;</span><br><span class="line">    if ([self isKindOfClass:[UILabel class]]) &#123;//UILabel 使用 text</span><br><span class="line">        tagStr = ((UILabel *)self).text ?: @&quot;tagLabel&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    else if ([self isKindOfClass:[UIImageView class]]) &#123;//UIImageView 使用 image 的 imageName</span><br><span class="line">        tagStr = ((UIImageView *)self).image.accessibilityIdentifier ?: @&quot;tagUIImageView&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    else if ([self isKindOfClass:[UIButton class]]) &#123;//UIButton 使用 button 的 text 和 image</span><br><span class="line">        tagStr = [NSString stringWithFormat:@&quot;%@.%@&quot;,((UIButton *)self).titleLabel.text?:@&quot;tagUIButtonStr&quot;,((UIButton *)self).imageView.image.accessibilityIdentifier?:@&quot;tagUIButtonImageStr&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    NSString *targetResult;</span><br><span class="line">    if (accessibilityIdentifier) &#123;</span><br><span class="line">        targetResult = [NSString stringWithFormat:@&quot;(%@)&quot;, accessibilityIdentifier];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        targetResult = [NSString stringWithFormat:@&quot;(%@,%@,%@)&quot;, tagStr, propStr, pathStr];</span><br><span class="line">    &#125;</span><br><span class="line">    [self setAccessibilityIdentifier:targetResult];</span><br><span class="line">    return targetResult;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIView (uniqueId)</span><br><span class="line"></span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UIView.class originalSelector:@selector(accessibilityIdentifier) swizzleSelector:@selector(ba_accessibilityIdentifier)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)ba_accessibilityIdentifier &#123;</span><br><span class="line">    NSString *accessibilityIdentifier = [self ba_accessibilityIdentifier];</span><br><span class="line">    if (accessibilityIdentifier.length &gt; 0 &amp;&amp; [[accessibilityIdentifier substringToIndex:1] isEqualToString:@&quot;(&quot;]) &#123;</span><br><span class="line">        return accessibilityIdentifier;</span><br><span class="line">    &#125;</span><br><span class="line">    else if ([accessibilityIdentifier isEqualToString:@&quot;null&quot;]) &#123;</span><br><span class="line">        accessibilityIdentifier = @&quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // MARK : 定位 xPath</span><br><span class="line">    NSMutableString *pathStr = [NSMutableString string];</span><br><span class="line">    UIView *view = self;</span><br><span class="line">    while (view.nextResponder) &#123;</span><br><span class="line">        NSString *clsName = NSStringFromClass(view.class);</span><br><span class="line">        if (clsName) &#123;</span><br><span class="line">            [pathStr appendFormat:@&quot;%@,&quot;, clsName];</span><br><span class="line">        &#125;</span><br><span class="line">        if ([view.class isSubclassOfClass:[UIViewController class]]) &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        view = (id)view.nextResponder;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (pathStr.length == 0 || [pathStr isEqualToString:@&quot;null&quot;]) &#123;</span><br><span class="line">        pathStr = [NSMutableString stringWithString:@&quot;xpath&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // MARK : 查找当前view是否是属性持有，并返回属性名</span><br><span class="line">    NSString *propStr = [self.superview findNameWithInstance:self];</span><br><span class="line">    </span><br><span class="line">    if (!propStr || propStr.length == 0 || [propStr isEqualToString:@&quot;null&quot;]) &#123;</span><br><span class="line">        propStr = @&quot;propName&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // MARK : 特殊处理标识</span><br><span class="line">    NSString *tagStr = @&quot;&quot;;</span><br><span class="line">    if ([self isKindOfClass:[UILabel class]]) &#123;//UILabel 使用 text</span><br><span class="line">        tagStr = ((UILabel *)self).text ?: @&quot;tagLabel&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    else if ([self isKindOfClass:[UIImageView class]]) &#123;//UIImageView 使用 image 的 imageName</span><br><span class="line">        tagStr = ((UIImageView *)self).image.accessibilityIdentifier ?: @&quot;tagUIImageView&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    else if ([self isKindOfClass:[UIButton class]]) &#123;//UIButton 使用 button 的 text 和 image</span><br><span class="line">        tagStr = [NSString stringWithFormat:@&quot;%@.%@&quot;,((UIButton *)self).titleLabel.text?:@&quot;tagUIButtonStr&quot;,((UIButton *)self).imageView.image.accessibilityIdentifier?:@&quot;tagUIButtonImageStr&quot;];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    NSString *targetResult;</span><br><span class="line">    if (accessibilityIdentifier) &#123;</span><br><span class="line">        targetResult = [NSString stringWithFormat:@&quot;(%@)&quot;, accessibilityIdentifier];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        targetResult = [NSString stringWithFormat:@&quot;(%@,%@,%@)&quot;, tagStr, propStr, pathStr];</span><br><span class="line">    &#125;</span><br><span class="line">    [self setAccessibilityIdentifier:targetResult];</span><br><span class="line">    return targetResult;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
 <p>辅助 UIView 生成 accessibilityIdentifier 的分类：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIResponder (uniqueId)</span><br><span class="line">- (NSString *)nameWithInstance:(id)instance</span><br><span class="line">&#123;</span><br><span class="line">    unsigned int numIvars = 0;</span><br><span class="line">    NSString *key = nil;</span><br><span class="line">    Ivar *ivars = class_copyIvarList([self class], &amp;numIvars);</span><br><span class="line">    for(int i = 0; i &lt; numIvars; i++) &#123;</span><br><span class="line">        Ivar thisIvar = ivars[i];</span><br><span class="line">        void *val = ((void *(*)(id, Ivar))object_getIvar)(self, thisIvar);</span><br><span class="line">        if (val == (__bridge void *)(instance)) &#123;//此处 crash 不要慌！</span><br><span class="line">            key = [NSString stringWithUTF8String:ivar_getName(thisIvar)];</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    free(ivars);</span><br><span class="line">    return key;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)findNameWithInstance:(UIView *)instance</span><br><span class="line">&#123;</span><br><span class="line">    id nextResponder = [self nextResponder];</span><br><span class="line">    NSString *name = [self nameWithInstance:instance];</span><br><span class="line">    if (!name) &#123;</span><br><span class="line">        return [nextResponder findNameWithInstance:instance];</span><br><span class="line">    &#125;</span><br><span class="line">    if ([name hasPrefix:@&quot;_&quot;]) &#123;  //去掉变量名的下划线前缀</span><br><span class="line">        name = [name substringFromIndex:1];</span><br><span class="line">    &#125;</span><br><span class="line">    return name;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIImage (uniqueId)</span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UIImage.class originalSelector:@selector(imageNamed:) swizzleSelector:@selector(ba_imageNamed:)];</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UIImage.class originalSelector:@selector(imageWithContentsOfFile:) swizzleSelector:@selector(ba_imageWithContentsOfFile:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - Method Swizzling</span><br><span class="line"></span><br><span class="line">+ (UIImage *)ba_imageNamed:(NSString *)imageName &#123;</span><br><span class="line">    UIImage *image = [UIImage ba_imageNamed:imageName];</span><br><span class="line">    image.accessibilityIdentifier = imageName;</span><br><span class="line">    return image;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (UIImage *)ba_imageWithContentsOfFile:(NSString *)path &#123;</span><br><span class="line">    UIImage *image = [UIImage ba_imageWithContentsOfFile:path];</span><br><span class="line">    NSArray *components = [path pathComponents];</span><br><span class="line">    if (components.count &gt; 0) &#123;</span><br><span class="line">        image.accessibilityIdentifier = components.lastObject;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        image.accessibilityIdentifier = path;</span><br><span class="line">    &#125;</span><br><span class="line">    return image;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)ba_accessibilityIdentifier &#123;</span><br><span class="line">    NSString *ba_accessibilityIdentifier = [self ba_accessibilityIdentifier];</span><br><span class="line">    return ba_accessibilityIdentifier;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIResponder (uniqueId)</span><br><span class="line">- (NSString *)nameWithInstance:(id)instance</span><br><span class="line">&#123;</span><br><span class="line">    unsigned int numIvars = 0;</span><br><span class="line">    NSString *key = nil;</span><br><span class="line">    Ivar *ivars = class_copyIvarList([self class], &amp;numIvars);</span><br><span class="line">    for(int i = 0; i &lt; numIvars; i++) &#123;</span><br><span class="line">        Ivar thisIvar = ivars[i];</span><br><span class="line">        void *val = ((void *(*)(id, Ivar))object_getIvar)(self, thisIvar);</span><br><span class="line">        if (val == (__bridge void *)(instance)) &#123;//此处 crash 不要慌！</span><br><span class="line">            key = [NSString stringWithUTF8String:ivar_getName(thisIvar)];</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    free(ivars);</span><br><span class="line">    return key;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)findNameWithInstance:(UIView *)instance</span><br><span class="line">&#123;</span><br><span class="line">    id nextResponder = [self nextResponder];</span><br><span class="line">    NSString *name = [self nameWithInstance:instance];</span><br><span class="line">    if (!name) &#123;</span><br><span class="line">        return [nextResponder findNameWithInstance:instance];</span><br><span class="line">    &#125;</span><br><span class="line">    if ([name hasPrefix:@&quot;_&quot;]) &#123;  //去掉变量名的下划线前缀</span><br><span class="line">        name = [name substringFromIndex:1];</span><br><span class="line">    &#125;</span><br><span class="line">    return name;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIImage (uniqueId)</span><br><span class="line">+ (void)load &#123;</span><br><span class="line">    static dispatch_once_t onceToken;</span><br><span class="line">    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UIImage.class originalSelector:@selector(imageNamed:) swizzleSelector:@selector(ba_imageNamed:)];</span><br><span class="line">        [self my_instanceMethodSwizzleWithClass:UIImage.class originalSelector:@selector(imageWithContentsOfFile:) swizzleSelector:@selector(ba_imageWithContentsOfFile:)];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#pragma mark - Method Swizzling</span><br><span class="line"></span><br><span class="line">+ (UIImage *)ba_imageNamed:(NSString *)imageName &#123;</span><br><span class="line">    UIImage *image = [UIImage ba_imageNamed:imageName];</span><br><span class="line">    image.accessibilityIdentifier = imageName;</span><br><span class="line">    return image;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (UIImage *)ba_imageWithContentsOfFile:(NSString *)path &#123;</span><br><span class="line">    UIImage *image = [UIImage ba_imageWithContentsOfFile:path];</span><br><span class="line">    NSArray *components = [path pathComponents];</span><br><span class="line">    if (components.count &gt; 0) &#123;</span><br><span class="line">        image.accessibilityIdentifier = components.lastObject;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        image.accessibilityIdentifier = path;</span><br><span class="line">    &#125;</span><br><span class="line">    return image;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (NSString *)ba_accessibilityIdentifier &#123;</span><br><span class="line">    NSString *ba_accessibilityIdentifier = [self ba_accessibilityIdentifier];</span><br><span class="line">    return ba_accessibilityIdentifier;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本篇文章总结的埋点，只能针对通用的事件进行处理。实际埋点需求中，埋点往往和业务数据强相关，比如点击页面上的加购物车按钮，埋点上报的数据中需要有商品id，当前商品的促销类型，商家id等等，这类需求暂时没有很好的无痕埋点方案。</p>
 <p>所以，实际工作场景的埋点需求可能还是针对普适性的埋点需求使用无痕埋点思路实现，针对特定的业务需求还是需要特定的实现。</p>
 <p><strong>参考链接</strong></p>
-<p><a href="https://time.geekbang.org/column/article/87925" target="_blank" rel="noopener">iOS 开发高手课：无侵入的埋点方案如何实现？</a></p>
-<p><a href="http://yulingtianxia.com/blog/2016/03/28/Add-UITest-Label-for-UIAutomation/" target="_blank" rel="noopener">为 UIAutomation 添加自动化测试标签的探索</a></p>
-<img src="/2019/11/10/iOS无痕埋点实现/埋点3.png" title="NSObject继承图">
+<p><a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/87925">iOS 开发高手课：无侵入的埋点方案如何实现？</a></p>
+<p><a target="_blank" rel="noopener" href="http://yulingtianxia.com/blog/2016/03/28/Add-UITest-Label-for-UIAutomation/">为 UIAutomation 添加自动化测试标签的探索</a></p>
+<img src="/2019/11/10/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/%E5%9F%8B%E7%82%B93.png" class="" title="NSObject继承图">
 
-      
+
+
+
+
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/10/20/内存管理随记/" rel="next" title="iOS 内存管理随记">
-                <i class="fa fa-chevron-left"></i> iOS 内存管理随记
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/11/24/iOS单例的正确使用姿势/" rel="prev" title="iOS单例的正确使用姿势">
-                iOS单例的正确使用姿势 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/20/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E9%9A%8F%E8%AE%B0/" rel="prev" title="iOS 内存管理随记">
+                  <i class="fa fa-chevron-left"></i> iOS 内存管理随记
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#埋点方法"><span class="nav-number">1.</span> <span class="nav-text">埋点方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无痕埋点实践"><span class="nav-number">2.</span> <span class="nav-text">无痕埋点实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据收集"><span class="nav-number">2.1.</span> <span class="nav-text">数据收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">2.1.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Appdelegate"><span class="nav-number">2.1.2.</span> <span class="nav-text">Appdelegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIViewController"><span class="nav-number">2.1.3.</span> <span class="nav-text">UIViewController</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIControl"><span class="nav-number">2.1.4.</span> <span class="nav-text">UIControl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionView、UITableView"><span class="nav-number">2.1.5.</span> <span class="nav-text">UICollectionView、UITableView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UITapGestureRecognizer"><span class="nav-number">2.1.6.</span> <span class="nav-text">UITapGestureRecognizer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控件的唯一标识符"><span class="nav-number">2.2.</span> <span class="nav-text">控件的唯一标识符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2019/11/24/iOS%E5%8D%95%E4%BE%8B%E7%9A%84%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/" rel="next" title="iOS单例的正确使用姿势">
+                  iOS单例的正确使用姿势 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -871,34 +489,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

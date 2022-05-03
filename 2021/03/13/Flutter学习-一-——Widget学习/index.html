@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="官方文档以“一切皆为组件”作为它的口号，比如一个布局元素、一个动画亦或是装饰效果等。所以要想学好 Flutter，组件是最好的起点。 首先，我们先不必纠结这个概念，只需要将 widget 想象为一个可视化组件或与应用可视化方面交互的组件，跟 iOS 中的 view 可视化控件不同的是，widget 不是一个控件，而是对控件的描述，随着学习的深入，再来深入了解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter学习(一)——Widget学习">
+<meta property="og:url" content="http://yoursite.com/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="江涛的博客">
+<meta property="og:description" content="官方文档以“一切皆为组件”作为它的口号，比如一个布局元素、一个动画亦或是装饰效果等。所以要想学好 Flutter，组件是最好的起点。 首先，我们先不必纠结这个概念，只需要将 widget 想象为一个可视化组件或与应用可视化方面交互的组件，跟 iOS 中的 view 可视化控件不同的是，widget 不是一个控件，而是对控件的描述，随着学习的深入，再来深入了解。">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/widgets-lib.jpg">
+<meta property="og:image" content="http://yoursite.com/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/combination.jpg">
+<meta property="og:image" content="http://yoursite.com/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/paint.jpg">
+<meta property="article:published_time" content="2021-03-13T15:05:32.000Z">
+<meta property="article:modified_time" content="2022-04-12T11:26:25.605Z">
+<meta property="article:author" content="JTao">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/widgets-lib.jpg">
+
+
+<link rel="canonical" href="http://yoursite.com/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/","path":"2021/03/13/Flutter学习-一-——Widget学习/","title":"Flutter学习(一)——Widget学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Flutter学习(一)——Widget学习 | 江涛的博客</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D-Widget"><span class="nav-number">1.</span> <span class="nav-text">两种 Widget</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">组件介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Widget-%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="nav-number">3.</span> <span class="nav-text">Widget 的自定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E7%8E%B0%E6%9C%89-Widget"><span class="nav-number">3.1.</span> <span class="nav-text">组合现有 Widget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%98%E5%88%B6"><span class="nav-number">3.2.</span> <span class="nav-text">自定义绘制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B8%A4%E4%B8%89%E4%BA%8B"><span class="nav-number">4.</span> <span class="nav-text">生命周期两三事</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#App-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.1.</span> <span class="nav-text">App 生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Widget-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">4.2.</span> <span class="nav-text">Widget 生命周期</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Flutter学习(一)——Widget学习 | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flutter学习(一)——Widget学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-03-13 23:05:32" itemprop="dateCreated datePublished" datetime="2021-03-13T23:05:32+08:00">2021-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-04-12 19:26:25" itemprop="dateModified" datetime="2022-04-12T19:26:25+08:00">2022-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Flutter-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">Flutter 学习之路</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>官方文档以“一切皆为组件”作为它的口号，比如一个布局元素、一个动画亦或是装饰效果等。所以要想学好 Flutter，组件是最好的起点。</p>
+<p>首先，我们先不必纠结这个概念，只需要将 widget 想象为一个可视化组件或与应用可视化方面交互的组件，跟 iOS 中的 view 可视化控件不同的是，widget 不是一个控件，而是对控件的描述，随着学习的深入，再来深入了解。</p>
+<span id="more"></span>
+
+<h2 id="两种-Widget"><a href="#两种-Widget" class="headerlink" title="两种 Widget"></a>两种 Widget</h2><ul>
+<li><p>StatelessWidget<br>StatelessWidget 是无状态组件，它只是用来展示信息，在你构建初始化后不再进行改变；</p>
+</li>
+<li><p>StatefulWidget<br>StatefulWidget，是有状态组件，拥有一个 state 对象来存储它的状态数据，并在 widget 树重建时携带着它，因此状态不会丢失。一个 StatefulWidget 类对应一个 state 类，state 是与对应 StatefulWidget 维护的状态，这种 Widget 可以通过改变状态使得 UI 发生变化。</p>
+</li>
+</ul>
+<h2 id="组件介绍"><a href="#组件介绍" class="headerlink" title="组件介绍"></a>组件介绍</h2><p>本来想写一些常用组件的基本使用，但是觉得这些东西随处可得，我也就偷个懒吧。</p>
+<p>这里推荐一个很赞的项目 <a target="_blank" rel="noopener" href="https://github.com/toly1994328/FlutterUnit">FlutterUnit</a>，它罗列了非常多的组件，还可以直观的看到效果和代码。</p>
+<img src="/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/widgets-lib.jpg" class="" title="示例图">
+
+<p>自己开发时，想知道某个 Widget 怎么使用的话，就去<a target="_blank" rel="noopener" href="https://api.flutter-io.cn/flutter/widgets/widgets-library.html">Widget使用速查文档</a>查一下吧。</p>
+<p>基础组件，是搭建项目的基石，也是我们用的最多的组件。这里罗列几个最常用的。</p>
+<h2 id="Widget-的自定义"><a href="#Widget-的自定义" class="headerlink" title="Widget 的自定义"></a>Widget 的自定义</h2><p>系统提供的组件肯定是不能满足开发时各种奇奇怪怪的需求的，所以，我们还需要知道如何去自定义 Widget 来弥补系统组件的不足。在我熟悉的 iOS 开发中，自定义视图无非就是三中方式：</p>
+<ol>
+<li>组合形成新的样式</li>
+<li>自定义绘制</li>
+<li>集成系统视图，在里面进行魔改</li>
+</ol>
+<p>在 Flutter 中，其实也是一样的道理，这里就介绍一下前两种方法，第三种的使用场景还是比较少的。</p>
+<h3 id="组合现有-Widget"><a href="#组合现有-Widget" class="headerlink" title="组合现有 Widget"></a>组合现有 Widget</h3><p>现有 Widget 组合即是利用基础 Widget 根据需求来组合成一个通用的 Widget，这样在使用过程中避免设置过多的属性，且增强其复用性。 比如，在实际开发中，我们经常需要为信息流列表定义一些显示的 item，来显示信息。这些 item 就是我们组合 Widget 形成的一个新的 Widget。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">class DispalyItem extends StatelessWidget &#123;</span><br><span class="line">  const DispalyItem(&#123; Key? key &#125;) : super(key: key);</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line"></span><br><span class="line">    var box = Container(</span><br><span class="line">      color: Colors.red,</span><br><span class="line">      height:160,</span><br><span class="line">      width: 100,</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    var title = const Text(&quot;I&#x27;m title&quot;);</span><br><span class="line"></span><br><span class="line">    return Container(</span><br><span class="line">      width: 100,</span><br><span class="line">      height: 160,</span><br><span class="line">      color: Colors.grey,</span><br><span class="line">      child: Stack(</span><br><span class="line">        alignment: Alignment.bottomCenter,</span><br><span class="line">        children: [box, </span><br><span class="line">          Positioned(</span><br><span class="line">            child: title,</span><br><span class="line">            bottom: 10,</span><br><span class="line">          )</span><br><span class="line">        ]</span><br><span class="line">      )</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/combination.jpg" class="" title="示例图">
+
+<p>上面使用了 Stack 布局组件来使多个子组件堆叠展示。Stack 布局组件在屏幕上的效果是后面的子组件会覆盖在前面的子组件之上。</p>
+<p>当然，我们也可以将展示图片和标题，作为参数让外部使用者传入进来。只需要定义对应的属性，然后在初始化方法加入对应的初始化参数，最后 build 的时候，使用属性值来显示就可以了。</p>
+<h3 id="自定义绘制"><a href="#自定义绘制" class="headerlink" title="自定义绘制"></a>自定义绘制</h3><p>首先，需要先认识一下 CustomPainter，这是一个抽象类，需要自定义绘制的话，需要继承它并重写它的 paint 方法，在重写的 paint 方法中来绘制自己需要的图形。使用时，创建系统提供的 CustomPaint 组件，在其属性 painter 中提供我们自定义类的对象。</p>
+<ol>
+<li><p>创建自定义 CustomPainter 子类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class PieChartPainter extends CustomPainter&#123;</span><br><span class="line">  </span><br><span class="line">  Paint getColoredPaint(Color color)&#123;</span><br><span class="line">    Paint paint=Paint();</span><br><span class="line">    paint.color=color;</span><br><span class="line">    return paint;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  @override</span><br><span class="line">  void paint(Canvas canvas, Size size) &#123;</span><br><span class="line">    double wheelSize=min(size.width, size.height)/2;</span><br><span class="line">    double nbElem=8;</span><br><span class="line">    double radius=(2*pi)/nbElem;</span><br><span class="line">    Rect boundingRect=Rect.fromCircle(center: Offset(wheelSize,wheelSize), radius: wheelSize);</span><br><span class="line">    canvas.drawArc(boundingRect, 0, radius, true, getColoredPaint(Colors.orange));</span><br><span class="line">    canvas.drawArc(boundingRect, radius, radius, true, getColoredPaint(Colors.black));</span><br><span class="line">    canvas.drawArc(boundingRect, radius*2, radius, true, getColoredPaint(Colors.green));</span><br><span class="line">    canvas.drawArc(boundingRect, radius*3, radius, true, getColoredPaint(Colors.red));</span><br><span class="line">    canvas.drawArc(boundingRect, radius*4, radius, true, getColoredPaint(Colors.blue));</span><br><span class="line">    canvas.drawArc(boundingRect, radius*5, radius, true, getColoredPaint(Colors.yellow));</span><br><span class="line">    canvas.drawArc(boundingRect, radius*6, radius, true, getColoredPaint(Colors.purple));</span><br><span class="line">    canvas.drawArc(boundingRect, radius*7, radius, true, getColoredPaint(Colors.white));</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  @override</span><br><span class="line">  bool shouldRepaint(covariant CustomPainter oldDelegate)=&gt;oldDelegate!=this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>展示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Container(</span><br><span class="line">  child: CustomPaint(</span><br><span class="line">    size: const Size(300, 300),</span><br><span class="line">    painter: PieChartPainter(),</span><br><span class="line">  ),</span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<img src="/2021/03/13/Flutter%E5%AD%A6%E4%B9%A0-%E4%B8%80-%E2%80%94%E2%80%94Widget%E5%AD%A6%E4%B9%A0/paint.jpg" class="" title="示例图">
+
+
+<h2 id="生命周期两三事"><a href="#生命周期两三事" class="headerlink" title="生命周期两三事"></a>生命周期两三事</h2><p>要写出一个合理优秀的 Widget，了解其属性及绘制方式是基础，理解生命周期，让我们知道在什么时候应该做什么事，对我们构建项目是极为重要的。</p>
+<h3 id="App-生命周期"><a href="#App-生命周期" class="headerlink" title="App 生命周期"></a>App 生命周期</h3><p>Flutter 封装了一个枚举 AppLifecycleState 来描述这个生命周期，其中罗列了 App 生命周期的几个状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">enum AppLifecycleState &#123;</span><br><span class="line">  /// 应用程序是可见的，并且响应用户输入</span><br><span class="line">  resumed,</span><br><span class="line"></span><br><span class="line">  /// 应用程序处于非活动状态，未接收用户输入。</span><br><span class="line">  ///</span><br><span class="line">  /// 处于此状态的应用程序应假定它们可能随时被 [paused]</span><br><span class="line">  inactive,</span><br><span class="line"></span><br><span class="line">  /// 应用程序当前对用户不可见，不响应用户输入，后台运行。</span><br><span class="line">  paused,</span><br><span class="line"></span><br><span class="line">  /// 应用程序仍驻留在 flutter 引擎上，但已从任何主体视图分离。</span><br><span class="line">  detached,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">void main() &#123;</span><br><span class="line">  runApp(const MyApp());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyApp extends StatelessWidget &#123;</span><br><span class="line">  const MyApp(&#123;Key? key&#125;) : super(key: key);</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return MaterialApp(</span><br><span class="line">      title: &#x27;Flutter Demo&#x27;,</span><br><span class="line">      theme: ThemeData(</span><br><span class="line">        primarySwatch: Colors.blue,</span><br><span class="line">      ),</span><br><span class="line">      home: const MyHomePage(title: &#x27;Flutter Demo Home Page&#x27;),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyHomePage extends StatefulWidget &#123;</span><br><span class="line">  const MyHomePage(&#123;Key? key, required this.title&#125;) : super(key: key);</span><br><span class="line"></span><br><span class="line">  final String title;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  State&lt;MyHomePage&gt; createState() =&gt; _MyHomePageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class _MyHomePageState extends State&lt;MyHomePage&gt; with WidgetsBindingObserver &#123;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  void initState() &#123;</span><br><span class="line">    super.initState();</span><br><span class="line"></span><br><span class="line">    WidgetsBinding.instance?.addObserver(this);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  void didChangeAppLifecycleState(AppLifecycleState state) &#123;</span><br><span class="line">    print(&#x27;$state&#x27;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  void dispose()&#123;</span><br><span class="line">    WidgetsBinding.instance?.removeObserver(this);</span><br><span class="line">    super.dispose();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(widget.title),</span><br><span class="line">      ),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: Container(</span><br><span class="line">            child: Text(&quot;Lifecycle&quot;)</span><br><span class="line">        )</span><br><span class="line">      ), </span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Widget-生命周期"><a href="#Widget-生命周期" class="headerlink" title="Widget 生命周期"></a>Widget 生命周期</h3><p>这个生命周期也仅仅是针对有状态组件，对于无状态组件生命周期只有 build 这个过程，也只会渲染一次。</p>
+<p>整个过程分为四个阶段：</p>
+<ol>
+<li><p>初始化阶段</p>
+<p> createState 和 initState</p>
+</li>
+<li><p>组件创建阶段</p>
+<p> didChangeDependencies 和 build；</p>
+</li>
+<li><p>组件刷新阶段 </p>
+<p> 在组件运行过程中会多次被触发，这也是优化过程中需要着重需要注意的点。</p>
+<p> didChangeDependencies、build、didUpdateWidget</p>
+<p> addPostFrameCallback（只调用一次）</p>
+</li>
+<li><p>组件销毁阶段</p>
+<p>deactivate 和 dispose。</p>
+</li>
+</ol>
+<p><strong>详细说明</strong></p>
+<ul>
+<li><p>createState<br>StatefulWidget 创建 State 的方法，只调用一次。</p>
+</li>
+<li><p>initState<br>StatefulWidget 创建后调用的第一个方法，该 widiget 插入到 widget 树结构时被调用，只调用一次，因此，该函数一般用来初始化操作，状态初始化、订阅子树事件通知。</p>
+</li>
+<li><p>didChangeDependencies<br>当调用 initState 后会立即调用这个方法，这个方法是在 state 对象被创建好了但没有准备好构建 build 的时候调用的。之后只有当 StatefulWidget 依赖的 InheritedWidget 发生变化之后，didChangeDependencies 才会调用，所以 didChangeDependencies 可以调用多次。</p>
+</li>
+<li><p>build<br>在 didChangeDeoendencies 之后立即调用，来构建 widget 子树。触发的时机较多：initState()、didChangeDependencies()、setState()、didUpdateWidget()等方法后重新 build。一般不在 build 中调用除创建 Widget 的方法，否则会影响渲染效率。</p>
+</li>
+<li><p>addPostFrameCallback<br>StatefulWidget 渲染结束之后的回调，只会调用一次，一般是在 initState 里添加回调。通过 addPostFrameCallback 可以做一些安全的操作，在有些时候是很有用的，它会在当前 Frame 绘制完后进行回调，并只会回调一次，如果要再次监听需要再设置。</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void initState() &#123;</span><br><span class="line">    super.initState();</span><br><span class="line">    WidgetsBinding.instance.addPostFrameCallback((_)&#123;</span><br><span class="line">        print(&quot;Frame has been rendered&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>didUpdateWidget<br>在 widget 重新构建时，由 flutter framework 判断检测 widget 树中同一位置新旧节点，决定是否更新，调用该方法。</p>
+</li>
+<li><p>deactivate<br>当 widget 对象从树中被移除时，会调用此方法。</p>
+</li>
+<li><p>dispose<br>当 widget 对象从树中被永久移除时调用 ，可以在此方法中释放资源。</p>
+</li>
+<li><p>reassemble<br>专门为了开发调试而提供的，在热重载时会被调用。此回调在Release模式下永远不会被调用。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/01/03/%E5%9C%A8-Swift-%E4%B8%AD%E4%BD%BF%E7%94%A8-iconfont/" rel="prev" title="在 Swift 中使用 IconFont">
+                  <i class="fa fa-chevron-left"></i> 在 Swift 中使用 IconFont
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/28/Flutter%E5%AD%A6%E4%B9%A0-%E4%BA%8C-%E2%80%94%E2%80%94%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6%E5%92%8C%E6%89%8B%E5%8A%BF/" rel="next" title="Flutter学习(二)——触摸事件和手势">
+                  Flutter学习(二)——触摸事件和手势 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

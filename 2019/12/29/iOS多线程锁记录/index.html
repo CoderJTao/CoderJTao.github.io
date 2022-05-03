@@ -1,353 +1,246 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="介绍 锁的概念 两种锁——自旋锁与互斥锁 两种锁的使用选择   几种常见的锁 OSSpinLock os_unfair_lock atomic @synchronized dispatch_semaphore pthread_mutex NSLock、NSRecurisiveLock、NSCondition、NSConditionLock">
+    <meta name="description" content="介绍 锁的概念 两种锁——自旋锁与互斥锁 两种锁的使用选择   几种常见的锁 OSSpinLock os_unfair_lock atomic @synchronized dispatch_semaphore pthread_mutex NSLock、NSRecurisiveLock、NSCondition、NSConditionLock">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS多线程锁记录">
-<meta property="og:url" content="http://yoursite.com/2019/12/29/iOS多线程锁记录/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/12/29/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%94%81%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="介绍 锁的概念 两种锁——自旋锁与互斥锁 两种锁的使用选择   几种常见的锁 OSSpinLock os_unfair_lock atomic @synchronized dispatch_semaphore pthread_mutex NSLock、NSRecurisiveLock、NSCondition、NSConditionLock">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/12/29/iOS多线程锁记录/线程锁1.png">
-<meta property="og:updated_time" content="2020-08-14T14:47:53.000Z">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2019/12/29/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%94%81%E8%AE%B0%E5%BD%95/%E7%BA%BF%E7%A8%8B%E9%94%811.png">
+<meta property="article:published_time" content="2019-12-28T16:48:38.000Z">
+<meta property="article:modified_time" content="2020-08-14T14:47:53.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS多线程锁记录">
-<meta name="twitter:description" content="介绍 锁的概念 两种锁——自旋锁与互斥锁 两种锁的使用选择   几种常见的锁 OSSpinLock os_unfair_lock atomic @synchronized dispatch_semaphore pthread_mutex NSLock、NSRecurisiveLock、NSCondition、NSConditionLock">
-<meta name="twitter:image" content="http://yoursite.com/2019/12/29/iOS多线程锁记录/线程锁1.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/12/29/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%94%81%E8%AE%B0%E5%BD%95/%E7%BA%BF%E7%A8%8B%E9%94%811.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2019/12/29/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%94%81%E8%AE%B0%E5%BD%95/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2019/12/29/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%94%81%E8%AE%B0%E5%BD%95/","path":"2019/12/29/iOS多线程锁记录/","title":"iOS多线程锁记录"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2019/12/29/iOS多线程锁记录/">
-
-
-
-
-
-  <title>iOS多线程锁记录 | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>iOS多线程锁记录 | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">锁的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E9%94%81%E2%80%94%E2%80%94%E8%87%AA%E6%97%8B%E9%94%81%E4%B8%8E%E4%BA%92%E6%96%A5%E9%94%81"><span class="nav-number">1.2.</span> <span class="nav-text">两种锁——自旋锁与互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">自旋锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%92%E6%96%A5%E9%94%81"><span class="nav-number">1.2.2.</span> <span class="nav-text">互斥锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E9%94%81%E7%9A%84%E4%BD%BF%E7%94%A8%E9%80%89%E6%8B%A9"><span class="nav-number">1.2.3.</span> <span class="nav-text">两种锁的使用选择</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%A0%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">几种常见的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSSpinLock"><span class="nav-number">2.1.</span> <span class="nav-text">OSSpinLock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#os-unfair-lock"><span class="nav-number">2.2.</span> <span class="nav-text">os_unfair_lock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atomic"><span class="nav-number">2.3.</span> <span class="nav-text">atomic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized"><span class="nav-number">2.4.</span> <span class="nav-text">@synchronized</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatch-semaphore"><span class="nav-number">2.5.</span> <span class="nav-text">dispatch_semaphore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pthread-mutex"><span class="nav-number">2.6.</span> <span class="nav-text">pthread_mutex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSLock%E3%80%81NSRecurisiveLock%E3%80%81NSCondition%E3%80%81NSConditionLock"><span class="nav-number">2.7.</span> <span class="nav-text">NSLock、NSRecurisiveLock、NSCondition、NSConditionLock</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/29/iOS多线程锁记录/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/29/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%94%81%E8%AE%B0%E5%BD%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="iOS多线程锁记录 | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS多线程锁记录
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">iOS多线程锁记录</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-29T00:48:38+08:00">
-                2019-12-29
-              </time>
-            
+      <time title="Created: 2019-12-29 00:48:38" itemprop="dateCreated datePublished" datetime="2019-12-29T00:48:38+08:00">2019-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-08-14 22:47:53" itemprop="dateModified" datetime="2020-08-14T22:47:53+08:00">2020-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS%E5%B8%B8%E8%A7%81%E7%9F%A5%E8%AF%86%E7%82%B9/" itemprop="url" rel="index"><span itemprop="name">iOS常见知识点</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS常见知识点/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS常见知识点</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         <ul>
 <li><a href="#desc">介绍</a><ul>
-<li><a href>锁的概念</a></li>
-<li><a href>两种锁——自旋锁与互斥锁</a></li>
-<li><a href>两种锁的使用选择</a></li>
+<li><a href="">锁的概念</a></li>
+<li><a href="">两种锁——自旋锁与互斥锁</a></li>
+<li><a href="">两种锁的使用选择</a></li>
 </ul>
 </li>
 <li><a href="#locks">几种常见的锁</a><ul>
@@ -362,7 +255,9 @@
 </li>
 </ul>
 <!-- https://blog.csdn.net/Deft_MKJing/article/details/79513500?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~first_rank_v2~rank_v25-3-79513500.nonecase -->
-<a id="more"></a>
+
+<span id="more"></span>
+
 <p><span id="desc"></span></p>
 <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><h2 id="锁的概念"><a href="#锁的概念" class="headerlink" title="锁的概念"></a>锁的概念</h2><p>锁 – 是保证线程安全常见的同步工具。锁是一种非强制的机制，如果使用了锁的话，每一个线程在访问数据或者资源前，要先获取锁，并在访问结束之后释放锁。如果锁已经被占用，其它试图获取锁的线程会等待，直到锁重新可用。</p>
 <h2 id="两种锁——自旋锁与互斥锁"><a href="#两种锁——自旋锁与互斥锁" class="headerlink" title="两种锁——自旋锁与互斥锁"></a>两种锁——自旋锁与互斥锁</h2><h3 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h3><ul>
@@ -385,7 +280,8 @@
 <p>如果共享数据已经有其它线程加锁了，资源申请线程会进入休眠状态等待锁。一旦被访问的资源被解锁，则等待资源的线程会被唤醒。</p>
 <p>互斥锁又分为递归锁和非递归锁：</p>
 <ul>
-<li>递归锁：可重入锁，同一个线程在锁释放前可再次获取锁，即可以递归调用。</li>
+<li><p>递归锁：可重入锁，同一个线程在锁释放前可再次获取锁，即可以递归调用。</p>
+</li>
 <li><p>非递归锁：不可重入，必须等锁释放后才能再次获取锁。</p>
 </li>
 <li><p><strong>特点</strong></p>
@@ -416,7 +312,7 @@
 <p><span id="locks"></span></p>
 <h1 id="几种常见的锁"><a href="#几种常见的锁" class="headerlink" title="几种常见的锁"></a>几种常见的锁</h1><p><span id="lock1"></span></p>
 <h2 id="OSSpinLock"><a href="#OSSpinLock" class="headerlink" title="OSSpinLock"></a>OSSpinLock</h2><p><strong>自旋锁</strong></p>
-<p><a href="https://blog.ibireme.com/2016/01/16/spinlock_is_unsafe_in_ios/" target="_blank" rel="noopener">不再安全的 OSSpinLock</a> 大神的文章已经说了这个锁的问题，苹果也废弃了这个锁。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.ibireme.com/2016/01/16/spinlock_is_unsafe_in_ios/">不再安全的 OSSpinLock</a> 大神的文章已经说了这个锁的问题，苹果也废弃了这个锁。</p>
 <ul>
 <li>优先级反转</li>
 </ul>
@@ -424,61 +320,75 @@
 <p><span id="lock2"></span></p>
 <h2 id="os-unfair-lock"><a href="#os-unfair-lock" class="headerlink" title="os_unfair_lock"></a>os_unfair_lock</h2><p><strong>互斥锁</strong></p>
 <p>os_unfair_lock 是苹果替换 OSSpinLock 的锁。可以在 objc-runtime 源码中可以看到 runtime 中使用的 OSSpinLock 的都已经替换为了 os_unfair_lock。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// objc-locks.h</span><br><span class="line"></span><br><span class="line">extern mutex_t selLock;</span><br><span class="line">#if CONFIG_USE_CACHE_LOCK</span><br><span class="line">extern mutex_t cacheUpdateLock;</span><br><span class="line">#endif</span><br><span class="line">extern recursive_mutex_t loadMethodLock;</span><br><span class="line">extern mutex_t crashlog_lock;</span><br><span class="line">extern spinlock_t objcMsgLogLock;</span><br><span class="line">extern mutex_t AltHandlerDebugLock;</span><br><span class="line">extern mutex_t AssociationsManagerLock;</span><br><span class="line"></span><br><span class="line">// objc-os.h</span><br><span class="line"></span><br><span class="line">using spinlock_t = mutex_tt&lt;LOCKDEBUG&gt;;</span><br><span class="line">using mutex_t = mutex_tt&lt;LOCKDEBUG&gt;;</span><br><span class="line">using recursive_mutex_t = recursive_mutex_tt&lt;LOCKDEBUG&gt;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// objc-locks.h</span><br><span class="line"></span><br><span class="line">extern mutex_t selLock;</span><br><span class="line">#if CONFIG_USE_CACHE_LOCK</span><br><span class="line">extern mutex_t cacheUpdateLock;</span><br><span class="line">#endif</span><br><span class="line">extern recursive_mutex_t loadMethodLock;</span><br><span class="line">extern mutex_t crashlog_lock;</span><br><span class="line">extern spinlock_t objcMsgLogLock;</span><br><span class="line">extern mutex_t AltHandlerDebugLock;</span><br><span class="line">extern mutex_t AssociationsManagerLock;</span><br><span class="line"></span><br><span class="line">// objc-os.h</span><br><span class="line"></span><br><span class="line">using spinlock_t = mutex_tt&lt;LOCKDEBUG&gt;;</span><br><span class="line">using mutex_t = mutex_tt&lt;LOCKDEBUG&gt;;</span><br><span class="line">using recursive_mutex_t = recursive_mutex_tt&lt;LOCKDEBUG&gt;;</span><br></pre></td></tr></table></figure>
+
 <p>上面 mutex_tt、recursive_mutex_tt 都是类。它们的源码太多，这里就不贴出来了。它们都是基于 os_unfair_lock 的封装使用。</p>
 <p>os_unfair_lock 用于取代不安全的 OSSpinLock，从 iOS10 开始才支持。从底层调用看，等待 os_unfair_lock 锁的线程会处于休眠状态，并非忙等。</p>
 <p>所以，os_unfair_lock 属于互斥锁。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 初始化</span><br><span class="line"> os_unfair_lock lock = OS_UNFAIR_LOCK_INIT;</span><br><span class="line"> //尝试加锁</span><br><span class="line"> os_unfair_lock_trylock(&amp;lock);</span><br><span class="line"> // 加锁</span><br><span class="line"> os_unfair_lock_lock(&amp;lock);</span><br><span class="line"> // 解锁</span><br><span class="line"> os_unfair_lock_unlock(&amp;lock);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 初始化</span><br><span class="line"> os_unfair_lock lock = OS_UNFAIR_LOCK_INIT;</span><br><span class="line"> //尝试加锁</span><br><span class="line"> os_unfair_lock_trylock(&amp;lock);</span><br><span class="line"> // 加锁</span><br><span class="line"> os_unfair_lock_lock(&amp;lock);</span><br><span class="line"> // 解锁</span><br><span class="line"> os_unfair_lock_unlock(&amp;lock);</span><br></pre></td></tr></table></figure>
+
 <p><span id="lock3"></span></p>
 <h2 id="atomic"><a href="#atomic" class="headerlink" title="atomic"></a>atomic</h2><p>直接查看源码中 atomic 的实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">void objc_setProperty_atomic(id self, SEL _cmd, id newValue, ptrdiff_t offset)</span><br><span class="line">&#123;</span><br><span class="line">    reallySetProperty(self, _cmd, newValue, offset, true, false, false);</span><br><span class="line">&#125;</span><br><span class="line">static inline void reallySetProperty(id self, SEL _cmd, id newValue, ptrdiff_t offset, bool atomic, bool copy, bool mutableCopy)</span><br><span class="line">&#123;</span><br><span class="line">    // ...</span><br><span class="line"></span><br><span class="line">    if (!atomic) &#123;</span><br><span class="line">        // 不是 atomic 修饰</span><br><span class="line">        oldValue = *slot;</span><br><span class="line">        *slot = newValue;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // 如果是 atomic 修饰，加一把同步锁，保证 setter 的安全</span><br><span class="line">        spinlock_t&amp; slotlock = PropertyLocks[slot];</span><br><span class="line">        slotlock.lock();</span><br><span class="line">        oldValue = *slot;</span><br><span class="line">        *slot = newValue;        </span><br><span class="line">        slotlock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">id objc_getProperty(id self, SEL _cmd, ptrdiff_t offset, BOOL atomic) &#123;</span><br><span class="line">    // ...</span><br><span class="line">    </span><br><span class="line">    // 非原子属性，直接返回值</span><br><span class="line">    if (!atomic) return *slot;</span><br><span class="line">    // 原子属性，加同步锁，保证 getter 的安全</span><br><span class="line">    spinlock_t&amp; slotlock = PropertyLocks[slot];</span><br><span class="line">    slotlock.lock();</span><br><span class="line">    id value = objc_retain(*slot);</span><br><span class="line">    slotlock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里在 set 和 get 的方法中，都添加了一个 spinlock_t 锁（是一个 os_unfair_lock），保证了 atomic 属性的 getter/setter 操作的完整性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">void objc_setProperty_atomic(id self, SEL _cmd, id newValue, ptrdiff_t offset)</span><br><span class="line">&#123;</span><br><span class="line">    reallySetProperty(self, _cmd, newValue, offset, true, false, false);</span><br><span class="line">&#125;</span><br><span class="line">static inline void reallySetProperty(id self, SEL _cmd, id newValue, ptrdiff_t offset, bool atomic, bool copy, bool mutableCopy)</span><br><span class="line">&#123;</span><br><span class="line">    // ...</span><br><span class="line"></span><br><span class="line">    if (!atomic) &#123;</span><br><span class="line">        // 不是 atomic 修饰</span><br><span class="line">        oldValue = *slot;</span><br><span class="line">        *slot = newValue;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // 如果是 atomic 修饰，加一把同步锁，保证 setter 的安全</span><br><span class="line">        spinlock_t&amp; slotlock = PropertyLocks[slot];</span><br><span class="line">        slotlock.lock();</span><br><span class="line">        oldValue = *slot;</span><br><span class="line">        *slot = newValue;        </span><br><span class="line">        slotlock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">id objc_getProperty(id self, SEL _cmd, ptrdiff_t offset, BOOL atomic) &#123;</span><br><span class="line">    // ...</span><br><span class="line">    </span><br><span class="line">    // 非原子属性，直接返回值</span><br><span class="line">    if (!atomic) return *slot;</span><br><span class="line">    // 原子属性，加同步锁，保证 getter 的安全</span><br><span class="line">    spinlock_t&amp; slotlock = PropertyLocks[slot];</span><br><span class="line">    slotlock.lock();</span><br><span class="line">    id value = objc_retain(*slot);</span><br><span class="line">    slotlock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里在 set 和 get 的方法中，都添加了一个 spinlock_t 锁（是一个 os_unfair_lock），保证了 atomic 属性的 getter&#x2F;setter 操作的完整性。</p>
 <p>所以 atomic 不能保证对象多线程的安全。它只是能保证你访问的时候给你返回一个完好无损的 value 而已。</p>
 <p><span id="lock4"></span></p>
 <h2 id="synchronized"><a href="#synchronized" class="headerlink" title="@synchronized"></a>@synchronized</h2><p>@synchronized 的实现源码，我们可以在 objc_runtime 源码中 objc_sync.mm 文件下找到。</p>
 <p>@synchronize 的使用本质上就是使用 objc_sync_enter 和 objc_sync_exit 的成对使用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int objc_sync_enter(id obj)</span><br><span class="line">&#123;</span><br><span class="line">    int result = OBJC_SYNC_SUCCESS;</span><br><span class="line"></span><br><span class="line">    if (obj) &#123;</span><br><span class="line">        SyncData* data = id2data(obj, ACQUIRE);</span><br><span class="line">        ASSERT(data);</span><br><span class="line">        data-&gt;mutex.lock();</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // @synchronized(nil) does nothing</span><br><span class="line">        if (DebugNilSync) &#123;</span><br><span class="line">            _objc_inform(&quot;NIL SYNC DEBUG: @synchronized(nil); set a breakpoint on objc_sync_nil to debug&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        objc_sync_nil();</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">int objc_sync_exit(id obj)</span><br><span class="line">&#123;</span><br><span class="line">    int result = OBJC_SYNC_SUCCESS;</span><br><span class="line">    </span><br><span class="line">    if (obj) &#123;</span><br><span class="line">        SyncData* data = id2data(obj, RELEASE); </span><br><span class="line">        if (!data) &#123;</span><br><span class="line">            result = OBJC_SYNC_NOT_OWNING_THREAD_ERROR;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            bool okay = data-&gt;mutex.tryUnlock();</span><br><span class="line">            if (!okay) &#123;</span><br><span class="line">                result = OBJC_SYNC_NOT_OWNING_THREAD_ERROR;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // @synchronized(nil) does nothing</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int objc_sync_enter(id obj)</span><br><span class="line">&#123;</span><br><span class="line">    int result = OBJC_SYNC_SUCCESS;</span><br><span class="line"></span><br><span class="line">    if (obj) &#123;</span><br><span class="line">        SyncData* data = id2data(obj, ACQUIRE);</span><br><span class="line">        ASSERT(data);</span><br><span class="line">        data-&gt;mutex.lock();</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // @synchronized(nil) does nothing</span><br><span class="line">        if (DebugNilSync) &#123;</span><br><span class="line">            _objc_inform(&quot;NIL SYNC DEBUG: @synchronized(nil); set a breakpoint on objc_sync_nil to debug&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        objc_sync_nil();</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">int objc_sync_exit(id obj)</span><br><span class="line">&#123;</span><br><span class="line">    int result = OBJC_SYNC_SUCCESS;</span><br><span class="line">    </span><br><span class="line">    if (obj) &#123;</span><br><span class="line">        SyncData* data = id2data(obj, RELEASE); </span><br><span class="line">        if (!data) &#123;</span><br><span class="line">            result = OBJC_SYNC_NOT_OWNING_THREAD_ERROR;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            bool okay = data-&gt;mutex.tryUnlock();</span><br><span class="line">            if (!okay) &#123;</span><br><span class="line">                result = OBJC_SYNC_NOT_OWNING_THREAD_ERROR;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // @synchronized(nil) does nothing</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>在继续看源码之前先将其中涉及到的数据结构先看一下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// 可以看成是一个链表的节点</span><br><span class="line">typedef struct alignas(CacheLineSize) SyncData &#123;</span><br><span class="line">    struct SyncData* nextData;          // 指向另一个 SyncData 对象的指针</span><br><span class="line">    DisguisedPtr&lt;objc_object&gt; object;   // 传入的 object</span><br><span class="line">    int32_t threadCount;                // 使用这个 SyncData 对象中锁的线程数量</span><br><span class="line">    recursive_mutex_t mutex;            // 递归锁</span><br><span class="line">&#125; SyncData;</span><br><span class="line"></span><br><span class="line">// 每个 SyncList 结构体都有个指向 SyncData 节点链表头部的指针，也有一个用于防止多个线程对此列表做并发修改的锁。</span><br><span class="line">struct SyncList &#123;</span><br><span class="line">    SyncData *data;</span><br><span class="line">    spinlock_t lock;</span><br><span class="line"></span><br><span class="line">    constexpr SyncList() : data(nil), lock(fork_unsafe_lock) &#123; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static StripedMap&lt;SyncList&gt; sDataLists;</span><br><span class="line"></span><br><span class="line">// 缓存中的 item</span><br><span class="line">typedef struct &#123;</span><br><span class="line">    SyncData *data;   </span><br><span class="line">    unsigned int lockCount;  // 这个线程锁定这个 object 的次数</span><br><span class="line">&#125; SyncCacheItem;</span><br><span class="line"></span><br><span class="line">// 线程缓存</span><br><span class="line">typedef struct SyncCache &#123;</span><br><span class="line">    unsigned int allocated;</span><br><span class="line">    unsigned int used;</span><br><span class="line">    SyncCacheItem list[0];</span><br><span class="line">&#125; SyncCache;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// 可以看成是一个链表的节点</span><br><span class="line">typedef struct alignas(CacheLineSize) SyncData &#123;</span><br><span class="line">    struct SyncData* nextData;          // 指向另一个 SyncData 对象的指针</span><br><span class="line">    DisguisedPtr&lt;objc_object&gt; object;   // 传入的 object</span><br><span class="line">    int32_t threadCount;                // 使用这个 SyncData 对象中锁的线程数量</span><br><span class="line">    recursive_mutex_t mutex;            // 递归锁</span><br><span class="line">&#125; SyncData;</span><br><span class="line"></span><br><span class="line">// 每个 SyncList 结构体都有个指向 SyncData 节点链表头部的指针，也有一个用于防止多个线程对此列表做并发修改的锁。</span><br><span class="line">struct SyncList &#123;</span><br><span class="line">    SyncData *data;</span><br><span class="line">    spinlock_t lock;</span><br><span class="line"></span><br><span class="line">    constexpr SyncList() : data(nil), lock(fork_unsafe_lock) &#123; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">static StripedMap&lt;SyncList&gt; sDataLists;</span><br><span class="line"></span><br><span class="line">// 缓存中的 item</span><br><span class="line">typedef struct &#123;</span><br><span class="line">    SyncData *data;   </span><br><span class="line">    unsigned int lockCount;  // 这个线程锁定这个 object 的次数</span><br><span class="line">&#125; SyncCacheItem;</span><br><span class="line"></span><br><span class="line">// 线程缓存</span><br><span class="line">typedef struct SyncCache &#123;</span><br><span class="line">    unsigned int allocated;</span><br><span class="line">    unsigned int used;</span><br><span class="line">    SyncCacheItem list[0];</span><br><span class="line">&#125; SyncCache;</span><br></pre></td></tr></table></figure>
+
 <p>接下来可以来看看源码中的实现了，在具体的实现逻辑中，我们可以看到通过 id2data 方法，对 obj 进行了捕获和释放的操作，并生成了一个 SyncData 类型的对象。我们发现 SyncData 是一个结构体，而且有一个SyncData类型的nextData变量，指向下个数据，所以我们可以知道SyncData是一个链表结构中的一个元素。所以这是一个递归锁。</p>
 <ol>
 <li><strong>准备SyncData</strong></li>
 </ol>
 <p>我们可以看到会会通过 LOCK_FOR_OBJ 和 LIST_FOR_OBJ 取出 object 所对应的 lockp 和 listp。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static SyncData* id2data(id object, enum usage why)</span><br><span class="line">&#123;</span><br><span class="line">    spinlock_t *lockp = &amp;LOCK_FOR_OBJ(object);</span><br><span class="line">    SyncData **listp = &amp;LIST_FOR_OBJ(object);</span><br><span class="line">    SyncData* result = NULL;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static SyncData* id2data(id object, enum usage why)</span><br><span class="line">&#123;</span><br><span class="line">    spinlock_t *lockp = &amp;LOCK_FOR_OBJ(object);</span><br><span class="line">    SyncData **listp = &amp;LIST_FOR_OBJ(object);</span><br><span class="line">    SyncData* result = NULL;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>既然我们在任何地方都可以直接通过调用方法来使用，那么说明底层必然维护着一套内部的存储。通过代码我们也可以看出，系统在底层维护了一个哈希表，里面存储了 SyncList 结构的数据，而 SyncList 是一个结构体，包含一个 SyncData 的头结点和一个 spinlock_t 锁对象</p>
 <ol start="2">
 <li><strong>快速检查线程缓存</strong></li>
 </ol>
 <p>此步操作会通过 tls 封装的相关 pthead 操作线程的相关增删改查方法，获取到单个线程中缓存的 SyncData 数据，并进行快速查询和缓存</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">static SyncData* id2data(id object, enum usage why)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    #if SUPPORT_DIRECT_THREAD_KEYS</span><br><span class="line">    // Check per-thread single-entry fast cache for matching object</span><br><span class="line">    ✅// 检查每线程单项快速缓存中是否有匹配的对象</span><br><span class="line">    bool fastCacheOccupied = NO;</span><br><span class="line">        ✅// 通过tls相关封装的pthead方法获取是否有再底层存储的SyncData</span><br><span class="line">    SyncData *data = (SyncData *)tls_get_direct(SYNC_DATA_DIRECT_KEY);</span><br><span class="line">    if (data) &#123;</span><br><span class="line">        fastCacheOccupied = YES;</span><br><span class="line">        ✅// 如果获取到的数据和传入数据相同</span><br><span class="line">        if (data-&gt;object == object) &#123;</span><br><span class="line">            // Found a match in fast cache.</span><br><span class="line">            uintptr_t lockCount;</span><br><span class="line"></span><br><span class="line">            result = data;</span><br><span class="line">            lockCount = (uintptr_t)tls_get_direct(SYNC_COUNT_DIRECT_KEY);</span><br><span class="line">            if (result-&gt;threadCount &lt;= 0  ||  lockCount &lt;= 0) &#123;</span><br><span class="line">                _objc_fatal(&quot;id2data fastcache is buggy&quot;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            switch(why) &#123;</span><br><span class="line">            case ACQUIRE: &#123;</span><br><span class="line">                // 如果是 entry，则对 lockCount 加 1，并通过 tls 保存</span><br><span class="line">                lockCount++;</span><br><span class="line">                tls_set_direct(SYNC_COUNT_DIRECT_KEY, (void*)lockCount);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            case RELEASE:</span><br><span class="line">                // 如果是 exit，则对 lockCount 减 1，并通过 tls 保存</span><br><span class="line">                lockCount--;</span><br><span class="line">                tls_set_direct(SYNC_COUNT_DIRECT_KEY, (void*)lockCount);</span><br><span class="line">                if (lockCount == 0) &#123;</span><br><span class="line">                    // remove from fast cache</span><br><span class="line">                    // 如果 lockCount 为 0，则从高速缓存中删除</span><br><span class="line">                    tls_set_direct(SYNC_DATA_DIRECT_KEY, NULL);</span><br><span class="line">                    // atomic because may collide with concurrent ACQUIRE</span><br><span class="line">                    OSAtomicDecrement32Barrier(&amp;result-&gt;threadCount);</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case CHECK:</span><br><span class="line">                // do nothing</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">#endif</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">static SyncData* id2data(id object, enum usage why)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    #if SUPPORT_DIRECT_THREAD_KEYS</span><br><span class="line">    // Check per-thread single-entry fast cache for matching object</span><br><span class="line">    ✅// 检查每线程单项快速缓存中是否有匹配的对象</span><br><span class="line">    bool fastCacheOccupied = NO;</span><br><span class="line">        ✅// 通过tls相关封装的pthead方法获取是否有再底层存储的SyncData</span><br><span class="line">    SyncData *data = (SyncData *)tls_get_direct(SYNC_DATA_DIRECT_KEY);</span><br><span class="line">    if (data) &#123;</span><br><span class="line">        fastCacheOccupied = YES;</span><br><span class="line">        ✅// 如果获取到的数据和传入数据相同</span><br><span class="line">        if (data-&gt;object == object) &#123;</span><br><span class="line">            // Found a match in fast cache.</span><br><span class="line">            uintptr_t lockCount;</span><br><span class="line"></span><br><span class="line">            result = data;</span><br><span class="line">            lockCount = (uintptr_t)tls_get_direct(SYNC_COUNT_DIRECT_KEY);</span><br><span class="line">            if (result-&gt;threadCount &lt;= 0  ||  lockCount &lt;= 0) &#123;</span><br><span class="line">                _objc_fatal(&quot;id2data fastcache is buggy&quot;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            switch(why) &#123;</span><br><span class="line">            case ACQUIRE: &#123;</span><br><span class="line">                // 如果是 entry，则对 lockCount 加 1，并通过 tls 保存</span><br><span class="line">                lockCount++;</span><br><span class="line">                tls_set_direct(SYNC_COUNT_DIRECT_KEY, (void*)lockCount);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            case RELEASE:</span><br><span class="line">                // 如果是 exit，则对 lockCount 减 1，并通过 tls 保存</span><br><span class="line">                lockCount--;</span><br><span class="line">                tls_set_direct(SYNC_COUNT_DIRECT_KEY, (void*)lockCount);</span><br><span class="line">                if (lockCount == 0) &#123;</span><br><span class="line">                    // remove from fast cache</span><br><span class="line">                    // 如果 lockCount 为 0，则从高速缓存中删除</span><br><span class="line">                    tls_set_direct(SYNC_DATA_DIRECT_KEY, NULL);</span><br><span class="line">                    // atomic because may collide with concurrent ACQUIRE</span><br><span class="line">                    OSAtomicDecrement32Barrier(&amp;result-&gt;threadCount);</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case CHECK:</span><br><span class="line">                // do nothing</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">#endif</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ol start="3">
 <li><strong>检查有锁线程中的缓存</strong></li>
 </ol>
 <p>检查所有线程中的缓存</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">static SyncData* id2data(id object, enum usage why)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    // Check per-thread cache of already-owned locks for matching object</span><br><span class="line">    // 检查已拥有锁的每个线程高速缓存中是否有匹配的对象</span><br><span class="line">    SyncCache *cache = fetch_cache(NO);</span><br><span class="line">    if (cache) &#123;</span><br><span class="line">        unsigned int i;</span><br><span class="line">        for (i = 0; i &lt; cache-&gt;used; i++) &#123;</span><br><span class="line">            SyncCacheItem *item = &amp;cache-&gt;list[i];</span><br><span class="line">            if (item-&gt;data-&gt;object != object) continue;</span><br><span class="line"></span><br><span class="line">            // Found a match.</span><br><span class="line">            result = item-&gt;data;</span><br><span class="line">            if (result-&gt;threadCount &lt;= 0  ||  item-&gt;lockCount &lt;= 0) &#123;</span><br><span class="line">                _objc_fatal(&quot;id2data cache is buggy&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">                </span><br><span class="line">            switch(why) &#123;</span><br><span class="line">            case ACQUIRE:</span><br><span class="line">                item-&gt;lockCount++;</span><br><span class="line">                break;</span><br><span class="line">            case RELEASE:</span><br><span class="line">                item-&gt;lockCount--;</span><br><span class="line">                if (item-&gt;lockCount == 0) &#123;</span><br><span class="line">                    // remove from per-thread cache</span><br><span class="line">                    cache-&gt;list[i] = cache-&gt;list[--cache-&gt;used];</span><br><span class="line">                    // atomic because may collide with concurrent ACQUIRE</span><br><span class="line">                    OSAtomicDecrement32Barrier(&amp;result-&gt;threadCount);</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case CHECK:</span><br><span class="line">                // do nothing</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">static SyncData* id2data(id object, enum usage why)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    // Check per-thread cache of already-owned locks for matching object</span><br><span class="line">    // 检查已拥有锁的每个线程高速缓存中是否有匹配的对象</span><br><span class="line">    SyncCache *cache = fetch_cache(NO);</span><br><span class="line">    if (cache) &#123;</span><br><span class="line">        unsigned int i;</span><br><span class="line">        for (i = 0; i &lt; cache-&gt;used; i++) &#123;</span><br><span class="line">            SyncCacheItem *item = &amp;cache-&gt;list[i];</span><br><span class="line">            if (item-&gt;data-&gt;object != object) continue;</span><br><span class="line"></span><br><span class="line">            // Found a match.</span><br><span class="line">            result = item-&gt;data;</span><br><span class="line">            if (result-&gt;threadCount &lt;= 0  ||  item-&gt;lockCount &lt;= 0) &#123;</span><br><span class="line">                _objc_fatal(&quot;id2data cache is buggy&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">                </span><br><span class="line">            switch(why) &#123;</span><br><span class="line">            case ACQUIRE:</span><br><span class="line">                item-&gt;lockCount++;</span><br><span class="line">                break;</span><br><span class="line">            case RELEASE:</span><br><span class="line">                item-&gt;lockCount--;</span><br><span class="line">                if (item-&gt;lockCount == 0) &#123;</span><br><span class="line">                    // remove from per-thread cache</span><br><span class="line">                    cache-&gt;list[i] = cache-&gt;list[--cache-&gt;used];</span><br><span class="line">                    // atomic because may collide with concurrent ACQUIRE</span><br><span class="line">                    OSAtomicDecrement32Barrier(&amp;result-&gt;threadCount);</span><br><span class="line">                &#125;</span><br><span class="line">                break;</span><br><span class="line">            case CHECK:</span><br><span class="line">                // do nothing</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ol start="4">
 <li><strong>全局哈希表查找</strong></li>
 </ol>
 <p>如果上述两步中，单个线程和已经锁住的线程中的缓存数据都没有找到的话，那么就会来到此步，回来系统保存的哈希表中 SyncList 结果中，进行链式查找。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">static SyncData* id2data(id object, enum usage why)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    &#123;</span><br><span class="line">        SyncData* p;</span><br><span class="line">        SyncData* firstUnused = NULL;</span><br><span class="line">        for (p = *listp; p != NULL; p = p-&gt;nextData) &#123;</span><br><span class="line">            if ( p-&gt;object == object ) &#123;</span><br><span class="line">                result = p;</span><br><span class="line">                // atomic because may collide with concurrent RELEASE</span><br><span class="line">                OSAtomicIncrement32Barrier(&amp;result-&gt;threadCount);</span><br><span class="line">                goto done;</span><br><span class="line">            &#125;</span><br><span class="line">            if ( (firstUnused == NULL) &amp;&amp; (p-&gt;threadCount == 0) )</span><br><span class="line">                firstUnused = p;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">        // no SyncData currently associated with object</span><br><span class="line">        if ( (why == RELEASE) || (why == CHECK) )</span><br><span class="line">            goto done;</span><br><span class="line">    </span><br><span class="line">        // an unused one was found, use it</span><br><span class="line">        if ( firstUnused != NULL ) &#123;</span><br><span class="line">            result = firstUnused;</span><br><span class="line">            result-&gt;object = (objc_object *)object;</span><br><span class="line">            result-&gt;threadCount = 1;</span><br><span class="line">            goto done;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">static SyncData* id2data(id object, enum usage why)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    &#123;</span><br><span class="line">        SyncData* p;</span><br><span class="line">        SyncData* firstUnused = NULL;</span><br><span class="line">        for (p = *listp; p != NULL; p = p-&gt;nextData) &#123;</span><br><span class="line">            if ( p-&gt;object == object ) &#123;</span><br><span class="line">                result = p;</span><br><span class="line">                // atomic because may collide with concurrent RELEASE</span><br><span class="line">                OSAtomicIncrement32Barrier(&amp;result-&gt;threadCount);</span><br><span class="line">                goto done;</span><br><span class="line">            &#125;</span><br><span class="line">            if ( (firstUnused == NULL) &amp;&amp; (p-&gt;threadCount == 0) )</span><br><span class="line">                firstUnused = p;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">        // no SyncData currently associated with object</span><br><span class="line">        if ( (why == RELEASE) || (why == CHECK) )</span><br><span class="line">            goto done;</span><br><span class="line">    </span><br><span class="line">        // an unused one was found, use it</span><br><span class="line">        if ( firstUnused != NULL ) &#123;</span><br><span class="line">            result = firstUnused;</span><br><span class="line">            result-&gt;object = (objc_object *)object;</span><br><span class="line">            result-&gt;threadCount = 1;</span><br><span class="line">            goto done;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ol start="5">
 <li><strong>生成新数据并写入缓存</strong></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">static SyncData* id2data(id object, enum usage why)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    posix_memalign((void **)&amp;result, alignof(SyncData), sizeof(SyncData));</span><br><span class="line">    result-&gt;object = (objc_object *)object;</span><br><span class="line">    result-&gt;threadCount = 1;</span><br><span class="line">    new (&amp;result-&gt;mutex) recursive_mutex_t(fork_unsafe_lock);</span><br><span class="line">    result-&gt;nextData = *listp;</span><br><span class="line">    *listp = result;</span><br><span class="line">    </span><br><span class="line"> done:</span><br><span class="line">    lockp-&gt;unlock();</span><br><span class="line">    if (result) &#123;</span><br><span class="line">        // Only new ACQUIRE should get here.</span><br><span class="line">        // All RELEASE and CHECK and recursive ACQUIRE are </span><br><span class="line">        // handled by the per-thread caches above.</span><br><span class="line">        ✅// 只有创建的 SyncData 才能进入这里。</span><br><span class="line">        ✅// 所有的释放、检查和递归获取都是由上面的线程缓存处理</span><br><span class="line">        if (why == RELEASE) &#123;</span><br><span class="line">            // Probably some thread is incorrectly exiting </span><br><span class="line">            // while the object is held by another thread.</span><br><span class="line">            return nil;</span><br><span class="line">        &#125;</span><br><span class="line">        if (why != ACQUIRE) _objc_fatal(&quot;id2data is buggy&quot;);</span><br><span class="line">        if (result-&gt;object != object) _objc_fatal(&quot;id2data is buggy&quot;);</span><br><span class="line"></span><br><span class="line">#if SUPPORT_DIRECT_THREAD_KEYS</span><br><span class="line">        if (!fastCacheOccupied) &#123;</span><br><span class="line">            // Save in fast thread cache</span><br><span class="line">            ✅// 存入快速线程缓存</span><br><span class="line">            tls_set_direct(SYNC_DATA_DIRECT_KEY, result);</span><br><span class="line">            tls_set_direct(SYNC_COUNT_DIRECT_KEY, (void*)1);</span><br><span class="line">        &#125; else </span><br><span class="line">#endif</span><br><span class="line">        &#123;</span><br><span class="line">            // Save in thread cache</span><br><span class="line">            ✅// 存入线程缓存</span><br><span class="line">            if (!cache) cache = fetch_cache(YES);</span><br><span class="line">            cache-&gt;list[cache-&gt;used].data = result;</span><br><span class="line">            cache-&gt;list[cache-&gt;used].lockCount = 1;</span><br><span class="line">            cache-&gt;used++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">static SyncData* id2data(id object, enum usage why)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    posix_memalign((void **)&amp;result, alignof(SyncData), sizeof(SyncData));</span><br><span class="line">    result-&gt;object = (objc_object *)object;</span><br><span class="line">    result-&gt;threadCount = 1;</span><br><span class="line">    new (&amp;result-&gt;mutex) recursive_mutex_t(fork_unsafe_lock);</span><br><span class="line">    result-&gt;nextData = *listp;</span><br><span class="line">    *listp = result;</span><br><span class="line">    </span><br><span class="line"> done:</span><br><span class="line">    lockp-&gt;unlock();</span><br><span class="line">    if (result) &#123;</span><br><span class="line">        // Only new ACQUIRE should get here.</span><br><span class="line">        // All RELEASE and CHECK and recursive ACQUIRE are </span><br><span class="line">        // handled by the per-thread caches above.</span><br><span class="line">        ✅// 只有创建的 SyncData 才能进入这里。</span><br><span class="line">        ✅// 所有的释放、检查和递归获取都是由上面的线程缓存处理</span><br><span class="line">        if (why == RELEASE) &#123;</span><br><span class="line">            // Probably some thread is incorrectly exiting </span><br><span class="line">            // while the object is held by another thread.</span><br><span class="line">            return nil;</span><br><span class="line">        &#125;</span><br><span class="line">        if (why != ACQUIRE) _objc_fatal(&quot;id2data is buggy&quot;);</span><br><span class="line">        if (result-&gt;object != object) _objc_fatal(&quot;id2data is buggy&quot;);</span><br><span class="line"></span><br><span class="line">#if SUPPORT_DIRECT_THREAD_KEYS</span><br><span class="line">        if (!fastCacheOccupied) &#123;</span><br><span class="line">            // Save in fast thread cache</span><br><span class="line">            ✅// 存入快速线程缓存</span><br><span class="line">            tls_set_direct(SYNC_DATA_DIRECT_KEY, result);</span><br><span class="line">            tls_set_direct(SYNC_COUNT_DIRECT_KEY, (void*)1);</span><br><span class="line">        &#125; else </span><br><span class="line">#endif</span><br><span class="line">        &#123;</span><br><span class="line">            // Save in thread cache</span><br><span class="line">            ✅// 存入线程缓存</span><br><span class="line">            if (!cache) cache = fetch_cache(YES);</span><br><span class="line">            cache-&gt;list[cache-&gt;used].data = result;</span><br><span class="line">            cache-&gt;list[cache-&gt;used].lockCount = 1;</span><br><span class="line">            cache-&gt;used++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>至此一个 @synchronized 的相关操作已经执行完成。总结来说就是底层保存了一个哈希表，其中存储了 SyncData 结构的一个链表，通过线程缓存等操作，来进行增删改查，从来实现加解锁。但是操作结构复杂，步骤多，导致性能较差，而且需要注意传入的 obj 不能为空，否则无法进行锁操作。</p>
 <p><span id="lock5"></span></p>
 <h2 id="dispatch-semaphore"><a href="#dispatch-semaphore" class="headerlink" title="dispatch_semaphore"></a>dispatch_semaphore</h2><p>GCD 同步的一种方式，通过 dispatch_semaphore_t 信号量来实现。</p>
 <p>当我们将信号量的初始值设置为 1 时，可以将其当做互斥锁来使用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 生成信号量，参数 value 是信号量计数的初始值</span><br><span class="line">_lock = dispatch_semaphore_create(1); </span><br><span class="line"></span><br><span class="line">// 让信号量值减一，当信号量值为0时会等待(直到超时)，否则正常执行</span><br><span class="line">dispatch_semaphore_wait(_lock, DISPATCH_TIME_FOREVER); </span><br><span class="line"></span><br><span class="line">// 让信号量值加一，如果有通过 dispatch_semaphore_wait 函数等待 Dispatch Semaphore 的计数值增加的线程，会由系统唤醒最先等待的线程执行</span><br><span class="line">dispatch_semaphore_signal(_lock);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 生成信号量，参数 value 是信号量计数的初始值</span><br><span class="line">_lock = dispatch_semaphore_create(1); </span><br><span class="line"></span><br><span class="line">// 让信号量值减一，当信号量值为0时会等待(直到超时)，否则正常执行</span><br><span class="line">dispatch_semaphore_wait(_lock, DISPATCH_TIME_FOREVER); </span><br><span class="line"></span><br><span class="line">// 让信号量值加一，如果有通过 dispatch_semaphore_wait 函数等待 Dispatch Semaphore 的计数值增加的线程，会由系统唤醒最先等待的线程执行</span><br><span class="line">dispatch_semaphore_signal(_lock);</span><br></pre></td></tr></table></figure>
+
 <p><strong>拓展一下</strong></p>
 <p>YYDisskCache 在磁盘缓存的情况下，使用的信号量的方式对多线程进行加锁处理。磁盘 IO 的情况下，线程的等待时间较长，在这种场景下信号量的休眠等待机制较自旋锁的忙等（下面 pthread_mutex 介绍了 YYMemoryCache 的自旋忙等）更有优势。</p>
 <p><span id="lock6"></span></p>
 <h2 id="pthread-mutex"><a href="#pthread-mutex" class="headerlink" title="pthread_mutex"></a>pthread_mutex</h2><p>这里还是借用一下大神的图：</p>
-<img src="/2019/12/29/iOS多线程锁记录/线程锁1.png" title="效率图">
+<img src="/2019/12/29/iOS%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%94%81%E8%AE%B0%E5%BD%95/%E7%BA%BF%E7%A8%8B%E9%94%811.png" class="" title="效率图">
+
 <p>可以看到 pthread_mutex 的效率还是很强大的。大神的 YYMemoryCache 中也是使用 pthread_mutex_t 来对多线程情况下进行的加锁。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// 声明互斥锁</span><br><span class="line">pthread_mutex_t lock;</span><br><span class="line"></span><br><span class="line">// 声明互斥锁属性对象</span><br><span class="line">pthread_mutexattr_t attr;</span><br><span class="line">// 初始化属性对象</span><br><span class="line">pthread_mutexattr_init(&amp;attr);</span><br><span class="line"></span><br><span class="line">// 设置互斥锁的类型属性</span><br><span class="line">pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_NORMAL);</span><br><span class="line">//    pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_ERRORCHECK);</span><br><span class="line">//    pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_RECURSIVE);</span><br><span class="line">//    pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_DEFAULT); // PTHREAD_MUTEX_NORMAL</span><br><span class="line"></span><br><span class="line">// 利用属性初始化锁</span><br><span class="line">pthread_mutex_init(&amp;lock, &amp;attr);</span><br><span class="line">pthread_mutex_init(&amp;lock, NULL);</span><br><span class="line"></span><br><span class="line">pthread_mutex_trylock(&amp;lock);</span><br><span class="line">pthread_mutex_lock(&amp;lock);</span><br><span class="line">pthread_mutex_unlock(&amp;lock);</span><br><span class="line"></span><br><span class="line">pthread_mutexattr_destroy(&amp;attr);</span><br><span class="line">pthread_mutex_destroy(&amp;lock);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// 声明互斥锁</span><br><span class="line">pthread_mutex_t lock;</span><br><span class="line"></span><br><span class="line">// 声明互斥锁属性对象</span><br><span class="line">pthread_mutexattr_t attr;</span><br><span class="line">// 初始化属性对象</span><br><span class="line">pthread_mutexattr_init(&amp;attr);</span><br><span class="line"></span><br><span class="line">// 设置互斥锁的类型属性</span><br><span class="line">pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_NORMAL);</span><br><span class="line">//    pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_ERRORCHECK);</span><br><span class="line">//    pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_RECURSIVE);</span><br><span class="line">//    pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_DEFAULT); // PTHREAD_MUTEX_NORMAL</span><br><span class="line"></span><br><span class="line">// 利用属性初始化锁</span><br><span class="line">pthread_mutex_init(&amp;lock, &amp;attr);</span><br><span class="line">pthread_mutex_init(&amp;lock, NULL);</span><br><span class="line"></span><br><span class="line">pthread_mutex_trylock(&amp;lock);</span><br><span class="line">pthread_mutex_lock(&amp;lock);</span><br><span class="line">pthread_mutex_unlock(&amp;lock);</span><br><span class="line"></span><br><span class="line">pthread_mutexattr_destroy(&amp;attr);</span><br><span class="line">pthread_mutex_destroy(&amp;lock);</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>PTHREAD_MUTEX_DEFAULT</li>
 </ul>
@@ -496,15 +406,16 @@
 </ul>
 <p>类型的互斥锁不同，对此类型互斥锁进行重新锁定时不会产生死锁情况。多次锁定互斥锁需要进行相同次数的解除锁定才可以释放该锁，然后其他线程才能获取该互斥锁。如果线程尝试解除锁定的互斥锁已经由其他线程锁定，则会返回错误。  如果线程尝试解除锁定的互斥锁未锁定，则会返回错误。</p>
 <p>上面就是 pthread_mutex_t 的基本使用。</p>
-<p>更多的使用方式可以参考<a href="https://docs.oracle.com/cd/E19253-01/819-7051/6n919hpaf/index.html#sync-26886" target="_blank" rel="noopener">这篇文章</a>，里面详细的介绍了 pthread_mutext 的配置。</p>
+<p>更多的使用方式可以参考<a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/E19253-01/819-7051/6n919hpaf/index.html#sync-26886">这篇文章</a>，里面详细的介绍了 pthread_mutext 的配置。</p>
 <p><strong>拓展一下</strong></p>
 <p>pthread_mutex_t 是互斥锁，它有一个特性：当多个线程出现数据竞争时，除了”竞争成功”的那个线程外，其他线程都会进入被动挂起状态，而当”竞争成功”的那个线程解锁时，会主动去将其他线程激活，这个过程包含了上下文的切换，CPU 抢占，信号发送等开销，很明显，互斥锁的起始开销有些大，效率低于自旋锁。</p>
 <p>所以在 YYMemoryCache 使用了 pthread_mutex_trylock () 尝试解锁，若解锁失败该方法会立即返回，让当前线程不会进入被动的挂起状态（也可以说阻塞），在下一次循环时又继续尝试获取锁。这个过程很有意思，感觉是手动实现了一个自旋锁。而自旋锁有个需要注意的问题是：死循环等待的时间越长，对 CPU 的消耗越大。所以作者做了一个很短的睡眠 usleep(10 * 1000);，有效的减小了循环的调用次数，至于这个睡眠时间的长度为什么是 10ms， 作者应该做了测试。</p>
 <p><span id="lock7"></span></p>
-<h2 id="NSLock、NSRecurisiveLock、NSCondition、NSConditionLock"><a href="#NSLock、NSRecurisiveLock、NSCondition、NSConditionLock" class="headerlink" title="NSLock、NSRecurisiveLock、NSCondition、NSConditionLock"></a>NSLock、NSRecurisiveLock、NSCondition、NSConditionLock</h2><p>NSLock 源码在 CoreFundation 框架中，无法进行查看，所以我们看 Swift 版本的 CoreFundation 实现，来类比 NSLock 实现，源码在<a href="https://github.com/apple/swift-corelibs-foundation/blob/ce2827f06ca218fcb8756d9f0bc086b9746dffbe/Sources/Foundation/NSLock.swift" target="_blank" rel="noopener">这里</a>。</p>
+<h2 id="NSLock、NSRecurisiveLock、NSCondition、NSConditionLock"><a href="#NSLock、NSRecurisiveLock、NSCondition、NSConditionLock" class="headerlink" title="NSLock、NSRecurisiveLock、NSCondition、NSConditionLock"></a>NSLock、NSRecurisiveLock、NSCondition、NSConditionLock</h2><p>NSLock 源码在 CoreFundation 框架中，无法进行查看，所以我们看 Swift 版本的 CoreFundation 实现，来类比 NSLock 实现，源码在<a target="_blank" rel="noopener" href="https://github.com/apple/swift-corelibs-foundation/blob/ce2827f06ca218fcb8756d9f0bc086b9746dffbe/Sources/Foundation/NSLock.swift">这里</a>。</p>
 <p>本来只是查看 NSLock 的，然后发现 NSRecurisiveLock、NSCondition、NSConditionLock 都在这里，就放在一起记录一下吧。</p>
-<p>下面我们先看看源码：（这里的源码是删减版的，若是有兴趣可以去<a href="https://github.com/apple/swift-corelibs-foundation/blob/ce2827f06ca218fcb8756d9f0bc086b9746dffbe/Sources/Foundation/NSLock.swift" target="_blank" rel="noopener">查看完整代码</a>）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line">private typealias _MutexPointer = UnsafeMutablePointer&lt;pthread_mutex_t&gt;</span><br><span class="line">private typealias _RecursiveMutexPointer = UnsafeMutablePointer&lt;pthread_mutex_t&gt;</span><br><span class="line">private typealias _ConditionVariablePointer = UnsafeMutablePointer&lt;pthread_cond_t&gt;</span><br><span class="line"></span><br><span class="line">open class NSLock: NSObject, NSLocking &#123;</span><br><span class="line">    internal var mutex = _MutexPointer.allocate(capacity: 1)</span><br><span class="line"></span><br><span class="line">    private var timeoutCond = _ConditionVariablePointer.allocate(capacity: 1)</span><br><span class="line">    private var timeoutMutex = _MutexPointer.allocate(capacity: 1)</span><br><span class="line"></span><br><span class="line">    public override init() &#123;</span><br><span class="line">        pthread_mutex_init(mutex, nil)</span><br><span class="line"></span><br><span class="line">        pthread_cond_init(timeoutCond, nil)</span><br><span class="line">        pthread_mutex_init(timeoutMutex, nil)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func lock() &#123;</span><br><span class="line">        pthread_mutex_lock(mutex)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func unlock() &#123;</span><br><span class="line">        pthread_mutex_unlock(mutex)</span><br><span class="line"></span><br><span class="line">        // Wakeup any threads waiting in lock(before:)</span><br><span class="line">        pthread_mutex_lock(timeoutMutex)</span><br><span class="line">        pthread_cond_broadcast(timeoutCond)</span><br><span class="line">        pthread_mutex_unlock(timeoutMutex)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open class NSRecursiveLock: NSObject, NSLocking &#123;</span><br><span class="line">    internal var mutex = _RecursiveMutexPointer.allocate(capacity: 1)</span><br><span class="line"></span><br><span class="line">    private var timeoutCond = _ConditionVariablePointer.allocate(capacity: 1)</span><br><span class="line">    private var timeoutMutex = _MutexPointer.allocate(capacity: 1)</span><br><span class="line"></span><br><span class="line">    public override init() &#123;</span><br><span class="line">        super.init()</span><br><span class="line"></span><br><span class="line">        var attrib = pthread_mutexattr_t()</span><br><span class="line"></span><br><span class="line">        withUnsafeMutablePointer(to: &amp;attrib) &#123; attrs in</span><br><span class="line">            pthread_mutexattr_init(attrs)</span><br><span class="line">            pthread_mutexattr_settype(attrs, Int32(PTHREAD_MUTEX_RECURSIVE))</span><br><span class="line">            pthread_mutex_init(mutex, attrs)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        pthread_cond_init(timeoutCond, nil)</span><br><span class="line">        pthread_mutex_init(timeoutMutex, nil)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open class NSCondition: NSObject, NSLocking &#123;</span><br><span class="line">    internal var mutex = _MutexPointer.allocate(capacity: 1)</span><br><span class="line">    internal var cond = _ConditionVariablePointer.allocate(capacity: 1)</span><br><span class="line"></span><br><span class="line">    public override init() &#123;</span><br><span class="line">        pthread_mutex_init(mutex, nil)</span><br><span class="line">        pthread_cond_init(cond, nil)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    open func lock() &#123;</span><br><span class="line">        pthread_mutex_lock(mutex)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    open func unlock() &#123;</span><br><span class="line">        pthread_mutex_unlock(mutex)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func wait() &#123;</span><br><span class="line">        pthread_cond_wait(cond, mutex)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    open func signal() &#123;</span><br><span class="line">        pthread_cond_signal(cond)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func broadcast() &#123;</span><br><span class="line">        pthread_cond_broadcast(cond)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open class NSConditionLock : NSObject, NSLocking &#123;</span><br><span class="line">    internal var _cond = NSCondition()</span><br><span class="line">    internal var _value: Int</span><br><span class="line">    internal var _thread: _swift_CFThreadRef?</span><br><span class="line">    </span><br><span class="line">    open var condition: Int &#123;</span><br><span class="line">        return _value</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public convenience override init() &#123;</span><br><span class="line">        self.init(condition: 0)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public init(condition: Int) &#123;</span><br><span class="line">        _value = condition</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func lock() &#123;</span><br><span class="line">        let _ = lock(before: Date.distantFuture)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func unlock() &#123;</span><br><span class="line">        _cond.lock()</span><br><span class="line"></span><br><span class="line">        _thread = nil</span><br><span class="line"></span><br><span class="line">        _cond.broadcast()</span><br><span class="line">        _cond.unlock()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    open func lock(before limit: Date) -&gt; Bool &#123;</span><br><span class="line">        _cond.lock()</span><br><span class="line">        while _thread != nil &#123;</span><br><span class="line">            if !_cond.wait(until: limit) &#123;</span><br><span class="line">                _cond.unlock()</span><br><span class="line">                return false</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        _thread = pthread_self()</span><br><span class="line"></span><br><span class="line">        _cond.unlock()</span><br><span class="line">        return true</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面我们先看看源码：（这里的源码是删减版的，若是有兴趣可以去<a target="_blank" rel="noopener" href="https://github.com/apple/swift-corelibs-foundation/blob/ce2827f06ca218fcb8756d9f0bc086b9746dffbe/Sources/Foundation/NSLock.swift">查看完整代码</a>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line">private typealias _MutexPointer = UnsafeMutablePointer&lt;pthread_mutex_t&gt;</span><br><span class="line">private typealias _RecursiveMutexPointer = UnsafeMutablePointer&lt;pthread_mutex_t&gt;</span><br><span class="line">private typealias _ConditionVariablePointer = UnsafeMutablePointer&lt;pthread_cond_t&gt;</span><br><span class="line"></span><br><span class="line">open class NSLock: NSObject, NSLocking &#123;</span><br><span class="line">    internal var mutex = _MutexPointer.allocate(capacity: 1)</span><br><span class="line"></span><br><span class="line">    private var timeoutCond = _ConditionVariablePointer.allocate(capacity: 1)</span><br><span class="line">    private var timeoutMutex = _MutexPointer.allocate(capacity: 1)</span><br><span class="line"></span><br><span class="line">    public override init() &#123;</span><br><span class="line">        pthread_mutex_init(mutex, nil)</span><br><span class="line"></span><br><span class="line">        pthread_cond_init(timeoutCond, nil)</span><br><span class="line">        pthread_mutex_init(timeoutMutex, nil)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func lock() &#123;</span><br><span class="line">        pthread_mutex_lock(mutex)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func unlock() &#123;</span><br><span class="line">        pthread_mutex_unlock(mutex)</span><br><span class="line"></span><br><span class="line">        // Wakeup any threads waiting in lock(before:)</span><br><span class="line">        pthread_mutex_lock(timeoutMutex)</span><br><span class="line">        pthread_cond_broadcast(timeoutCond)</span><br><span class="line">        pthread_mutex_unlock(timeoutMutex)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open class NSRecursiveLock: NSObject, NSLocking &#123;</span><br><span class="line">    internal var mutex = _RecursiveMutexPointer.allocate(capacity: 1)</span><br><span class="line"></span><br><span class="line">    private var timeoutCond = _ConditionVariablePointer.allocate(capacity: 1)</span><br><span class="line">    private var timeoutMutex = _MutexPointer.allocate(capacity: 1)</span><br><span class="line"></span><br><span class="line">    public override init() &#123;</span><br><span class="line">        super.init()</span><br><span class="line"></span><br><span class="line">        var attrib = pthread_mutexattr_t()</span><br><span class="line"></span><br><span class="line">        withUnsafeMutablePointer(to: &amp;attrib) &#123; attrs in</span><br><span class="line">            pthread_mutexattr_init(attrs)</span><br><span class="line">            pthread_mutexattr_settype(attrs, Int32(PTHREAD_MUTEX_RECURSIVE))</span><br><span class="line">            pthread_mutex_init(mutex, attrs)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        pthread_cond_init(timeoutCond, nil)</span><br><span class="line">        pthread_mutex_init(timeoutMutex, nil)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open class NSCondition: NSObject, NSLocking &#123;</span><br><span class="line">    internal var mutex = _MutexPointer.allocate(capacity: 1)</span><br><span class="line">    internal var cond = _ConditionVariablePointer.allocate(capacity: 1)</span><br><span class="line"></span><br><span class="line">    public override init() &#123;</span><br><span class="line">        pthread_mutex_init(mutex, nil)</span><br><span class="line">        pthread_cond_init(cond, nil)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    open func lock() &#123;</span><br><span class="line">        pthread_mutex_lock(mutex)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    open func unlock() &#123;</span><br><span class="line">        pthread_mutex_unlock(mutex)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func wait() &#123;</span><br><span class="line">        pthread_cond_wait(cond, mutex)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    open func signal() &#123;</span><br><span class="line">        pthread_cond_signal(cond)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func broadcast() &#123;</span><br><span class="line">        pthread_cond_broadcast(cond)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">open class NSConditionLock : NSObject, NSLocking &#123;</span><br><span class="line">    internal var _cond = NSCondition()</span><br><span class="line">    internal var _value: Int</span><br><span class="line">    internal var _thread: _swift_CFThreadRef?</span><br><span class="line">    </span><br><span class="line">    open var condition: Int &#123;</span><br><span class="line">        return _value</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public convenience override init() &#123;</span><br><span class="line">        self.init(condition: 0)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public init(condition: Int) &#123;</span><br><span class="line">        _value = condition</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func lock() &#123;</span><br><span class="line">        let _ = lock(before: Date.distantFuture)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    open func unlock() &#123;</span><br><span class="line">        _cond.lock()</span><br><span class="line"></span><br><span class="line">        _thread = nil</span><br><span class="line"></span><br><span class="line">        _cond.broadcast()</span><br><span class="line">        _cond.unlock()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    open func lock(before limit: Date) -&gt; Bool &#123;</span><br><span class="line">        _cond.lock()</span><br><span class="line">        while _thread != nil &#123;</span><br><span class="line">            if !_cond.wait(until: limit) &#123;</span><br><span class="line">                _cond.unlock()</span><br><span class="line">                return false</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        _thread = pthread_self()</span><br><span class="line"></span><br><span class="line">        _cond.unlock()</span><br><span class="line">        return true</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>从源码我们看到，这四种锁都是对 pthread_mutex 的上层封装。</p>
 <ul>
 <li>NSLock 不是递归锁，只是对</li>
@@ -519,347 +430,61 @@
 <li>NSConditionLock 是 NSCondition 加线程数的封装，继承 NSLocking 协议，也有 lock 和 unlock 等方法。实现了类似dispatch_semaphore的效果。</li>
 </ul>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/11/24/iOS单例的正确使用姿势/" rel="next" title="iOS单例的正确使用姿势">
-                <i class="fa fa-chevron-left"></i> iOS单例的正确使用姿势
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/02/09/查漏补缺——网络/" rel="prev" title="查漏补缺——网络">
-                查漏补缺——网络 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/11/24/iOS%E5%8D%95%E4%BE%8B%E7%9A%84%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/" rel="prev" title="iOS单例的正确使用姿势">
+                  <i class="fa fa-chevron-left"></i> iOS单例的正确使用姿势
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#锁的概念"><span class="nav-number">1.1.</span> <span class="nav-text">锁的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两种锁——自旋锁与互斥锁"><span class="nav-number">1.2.</span> <span class="nav-text">两种锁——自旋锁与互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自旋锁"><span class="nav-number">1.2.1.</span> <span class="nav-text">自旋锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#互斥锁"><span class="nav-number">1.2.2.</span> <span class="nav-text">互斥锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两种锁的使用选择"><span class="nav-number">1.2.3.</span> <span class="nav-text">两种锁的使用选择</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#几种常见的锁"><span class="nav-number">2.</span> <span class="nav-text">几种常见的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSSpinLock"><span class="nav-number">2.1.</span> <span class="nav-text">OSSpinLock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#os-unfair-lock"><span class="nav-number">2.2.</span> <span class="nav-text">os_unfair_lock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atomic"><span class="nav-number">2.3.</span> <span class="nav-text">atomic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized"><span class="nav-number">2.4.</span> <span class="nav-text">@synchronized</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatch-semaphore"><span class="nav-number">2.5.</span> <span class="nav-text">dispatch_semaphore</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pthread-mutex"><span class="nav-number">2.6.</span> <span class="nav-text">pthread_mutex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSLock、NSRecurisiveLock、NSCondition、NSConditionLock"><span class="nav-number">2.7.</span> <span class="nav-text">NSLock、NSRecurisiveLock、NSCondition、NSConditionLock</span></a></li></ol></li></ol></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2020/02/09/%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA%E2%80%94%E2%80%94%E7%BD%91%E7%BB%9C/" rel="next" title="查漏补缺——网络">
+                  查漏补缺——网络 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -872,34 +497,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

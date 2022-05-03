@@ -1,348 +1,241 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="在开发中，无论我们使用 Push 还是 Present 推出新的 ViewController 时，系统为了提高用户体验都会为我们默认加上一些过渡动画。但是，系统默认的动画总是不能满足大家各种各样的需求的，所以系统也为我们提供了在不同场景下自定义过渡动画以及通过手势控制过渡进度的实现方案。 这篇文章记录了自定义转场动画中的几种情况：  模态跳转（Present） 导航控制器跳转（Push） UIT">
+    <meta name="description" content="在开发中，无论我们使用 Push 还是 Present 推出新的 ViewController 时，系统为了提高用户体验都会为我们默认加上一些过渡动画。但是，系统默认的动画总是不能满足大家各种各样的需求的，所以系统也为我们提供了在不同场景下自定义过渡动画以及通过手势控制过渡进度的实现方案。 这篇文章记录了自定义转场动画中的几种情况：  模态跳转（Present） 导航控制器跳转（Push） UIT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自定义转场动画">
-<meta property="og:url" content="http://yoursite.com/2018/06/17/自定义转场动画/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/06/17/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/index.html">
 <meta property="og:site_name" content="江涛的博客">
 <meta property="og:description" content="在开发中，无论我们使用 Push 还是 Present 推出新的 ViewController 时，系统为了提高用户体验都会为我们默认加上一些过渡动画。但是，系统默认的动画总是不能满足大家各种各样的需求的，所以系统也为我们提供了在不同场景下自定义过渡动画以及通过手势控制过渡进度的实现方案。 这篇文章记录了自定义转场动画中的几种情况：  模态跳转（Present） 导航控制器跳转（Push） UIT">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/06/17/自定义转场动画/Transition.gif">
-<meta property="og:updated_time" content="2019-07-01T06:51:34.000Z">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2018/06/17/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/Transition.gif">
+<meta property="article:published_time" content="2018-06-17T09:51:01.000Z">
+<meta property="article:modified_time" content="2019-07-01T06:51:34.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="自定义转场动画">
-<meta name="twitter:description" content="在开发中，无论我们使用 Push 还是 Present 推出新的 ViewController 时，系统为了提高用户体验都会为我们默认加上一些过渡动画。但是，系统默认的动画总是不能满足大家各种各样的需求的，所以系统也为我们提供了在不同场景下自定义过渡动画以及通过手势控制过渡进度的实现方案。 这篇文章记录了自定义转场动画中的几种情况：  模态跳转（Present） 导航控制器跳转（Push） UIT">
-<meta name="twitter:image" content="http://yoursite.com/2018/06/17/自定义转场动画/Transition.gif">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/17/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/Transition.gif">
+
+
+<link rel="canonical" href="http://yoursite.com/2018/06/17/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2018/06/17/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/","path":"2018/06/17/自定义转场动画/","title":"自定义转场动画"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2018/06/17/自定义转场动画/">
-
-
-
-
-
-  <title>自定义转场动画 | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>自定义转场动画 | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">效果图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">预备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%80%81%E8%B7%B3%E8%BD%AC%EF%BC%88Present%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">模态跳转（Present）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF"><span class="nav-number">3.0.1.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.0.2.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.0.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%E6%8E%A7%E5%88%B6%E5%99%A8%E8%B7%B3%E8%BD%AC%EF%BC%88Push%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">导航控制器跳转（Push）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF-1"><span class="nav-number">4.0.1.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4-1"><span class="nav-number">4.0.2.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-1"><span class="nav-number">4.0.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UITabbarController"><span class="nav-number">5.</span> <span class="nav-text">UITabbarController</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF-2"><span class="nav-number">5.0.1.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4-2"><span class="nav-number">5.0.2.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-2"><span class="nav-number">5.0.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E6%96%B9%E6%A1%86%E6%9E%B6%E2%80%94%E2%80%94Lottie"><span class="nav-number">6.</span> <span class="nav-text">三方框架——Lottie</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">6.0.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF-3"><span class="nav-number">6.0.2.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4-3"><span class="nav-number">6.0.3.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-3"><span class="nav-number">6.0.4.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/17/自定义转场动画/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/17/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="自定义转场动画 | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          自定义转场动画
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">自定义转场动画</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-17T17:51:01+08:00">
-                2018-06-17
-              </time>
-            
+      <time title="Created: 2018-06-17 17:51:01" itemprop="dateCreated datePublished" datetime="2018-06-17T17:51:01+08:00">2018-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2019-07-01 14:51:34" itemprop="dateModified" datetime="2019-07-01T14:51:34+08:00">2019-07-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">iOS学习记录</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS学习记录/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS学习记录</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         <p>在开发中，无论我们使用 Push 还是 Present 推出新的 ViewController 时，系统为了提高用户体验都会为我们默认加上一些过渡动画。但是，系统默认的动画总是不能满足大家各种各样的需求的，所以系统也为我们提供了在不同场景下自定义过渡动画以及通过手势控制过渡进度的实现方案。</p>
 <p>这篇文章记录了自定义转场动画中的几种情况：</p>
 <ul>
@@ -351,8 +244,10 @@
 <li>UITabbarController</li>
 <li>三方框架——Lottie</li>
 </ul>
-<a id="more"></a>
-<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><img src="/2018/06/17/自定义转场动画/Transition.gif" title="效果图">
+<span id="more"></span>
+
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><img src="/2018/06/17/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/Transition.gif" class="" title="效果图">
+
 <h2 id="预备"><a href="#预备" class="headerlink" title="预备"></a>预备</h2><p>首先，我们现在介绍几个在自定义转场动画时需要接触的协议：</p>
 <ul>
 <li><p><strong>UIViewControllerAnimatedTransitioning：</strong> 实现此协议的实例控制转场动画效果。</p>
@@ -364,32 +259,42 @@
 <blockquote>
 <p>ps：下面的实例中，请大家忽略动画效果，关注实现。(其实是懒得去写太多动画了。🤦‍♂️)</p>
 </blockquote>
-<h2 id="模态跳转（Present）"><a href="#模态跳转（Present）" class="headerlink" title="模态跳转（Present）"></a>模态跳转（Present）</h2><h4 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.present(vc!, animated: true) &#123;&#125; </span><br><span class="line">self.dismiss(animated: true) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="模态跳转（Present）"><a href="#模态跳转（Present）" class="headerlink" title="模态跳转（Present）"></a>模态跳转（Present）</h2><h4 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.present(vc!, animated: true) &#123;&#125; </span><br><span class="line">self.dismiss(animated: true) &#123;&#125; </span><br></pre></td></tr></table></figure>
+
 <h4 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h4><ol>
 <li>设置将要 present 的 ViewController 的 transitioningDelegate 对象，此对象是实现协议 UIViewControllerTransitioningDelegate 的实例。</li>
 <li>实现 UIViewControllerTransitioningDelegate 协议中的几个代理方法，返回实现了 UIViewControllerAnimatedTransitioning 协议的动画效果控制类。</li>
 </ol>
 <p>需要实现的<strong>UIViewControllerTransitioningDelegate</strong>方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//返回用于 present 的自定义 transition 动画</span><br><span class="line">optional func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?</span><br><span class="line">    </span><br><span class="line">//返回用于 dismiss 的自定义 transition 动画</span><br><span class="line">optional func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?</span><br></pre></td></tr></table></figure>
-<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/// 第一个 VC 中点击跳转</span><br><span class="line">func presentClick(_ sender: Any) &#123;</span><br><span class="line">        let vc = self.storyboard?.instantiateViewController(withIdentifier: &quot;PresentSecondViewController&quot;)</span><br><span class="line">        </span><br><span class="line">        vc?.modalPresentationStyle = .fullScreen</span><br><span class="line">        </span><br><span class="line">        vc?.transitioningDelegate = self</span><br><span class="line">        </span><br><span class="line">        self.present(vc!, animated: true) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 第一个 VC 实现协议，返回控制转场动画效果的实例</span><br><span class="line">extension PresentFirstViewController: UIViewControllerTransitioningDelegate &#123;</span><br><span class="line">    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        return NormalPresentAnimator()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        return NormalPresentAnimator()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="导航控制器跳转（Push）"><a href="#导航控制器跳转（Push）" class="headerlink" title="导航控制器跳转（Push）"></a>导航控制器跳转（Push）</h2><h4 id="场景-1"><a href="#场景-1" class="headerlink" title="场景"></a>场景</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.navigationController?.pushViewController(vc!, animated: true)</span><br><span class="line">self.navigationController?.popViewController(animated: true)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//返回用于 present 的自定义 transition 动画</span><br><span class="line">optional func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?</span><br><span class="line">    </span><br><span class="line">//返回用于 dismiss 的自定义 transition 动画</span><br><span class="line">optional func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?</span><br></pre></td></tr></table></figure>
+
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/// 第一个 VC 中点击跳转</span><br><span class="line">func presentClick(_ sender: Any) &#123;</span><br><span class="line">        let vc = self.storyboard?.instantiateViewController(withIdentifier: &quot;PresentSecondViewController&quot;)</span><br><span class="line">        </span><br><span class="line">        vc?.modalPresentationStyle = .fullScreen</span><br><span class="line">        </span><br><span class="line">        vc?.transitioningDelegate = self</span><br><span class="line">        </span><br><span class="line">        self.present(vc!, animated: true) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 第一个 VC 实现协议，返回控制转场动画效果的实例</span><br><span class="line">extension PresentFirstViewController: UIViewControllerTransitioningDelegate &#123;</span><br><span class="line">    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        return NormalPresentAnimator()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        return NormalPresentAnimator()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="导航控制器跳转（Push）"><a href="#导航控制器跳转（Push）" class="headerlink" title="导航控制器跳转（Push）"></a>导航控制器跳转（Push）</h2><h4 id="场景-1"><a href="#场景-1" class="headerlink" title="场景"></a>场景</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.navigationController?.pushViewController(vc!, animated: true)</span><br><span class="line">self.navigationController?.popViewController(animated: true)</span><br></pre></td></tr></table></figure>
+
 <h4 id="实现步骤-1"><a href="#实现步骤-1" class="headerlink" title="实现步骤"></a>实现步骤</h4><ol>
 <li>设置导航控制器 UINavigationController 的 delegate。</li>
 <li>实现 UINavigationControllerDelegate 协议中的代理方法，返回实现了 UIViewControllerAnimatedTransitioning 协议的动画效果控制类。</li>
 </ol>
 <p>需要实现的<strong>UINavigationControllerDelegate</strong>方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">optional func navigationController(_ navigationController: UINavigationController,</span><br><span class="line">                              animationControllerFor operation: UINavigationController.Operation,</span><br><span class="line">                              from fromVC: UIViewController,</span><br><span class="line">                              to toVC: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?</span><br></pre></td></tr></table></figure>
-<h4 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class PushFirstViewController: UIViewController &#123;</span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        self.navigationController?.delegate = self</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @IBAction func pushClick(_ sender: Any) &#123;</span><br><span class="line">        let vc = self.storyboard?.instantiateViewController(withIdentifier: &quot;PushSecondViewController&quot;)</span><br><span class="line">        </span><br><span class="line">        self.navigationController?.pushViewController(vc!, animated: true)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">extension PushFirstViewController: UINavigationControllerDelegate &#123;</span><br><span class="line">    //返回自定义过渡动画</span><br><span class="line">    func navigationController(_ navigationController: UINavigationController,</span><br><span class="line">                              animationControllerFor operation: UINavigationController.Operation,</span><br><span class="line">                              from fromVC: UIViewController,</span><br><span class="line">                              to toVC: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        if operation == .pop &amp;&amp; fromVC is PushFirstViewController &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return NormalPushAnimator()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">optional func navigationController(_ navigationController: UINavigationController,</span><br><span class="line">                              animationControllerFor operation: UINavigationController.Operation,</span><br><span class="line">                              from fromVC: UIViewController,</span><br><span class="line">                              to toVC: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?</span><br></pre></td></tr></table></figure>
+
+<h4 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class PushFirstViewController: UIViewController &#123;</span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        self.navigationController?.delegate = self</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @IBAction func pushClick(_ sender: Any) &#123;</span><br><span class="line">        let vc = self.storyboard?.instantiateViewController(withIdentifier: &quot;PushSecondViewController&quot;)</span><br><span class="line">        </span><br><span class="line">        self.navigationController?.pushViewController(vc!, animated: true)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">extension PushFirstViewController: UINavigationControllerDelegate &#123;</span><br><span class="line">    //返回自定义过渡动画</span><br><span class="line">    func navigationController(_ navigationController: UINavigationController,</span><br><span class="line">                              animationControllerFor operation: UINavigationController.Operation,</span><br><span class="line">                              from fromVC: UIViewController,</span><br><span class="line">                              to toVC: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        if operation == .pop &amp;&amp; fromVC is PushFirstViewController &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return NormalPushAnimator()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 <h2 id="UITabbarController"><a href="#UITabbarController" class="headerlink" title="UITabbarController"></a>UITabbarController</h2><p>在前面的两个专场实现中，我们在需要转场的类中分别实现了<strong>UIViewControllerTransitioningDelegate</strong> 及 <strong>UINavigationControllerDelegate</strong> 方法，在这两个协议中，还有这样几个方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/// UIViewControllerTransitioningDelegate</span><br><span class="line">optional func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -&gt; UIViewControllerInteractiveTransitioning?</span><br><span class="line"></span><br><span class="line">optional func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -&gt; UIViewControllerInteractiveTransitioning?</span><br><span class="line"></span><br><span class="line">/// UINavigationControllerDelegate</span><br><span class="line">optional func navigationController(_ navigationController: UINavigationController,</span><br><span class="line">                                       interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -&gt; UIViewControllerInteractiveTransitioning?</span><br></pre></td></tr></table></figure>
-<p>上面这几个方法呢？其实就是我们通过利用手势转场时过渡的进度处理方法。我们需要在代理方法中返回一个实现了 <strong>UIViewControllerInteractiveTransitioning</strong> 协议的对象来对转场进度进行控制。下面的 UITabbarController 中我就实现一个利用手势控制转场的例子。 Present 及 Push/Pop 按照相同的思路实现即可。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/// UIViewControllerTransitioningDelegate</span><br><span class="line">optional func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -&gt; UIViewControllerInteractiveTransitioning?</span><br><span class="line"></span><br><span class="line">optional func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -&gt; UIViewControllerInteractiveTransitioning?</span><br><span class="line"></span><br><span class="line">/// UINavigationControllerDelegate</span><br><span class="line">optional func navigationController(_ navigationController: UINavigationController,</span><br><span class="line">                                       interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -&gt; UIViewControllerInteractiveTransitioning?</span><br></pre></td></tr></table></figure>
+
+<p>上面这几个方法呢？其实就是我们通过利用手势转场时过渡的进度处理方法。我们需要在代理方法中返回一个实现了 <strong>UIViewControllerInteractiveTransitioning</strong> 协议的对象来对转场进度进行控制。下面的 UITabbarController 中我就实现一个利用手势控制转场的例子。 Present 及 Push&#x2F;Pop 按照相同的思路实现即可。 </p>
 <h4 id="场景-2"><a href="#场景-2" class="headerlink" title="场景"></a>场景</h4><p>UITabbarController 在默认的状态下，切换控制器时是没有动画效果的。如果需要动画效果的话，需要我们进行自定义。</p>
 <h4 id="实现步骤-2"><a href="#实现步骤-2" class="headerlink" title="实现步骤"></a>实现步骤</h4><ol>
 <li>设置 UITabbarController 的 delegate。</li>
 <li>实现 UITabBarControllerDelegate 协议中的代理方法，返回实现了 UIViewControllerAnimatedTransitioning 协议的动画效果控制类，以及返回实现了 UIViewControllerInteractiveTransitioning 协议的转场进度控制类。</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/// 返回实现了 UIViewControllerAnimatedTransitioning 协议的实例</span><br><span class="line">func tabBarController(_ tabBarController: UITabBarController,</span><br><span class="line">                          animationControllerForTransitionFrom fromVC: UIViewController,</span><br><span class="line">                          to toVC: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?</span><br><span class="line"></span><br><span class="line">/// 返回实现了 UIViewControllerInteractiveTransitioning 协议的实例       </span><br><span class="line">func tabBarController(_ tabBarController: UITabBarController,</span><br><span class="line">                          interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -&gt; UIViewControllerInteractiveTransitioning?</span><br></pre></td></tr></table></figure>
-<h4 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class TabbarController: UITabBarController, UITabBarControllerDelegate &#123;</span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line"></span><br><span class="line">        self.delegate = self</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func tabBarController(_ tabBarController: UITabBarController,</span><br><span class="line">                          animationControllerForTransitionFrom fromVC: UIViewController,</span><br><span class="line">                          to toVC: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        </span><br><span class="line">    if self.selectedIndex == 0 &#123;</span><br><span class="line">        return TabbarAnimator(edge: .right)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return TabbarAnimator(edge: .left)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">func tabBarController(_ tabBarController: UITabBarController,</span><br><span class="line">                          interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -&gt; UIViewControllerInteractiveTransitioning? &#123;</span><br><span class="line">    if self.panGesture.state == .began || self.panGesture.state == .changed &#123;</span><br><span class="line">        return TabbarInteractionTransition(pan: self.panGesture)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return nil</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/// 返回实现了 UIViewControllerAnimatedTransitioning 协议的实例</span><br><span class="line">func tabBarController(_ tabBarController: UITabBarController,</span><br><span class="line">                          animationControllerForTransitionFrom fromVC: UIViewController,</span><br><span class="line">                          to toVC: UIViewController) -&gt; UIViewControllerAnimatedTransitioning?</span><br><span class="line"></span><br><span class="line">/// 返回实现了 UIViewControllerInteractiveTransitioning 协议的实例       </span><br><span class="line">func tabBarController(_ tabBarController: UITabBarController,</span><br><span class="line">                          interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -&gt; UIViewControllerInteractiveTransitioning?</span><br></pre></td></tr></table></figure>
+
+<h4 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class TabbarController: UITabBarController, UITabBarControllerDelegate &#123;</span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line"></span><br><span class="line">        self.delegate = self</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func tabBarController(_ tabBarController: UITabBarController,</span><br><span class="line">                          animationControllerForTransitionFrom fromVC: UIViewController,</span><br><span class="line">                          to toVC: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        </span><br><span class="line">    if self.selectedIndex == 0 &#123;</span><br><span class="line">        return TabbarAnimator(edge: .right)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return TabbarAnimator(edge: .left)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">func tabBarController(_ tabBarController: UITabBarController,</span><br><span class="line">                          interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -&gt; UIViewControllerInteractiveTransitioning? &#123;</span><br><span class="line">    if self.panGesture.state == .began || self.panGesture.state == .changed &#123;</span><br><span class="line">        return TabbarInteractionTransition(pan: self.panGesture)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return nil</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h2 id="三方框架——Lottie"><a href="#三方框架——Lottie" class="headerlink" title="三方框架——Lottie"></a>三方框架——Lottie</h2><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>Lottie 是 Android 和 iOS 的移动库，用 bodymovin 解析 Adobe After Effects 导出为 json 的动画并在移动设备上生成矢量动画。设计师可以轻松的创建漂亮(复杂)的动画，无需程序员辛苦地手动去创建及调试。</p>
 <h4 id="场景-3"><a href="#场景-3" class="headerlink" title="场景"></a>场景</h4><p>实现一些特殊的转场，且程序员无足够时间调试动画时。</p>
 <h4 id="实现步骤-3"><a href="#实现步骤-3" class="headerlink" title="实现步骤"></a>实现步骤</h4><ol>
@@ -398,351 +303,66 @@
 <li>因为 Lottie 实现的转场实际上是 Present 的转场，所以设置将要 Present 的控制器的 transitioningDelegate。</li>
 <li>实现 UIViewControllerTransitioningDelegate 协议中的几个代理方法，返回利用转场动画 json 文件初始化的 LOTAnimationTransitionController 的实例。</li>
 </ol>
-<h4 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">/// 第一个 VC</span><br><span class="line">func presentClick(_ sender: Any) &#123;</span><br><span class="line">    let vc = self.storyboard?.instantiateViewController(withIdentifier: &quot;LottieSecondViewController&quot;)</span><br><span class="line">    </span><br><span class="line">    vc?.transitioningDelegate = self</span><br><span class="line">    </span><br><span class="line">    self.present(vc!, animated: true) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// 实现 UIViewControllerTransitioningDelegate，返回  LOTAnimationTransitionController 的实例</span><br><span class="line">extension LottieFirstViewController: UIViewControllerTransitioningDelegate &#123;</span><br><span class="line">    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        </span><br><span class="line">        let transitionController = LOTAnimationTransitionController(animationNamed: &quot;Count&quot;,</span><br><span class="line">                                                                    fromLayerNamed: &quot;&quot;,</span><br><span class="line">                                                                    toLayerNamed: &quot;&quot;,</span><br><span class="line">                                                                    applyAnimationTransform: false)</span><br><span class="line">        return transitionController</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        let transitionController = LOTAnimationTransitionController(animationNamed: &quot;Three&quot;,</span><br><span class="line">                                                                    fromLayerNamed: &quot;&quot;,</span><br><span class="line">                                                                    toLayerNamed: &quot;&quot;,</span><br><span class="line">                                                                    applyAnimationTransform: false)</span><br><span class="line">        return transitionController</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面的所有动画的示例可以在<a href="https://github.com/CoderJTao/CustomTransitions" target="_blank" rel="noopener">我的Github</a>上找到哦，各位前快去下载把玩吧。</p>
+<h4 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/// 第一个 VC</span><br><span class="line">func presentClick(_ sender: Any) &#123;</span><br><span class="line">    let vc = self.storyboard?.instantiateViewController(withIdentifier: &quot;LottieSecondViewController&quot;)</span><br><span class="line">    </span><br><span class="line">    vc?.transitioningDelegate = self</span><br><span class="line">    </span><br><span class="line">    self.present(vc!, animated: true) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// 实现 UIViewControllerTransitioningDelegate，返回  LOTAnimationTransitionController 的实例</span><br><span class="line">extension LottieFirstViewController: UIViewControllerTransitioningDelegate &#123;</span><br><span class="line">    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        </span><br><span class="line">        let transitionController = LOTAnimationTransitionController(animationNamed: &quot;Count&quot;,</span><br><span class="line">                                                                    fromLayerNamed: &quot;&quot;,</span><br><span class="line">                                                                    toLayerNamed: &quot;&quot;,</span><br><span class="line">                                                                    applyAnimationTransform: false)</span><br><span class="line">        return transitionController</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;</span><br><span class="line">        let transitionController = LOTAnimationTransitionController(animationNamed: &quot;Three&quot;,</span><br><span class="line">                                                                    fromLayerNamed: &quot;&quot;,</span><br><span class="line">                                                                    toLayerNamed: &quot;&quot;,</span><br><span class="line">                                                                    applyAnimationTransform: false)</span><br><span class="line">        return transitionController</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面的所有动画的示例可以在<a target="_blank" rel="noopener" href="https://github.com/CoderJTao/CustomTransitions">我的Github</a>上找到哦，各位前快去下载把玩吧。</p>
 <p>好的转场动画，在用户交互上会带来更加美妙的体验。让用户尽享丝滑哦。</p>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/06/10/可选接口/" rel="next" title="Swift 可选接口">
-                <i class="fa fa-chevron-left"></i> Swift 可选接口
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/23/Swift命名空间/" rel="prev" title="Swift 命名空间">
-                Swift 命名空间 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/06/10/%E5%8F%AF%E9%80%89%E6%8E%A5%E5%8F%A3/" rel="prev" title="Swift 可选接口">
+                  <i class="fa fa-chevron-left"></i> Swift 可选接口
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#效果图"><span class="nav-number">1.</span> <span class="nav-text">效果图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预备"><span class="nav-number">2.</span> <span class="nav-text">预备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模态跳转（Present）"><span class="nav-number">3.</span> <span class="nav-text">模态跳转（Present）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#场景"><span class="nav-number">3.0.1.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现步骤"><span class="nav-number">3.0.2.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例"><span class="nav-number">3.0.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#导航控制器跳转（Push）"><span class="nav-number">4.</span> <span class="nav-text">导航控制器跳转（Push）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#场景-1"><span class="nav-number">4.0.1.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现步骤-1"><span class="nav-number">4.0.2.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-1"><span class="nav-number">4.0.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UITabbarController"><span class="nav-number">5.</span> <span class="nav-text">UITabbarController</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#场景-2"><span class="nav-number">5.0.1.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现步骤-2"><span class="nav-number">5.0.2.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-2"><span class="nav-number">5.0.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三方框架——Lottie"><span class="nav-number">6.</span> <span class="nav-text">三方框架——Lottie</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍"><span class="nav-number">6.0.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#场景-3"><span class="nav-number">6.0.2.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现步骤-3"><span class="nav-number">6.0.3.</span> <span class="nav-text">实现步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例-3"><span class="nav-number">6.0.4.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2018/06/23/Swift%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" rel="next" title="Swift 命名空间">
+                  Swift 命名空间 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -755,34 +375,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

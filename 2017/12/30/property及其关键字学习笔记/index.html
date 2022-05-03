@@ -1,360 +1,256 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="前言 一、@property的本质当我们写下@property NSObject *name时，编译器帮我们做了以下几件事:  创建实例变量_name 声明name属性的setter、getter方法 实现name属性的setter、getter方法">
+    <meta name="description" content="前言  一、@property的本质当我们写下@property NSObject *name时，编译器帮我们做了以下几件事:  创建实例变量_name 声明name属性的setter、getter方法 实现name属性的setter、getter方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="@property及其关键字学习笔记">
-<meta property="og:url" content="http://yoursite.com/2017/12/30/property及其关键字学习笔记/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="江涛的博客">
-<meta property="og:description" content="前言 一、@property的本质当我们写下@property NSObject *name时，编译器帮我们做了以下几件事:  创建实例变量_name 声明name属性的setter、getter方法 实现name属性的setter、getter方法">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2017/12/30/property及其关键字学习笔记/property_MindNode.jpg">
-<meta property="og:image" content="http://yoursite.com/2017/12/30/property及其关键字学习笔记/property_copy.jpg">
-<meta property="og:image" content="http://yoursite.com/2017/12/30/property及其关键字学习笔记/property_weak.jpg">
-<meta property="og:updated_time" content="2020-07-28T14:58:22.000Z">
+<meta property="og:description" content="前言  一、@property的本质当我们写下@property NSObject *name时，编译器帮我们做了以下几件事:  创建实例变量_name 声明name属性的setter、getter方法 实现name属性的setter、getter方法">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/property_MindNode.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/property_copy.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/property_weak.jpg">
+<meta property="article:published_time" content="2017-12-30T09:13:56.000Z">
+<meta property="article:modified_time" content="2020-07-28T14:58:22.000Z">
+<meta property="article:author" content="JTao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="@property及其关键字学习笔记">
-<meta name="twitter:description" content="前言 一、@property的本质当我们写下@property NSObject *name时，编译器帮我们做了以下几件事:  创建实例变量_name 声明name属性的setter、getter方法 实现name属性的setter、getter方法">
-<meta name="twitter:image" content="http://yoursite.com/2017/12/30/property及其关键字学习笔记/property_MindNode.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/property_MindNode.jpg">
+
+
+<link rel="canonical" href="http://yoursite.com/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/","path":"2017/12/30/property及其关键字学习笔记/","title":"@property及其关键字学习笔记"}</script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2017/12/30/property及其关键字学习笔记/">
-
-
-
-
-
-  <title>@property及其关键字学习笔记 | 江涛的博客</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>@property及其关键字学习笔记 | 江涛的博客</title>
   
 
 
 
 
 
-
-
-
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">江涛的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">江涛的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-self">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            简历
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81-property%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="nav-number">2.</span> <span class="nav-text">一、@property的本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81-property%E7%9A%84%E5%B8%B8%E8%A7%81%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">3.</span> <span class="nav-text">二、@property的常见关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E6%9D%83%E9%99%90"><span class="nav-number">3.1.</span> <span class="nav-text">读写权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0"><span class="nav-number">3.3.</span> <span class="nav-text">引用计数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#strong-%E5%8F%8A-retain"><span class="nav-number">3.3.1.</span> <span class="nav-text">strong 及 retain</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#assign-%E5%8F%8A-unsafe-unretained"><span class="nav-number">3.3.2.</span> <span class="nav-text">assign 及 unsafe_unretained</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#copy"><span class="nav-number">3.3.3.</span> <span class="nav-text">copy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weak"><span class="nav-number">3.3.4.</span> <span class="nav-text">weak</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%E3%80%81%E4%BD%9C%E7%94%A8"><span class="nav-number">3.3.4.1.</span> <span class="nav-text">1、作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%E3%80%81%E5%8E%9F%E7%90%86"><span class="nav-number">3.3.4.2.</span> <span class="nav-text">2、原理</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JTao"
+      src="/images/JT_logo.gif">
+  <p class="site-author-name" itemprop="name">JTao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/30/property及其关键字学习笔记/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="JTao">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/JT_logo.gif">
+      <meta itemprop="name" content="JTao">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="江涛的博客">
+      <meta itemprop="description" content="">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="@property及其关键字学习笔记 | 江涛的博客">
+      <meta itemprop="description" content="">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          @property及其关键字学习笔记
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">@property及其关键字学习笔记</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-30T17:13:56+08:00">
-                2017-12-30
-              </time>
-            
+      <time title="Created: 2017-12-30 17:13:56" itemprop="dateCreated datePublished" datetime="2017-12-30T17:13:56+08:00">2017-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2020-07-28 22:58:22" itemprop="dateModified" datetime="2020-07-28T22:58:22+08:00">2020-07-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS%E5%B8%B8%E8%A7%81%E7%9F%A5%E8%AF%86%E7%82%B9/" itemprop="url" rel="index"><span itemprop="name">iOS常见知识点</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS常见知识点/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS常见知识点</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><img src="/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/property_MindNode.jpg" class="" title="property_MindNode">
 
-      
-      
-
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><img src="/2017/12/30/property及其关键字学习笔记/property_MindNode.jpg" title="property_MindNode">
 <h2 id="一、-property的本质"><a href="#一、-property的本质" class="headerlink" title="一、@property的本质"></a>一、@property的本质</h2><p>当我们写下@property NSObject *name时，编译器帮我们做了以下几件事:</p>
 <ul>
 <li>创建实例变量_name</li>
 <li>声明name属性的setter、getter方法</li>
 <li>实现name属性的setter、getter方法</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
+
 <p>所以我们可以看出@property的本质是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property = ivar + getter + setter;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@property = ivar + getter + setter;</span><br></pre></td></tr></table></figure>
+
 <p>也就是说使用@property时, 系统会自动创建实例变量及其setter和getter方法;</p>
 <hr>
 <h2 id="二、-property的常见关键字"><a href="#二、-property的常见关键字" class="headerlink" title="二、@property的常见关键字"></a>二、@property的常见关键字</h2><h3 id="读写权限"><a href="#读写权限" class="headerlink" title="读写权限"></a>读写权限</h3><ul>
@@ -366,11 +262,11 @@
 <h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><ul>
 <li><p>atomic 和 nonatomic 用来决定编译器生成的getter和setter是否为原子操作。</p>
 </li>
-<li><p>atomic： 会保证系统生成的 getter/setter 操作的完整性，不受其他线程影响。getter 还是能得到一个完好无损的对象（可以保证数据的完整性），但这个对象在多线程的情况下是不能确定的。举例如下：</p>
+<li><p>atomic： 会保证系统生成的 getter&#x2F;setter 操作的完整性，不受其他线程影响。getter 还是能得到一个完好无损的对象（可以保证数据的完整性），但这个对象在多线程的情况下是不能确定的。举例如下：</p>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">@interface ViewController ()</span><br><span class="line">@property(atomic, strong) NSString *testStr;</span><br><span class="line">@end</span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    self.testStr = @&quot;JiangT&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    // getter</span><br><span class="line">    NSBlockOperation *oper1 =[NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line">        NSLog(self.testStr);</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    // setter</span><br><span class="line">    NSBlockOperation *oper2 = [NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line">        self.testStr = @&quot;change one&quot;;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    // setter</span><br><span class="line">    NSBlockOperation *oper3 = [NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line">        self.testStr = @&quot;change two&quot;;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    // setter</span><br><span class="line">    NSBlockOperation *oper4 = [NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line">        self.testStr = @&quot;change three&quot;;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    // setter</span><br><span class="line">    NSBlockOperation *oper5 = [NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line">        self.testStr = @&quot;change four&quot;;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    //创建队列</span><br><span class="line">    NSOperationQueue *queue = [[NSOperationQueue alloc] init];</span><br><span class="line">    [queue addOperations:@[oper1, oper2, oper3, oper4, oper5] waitUntilFinished:NO];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">---输出结果：---</span><br><span class="line">AtomicDemo[52660:1647356] change two</span><br><span class="line">AtomicDemo[52660:1647356] change four</span><br><span class="line">AtomicDemo[52660:1647356] change four</span><br><span class="line">AtomicDemo[52660:1647354] change two</span><br><span class="line">AtomicDemo[52660:1647354] change four</span><br><span class="line">AtomicDemo[52660:1647354] change four</span><br><span class="line">AtomicDemo[52660:1647356] change four</span><br></pre></td></tr></table></figure>
-<p>如果线程 A 调了 getter，与此同时线程 B 、线程 C 都调了 setter。那最后线程 A get 到的值，有3种     可能：可能是 B、C set 之前原始的值，也可能是 B set 的值，也可能是 C set 的值。同时，最终这个属性的值，可能是 B set 的值，也有可能是 C set 的值。所以atomic可并不能保证对象的线程安全。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">@interface ViewController ()</span><br><span class="line">@property(atomic, strong) NSString *testStr;</span><br><span class="line">@end</span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    self.testStr = @&quot;JiangT&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    // getter</span><br><span class="line">    NSBlockOperation *oper1 =[NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line">        NSLog(self.testStr);</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    // setter</span><br><span class="line">    NSBlockOperation *oper2 = [NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line">        self.testStr = @&quot;change one&quot;;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    // setter</span><br><span class="line">    NSBlockOperation *oper3 = [NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line">        self.testStr = @&quot;change two&quot;;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    // setter</span><br><span class="line">    NSBlockOperation *oper4 = [NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line">        self.testStr = @&quot;change three&quot;;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    // setter</span><br><span class="line">    NSBlockOperation *oper5 = [NSBlockOperation blockOperationWithBlock:^&#123;</span><br><span class="line">        self.testStr = @&quot;change four&quot;;</span><br><span class="line">    &#125;];</span><br><span class="line">    </span><br><span class="line">    //创建队列</span><br><span class="line">    NSOperationQueue *queue = [[NSOperationQueue alloc] init];</span><br><span class="line">    [queue addOperations:@[oper1, oper2, oper3, oper4, oper5] waitUntilFinished:NO];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">---输出结果：---</span><br><span class="line">AtomicDemo[52660:1647356] change two</span><br><span class="line">AtomicDemo[52660:1647356] change four</span><br><span class="line">AtomicDemo[52660:1647356] change four</span><br><span class="line">AtomicDemo[52660:1647354] change two</span><br><span class="line">AtomicDemo[52660:1647354] change four</span><br><span class="line">AtomicDemo[52660:1647354] change four</span><br><span class="line">AtomicDemo[52660:1647356] change four</span><br></pre></td></tr></table></figure>
+<p>如果线程 A 调了 getter，与此同时线程 B 、线程 C 都调了 setter。那最后线程 A get 到的值，有3种	 可能：可能是 B、C set 之前原始的值，也可能是 B set 的值，也可能是 C set 的值。同时，最终这个属性的值，可能是 B set 的值，也有可能是 C set 的值。所以atomic可并不能保证对象的线程安全。</p>
 <p>也就是说：如果有多个线程同时调用setter的话，不会出现某一个线程执行完setter全部语句之前，另一个线程开始执行setter情况，相当于函数头尾加了锁一样，每次只能有一个线程调用对象的setter方法，所以可以保证数据的完整性。</p>
 <p><strong>结论：</strong> atomic所说的线程安全只是保证了getter和setter存取方法的线程安全，并不能保证整个对象是线程安全的。</p>
 <ul>
@@ -396,7 +292,7 @@
 <ul>
 <li><p>assign</p>
 <ul>
-<li>这个修饰词是直接赋值的意思 , 整型/浮点型等数据类型都用这个词修饰。</li>
+<li>这个修饰词是直接赋值的意思 , 整型&#x2F;浮点型等数据类型都用这个词修饰。</li>
 <li>如果没有使用 weak strong retain copy 修饰 , 那么默认就是使用 assign 了。</li>
 <li>修饰对象类型时，不改变其引用计数。</li>
 <li>如果用来修饰对象属性 , 那么当对象被销毁后指针是不会指向 nil 的。 所以会出现野指针错误。</li>
@@ -418,15 +314,16 @@
 <li><p>对于可变集合类对象，不管是进行copy操作还是mutableCopy操作，其内存地址都发生了变化，但是其中的元素内存地址都没有发生变化，属于单层深拷贝。</p>
 </li>
 </ul>
-<font color="red">使用注意：</font>
-
+<p><font color="red">使用注意：</font></p>
 <blockquote>
 <ol>
 <li>当将一个可变对象分别赋值给两个使用不同修饰词的属性后，改变可变对象的内容，使用strong修饰的会跟随着改变，但使用copy修饰的没有改变内容。</li>
 </ol>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@interface test()</span><br><span class="line"> </span><br><span class="line">@property(nonatomic, strong) NSMutableString *strStrong;</span><br><span class="line">@property(nonatomic, copy) NSMutableString *strCopy;</span><br><span class="line"> </span><br><span class="line">@end</span><br><span class="line"> </span><br><span class="line">/********************* test.m **********************/</span><br><span class="line">NSMutableString *string = [NSMutableString stringWithFormat:@&quot;abc&quot;];</span><br><span class="line"></span><br><span class="line">self.strStrong = str;    </span><br><span class="line">self.strCopy = str;</span><br><span class="line">    </span><br><span class="line">[self.strStrong appendString:@&quot;def&quot;];</span><br><span class="line">[self.strCopy appendString:@&quot;def&quot;];// 在这一行会crash</span><br></pre></td></tr></table></figure>
- <img src="/2017/12/30/property及其关键字学习笔记/property_copy.jpg">
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@interface test()</span><br><span class="line"> </span><br><span class="line">@property(nonatomic, strong) NSMutableString *strStrong;</span><br><span class="line">@property(nonatomic, copy) NSMutableString *strCopy;</span><br><span class="line"> </span><br><span class="line">@end</span><br><span class="line"> </span><br><span class="line">/********************* test.m **********************/</span><br><span class="line">NSMutableString *string = [NSMutableString stringWithFormat:@&quot;abc&quot;];</span><br><span class="line"></span><br><span class="line">self.strStrong = str;    </span><br><span class="line">self.strCopy = str;</span><br><span class="line">    </span><br><span class="line">[self.strStrong appendString:@&quot;def&quot;];</span><br><span class="line">[self.strCopy appendString:@&quot;def&quot;];// 在这一行会crash</span><br></pre></td></tr></table></figure>
+
+ <img src="/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/property_copy.jpg" class="">
+
 <p>因为copy是复制出一个不可变的对象，在不可变对象上运行可变对象的方法，就会找不到执行方法。</p>
 <h4 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h4><h5 id="1、作用"><a href="#1、作用" class="headerlink" title="1、作用"></a>1、作用</h5><ul>
 <li>weak 必须用于 OC 对象</li>
@@ -436,7 +333,8 @@
 </ul>
 <h5 id="2、原理"><a href="#2、原理" class="headerlink" title="2、原理"></a>2、原理</h5><p>Runtime维护了一个weak表，用于存储指向某个对象的所有weak指针。weak表其实是一个hash表，K<br>ey是所指对象的地址，value是weak指针的地址（这个地址的值是所指对象指针的地址）数组。</p>
 <p>为什么value是数组？因为一个对象可能被多个弱引用指针指向。</p>
- <img src="/2017/12/30/property及其关键字学习笔记/property_weak.jpg">
+ <img src="/2017/12/30/property%E5%8F%8A%E5%85%B6%E5%85%B3%E9%94%AE%E5%AD%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/property_weak.jpg" class="">
+
 <ol>
 <li><p><strong>初始化时：</strong></p>
 <p> runtime会调用objc_initWeak函数，objc_initWeak函数会初始化一个新的weak指针指向对象的地址。</p>
@@ -454,347 +352,61 @@
 <p>所以：当自身已经对它进行一次强引用,没有必要再强引用一次,此时也会使用 weak。</p>
 </blockquote>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/12/10/KVO学习笔记/" rel="next" title="KVO学习笔记">
-                <i class="fa fa-chevron-left"></i> KVO学习笔记
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/13/不规则Button点击（一）/" rel="prev" title="不规则Button点击（一）">
-                不规则Button点击（一） <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/JT_logo.gif" alt="JTao">
-            
-              <p class="site-author-name" itemprop="name">JTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">61</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/12/10/KVO%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="KVO学习笔记">
+                  <i class="fa fa-chevron-left"></i> KVO学习笔记
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/CoderJTao" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、-property的本质"><span class="nav-number">2.</span> <span class="nav-text">一、@property的本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、-property的常见关键字"><span class="nav-number">3.</span> <span class="nav-text">二、@property的常见关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读写权限"><span class="nav-number">3.1.</span> <span class="nav-text">读写权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原子性"><span class="nav-number">3.2.</span> <span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用计数"><span class="nav-number">3.3.</span> <span class="nav-text">引用计数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#strong-及-retain"><span class="nav-number">3.3.1.</span> <span class="nav-text">strong 及 retain</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#assign-及-unsafe-unretained"><span class="nav-number">3.3.2.</span> <span class="nav-text">assign 及 unsafe_unretained</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#copy"><span class="nav-number">3.3.3.</span> <span class="nav-text">copy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weak"><span class="nav-number">3.3.4.</span> <span class="nav-text">weak</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、作用"><span class="nav-number">3.3.4.1.</span> <span class="nav-text">1、作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、原理"><span class="nav-number">3.3.4.2.</span> <span class="nav-text">2、原理</span></a></li></ol></li></ol></li></ol></li></ol></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2018/01/13/%E4%B8%8D%E8%A7%84%E5%88%99Button%E7%82%B9%E5%87%BB%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="不规则Button点击（一）">
+                  不规则Button点击（一） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JTao</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JTao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -807,34 +419,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>
